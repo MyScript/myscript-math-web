@@ -1,0 +1,127 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../myscript-toolbar/myscript-toolbar.html">
+<link rel="import" href="../myscript-result/myscript-result.html">
+<link rel="import" href="../myscript-stroker/myscript-stroker.html">
+<link rel="import" href="../myscript-renderer/myscript-renderer.html">
+<link rel="import" href="../myscript-recognizer/myscript-recognizer.html">
+<link rel="import" href="../myscript-canvas/myscript-canvas.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+
+<!--
+Element providing solution to no problem in particular.
+
+##### Example
+
+    <myscript-math url="http://localhost:8888/api/v3.0/recognition/rest" applicationKey="ed45a5b4-946d-45c4-8234-fb840fb6416b" hmacKey="a1789a80-8514-3d17-acd0-cc5d6674acea" type="Math"></myscript-math>
+
+@element myscript-math
+@blurb MyScript HTML5 math Element to help developer for integrate handwriting recognition.
+@status alpha
+@homepage http://polymerlabs.github.io/myscript-math
+-->
+<polymer-element name="myscript-math" attributes="url applicationKey hmacKey type" on-myscript-toolbar-delete="{{delete}}" on-myscript-toolbar-undo="{{undo}}" on-myscript-toolbar-redo="{{redo}}" on-myscript-toolbar-info="{{info}}">
+    <template>
+        <link rel="stylesheet" href="./myscript-math.css">
+        <core-scaffold>
+            <div vertical layout>
+                <div>
+                    <myscript-result></myscript-result>
+                </div>
+                <div>
+                    <myscript-toolbar delete="true" undo="true" redo="true" info="true"></myscript-toolbar>
+                    <myscript-stroker></myscript-stroker>
+                    <myscript-renderer type="{{type}}"></myscript-renderer>
+                    <myscript-recognizer type="{{type}}" url="{{url}}" applicationKey="{{applicationKey}}" hmacKey="{{hmacKey}}" ></myscript-recognizer>
+                    <myscript-canvas on-myscript-canvas-down="{{down}}" on-myscript-canvas-track="{{track}}" on-myscript-canvas-up="{{up}}"></myscript-canvas>
+                </div>
+            </div>
+            <paper-dialog id="infodialog" class="infodialog" backdrop layout fullbleed>
+                <div class="fullcontainer" fullbleed flex layout vertical>
+                        <h3>About</h3>
+                        <p align='justify'>Write an equation in the canvas zone. <br> After a short timeout (a second) the recognition will be launched and the result will be shown at the bottom of the page. <br> You can clear the writing space by clicking on the garbage can icon in the top right corner of the yellow zone.</p>
+                    </div>
+                </div>
+            </paper-dialog>
+        </core-scaffold>
+    </template>
+    <script>
+        Polymer({
+            result: '',
+            toolbar: '',
+            stroker: '',
+            renderer: '',
+            recognizer: '',
+            canvas: '',
+            rendererParameters: '',
+            recognizerParameters: '',
+            instanceId: '',
+            components: [],
+            timer: null,
+            delete: function(event){
+                this.result.clear();
+                this.stroker.clear();
+                this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
+                this.instanceId ='';
+            },
+            undo: function(event){
+                this.stroker.undo();
+                this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
+                this.renderer.drawStrokes(this.stroker.getStrokes(), this.rendererParameters, this.canvas.$.canvas.getContext('2d'));
+            },
+            redo: function(event){
+                this.stroker.redo();
+                this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
+                this.renderer.drawStrokes(this.stroker.getStrokes(), this.rendererParameters, this.canvas.$.canvas.getContext('2d'));
+            },
+            info: function(event){
+                this.$.infodialog.toggle();
+            },
+            down: function(event){
+                if (this.timer) {
+                    this.timer.stop();
+                }
+                this.stroker.startStrokeWriting(event.detail.x, event.detail.y);
+                this.renderer.drawStart(event.detail.event, event.detail.x, event.detail.y);
+            },
+            track: function(event){
+                this.stroker.continueStrokeWriting(event.detail.x, event.detail.y);
+                this.renderer.drawContinue(event.detail.event, event.detail.x, event.detail.y, this.rendererParameters, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'));
+            },
+            up: function(event){
+                this.stroker.endStrokeWriting();
+                this.renderer.drawEnd(event.detail.event, event.detail.x, event.detail.y, this.rendererParameters, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'));
+
+                this.timer = this.job(this.timer, function() {
+                    this.recognizer.doSimpleRecognition(this.applicationKey, this.recognizerParameters, this.instanceId, this.components.concat(this.stroker.getStrokes()), this.hmacKey).then(
+                                    function success (response) {
+                                        document.querySelector('myscript-math').shadowRoot.querySelector('myscript-recognizer').fire('recognitionSuccessEvent',{response:response});
+                                        document.querySelector('myscript-math').instanceId = response.instanceId;
+                                        document.querySelector('myscript-math').shadowRoot.querySelector('myscript-renderer').clear(document.querySelector('myscript-math').shadowRoot.querySelector('myscript-canvas').$.canvas.getContext('2d'));
+                                        document.querySelector('myscript-math').shadowRoot.querySelector('myscript-renderer').drawRecognitionResult(document.querySelector('myscript-math').shadowRoot.querySelector('myscript-stroker').getStrokes(),  response.result, document.querySelector('myscript-math').rendererParameters, document.querySelector('myscript-math').shadowRoot.querySelector('myscript-canvas').$.canvas.getContext('2d'));
+                                    },
+                                    function error (response) {
+                                        document.querySelector('myscript-math').shadowRoot.querySelector('myscript-recognizer').fire('recognitionErrorEvent',{response:response});
+                                    }
+                            );
+                }, 2000);
+            },
+            ready: function() {
+
+                this.result = this.shadowRoot.querySelector('myscript-result');
+                this.toolbar = this.shadowRoot.querySelector('myscript-toolbar');
+                this.stroker = this.shadowRoot.querySelector('myscript-stroker');
+                this.renderer = this.shadowRoot.querySelector('myscript-renderer');
+                this.recognizer = this.shadowRoot.querySelector('myscript-recognizer');
+                this.canvas = this.shadowRoot.querySelector('myscript-canvas');
+
+                this.rendererParameters = this.renderer.createRenderingParameter();
+                this.recognizerParameters = this.recognizer.createMathParameter();
+
+                this.instanceId = '';
+                this.components = [];
+
+                this.recognizerParameters.setResultTypes(['LATEX', 'MATHML', 'SYMBOLTREE']);
+            }
+        });
+    </script>
+</polymer-element>

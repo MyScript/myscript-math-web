@@ -1,0 +1,33 @@
+{
+  "name": "myscript-math",
+  "version": "0.0.1",
+  "authors": [
+    "Yohann Streibel <yohann.streibel@myscript.com>"
+  ],
+  "description": "MyScript HTML5 math Element to help developer for integrate handwriting recognition",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "seed"
+  ],
+  "main": "myscript-math.html",
+  "license": "MIT",
+  "homepage": "https://github.com/myscript/myscript-math/",
+  "ignore": [
+    "/.*",
+    "/tests/"
+  ],
+  "dependencies": {
+      "polymer": "Polymer/polymer#~0.5.3",
+      "myscript-toolbar":"*",
+      "myscript-result":"*",
+      "myscript-stroker":"*",
+      "myscript-renderer":"*",
+      "myscript-recognizer":"*",
+      "myscript-canvas":"*"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^0.7.3"
+  }
+}

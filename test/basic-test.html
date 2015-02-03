@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>myscript-math</title>
+
+  <script src="../../platform/platform.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+
+  <!-- Step 1: import the element to test -->
+  <link rel="import" href="../myscript-math.html">
+</head>
+<body>
+
+  <!-- You use the document as a place to set up your fixtures. -->
+  <myscript-math></myscript-math>
+
+  <script>
+    var myEl = document.querySelector('myscript-math');
+
+    suite('<myscript-math>', function() {
+
+      test('defines the "width" attribute', function() {
+        assert.equal(myEl.width, '300px');
+      });
+
+      test('defines the "height" attribute', function() {
+        assert.equal(myEl.height, '200px');
+      });
+
+      test('defines the "color" attribute', function() {
+          assert.equal(myEl.color, 'red');
+      });
+
+    });
+  </script>
+
+</body>
+</html>
