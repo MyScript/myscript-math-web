@@ -20,6 +20,7 @@
   ],
   "dependencies": {
       "polymer": "Polymer/polymer#~0.5.3",
+      "paper-dialog": "Polymer/paper-dialog#~0.5.3",
       "myscript-toolbar":"*",
       "myscript-result":"*",
       "myscript-stroker":"*",
