@@ -92,7 +92,7 @@ Element providing solution to no problem in particular.
                 this.renderer.drawEnd(event.detail.event, event.detail.x, event.detail.y, this.rendererParameters, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'));
 
                 this.timer = this.job(this.timer, function() {
-                    this.recognizer.doSimpleRecognition(this.applicationKey, this.recognizerParameters, this.instanceId, this.components.concat(this.stroker.getStrokes()), this.hmacKey).then(
+                    this.recognizer.doSimpleRecognition(this.applicationKey, this.instanceId, this.components.concat(this.stroker.getStrokes()), this.hmacKey, this.recognizerParameters).then(
                                     function success (response) {
                                         document.querySelector('myscript-math').shadowRoot.querySelector('myscript-recognizer').fire('recognitionSuccessEvent',{response:response});
                                         document.querySelector('myscript-math').instanceId = response.instanceId;
