@@ -66,12 +66,12 @@ Element providing solution to no problem in particular.
             undo: function(event){
                 this.stroker.undo();
                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
-                this.renderer.drawStrokes(this.stroker.getStrokes(), this.rendererParameters, this.canvas.$.canvas.getContext('2d'));
+                this.renderer.drawStrokes(this.stroker.getStrokes(), this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
             },
             redo: function(event){
                 this.stroker.redo();
                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
-                this.renderer.drawStrokes(this.stroker.getStrokes(), this.rendererParameters, this.canvas.$.canvas.getContext('2d'));
+                this.renderer.drawStrokes(this.stroker.getStrokes(), this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
             },
             info: function(event){
                 this.$.infodialog.toggle();
@@ -80,16 +80,16 @@ Element providing solution to no problem in particular.
                 if (this.timer) {
                     this.timer.stop();
                 }
-                this.stroker.startStrokeWriting(event.detail.x, event.detail.y);
+                this.stroker.startStrokeWriting(event.detail.x, event.detail.y, event.detail.event.timeStamp);
                 this.renderer.drawStart(event.detail.event, event.detail.x, event.detail.y);
             },
             track: function(event){
-                this.stroker.continueStrokeWriting(event.detail.x, event.detail.y);
-                this.renderer.drawContinue(event.detail.event, event.detail.x, event.detail.y, this.rendererParameters, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'));
+                this.stroker.continueStrokeWriting(event.detail.x, event.detail.y, event.detail.event.timeStamp);
+                this.renderer.drawContinue(event.detail.event, event.detail.x, event.detail.y, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'), this.rendererParameters);
             },
             up: function(event){
                 this.stroker.endStrokeWriting();
-                this.renderer.drawEnd(event.detail.event, event.detail.x, event.detail.y, this.rendererParameters, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'));
+                this.renderer.drawEnd(event.detail.event, event.detail.x, event.detail.y, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'), this.rendererParameters);
 
                 this.timer = this.job(this.timer, function() {
                     this.recognizer.doSimpleRecognition(this.applicationKey, this.instanceId, this.components.concat(this.stroker.getStrokes()), this.hmacKey, this.recognizerParameters).then(
@@ -97,7 +97,7 @@ Element providing solution to no problem in particular.
                                         document.querySelector('myscript-math').shadowRoot.querySelector('myscript-recognizer').fire('recognitionSuccessEvent',{response:response});
                                         document.querySelector('myscript-math').instanceId = response.instanceId;
                                         document.querySelector('myscript-math').shadowRoot.querySelector('myscript-renderer').clear(document.querySelector('myscript-math').shadowRoot.querySelector('myscript-canvas').$.canvas.getContext('2d'));
-                                        document.querySelector('myscript-math').shadowRoot.querySelector('myscript-renderer').drawRecognitionResult(document.querySelector('myscript-math').shadowRoot.querySelector('myscript-stroker').getStrokes(),  response.result, document.querySelector('myscript-math').rendererParameters, document.querySelector('myscript-math').shadowRoot.querySelector('myscript-canvas').$.canvas.getContext('2d'));
+                                        document.querySelector('myscript-math').shadowRoot.querySelector('myscript-renderer').drawRecognitionResult(document.querySelector('myscript-math').shadowRoot.querySelector('myscript-stroker').getStrokes(),  response.result, document.querySelector('myscript-math').shadowRoot.querySelector('myscript-canvas').$.canvas.getContext('2d'), document.querySelector('myscript-math').rendererParameters);
                                     },
                                     function error (response) {
                                         document.querySelector('myscript-math').shadowRoot.querySelector('myscript-recognizer').fire('recognitionErrorEvent',{response:response});
