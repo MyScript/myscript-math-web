@@ -81,15 +81,15 @@ Element providing solution to no problem in particular.
                     this.timer.stop();
                 }
                 this.stroker.startStrokeWriting(event.detail.x, event.detail.y, event.detail.event.timeStamp);
-                this.renderer.drawStart(event.detail.event, event.detail.x, event.detail.y);
+                this.renderer.drawStart(event.detail.x, event.detail.y);
             },
             track: function(event){
                 this.stroker.continueStrokeWriting(event.detail.x, event.detail.y, event.detail.event.timeStamp);
-                this.renderer.drawContinue(event.detail.event, event.detail.x, event.detail.y, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'), this.rendererParameters);
+                this.renderer.drawContinue(event.detail.x, event.detail.y, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'), this.rendererParameters);
             },
             up: function(event){
                 this.stroker.endStrokeWriting();
-                this.renderer.drawEnd(event.detail.event, event.detail.x, event.detail.y, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'), this.rendererParameters);
+                this.renderer.drawEnd(event.detail.x, event.detail.y, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'), this.rendererParameters);
 
                 this.timer = this.job(this.timer, function() {
                     this.recognizer.doSimpleRecognition(this.applicationKey, this.instanceId, this.components.concat(this.stroker.getStrokes()), this.hmacKey, this.recognizerParameters).then(
