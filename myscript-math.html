@@ -32,7 +32,7 @@ Element providing solution to no problem in particular.
                     <myscript-stroker></myscript-stroker>
                     <myscript-renderer type="{{type}}"></myscript-renderer>
                     <myscript-recognizer type="{{type}}" url="{{url}}" applicationKey="{{applicationKey}}" hmacKey="{{hmacKey}}" ></myscript-recognizer>
-                    <myscript-canvas on-myscript-canvas-down="{{down}}" on-myscript-canvas-track="{{track}}" on-myscript-canvas-up="{{up}}"></myscript-canvas>
+                    <myscript-canvas on-myscript-canvas-down="{{down}}" on-myscript-canvas-track="{{track}}" on-myscript-canvas-up="{{up}}" on-myscript-canvas-resize="{{redraw}}"></myscript-canvas>
                 </div>
             </div>
             <paper-dialog id="infodialog" class="infodialog" backdrop layout fullbleed>
@@ -85,25 +85,32 @@ Element providing solution to no problem in particular.
             },
             track: function(event){
                 this.stroker.continueStrokeWriting(event.detail.x, event.detail.y, event.detail.event.timeStamp);
-                this.renderer.drawContinue(event.detail.x, event.detail.y, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'), this.rendererParameters);
+                this.renderer.drawContinue(event.detail.x, event.detail.y,  this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
             },
             up: function(event){
                 this.stroker.endStrokeWriting();
-                this.renderer.drawEnd(event.detail.x, event.detail.y, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'), this.rendererParameters);
+                this.renderer.drawEnd(event.detail.x, event.detail.y, this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
 
                 this.timer = this.job(this.timer, function() {
                     this.recognizer.doSimpleRecognition(this.applicationKey, this.instanceId, this.components.concat(this.stroker.getStrokes()), this.hmacKey, this.recognizerParameters).then(
                                     function success (response) {
-                                        document.querySelector('myscript-math').shadowRoot.querySelector('myscript-recognizer').fire('recognitionSuccessEvent',{response:response});
-                                        document.querySelector('myscript-math').instanceId = response.instanceId;
-                                        document.querySelector('myscript-math').shadowRoot.querySelector('myscript-renderer').clear(document.querySelector('myscript-math').shadowRoot.querySelector('myscript-canvas').$.canvas.getContext('2d'));
-                                        document.querySelector('myscript-math').shadowRoot.querySelector('myscript-renderer').drawRecognitionResult(document.querySelector('myscript-math').shadowRoot.querySelector('myscript-stroker').getStrokes(),  response.result, document.querySelector('myscript-math').shadowRoot.querySelector('myscript-canvas').$.canvas.getContext('2d'), document.querySelector('myscript-math').rendererParameters);
-                                    },
+                                        this.result.setResult(JSON.stringify(response));
+                                        this.instanceId = response.instanceId;
+                                        this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
+                                        this.renderer.drawRecognitionResult(this.stroker.getStrokes(),  response.result, this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
+                                    }.bind(this),
                                     function error (response) {
-                                        document.querySelector('myscript-math').shadowRoot.querySelector('myscript-recognizer').fire('recognitionErrorEvent',{response:response});
-                                    }
+                                        this.result.setResult(JSON.stringify(response));
+                                    }.bind(this)
                             );
                 }, 2000);
+            },
+            redraw: function(){
+                if(this.result.getResult() !== ''){
+                    this.renderer.drawRecognitionResult(this.stroker.getStrokes(),  new MyScript.MathDocument(JSON.parse(this.result.getResult()).result), this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
+                }else {
+                    this.renderer.drawStrokes(this.stroker.getStrokes(), this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
+                }
             },
             ready: function() {
 
