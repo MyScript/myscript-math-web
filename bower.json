@@ -19,8 +19,8 @@
     "/tests/"
   ],
   "dependencies": {
-      "polymer": "Polymer/polymer#~0.5.3",
-      "paper-dialog": "Polymer/paper-dialog#~0.5.3",
+      "polymer": "Polymer/polymer#~0.5.x",
+      "paper-dialog": "Polymer/paper-dialog#~0.5.x",
       "myscript-toolbar":"*",
       "myscript-result":"*",
       "myscript-stroker":"*",
@@ -29,6 +29,6 @@
       "myscript-canvas":"*"
   },
   "devDependencies": {
-    "web-component-tester": "Polymer/web-component-tester#^0.7.3"
+    "web-component-tester": "Polymer/web-component-tester#^0.7.x"
   }
 }
