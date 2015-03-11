@@ -34,7 +34,7 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                     <myscript-toolbar delete="true" undo="true" redo="true" info="true"></myscript-toolbar>
                     <myscript-stroker></myscript-stroker>
                     <myscript-renderer type="{{type}}"></myscript-renderer>
-                    <myscript-recognizer type="{{type}}" url="{{url}}" applicationKey="{{applicationKey}}" hmacKey="{{hmacKey}}" ></myscript-recognizer>
+                    <myscript-recognizer url="{{url}}" applicationKey="{{applicationKey}}" hmacKey="{{hmacKey}}" type="{{type}}"></myscript-recognizer>
                     <myscript-canvas></myscript-canvas>
                 </div>
             </div>
@@ -73,7 +73,7 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
 
                 /**
                  * Hmac key to use for recognition on MyScript handwriting recognition server.<br>
-                 * You have to create your own hmac key associate to your own application key on your account at http://cloud.myscript.com
+                 * You have to create your own hmac key corresponding to your own application key on your account at http://cloud.myscript.com
                  *
                  * @attribute hmacKey
                  * @type string
@@ -160,7 +160,7 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                 this.renderer.drawEnd(event.detail.offset.x, event.detail.offset.y, this.canvas.$.canvas.getContext('2d'));
 
                 this.timer = this.job(this.timer, function() {
-                    this.recognizer.doSimpleRecognition(this.applicationKey, this.instanceId, this.components.concat(this.stroker.getStrokes()), this.hmacKey).then(
+                    this.recognizer.doSimpleRecognition(this.instanceId, this.components.concat(this.stroker.getStrokes())).then(
                                     function success (response) {
                                         this.result.setResult(JSON.stringify(response));
                                         this.instanceId = response.instanceId;
