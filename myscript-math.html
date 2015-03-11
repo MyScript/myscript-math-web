@@ -8,18 +8,21 @@
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 
 <!--
-Element providing solution to no problem in particular.
+`myscript-math` is turnkey solution for those who need to add quickly MyScript Math recognition.<br>
+`myscript-math` is, that we call, rich component.<br>
+It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`, `myscript-stroker`, `myscript-recognizer` and `myscript-canvas`.
 
 ##### Example
 
-    <myscript-math url="http://localhost:8888/api/v3.0/recognition/rest" applicationKey="ed45a5b4-946d-45c4-8234-fb840fb6416b" hmacKey="a1789a80-8514-3d17-acd0-cc5d6674acea" type="Math"></myscript-math>
+    <myscript-math url="cloud.myscript.com" applicationKey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmacKey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"></myscript-math>
 
+@group MyScript Elements
 @element myscript-math
-@blurb MyScript HTML5 math Element to help developer for integrate handwriting recognition.
+@blurb MyScript HTML5 Math Element to help developer for integrate math handwriting recognition.
 @status alpha
 @homepage http://polymerlabs.github.io/myscript-math
 -->
-<polymer-element name="myscript-math" attributes="url applicationKey hmacKey type" on-myscript-toolbar-delete="{{delete}}" on-myscript-toolbar-undo="{{undo}}" on-myscript-toolbar-redo="{{redo}}" on-myscript-toolbar-info="{{info}}">
+<polymer-element name="myscript-math">
     <template>
         <link rel="stylesheet" href="./myscript-math.css">
         <core-scaffold>
@@ -32,7 +35,7 @@ Element providing solution to no problem in particular.
                     <myscript-stroker></myscript-stroker>
                     <myscript-renderer type="{{type}}"></myscript-renderer>
                     <myscript-recognizer type="{{type}}" url="{{url}}" applicationKey="{{applicationKey}}" hmacKey="{{hmacKey}}" ></myscript-recognizer>
-                    <myscript-canvas on-myscript-canvas-down="{{down}}" on-myscript-canvas-track="{{track}}" on-myscript-canvas-up="{{up}}" on-myscript-canvas-resize="{{redraw}}"></myscript-canvas>
+                    <myscript-canvas></myscript-canvas>
                 </div>
             </div>
             <paper-dialog id="infodialog" class="infodialog" backdrop layout fullbleed>
@@ -45,18 +48,83 @@ Element providing solution to no problem in particular.
         </core-scaffold>
     </template>
     <script>
-        Polymer({
+        Polymer('myscript-math', {
+
+            publish: {
+
+                /**
+                 * Url to use for MyScript handwriting recognition server
+                 *
+                 * @attribute url
+                 * @type string
+                 * @default 'cloud.myscript.com'
+                 */
+                url: 'cloud.myscript.com',
+
+                /**
+                 * Application key to use for recognition on MyScript handwriting recognition server.<br>
+                 * You have to create your own on your account at http://cloud.myscript.com
+                 *
+                 * @attribute applicationKey
+                 * @type string
+                 * @default 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
+                 */
+                applicationKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX',
+
+                /**
+                 * Hmac key to use for recognition on MyScript handwriting recognition server.<br>
+                 * You have to create your own hmac key associate to your own application key on your account at http://cloud.myscript.com
+                 *
+                 * @attribute hmacKey
+                 * @type string
+                 * @default 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
+                 */
+                hmacKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
+
+            },
+
+            // Handle event of myscript element
+            eventDelegates: {
+                'myscript-toolbar-delete': 'delete',
+                'myscript-toolbar-undo' : 'undo',
+                'myscript-toolbar-redo' : 'redo',
+                'myscript-toolbar-info' : 'info',
+                'myscript-canvas-down' : 'down',
+                'myscript-canvas-track' : 'track',
+                'myscript-canvas-up' : 'up',
+                'myscript-canvas-resize' : 'redraw'
+            },
+
+            // Handwriting recogntion type
+            type: 'Math',
+
+            // Result of handwriting recognition
             result: '',
-            toolbar: '',
-            stroker: '',
-            renderer: '',
-            recognizer: '',
-            canvas: '',
-            rendererParameters: '',
-            recognizerParameters: '',
-            instanceId: '',
+
+            // myscript-toolbar element
+            toolbar: undefined,
+
+            // myscript-stroker element
+            stroker: undefined,
+
+            // myscript-renderer element
+            renderer: undefined,
+
+            // myscript-recognizer element
+            recognizer: undefined,
+
+            // myscript-canvas element
+            canvas: undefined,
+
+            // Instance ID of Math handwriting recognition
+            instanceId: undefined,
+
+            // Input component to recognize
             components: [],
-            timer: null,
+
+            // Job use for Math handwriting recognition process
+            timer: undefined,
+
             delete: function(event){
                 this.result.clear();
                 this.stroker.clear();
@@ -66,12 +134,12 @@ Element providing solution to no problem in particular.
             undo: function(event){
                 this.stroker.undo();
                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
-                this.renderer.drawStrokes(this.stroker.getStrokes(), this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
+                this.renderer.drawStrokes(this.stroker.getStrokes(), this.canvas.$.canvas.getContext('2d'));
             },
             redo: function(event){
                 this.stroker.redo();
                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
-                this.renderer.drawStrokes(this.stroker.getStrokes(), this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
+                this.renderer.drawStrokes(this.stroker.getStrokes(), this.canvas.$.canvas.getContext('2d'));
             },
             info: function(event){
                 this.$.infodialog.toggle();
@@ -80,24 +148,24 @@ Element providing solution to no problem in particular.
                 if (this.timer) {
                     this.timer.stop();
                 }
-                this.stroker.startStrokeWriting(event.detail.x, event.detail.y, event.detail.event.timeStamp);
-                this.renderer.drawStart(event.detail.x, event.detail.y);
+                this.stroker.startInkCapture(event.detail.offset.x, event.detail.offset.y, event.detail.timeStamp);
+                this.renderer.drawStart(event.detail.offset.x, event.detail.offset.y);
             },
             track: function(event){
-                this.stroker.continueStrokeWriting(event.detail.x, event.detail.y, event.detail.event.timeStamp);
-                this.renderer.drawContinue(event.detail.x, event.detail.y,  this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
+                this.stroker.continueInkCapture(event.detail.offset.x, event.detail.offset.y, event.detail.timeStamp);
+                this.renderer.drawContinue(event.detail.offset.x, event.detail.offset.y,  this.canvas.$.canvas.getContext('2d'));
             },
             up: function(event){
-                this.stroker.endStrokeWriting();
-                this.renderer.drawEnd(event.detail.x, event.detail.y, this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
+                this.stroker.endInkCapture(event.detail.offset.x, event.detail.offset.y, event.detail.timeStamp);
+                this.renderer.drawEnd(event.detail.offset.x, event.detail.offset.y, this.canvas.$.canvas.getContext('2d'));
 
                 this.timer = this.job(this.timer, function() {
-                    this.recognizer.doSimpleRecognition(this.applicationKey, this.instanceId, this.components.concat(this.stroker.getStrokes()), this.hmacKey, this.recognizerParameters).then(
+                    this.recognizer.doSimpleRecognition(this.applicationKey, this.instanceId, this.components.concat(this.stroker.getStrokes()), this.hmacKey).then(
                                     function success (response) {
                                         this.result.setResult(JSON.stringify(response));
                                         this.instanceId = response.instanceId;
                                         this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
-                                        this.renderer.drawRecognitionResult(this.stroker.getStrokes(),  response.result, this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
+                                        this.renderer.drawRecognitionResult(this.stroker.getStrokes(),  response.result, this.canvas.$.canvas.getContext('2d'));
                                     }.bind(this),
                                     function error (response) {
                                         this.result.setResult(JSON.stringify(response));
@@ -107,9 +175,9 @@ Element providing solution to no problem in particular.
             },
             redraw: function(){
                 if(this.result.getResult() !== ''){
-                    this.renderer.drawRecognitionResult(this.stroker.getStrokes(),  new MyScript.MathDocument(JSON.parse(this.result.getResult()).result), this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
+                    this.renderer.drawRecognitionResult(this.stroker.getStrokes(),  new MyScript.MathDocument(JSON.parse(this.result.getResult()).result), this.canvas.$.canvas.getContext('2d'));
                 }else {
-                    this.renderer.drawStrokes(this.stroker.getStrokes(), this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
+                    this.renderer.drawStrokes(this.stroker.getStrokes(), this.canvas.$.canvas.getContext('2d'));
                 }
             },
             ready: function() {
@@ -121,13 +189,9 @@ Element providing solution to no problem in particular.
                 this.recognizer = this.shadowRoot.querySelector('myscript-recognizer');
                 this.canvas = this.shadowRoot.querySelector('myscript-canvas');
 
-                this.rendererParameters = this.renderer.createRenderingParameter();
-                this.recognizerParameters = this.recognizer.createMathParameter();
-
                 this.instanceId = '';
                 this.components = [];
 
-                this.recognizerParameters.setResultTypes(['LATEX', 'MATHML', 'SYMBOLTREE']);
             }
         });
     </script>
