@@ -23,7 +23,7 @@
       "paper-dialog": "Polymer/paper-dialog#~0.5.x",
       "myscript-toolbar":"*",
       "myscript-result":"*",
-      "myscript-stroker":"*",
+      "myscript-ink-manager":"*",
       "myscript-renderer":"*",
       "myscript-recognizer":"*",
       "myscript-canvas":"*"

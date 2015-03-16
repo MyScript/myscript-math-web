@@ -1,7 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../myscript-toolbar/myscript-toolbar.html">
 <link rel="import" href="../myscript-result/myscript-result.html">
-<link rel="import" href="../myscript-stroker/myscript-stroker.html">
+<link rel="import" href="../myscript-ink-manager/myscript-ink-manager.html">
 <link rel="import" href="../myscript-renderer/myscript-renderer.html">
 <link rel="import" href="../myscript-recognizer/myscript-recognizer.html">
 <link rel="import" href="../myscript-canvas/myscript-canvas.html">
@@ -10,7 +10,7 @@
 <!--
 `myscript-math` is turnkey solution for those who need to add quickly MyScript Math recognition.<br>
 `myscript-math` is, that we call, rich component.<br>
-It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`, `myscript-stroker`, `myscript-recognizer` and `myscript-canvas`.
+It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`, `myscript-ink-manager`, `myscript-recognizer` and `myscript-canvas`.
 
 ##### Example
 
@@ -32,7 +32,7 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                 </div>
                 <div>
                     <myscript-toolbar delete="true" undo="true" redo="true" info="true"></myscript-toolbar>
-                    <myscript-stroker></myscript-stroker>
+                    <myscript-ink-manager></myscript-ink-manager>
                     <myscript-renderer type="{{type}}"></myscript-renderer>
                     <myscript-recognizer url="{{url}}" applicationKey="{{applicationKey}}" hmacKey="{{hmacKey}}" type="{{type}}"></myscript-recognizer>
                     <myscript-canvas></myscript-canvas>
@@ -104,8 +104,8 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
             // myscript-toolbar element
             toolbar: undefined,
 
-            // myscript-stroker element
-            stroker: undefined,
+            // myscript-ink-manager element
+            inkManager: undefined,
 
             // myscript-renderer element
             renderer: undefined,
@@ -127,19 +127,19 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
 
             delete: function(event){
                 this.result.clear();
-                this.stroker.clear();
+                this.inkManager.clear();
                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
                 this.instanceId ='';
             },
             undo: function(event){
-                this.stroker.undo();
+                this.inkManager.undo();
                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
-                this.renderer.drawStrokes(this.stroker.getStrokes(), this.canvas.$.canvas.getContext('2d'));
+                this.renderer.drawStrokes(this.inkManager.getStrokes(), this.canvas.$.canvas.getContext('2d'));
             },
             redo: function(event){
-                this.stroker.redo();
+                this.inkManager.redo();
                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
-                this.renderer.drawStrokes(this.stroker.getStrokes(), this.canvas.$.canvas.getContext('2d'));
+                this.renderer.drawStrokes(this.inkManager.getStrokes(), this.canvas.$.canvas.getContext('2d'));
             },
             info: function(event){
                 this.$.infodialog.toggle();
@@ -148,24 +148,24 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                 if (this.timer) {
                     this.timer.stop();
                 }
-                this.stroker.startInkCapture(event.detail.offset.x, event.detail.offset.y, event.detail.timeStamp);
+                this.inkManager.startInkCapture(event.detail.offset.x, event.detail.offset.y, event.detail.timeStamp);
                 this.renderer.drawStart(event.detail.offset.x, event.detail.offset.y);
             },
             track: function(event){
-                this.stroker.continueInkCapture(event.detail.offset.x, event.detail.offset.y, event.detail.timeStamp);
+                this.inkManager.continueInkCapture(event.detail.offset.x, event.detail.offset.y, event.detail.timeStamp);
                 this.renderer.drawContinue(event.detail.offset.x, event.detail.offset.y,  this.canvas.$.canvas.getContext('2d'));
             },
             up: function(event){
-                this.stroker.endInkCapture(event.detail.offset.x, event.detail.offset.y, event.detail.timeStamp);
+                this.inkManager.endInkCapture(event.detail.offset.x, event.detail.offset.y, event.detail.timeStamp);
                 this.renderer.drawEnd(event.detail.offset.x, event.detail.offset.y, this.canvas.$.canvas.getContext('2d'));
 
                 this.timer = this.job(this.timer, function() {
-                    this.recognizer.doSimpleRecognition(this.instanceId, this.components.concat(this.stroker.getStrokes())).then(
+                    this.recognizer.doSimpleRecognition(this.instanceId, this.components.concat(this.inkManager.getStrokes())).then(
                                     function success (response) {
                                         this.result.setResult(JSON.stringify(response));
                                         this.instanceId = response.instanceId;
                                         this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
-                                        this.renderer.drawRecognitionResult(this.stroker.getStrokes(),  response.result, this.canvas.$.canvas.getContext('2d'));
+                                        this.renderer.drawRecognitionResult(this.inkManager.getStrokes(),  response.result, this.canvas.$.canvas.getContext('2d'));
                                     }.bind(this),
                                     function error (response) {
                                         this.result.setResult(JSON.stringify(response));
@@ -175,16 +175,16 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
             },
             redraw: function(){
                 if(this.result.getResult() !== ''){
-                    this.renderer.drawRecognitionResult(this.stroker.getStrokes(),  new MyScript.MathDocument(JSON.parse(this.result.getResult()).result), this.canvas.$.canvas.getContext('2d'));
+                    this.renderer.drawRecognitionResult(this.inkManager.getStrokes(),  new MyScript.MathDocument(JSON.parse(this.result.getResult()).result), this.canvas.$.canvas.getContext('2d'));
                 }else {
-                    this.renderer.drawStrokes(this.stroker.getStrokes(), this.canvas.$.canvas.getContext('2d'));
+                    this.renderer.drawStrokes(this.inkManager.getStrokes(), this.canvas.$.canvas.getContext('2d'));
                 }
             },
             ready: function() {
 
                 this.result = this.shadowRoot.querySelector('myscript-result');
                 this.toolbar = this.shadowRoot.querySelector('myscript-toolbar');
-                this.stroker = this.shadowRoot.querySelector('myscript-stroker');
+                this.inkManager = this.shadowRoot.querySelector('myscript-ink-manager');
                 this.renderer = this.shadowRoot.querySelector('myscript-renderer');
                 this.recognizer = this.shadowRoot.querySelector('myscript-recognizer');
                 this.canvas = this.shadowRoot.querySelector('myscript-canvas');
