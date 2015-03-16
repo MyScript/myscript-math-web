@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <title>myscript-math</title>
 
-  <script src="../../platform/platform.js"></script>
+  <script src="../../webcomponentsjs/webcomponents.min.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
 
   <!-- Step 1: import the element to test -->
@@ -14,23 +14,18 @@
 <body>
 
   <!-- You use the document as a place to set up your fixtures. -->
-  <myscript-math></myscript-math>
+  <myscript-math url="cloud.myscript.com" applicationKey="ed45a5b4-946d-45c4-8234-fb840fb6416b" hmacKey="a1789a80-8514-3d17-acd0-cc5d6674acea"></myscript-math>
 
   <script>
     var myEl = document.querySelector('myscript-math');
 
     suite('<myscript-math>', function() {
 
-      test('defines the "width" attribute', function() {
-        assert.equal(myEl.width, '300px');
-      });
-
-      test('defines the "height" attribute', function() {
-        assert.equal(myEl.height, '200px');
-      });
-
-      test('defines the "color" attribute', function() {
-          assert.equal(myEl.color, 'red');
+      test('Check myscript-math initialisation', function() {
+          assert.strictEqual('cloud.myscript.com', myEl.url);
+          assert.strictEqual('ed45a5b4-946d-45c4-8234-fb840fb6416b', myEl.applicationKey);
+          assert.strictEqual('a1789a80-8514-3d17-acd0-cc5d6674acea', myEl.hmacKey);
+          assert.strictEqual('Math', myEl.type);
       });
 
     });
