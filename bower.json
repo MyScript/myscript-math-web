@@ -1,6 +1,6 @@
 {
   "name": "myscript-math",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "authors": [
     "Yohann Streibel <yohann.streibel@myscript.com>"
   ],
@@ -21,12 +21,12 @@
   "dependencies": {
       "polymer": "Polymer/polymer#~0.5.x",
       "paper-dialog": "Polymer/paper-dialog#~0.5.x",
-      "myscript-toolbar":"*",
-      "myscript-result":"*",
-      "myscript-ink-manager":"*",
-      "myscript-renderer":"*",
-      "myscript-recognizer":"*",
-      "myscript-canvas":"*"
+      "myscript-toolbar": "0.1.0",
+      "myscript-result": "0.1.0",
+      "myscript-ink-manager": "0.1.0",
+      "myscript-renderer": "0.1.0",
+      "myscript-recognizer": "0.1.0",
+      "myscript-canvas": "0.1.0"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^0.7.x"
