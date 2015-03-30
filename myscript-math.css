@@ -1,0 +1,5 @@
+:host {
+    /*background-color: green; for debug purpose */
+    display: inherit;
+    height: 100%;
+}

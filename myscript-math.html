@@ -25,24 +25,24 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
 <polymer-element name="myscript-math">
     <template>
         <link rel="stylesheet" href="./myscript-math.css">
-        <core-scaffold>
-            <div vertical layout>
-                <div>
-                    <myscript-result></myscript-result>
-                </div>
-                <div>
-                    <myscript-toolbar delete="true" undo="true" redo="true" info="true"></myscript-toolbar>
-                    <myscript-ink-manager></myscript-ink-manager>
-                    <myscript-renderer type="{{type}}"></myscript-renderer>
-                    <myscript-recognizer url="{{url}}" applicationKey="{{applicationKey}}" hmacKey="{{hmacKey}}" type="{{type}}"></myscript-recognizer>
-                    <myscript-canvas></myscript-canvas>
-                </div>
-            </div>
+        <core-scaffold flex>
+            <core-header-panel navigation flex>
+                <myscript-result></myscript-result>
+                <myscript-toolbar delete="true" undo="true" redo="true" info="true"></myscript-toolbar>
+            </core-header-panel>
+            <myscript-ink-manager></myscript-ink-manager>
+            <myscript-renderer type="{{type}}"></myscript-renderer>
+            <myscript-recognizer url="{{url}}" applicationKey="{{applicationKey}}" hmacKey="{{hmacKey}}" type="{{type}}"></myscript-recognizer>
+            <myscript-canvas></myscript-canvas>
             <paper-dialog id="infodialog" class="infodialog" backdrop layout fullbleed>
                 <div class="fullcontainer" fullbleed flex layout vertical>
-                        <h3>About</h3>
-                        <p align='justify'>Write an equation in the canvas zone. <br> After a short timeout (a second) the recognition will be launched and the result will be shown at the bottom of the page. <br> You can clear the writing space by clicking on the garbage can icon in the top right corner of the yellow zone.</p>
-                    </div>
+                    <h3>About</h3>
+
+                    <p align='justify'>Write an equation in the canvas zone. <br> After a short timeout (a second) the
+                        recognition will be launched and the result will be shown at the bottom of the page. <br> You
+                        can clear the writing space by clicking on the garbage can icon in the top right corner of the
+                        yellow zone.</p>
+                </div>
                 </div>
             </paper-dialog>
         </core-scaffold>
@@ -86,13 +86,13 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
             // Handle event of myscript element
             eventDelegates: {
                 'myscript-toolbar-delete': 'delete',
-                'myscript-toolbar-undo' : 'undo',
-                'myscript-toolbar-redo' : 'redo',
-                'myscript-toolbar-info' : 'info',
-                'myscript-canvas-down' : 'down',
-                'myscript-canvas-track' : 'track',
-                'myscript-canvas-up' : 'up',
-                'myscript-canvas-resize' : 'redraw'
+                'myscript-toolbar-undo': 'undo',
+                'myscript-toolbar-redo': 'redo',
+                'myscript-toolbar-info': 'info',
+                'myscript-canvas-down': 'down',
+                'myscript-canvas-track': 'track',
+                'myscript-canvas-up': 'up',
+                'myscript-canvas-resize': 'redraw'
             },
 
             // Handwriting recogntion type
@@ -125,62 +125,62 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
             // Job use for Math handwriting recognition process
             timer: undefined,
 
-            delete: function(event){
+            delete: function (event) {
                 this.result.clear();
                 this.inkManager.clear();
                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
-                this.instanceId ='';
+                this.instanceId = '';
             },
-            undo: function(event){
+            undo: function (event) {
                 this.inkManager.undo();
                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
                 this.renderer.drawStrokes(this.inkManager.getStrokes(), this.canvas.$.canvas.getContext('2d'));
             },
-            redo: function(event){
+            redo: function (event) {
                 this.inkManager.redo();
                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
                 this.renderer.drawStrokes(this.inkManager.getStrokes(), this.canvas.$.canvas.getContext('2d'));
             },
-            info: function(event){
+            info: function (event) {
                 this.$.infodialog.toggle();
             },
-            down: function(event){
+            down: function (event) {
                 if (this.timer) {
                     this.timer.stop();
                 }
-                this.inkManager.startInkCapture(event.detail.offset.x, event.detail.offset.y, event.detail.timeStamp);
-                this.renderer.drawStart(event.detail.offset.x, event.detail.offset.y);
+                this.inkManager.startInkCapture(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, event.detail.timeStamp);
+                this.renderer.drawStart(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop);
             },
-            track: function(event){
-                this.inkManager.continueInkCapture(event.detail.offset.x, event.detail.offset.y, event.detail.timeStamp);
-                this.renderer.drawContinue(event.detail.offset.x, event.detail.offset.y,  this.canvas.$.canvas.getContext('2d'));
+            track: function (event) {
+                this.inkManager.continueInkCapture(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, event.detail.timeStamp);
+                this.renderer.drawContinue(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, this.canvas.$.canvas.getContext('2d'));
             },
-            up: function(event){
-                this.inkManager.endInkCapture(event.detail.offset.x, event.detail.offset.y, event.detail.timeStamp);
-                this.renderer.drawEnd(event.detail.offset.x, event.detail.offset.y, this.canvas.$.canvas.getContext('2d'));
+            up: function (event) {
+                this.inkManager.endInkCapture(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, event.detail.timeStamp);
+                this.renderer.drawEnd(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, this.canvas.$.canvas.getContext('2d'));
 
-                this.timer = this.job(this.timer, function() {
+                this.timer = this.job(this.timer, function () {
                     this.recognizer.doSimpleRecognition(this.instanceId, this.components.concat(this.inkManager.getStrokes())).then(
-                                    function success (response) {
-                                        this.result.setResult(JSON.stringify(response));
-                                        this.instanceId = response.instanceId;
-                                        this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
-                                        this.renderer.drawRecognitionResult(this.inkManager.getStrokes(),  response.result, this.canvas.$.canvas.getContext('2d'));
-                                    }.bind(this),
-                                    function error (response) {
-                                        this.result.setResult(JSON.stringify(response));
-                                    }.bind(this)
-                            );
+                            function success (response) {
+                                this.result.setResult(JSON.stringify(response));
+                                this.instanceId = response.instanceId;
+                                this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
+                                this.renderer.drawRecognitionResult(this.inkManager.getStrokes(), response.result, this.canvas.$.canvas.getContext('2d'));
+                            }.bind(this),
+                            function error (response) {
+                                this.result.setResult(JSON.stringify(response));
+                            }.bind(this)
+                    );
                 }, 2000);
             },
-            redraw: function(){
-                if(this.result.getResult() !== ''){
-                    this.renderer.drawRecognitionResult(this.inkManager.getStrokes(),  new MyScript.MathDocument(JSON.parse(this.result.getResult()).result), this.canvas.$.canvas.getContext('2d'));
-                }else {
+            redraw: function () {
+                if (this.result.getResult() !== '') {
+                    this.renderer.drawRecognitionResult(this.inkManager.getStrokes(), new MyScript.MathDocument(JSON.parse(this.result.getResult()).result), this.canvas.$.canvas.getContext('2d'));
+                } else {
                     this.renderer.drawStrokes(this.inkManager.getStrokes(), this.canvas.$.canvas.getContext('2d'));
                 }
             },
-            ready: function() {
+            ready: function () {
 
                 this.result = this.shadowRoot.querySelector('myscript-result');
                 this.toolbar = this.shadowRoot.querySelector('myscript-toolbar');
