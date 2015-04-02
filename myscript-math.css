@@ -2,3 +2,16 @@
     display: inherit;
     height: 100%;
 }
+
+paper-progress {
+    display: block;
+    width: 100%;
+}
+
+paper-progress.myscript::shadow #activeProgress {
+    background-color: #00a7cf;
+}
+
+paper-progress.myscript::shadow #secondaryProgress {
+    background-color: #00b5cf;
+}

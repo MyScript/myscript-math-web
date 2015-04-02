@@ -6,6 +6,7 @@
 <link rel="import" href="../myscript-recognizer/myscript-recognizer.html">
 <link rel="import" href="../myscript-canvas/myscript-canvas.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-progress/paper-progress.html">
 
 <!--
 `myscript-math` is a turnkey solution for those who need to add quickly MyScript Math recognition.<br>
@@ -27,6 +28,7 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
         <link rel="stylesheet" href="./myscript-math.css">
         <core-scaffold flex>
             <core-header-panel navigation flex>
+                <paper-progress  class="myscript"></paper-progress>
                 <myscript-result></myscript-result>
                 <myscript-toolbar delete="true" undo="true" redo="true" info="true"></myscript-toolbar>
             </core-header-panel>
@@ -116,6 +118,9 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
             // myscript-canvas element
             canvas: undefined,
 
+            // paper-progress element
+            progress: undefined,
+
             // Instance ID of Math handwriting recognition
             instanceId: undefined,
 
@@ -130,6 +135,7 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                 this.inkManager.clear();
                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
                 this.instanceId = '';
+                this.progress.indeterminate = false;
             },
             undo: function (event) {
                 this.inkManager.undo();
@@ -147,6 +153,7 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
             down: function (event) {
                 if (this.timer) {
                     this.timer.stop();
+                    this.progress.indeterminate = false;
                 }
                 this.inkManager.startInkCapture(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, event.detail.timeStamp);
                 this.renderer.drawStart(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop);
@@ -160,22 +167,25 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                 this.renderer.drawEnd(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, this.canvas.$.canvas.getContext('2d'));
 
                 this.timer = this.job(this.timer, function () {
+                    this.progress.indeterminate = true;
                     this.recognizer.doSimpleRecognition(this.instanceId, this.components.concat(this.inkManager.getStrokes())).then(
                             function success (response) {
-                                this.result.setResult(JSON.stringify(response));
+                                this.progress.indeterminate = false;
+                                this.result.setResult(response);
                                 this.instanceId = response.instanceId;
                                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
                                 this.renderer.drawRecognitionResult(this.inkManager.getStrokes(), response.result, this.canvas.$.canvas.getContext('2d'));
                             }.bind(this),
                             function error (response) {
+                                this.progress.indeterminate = false;
                                 this.result.setResult(JSON.stringify(response));
                             }.bind(this)
                     );
                 }, 2000);
             },
             redraw: function () {
-                if (this.result.getResult() !== '') {
-                    this.renderer.drawRecognitionResult(this.inkManager.getStrokes(), new MyScript.MathDocument(JSON.parse(this.result.getResult()).result), this.canvas.$.canvas.getContext('2d'));
+                if (typeof this.result.getResult() !== "string") {
+                    this.renderer.drawRecognitionResult(this.inkManager.getStrokes(), this.result.getResult().result, this.canvas.$.canvas.getContext('2d'));
                 } else {
                     this.renderer.drawStrokes(this.inkManager.getStrokes(), this.canvas.$.canvas.getContext('2d'));
                 }
@@ -188,6 +198,7 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                 this.renderer = this.shadowRoot.querySelector('myscript-renderer');
                 this.recognizer = this.shadowRoot.querySelector('myscript-recognizer');
                 this.canvas = this.shadowRoot.querySelector('myscript-canvas');
+                this.progress = this.shadowRoot.querySelector('paper-progress');
 
                 this.instanceId = '';
                 this.components = [];

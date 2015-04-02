@@ -21,6 +21,7 @@
   "dependencies": {
       "polymer": "Polymer/polymer#~0.5.x",
       "paper-dialog": "Polymer/paper-dialog#~0.5.x",
+      "paper-progress": "Polymer/paper-progress#~0.5.x",
       "myscript-toolbar": "0.1.0",
       "myscript-result": "0.1.0",
       "myscript-ink-manager": "0.1.0",
