@@ -26,7 +26,7 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
 <polymer-element name="myscript-math">
     <template>
         <link rel="stylesheet" href="./myscript-math.css">
-        <core-scaffold flex>
+        <div flex>
             <core-header-panel navigation flex>
                 <paper-progress  class="myscript"></paper-progress>
                 <myscript-result></myscript-result>
@@ -45,9 +45,8 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                         can clear the writing space by clicking on the garbage can icon in the top right corner of the
                         yellow zone.</p>
                 </div>
-                </div>
             </paper-dialog>
-        </core-scaffold>
+        </div>
     </template>
     <script>
         Polymer('myscript-math', {
