@@ -26,16 +26,13 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
 <polymer-element name="myscript-math">
     <template>
         <link rel="stylesheet" href="./myscript-math.css">
-        <div flex>
-            <core-header-panel navigation flex>
-                <paper-progress  class="myscript"></paper-progress>
-                <myscript-result></myscript-result>
-                <myscript-toolbar delete="true" undo="true" redo="true" info="true"></myscript-toolbar>
-            </core-header-panel>
+        <div vertical layout flex>
+            <paper-progress  class="myscript"></paper-progress>
+            <myscript-result></myscript-result>
+            <myscript-toolbar delete="true" undo="true" redo="true" info="true"></myscript-toolbar>
             <myscript-ink-manager></myscript-ink-manager>
             <myscript-renderer type="{{type}}"></myscript-renderer>
             <myscript-recognizer url="{{url}}" applicationKey="{{applicationKey}}" hmacKey="{{hmacKey}}" type="{{type}}"></myscript-recognizer>
-            <myscript-canvas></myscript-canvas>
             <paper-dialog id="infodialog" class="infodialog" backdrop layout fullbleed>
                 <div class="fullcontainer" fullbleed flex layout vertical>
                     <h3>About</h3>
@@ -46,6 +43,7 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                         yellow zone.</p>
                 </div>
             </paper-dialog>
+            <div flex><myscript-canvas></myscript-canvas></div>
         </div>
     </template>
     <script>
