@@ -43,7 +43,7 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                         yellow zone.</p>
                 </div>
             </paper-dialog>
-            <div flex><myscript-canvas></myscript-canvas></div>
+            <div><myscript-canvas></myscript-canvas></div>
         </div>
     </template>
     <script>
@@ -152,16 +152,16 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                     this.timer.stop();
                     this.progress.indeterminate = false;
                 }
-                this.inkManager.startInkCapture(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, event.detail.timeStamp);
-                this.renderer.drawStart(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop);
+                this.inkManager.startInkCapture(event.detail.pageX - event.detail.currentTarget.offsetParent.offsetLeft - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, event.detail.timeStamp);
+                this.renderer.drawStart(event.detail.pageX - event.detail.currentTarget.offsetParent.offsetLeft - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop);
             },
             track: function (event) {
-                this.inkManager.continueInkCapture(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, event.detail.timeStamp);
-                this.renderer.drawContinue(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, this.canvas.$.canvas.getContext('2d'));
+                this.inkManager.continueInkCapture(event.detail.pageX - event.detail.currentTarget.offsetParent.offsetLeft - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, event.detail.timeStamp);
+                this.renderer.drawContinue(event.detail.pageX - event.detail.currentTarget.offsetParent.offsetLeft - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, this.canvas.$.canvas.getContext('2d'));
             },
             up: function (event) {
-                this.inkManager.endInkCapture(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, event.detail.timeStamp);
-                this.renderer.drawEnd(event.detail.pageX - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, this.canvas.$.canvas.getContext('2d'));
+                this.inkManager.endInkCapture(event.detail.pageX - event.detail.currentTarget.offsetParent.offsetLeft - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, event.detail.timeStamp);
+                this.renderer.drawEnd(event.detail.pageX - event.detail.currentTarget.offsetParent.offsetLeft - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetTop, this.canvas.$.canvas.getContext('2d'));
 
                 this.timer = this.job(this.timer, function () {
                     this.progress.indeterminate = true;
