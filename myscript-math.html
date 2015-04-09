@@ -146,21 +146,35 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
             info: function (event) {
                 this.$.infodialog.toggle();
             },
+            getOffset: function (element){
+                var offset = {x: 0, y: 0};
+
+                while (element.offsetParent) {
+                    offset.x += element.offsetLeft;
+                    offset.y += element.offsetTop;
+                    element = element.offsetParent;
+                }
+
+                return offset;
+            },
             down: function (event) {
                 if (this.timer) {
                     this.timer.stop();
                     this.progress.indeterminate = false;
                 }
-                this.inkManager.startInkCapture(event.detail.pageX - event.detail.currentTarget.offsetParent.offsetLeft - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetParent.offsetTop - event.detail.currentTarget.offsetTop, event.detail.timeStamp);
-                this.renderer.drawStart(event.detail.pageX - event.detail.currentTarget.offsetParent.offsetLeft - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetParent.offsetTop - event.detail.currentTarget.offsetTop);
+                var offset = this.getOffset(event.detail.currentTarget);
+                this.inkManager.startInkCapture(event.detail.pageX - offset.x, event.detail.pageY - offset.y, event.detail.timeStamp);
+                this.renderer.drawStart(event.detail.pageX - offset.x, event.detail.pageY - offset.y);
             },
             track: function (event) {
-                this.inkManager.continueInkCapture(event.detail.pageX - event.detail.currentTarget.offsetParent.offsetLeft - event.detail.currentTarget.offsetLeft, event.detail.pageY  - event.detail.currentTarget.offsetParent.offsetTop - event.detail.currentTarget.offsetTop, event.detail.timeStamp);
-                this.renderer.drawContinue(event.detail.pageX - event.detail.currentTarget.offsetParent.offsetLeft - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetParent.offsetTop - event.detail.currentTarget.offsetTop, this.canvas.$.canvas.getContext('2d'));
+                var offset = this.getOffset(event.detail.currentTarget);
+                this.inkManager.continueInkCapture(event.detail.pageX - offset.x, event.detail.pageY  - offset.y, event.detail.timeStamp);
+                this.renderer.drawContinue(event.detail.pageX - offset.x, event.detail.pageY - offset.y, this.canvas.$.canvas.getContext('2d'));
             },
             up: function (event) {
-                this.inkManager.endInkCapture(event.detail.pageX - event.detail.currentTarget.offsetParent.offsetLeft - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetParent.offsetTop - event.detail.currentTarget.offsetTop, event.detail.timeStamp);
-                this.renderer.drawEnd(event.detail.pageX - event.detail.currentTarget.offsetParent.offsetLeft - event.detail.currentTarget.offsetLeft, event.detail.pageY - event.detail.currentTarget.offsetParent.offsetTop - event.detail.currentTarget.offsetTop, this.canvas.$.canvas.getContext('2d'));
+                var offset = this.getOffset(event.detail.currentTarget);
+                this.inkManager.endInkCapture(event.detail.pageX - offset.x, event.detail.pageY - offset.y, event.detail.timeStamp);
+                this.renderer.drawEnd(event.detail.pageX - offset.x, event.detail.pageY - offset.y, this.canvas.$.canvas.getContext('2d'));
 
                 this.timer = this.job(this.timer, function () {
                     this.progress.indeterminate = true;
