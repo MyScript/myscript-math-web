@@ -8,12 +8,13 @@
     "polymer",
     "myscript",
     "myscriptjs",
+    "myscriptwebcomponents",
     "handwriting",
     "recognition"
   ],
   "main": "myscript-math.html",
   "license": "Apache-2",
-  "homepage": "https://github.com/MyScript/myscript-math/",
+  "homepage": "https://github.com/MyScriptWebComponents/myscript-math/",
   "ignore": [
     "**/.*",
     "node_modules",
