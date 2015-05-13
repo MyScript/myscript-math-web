@@ -130,21 +130,57 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
             timer: undefined,
 
             delete: function (event) {
+                if (this.timer) {
+                    this.timer.stop();
+                }
                 this.result.clear();
                 this.inkManager.clear();
                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
                 this.instanceId = '';
                 this.progress.indeterminate = false;
+                this.toolbar.disableUndoButton(true);
+                this.toolbar.disableRedoButton(true);
             },
             undo: function (event) {
+                if (this.timer) {
+                    this.timer.stop();
+                    this.progress.indeterminate = false;
+                }
+
                 this.inkManager.undo();
                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
                 this.renderer.drawStrokes(this.inkManager.getStrokes(), this.canvas.$.canvas.getContext('2d'));
+
+                if(this.inkManager.isEmpty()) {
+                    this.result.clear();
+                    this.toolbar.disableUndoButton(true);
+                } else {
+                    this.timer = this.job(this.timer, function () {
+                        this.doRecognition()
+                    }, 0);
+                }
+                this.toolbar.disableRedoButton(false);
             },
             redo: function (event) {
+                if (this.timer) {
+                    this.timer.stop();
+                    this.progress.indeterminate = false;
+                }
+
+                if(!this.inkManager.isRedoEmpty()) {
+                    this.timer = this.job(this.timer, function () {
+                        this.doRecognition()
+                    }, 0);
+                }
+
                 this.inkManager.redo();
                 this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
                 this.renderer.drawStrokes(this.inkManager.getStrokes(), this.canvas.$.canvas.getContext('2d'));
+
+                if(this.inkManager.isRedoEmpty()){
+                    this.toolbar.disableRedoButton(true);
+                }
+                this.toolbar.disableUndoButton(false);
             },
             info: function (event) {
                 this.$.infodialog.toggle();
@@ -155,8 +191,15 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                     this.progress.indeterminate = false;
                 }
 
+                this.toolbar.disableDeleteButton(false);
+                this.toolbar.disableUndoButton(false);
+
                 this.inkManager.startInkCapture(event.detail.x, event.detail.y, event.detail.timeStamp);
                 this.renderer.drawStart(event.detail.x, event.detail.y);
+
+                if(this.inkManager.isRedoEmpty()){
+                    this.toolbar.disableRedoButton(true);
+                }
             },
             track: function (event) {
                 this.inkManager.continueInkCapture(event.detail.x, event.detail.y, event.detail.timeStamp);
@@ -166,7 +209,16 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                 this.inkManager.endInkCapture(event.detail.x, event.detail.y, event.detail.timeStamp);
                 this.renderer.drawEnd(event.detail.x, event.detail.y, this.canvas.$.canvas.getContext('2d'));
 
-                this.timer = this.job(this.timer, function () {
+                this.timer = this.job(this.timer, function(){this.doRecognition()}, 2000);
+            },
+            redraw: function () {
+                if (typeof this.result.getResult() !== "string") {
+                    this.renderer.drawRecognitionResult(this.inkManager.getStrokes(), this.result.getResult().result, this.canvas.$.canvas.getContext('2d'));
+                } else {
+                    this.renderer.drawStrokes(this.inkManager.getStrokes(), this.canvas.$.canvas.getContext('2d'));
+                }
+            },
+            doRecognition: function(){
                     this.progress.indeterminate = true;
                     this.recognizer.doSimpleRecognition(this.instanceId, this.components.concat(this.inkManager.getStrokes())).then(
                             function success (response) {
@@ -178,22 +230,18 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                             }.bind(this),
                             function error (response) {
                                 this.progress.indeterminate = false;
-                                this.result.setResult(JSON.stringify(response));
+                                this.result.setResult(response.message);
                             }.bind(this)
                     );
-                }, 2000);
-            },
-            redraw: function () {
-                if (typeof this.result.getResult() !== "string") {
-                    this.renderer.drawRecognitionResult(this.inkManager.getStrokes(), this.result.getResult().result, this.canvas.$.canvas.getContext('2d'));
-                } else {
-                    this.renderer.drawStrokes(this.inkManager.getStrokes(), this.canvas.$.canvas.getContext('2d'));
-                }
             },
             ready: function () {
 
                 this.result = this.shadowRoot.querySelector('myscript-result');
                 this.toolbar = this.shadowRoot.querySelector('myscript-toolbar');
+                this.toolbar.disableDeleteButton(true);
+                this.toolbar.disableUndoButton(true);
+                this.toolbar.disableRedoButton(true);
+                this.toolbar.disableInfoButton(false);
                 this.inkManager = this.shadowRoot.querySelector('myscript-ink-manager');
                 this.renderer = this.shadowRoot.querySelector('myscript-renderer');
                 this.recognizer = this.shadowRoot.querySelector('myscript-recognizer');
