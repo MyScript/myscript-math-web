@@ -29,7 +29,7 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
 <polymer-element name="myscript-math">
     <template>
         <link rel="stylesheet" href="./myscript-math.css">
-        <div vertical layout flex>
+        <div flex>
             <paper-progress  class="myscript"></paper-progress>
             <myscript-result></myscript-result>
             <myscript-toolbar delete="true" undo="true" redo="true" info="true"></myscript-toolbar>
@@ -45,7 +45,7 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                         can clear the writing space by clicking on the garbage can icon in the top left corner.</p>
                 </div>
             </paper-dialog>
-            <div><myscript-canvas></myscript-canvas></div>
+            <myscript-canvas></myscript-canvas>
         </div>
     </template>
     <script>
@@ -64,23 +64,23 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
 
                 /**
                  * Application key to use for recognition on MyScript handwriting recognition server.<br>
-                 * You have to create your own connecting to your account at http://cloud.myscript.com
+                 * You have to create your own connecting to your account at http://cloud.myscript.com.<br>
+                 * <b>Warning</b> : This parameter is <b>mandatory</b> and it's value should be a string.
                  *
                  * @attribute applicationKey
                  * @type string
-                 * @default 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
                  */
-                applicationKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX',
+                applicationKey: undefined,
 
                 /**
                  * Hmac key to use for recognition on MyScript handwriting recognition server.<br>
-                 * You have to create your own hmac key corresponding to your own application key in your account at http://cloud.myscript.com
+                 * You have to create your own hmac key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
+                 * <b>Warning</b> : This parameter is <b>mandatory</b> and it's value should be a string.
                  *
                  * @attribute hmacKey
                  * @type string
-                 * @default 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
                  */
-                hmacKey: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
+                hmacKey: undefined
 
             },
 
@@ -245,8 +245,10 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                 this.inkManager = this.shadowRoot.querySelector('myscript-ink-manager');
                 this.renderer = this.shadowRoot.querySelector('myscript-renderer');
                 this.recognizer = this.shadowRoot.querySelector('myscript-recognizer');
-                this.canvas = this.shadowRoot.querySelector('myscript-canvas');
                 this.progress = this.shadowRoot.querySelector('paper-progress');
+
+                this.canvas = this.shadowRoot.querySelector('myscript-canvas');
+
 
                 this.instanceId = '';
                 this.components = [];
