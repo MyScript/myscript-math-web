@@ -1,8 +1,3 @@
-:host {
-    display: inherit;
-    height: 100%;
-}
-
 paper-progress {
     display: block;
     width: 100%;

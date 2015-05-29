@@ -23,9 +23,9 @@
     "test"
   ],
   "dependencies": {
-      "polymer": "Polymer/polymer#~0.5.x",
-      "paper-dialog": "Polymer/paper-dialog#~0.5.x",
-      "paper-progress": "Polymer/paper-progress#~0.5.x",
+      "polymer": "Polymer/polymer#^1.0.0",
+      "paper-dialog": "polymerelements/paper-dialog#^1.0.0",
+      "paper-progress": "polymerelements/paper-progress#^1.0.0",
       "myscript-toolbar": "1.0.0",
       "myscript-result": "1.0.0",
       "myscript-ink-manager": "1.0.0",
@@ -34,6 +34,7 @@
       "myscript-canvas": "1.0.0"
   },
   "devDependencies": {
-    "web-component-tester": "Polymer/web-component-tester#^0.7.x"
+    "iron-component-page": "polymerelements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
   }
 }
