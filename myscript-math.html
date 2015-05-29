@@ -248,13 +248,17 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
             }, 2000);
         },
         _redraw: function () {
+            if(this._content){
+                this._content.style.width = this.width + "px";
+                this._content.style.height = this.height + "px";
+            }
+            
+            if(this._content){
+                this._canvas.width = this.width;
+                this._canvas.height = this.height - this._progress.clientHeight - this._result.clientHeight - this._toolbar.clientHeight;
+            }
 
-            this._content.style.width = this.width + "px";
-            this._content.style.height = this.height + "px";
-            this._canvas.width = this.width;
-            this._canvas.height = this.height - this._progress.clientHeight - this._result.clientHeight - this._toolbar.clientHeight;
-
-            if( this._result) {
+            if(this._result) {
                 if (typeof this._result.getResult() !== "string") {
                     this._renderer.drawRecognitionResult(this._inkManager.getStrokes(), this._result.getResult().result, this._canvas.$.canvas.getContext('2d'));
                 } else {
