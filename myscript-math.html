@@ -248,6 +248,10 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
             }, 2000);
         },
         _redraw: function () {
+
+            this._canvas.width = this.width;
+            this._canvas.height = this.height - this._progress.clientHeight - this._result.clientHeight - this._toolbar.clientHeight;
+
             if( this._result) {
                 if (typeof this._result.getResult() !== "string") {
                     this._renderer.drawRecognitionResult(this._inkManager.getStrokes(), this._result.getResult().result, this._canvas.$.canvas.getContext('2d'));
@@ -290,9 +294,6 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
             this._content = this.querySelector('#myscript-math-content');
             this._content.style.width = this.width + "px";
             this._content.style.height = this.height + "px";
-
-            this._canvas.width = this.width;
-            this._canvas.height = this.height - 110;
 
             this._instanceId = '';
             this._components = [];
