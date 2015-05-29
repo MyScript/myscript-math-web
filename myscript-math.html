@@ -249,6 +249,8 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
         },
         _redraw: function () {
 
+            this._content.style.width = this.width + "px";
+            this._content.style.height = this.height + "px";
             this._canvas.width = this.width;
             this._canvas.height = this.height - this._progress.clientHeight - this._result.clientHeight - this._toolbar.clientHeight;
 
@@ -292,8 +294,6 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
             this._canvas = this.querySelector('myscript-canvas');
 
             this._content = this.querySelector('#myscript-math-content');
-            this._content.style.width = this.width + "px";
-            this._content.style.height = this.height + "px";
 
             this._instanceId = '';
             this._components = [];
