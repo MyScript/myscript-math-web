@@ -1,6 +1,6 @@
 {
   "name": "myscript-math",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MyScript HTML5 math Element to help developer for integrate handwriting recognition",
   "keywords": [
     "web-component",
@@ -26,12 +26,12 @@
       "polymer": "Polymer/polymer#^1.0.0",
       "paper-dialog": "polymerelements/paper-dialog#^1.0.0",
       "paper-progress": "polymerelements/paper-progress#^1.0.0",
-      "myscript-toolbar": "1.0.1",
-      "myscript-result": "1.0.1",
-      "myscript-ink-manager": "1.0.1",
-      "myscript-renderer": "1.0.1",
-      "myscript-recognizer": "1.0.1",
-      "myscript-canvas": "1.0.1"
+      "myscript-toolbar": "1.0.2",
+      "myscript-result": "1.0.2",
+      "myscript-ink-manager": "1.0.2",
+      "myscript-renderer": "1.0.2",
+      "myscript-recognizer": "1.0.2",
+      "myscript-canvas": "1.0.2"
   },
   "devDependencies": {
     "iron-component-page": "polymerelements/iron-component-page#^1.0.0",
