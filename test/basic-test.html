@@ -23,9 +23,10 @@
 
       test('Check myscript-math initialisation', function() {
           assert.strictEqual('cloud.myscript.com', myEl.url);
-          assert.strictEqual('XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX', myEl.applicationKey);
-          assert.strictEqual('XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX', myEl.hmacKey);
-          assert.strictEqual('Math', myEl.type);
+          assert.strictEqual(undefined, myEl.applicationkey);
+          assert.strictEqual(undefined, myEl.hmackey);
+          assert.strictEqual(undefined, myEl.width);
+          assert.isDefined(myEl.height);
       });
 
     });
