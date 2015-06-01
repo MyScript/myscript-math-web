@@ -12,13 +12,13 @@ LICENSE: github.com/MyScriptWebComponents/myscript-math/blob/master/LICENSE
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../paper-progress/paper-progress.html">
 <!--
-The `myscript-math` is a turnkey solution for those who need to add quickly MyScript Math recognition.<br>
+The `myscript-math` is a turnkey solution for those who need to quickly implement MyScript Math recognition.<br>
 The `myscript-math` is what we call a rich component.<br>
 It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`, `myscript-ink-manager`, `myscript-recognizer` and `myscript-canvas`.
 
 ##### Example
 
-    <myscript-math url="cloud.myscript.com" applicationKey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmacKey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"></myscript-math>
+    <myscript-math url="cloud.myscript.com" applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"></myscript-math>
 
 @group MyScript Elements
 @element myscript-math
@@ -80,7 +80,7 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
              * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com.<br>
              * <b>Warning</b> : This parameter is <b>mandatory</b> and it's value should be a string.
              *
-             * @attribute applicationKey
+             * @attribute applicationkey
              * @type string
              */
             applicationKey: String,
@@ -88,9 +88,9 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
             /**
              * Hmac key to use for recognition on MyScript handwriting recognition server.<br>
              * You have to create your own hmac key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
-             * <b>Warning</b> : This parameter is <b>mandatory</b> and it's value should be a string.
+             * <b>Warning</b> : This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
              *
-             * @attribute hmacKey
+             * @attribute hmackey
              * @type string
              */
             hmacKey: String,
