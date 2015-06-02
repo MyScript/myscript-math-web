@@ -128,34 +128,34 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
             'myscript-canvas-resize': '_redraw'
         },
 
-        //myscript-math-content
+        /** @type {Element} myscript-math-content element */
         _content: undefined,
 
-        // myscript-result element
+        /** @type {Element} myscript-result element */
         _result: undefined,
 
-        // myscript-toolbar element
+        /** @type {Element} myscript-toolbar element */
         _toolbar: undefined,
 
-        // myscript-ink-manager element
+        /** @type {Element} myscript-ink-manager element */
         _inkManager: undefined,
 
-        // myscript-renderer element
+        /** @type {Element} myscript-renderer element */
         _renderer: undefined,
 
-        // myscript-recognizer element
+        /** @type {Element} myscript-recognizer element */
         _recognizer: undefined,
 
-        // myscript-canvas element
+        /** @type {Element} myscript-canvas element */
         _canvas: undefined,
 
-        // paper-progress element
+        /** @type {Element} paper-progress element */
         _progress: undefined,
 
-        // Instance ID of Math handwriting recognition
+        /** @type {string} Instance ID of Math handwriting recognition */
         _instanceId: undefined,
 
-        // Input component to recognize
+        /** @type {(Element,Array.)} Input component to recognize */
         _components: [],
 
         _delete: function (event) {
