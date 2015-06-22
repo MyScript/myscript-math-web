@@ -272,10 +272,12 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
                         this._instanceId = response.instanceId;
                         this._renderer.clear(this._canvas.$.canvas.getContext('2d'));
                         this._renderer.drawRecognitionResult(this._inkManager.getStrokes(), response.result, this._canvas.$.canvas.getContext('2d'));
+                        this.fire('myscript-recognition-result', response);
                     }.bind(this),
                     function error(response) {
                         this._progress.indeterminate = false;
                         this._result.setResult(response.message);
+                        this.fire('myscript-recognition-result', response);
                     }.bind(this)
             );
         },
