@@ -30,12 +30,12 @@
       "polymer": "Polymer/polymer#1.0.x",
       "paper-dialog": "polymerelements/paper-dialog#1.0.x",
       "paper-progress": "polymerelements/paper-progress#1.0.x",
-      "myscript-toolbar": "1.1.x",
-      "myscript-result": "1.1.x",
-      "myscript-ink-manager": "1.1.x",
-      "myscript-renderer": "1.1.x",
-      "myscript-recognizer": "1.1.x",
-      "myscript-canvas": "1.1.x"
+      "myscript-toolbar": "https://zen.visionobjects.com/git/WS/MyScriptJS.git#1.1.x",
+      "myscript-result": "https://zen.visionobjects.com/git/WS/MyScriptJS.git#1.1.x",
+      "myscript-ink-manager": "https://zen.visionobjects.com/git/WS/MyScriptJS.git#1.1.x",
+      "myscript-renderer": "https://zen.visionobjects.com/git/WS/MyScriptJS.git#1.1.x",
+      "myscript-recognizer": "https://zen.visionobjects.com/git/WS/MyScriptJS.git#1.1.x",
+      "myscript-canvas": "https://zen.visionobjects.com/git/WS/MyScriptJS.git#1.1.x"
   },
   "devDependencies": {
     "iron-component-page": "polymerelements/iron-component-page#1.0.x",
