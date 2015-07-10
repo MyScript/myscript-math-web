@@ -3,22 +3,19 @@ Copyright © MyScript.
 LICENSE: github.com/MyScriptWebComponents/myscript-math/blob/master/LICENSE
 -->
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../myscript-toolbar/myscript-toolbar.html">
-<link rel="import" href="../myscript-result/myscript-result.html">
-<link rel="import" href="../myscript-ink-manager/myscript-ink-manager.html">
-<link rel="import" href="../myscript-renderer/myscript-renderer.html">
-<link rel="import" href="../myscript-recognizer/myscript-recognizer.html">
-<link rel="import" href="../myscript-canvas/myscript-canvas.html">
+<link rel="import" href="../iron-icons/av-icons.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
-<link rel="import" href="../paper-progress/paper-progress.html">
+<link rel="import" href="../paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../myscript-ink-paper/myscript-ink-paper.html">
 <!--
-The `myscript-math` is a turnkey solution for those who need to quickly implement MyScript Math recognition.<br>
-The `myscript-math` is what we call a rich component.<br>
-It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`, `myscript-ink-manager`, `myscript-recognizer` and `myscript-canvas`.
+The `myscript-math` is a turnkey solution for those who need to quickly implement MyScript Math recognition.
 
 ##### Example
 
-    <myscript-math url="cloud.myscript.com" applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"></myscript-math>
+    <myscript-math application-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmac-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"></myscript-math>
 
 @group MyScript Elements
 @element myscript-math
@@ -29,280 +26,202 @@ It contains several MyScript Elements like `myscript-result`, `myscript-toolbar`
 @demo demo/index.html Basic Demo
 -->
 <dom-module id="myscript-math">
-    <link rel="import" type="css" href="myscript-math.css">
-    <template>
-        <div id="myscript-math-content">
-            <paper-progress  class="myscript"></paper-progress>
-            <myscript-result></myscript-result>
-            <myscript-toolbar delete="true" undo="true" redo="true" info="true"></myscript-toolbar>
-            <myscript-ink-manager></myscript-ink-manager>
-            <myscript-renderer type="Math"></myscript-renderer>
-            <myscript-recognizer url="{{url}}" applicationkey="{{applicationkey}}" hmackey="{{hmackey}}" type="Math"></myscript-recognizer>
-            <paper-dialog id="infodialog" modal>
-                <h3>About</h3>
+    <style>
+        paper-toolbar {
+            --paper-toolbar-background: #00a7cf;
+        }
 
-                <p align='justify'>Write an equation in the canvas zone. <br> After a short timeout (a second) the
-                    recognition will be launched and the result will be shown on the result field. <br> You
-                    can clear the writing space by clicking on the garbage can icon in the top left corner.</p>
-                <div class="buttons">
-                    <paper-button dialog-confirm autofocus>Close</paper-button>
-                </div>
-            </paper-dialog>
-            <myscript-canvas></myscript-canvas>
-        </div>
+        #resultField {
+            border: 1px solid #ddd;
+            margin: 1px;
+            min-height: 40px;
+            line-height: 40px;
+        }
+    </style>
+    <template>
+        <div id="resultField" flex></div>
+        <paper-toolbar>
+            <paper-icon-button id="delete" icon="delete"
+                               on-tap="_delete" disabled="_hasUndo">
+            </paper-icon-button>
+            <paper-icon-button id="undo" icon="undo"
+                               on-tap="_undo" disabled="!_hasUndo">
+            </paper-icon-button>
+            <paper-icon-button id="redo" icon="redo"
+                               on-tap="_redo" disabled="!_hasRedo">
+            </paper-icon-button>
+            <paper-icon-button id="info" icon="info"
+                               on-tap="_info">
+            </paper-icon-button>
+        </paper-toolbar>
+        <paper-dialog id="infodialog" modal>
+            <h3>About</h3>
+
+            <p align='justify'>Write an equation in the canvas zone. <br> After a short timeout (a second) the
+                recognition will be launched and the result will be shown on the result field. <br> You
+                can clear the writing space by clicking on the garbage can icon in the top left corner.</p>
+
+            <div class="buttons">
+                <paper-button dialog-confirm autofocus>Close</paper-button>
+            </div>
+        </paper-dialog>
+        <myscript-ink-paper url="{{url}}"
+                            type="MATH"
+                            application-key="{{ applicationKey }}"
+                            hmac-key="{{ hmacKey }}"
+                            width="{{ computedWidth }}"
+                            height="{{ computedHeight }}"
+                            timeout="{{ timeout }}"
+                            on-result="_onRecognized"
+                            on-error="_onError">
+        </myscript-ink-paper>
     </template>
 </dom-module>
 
 <script>
-(function() {
-
-
-    Polymer({
-
-        is: 'myscript-math',
-
-        properties: {
-
-            /**
-             * Url to use for MyScript handwriting recognition server
-             *
-             * @attribute url
-             * @type string
-             * @default 'cloud.myscript.com'
-             */
-            url: {
-                type: String,
-                value: 'cloud.myscript.com'
-            },
-
-            /**
-             * Application key to use for recognition on MyScript handwriting recognition server.<br>
-             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com.<br>
-             * <b>Warning</b> : This parameter is <b>mandatory</b> and it's value should be a string.
-             *
-             * @attribute applicationkey
-             * @type string
-             */
-            applicationkey: String,
-
-            /**
-             * Hmac key to use for recognition on MyScript handwriting recognition server.<br>
-             * You have to create your own hmac key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
-             * <b>Warning</b> : This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
-             *
-             * @attribute hmackey
-             * @type string
-             */
-            hmackey: String,
-
-            /**
-             * Width of the myscript-math.
-             *
-             * @attribute width
-             * @type Number
-             */
-            width: Number,
-
-            /**
-             * Height of the myscript-math.
-             *
-             * @attribute height
-             * @type Number
-             */
-            height: {
-                type: Number,
-                value: 400
-            }
-
-        },
-
-        // Handle event of myscript element
-        listeners: {
-            'myscript-toolbar-delete': '_delete',
-            'myscript-toolbar-undo': '_undo',
-            'myscript-toolbar-redo': '_redo',
-            'myscript-toolbar-info': '_info',
-            'myscript-canvas-down': '_down',
-            'myscript-canvas-track': '_track',
-            'myscript-canvas-up': '_up',
-            'myscript-canvas-resize': '_redraw'
-        },
-
-        /** @type {Element} myscript-math-content element */
-        _content: undefined,
-
-        /** @type {Element} myscript-result element */
-        _result: undefined,
-
-        /** @type {Element} myscript-toolbar element */
-        _toolbar: undefined,
-
-        /** @type {Element} myscript-ink-manager element */
-        _inkManager: undefined,
-
-        /** @type {Element} myscript-renderer element */
-        _renderer: undefined,
-
-        /** @type {Element} myscript-recognizer element */
-        _recognizer: undefined,
-
-        /** @type {Element} myscript-canvas element */
-        _canvas: undefined,
-
-        /** @type {Element} paper-progress element */
-        _progress: undefined,
-
-        /** @type {string} Instance ID of Math handwriting recognition */
-        _instanceId: undefined,
-
-        /** @type {(Element,Array.)} Input component to recognize */
-        _components: [],
-
-        _delete: function (event) {
-            if (this.isDebouncerActive('timer')) {
-                this.cancelDebouncer('timer');
-            }
-
-            this._result.clear();
-            this._inkManager.clear();
-            this._renderer.clear(this._canvas.$.canvas.getContext('2d'));
-            this._instanceId = '';
-            this._progress.indeterminate = false;
-            this._toolbar.disableUndoButton(true);
-            this._toolbar.disableRedoButton(true);
-            this._toolbar.disableDeleteButton(true);
-        },
-        _undo: function (event) {
-            if (this.isDebouncerActive('timer')) {
-                this.cancelDebouncer('timer');
-                this._progress.indeterminate = false;
-            }
-
-            this._inkManager.undo();
-            this._renderer.clear(this._canvas.$.canvas.getContext('2d'));
-            this._renderer.drawStrokes(this._inkManager.getStrokes(), this._canvas.$.canvas.getContext('2d'));
-
-            if (this._inkManager.isEmpty()) {
-                this._result.clear();
-                this._toolbar.disableUndoButton(true);
-            } else {
-                this.debounce('timer', function () {
-                    this._doRecognition()
-                }, 0);
-            }
-            this._toolbar.disableRedoButton(false);
-        },
-        _redo: function (event) {
-            if (this.isDebouncerActive('timer')) {
-                this.cancelDebouncer('timer');
-                this._progress.indeterminate = false;
-            }
-
-            if (!this._inkManager.isRedoEmpty()) {
-                this.timer = this.debounce(this.timer, function () {
-                    this._doRecognition()
-                }, 0);
-            }
-
-            this._inkManager.redo();
-            this._renderer.clear(this._canvas.$.canvas.getContext('2d'));
-            this._renderer.drawStrokes(this._inkManager.getStrokes(), this._canvas.$.canvas.getContext('2d'));
-
-            if (this._inkManager.isRedoEmpty()) {
-                this._toolbar.disableRedoButton(true);
-            }
-            this._toolbar.disableUndoButton(false);
-        },
-        _info: function (event) {
-            this.$.infodialog.toggle();
-        },
-        _down: function (event) {
-            if (this.isDebouncerActive('timer')) {
-                this.cancelDebouncer('timer');
-                this._progress.indeterminate = false;
-            }
-
-            this._toolbar.disableDeleteButton(false);
-            this._toolbar.disableUndoButton(false);
-
-            this._inkManager.startInkCapture(event.detail.detail.x, event.detail.detail.y, event.detail.timeStamp);
-            this._renderer.drawStart(event.detail.detail.x, event.detail.detail.y);
-
-            if (this._inkManager.isRedoEmpty()) {
-                this._toolbar.disableRedoButton(true);
-            }
-        },
-        _track: function (event) {
-            this._inkManager.continueInkCapture(event.detail.detail.x, event.detail.detail.y, event.detail.timeStamp);
-            this._renderer.drawContinue(event.detail.detail.x, event.detail.detail.y, this._canvas.$.canvas.getContext('2d'));
-        },
-        _up: function (event) {
-            this._inkManager.endInkCapture(event.detail.detail.x, event.detail.detail.y, event.detail.timeStamp);
-            this._renderer.drawEnd(event.detail.detail.x, event.detail.detail.y, this._canvas.$.canvas.getContext('2d'));
-
-            this.debounce('timer', function () {
-                this._doRecognition()
-            }, 2000);
-        },
-        _redraw: function () {
-            if(this._content){
-                this._content.style.width = this.width + "px";
-                this._content.style.height = this.height + "px";
-            }
-            
-            if(this._content){
-                this._canvas.width = this.width;
-                this._canvas.height = this.height - this._progress.clientHeight - this._result.clientHeight - this._toolbar.clientHeight;
-            }
-
-            if(this._result) {
-                if (typeof this._result.getResult() !== "string") {
-                    this._renderer.drawRecognitionResult(this._inkManager.getStrokes(), this._result.getResult().result, this._canvas.$.canvas.getContext('2d'));
-                } else {
-                    this._renderer.drawStrokes(this._inkManager.getStrokes(), this._canvas.$.canvas.getContext('2d'));
+    (function () {
+        Polymer({
+            is: 'myscript-math',
+            properties: {
+                /**
+                 * Url to use for MyScript handwriting recognition server
+                 *
+                 * @attribute url
+                 * @type String
+                 */
+                url: String,
+                /**
+                 * The myscript-ink-paper width
+                 *
+                 * <b>Warning</b>: This is <b>not</b> the myscript-math width, but the canvas one.
+                 *
+                 * @attribute width
+                 * @type Number
+                 */
+                width: {
+                    type: Number,
+                    notify: true
+                },
+                /**
+                 * The myscript-ink-paper height
+                 *
+                 * <b>Warning</b>: This is <b>not</b> the myscript-math height, but the canvas one.
+                 *
+                 * @attribute height
+                 * @type Number
+                 */
+                height: {
+                    type: Number,
+                    notify: true
+                },
+                /**
+                 * Recognition timeout
+                 *
+                 * @attribute timeout
+                 * @type Number
+                 * @default 2000
+                 */
+                timeout: {
+                    type: Number,
+                    notify: true
+                },
+                /**
+                 * Application key to use for recognition on MyScript handwriting recognition server.<br>
+                 * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com.<br>
+                 * <b>Warning</b>: This parameter is <b>mandatory</b> and it's value should be a string.
+                 *
+                 * @attribute application-key
+                 * @type String
+                 */
+                applicationKey: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
+                 * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
+                 *
+                 * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
+                 *
+                 * @attribute hmac-key
+                 * @type String
+                 */
+                hmacKey: {
+                    type: String,
+                    notify: true
                 }
+            },
+            behaviors: [
+                Polymer.IronResizableBehavior
+            ],
+            listeners: {
+                'iron-resize': '_onResize'
+            },
+            _delete: function () {
+                this._inkPaper.clear();
+            },
+            _hasUndo: function () {
+                this._inkPaper.hasUndo();
+            },
+            _undo: function () {
+                this._inkPaper.undo();
+            },
+            _hasRedo: function () {
+                this._inkPaper.hasRedo();
+            },
+            _redo: function () {
+                this._inkPaper.redo();
+            },
+            _info: function () {
+                this.$.infodialog.toggle();
+            },
+            _recognize: function () {
+                this._inkPaper.recognize();
+            },
+            _onRecognized: function (e) {
+                this._result.innerHTML = '';
+
+                var result = e.detail;
+                var resultElements = result.getMathDocument().getResultElements();
+                for (var res in resultElements) {
+                    if (resultElements[res] instanceof MyScript.MathLaTexResultElement) {
+                        this._result.innerHTML = resultElements[res].getValue(); // TODO render KaTeX
+                    }
+                }
+            },
+            _onError: function (e) {
+                var result = e.detail;
+            },
+            _onResize: function() {
+                if (this._inkPaper) {
+                    if (!this.width && (this.parent.offsetWidth > 0)) {
+                        this.computedWidth = this.parent.offsetWidth;
+                    } else {
+                        this.computedWidth = this.width;
+                    }
+
+                    if (!this.height && (this.parent.offsetHeight > 0)) {
+                        this.computedHeight = this.parent.offsetHeight - this._result.offsetHeight - this._toolbar.offsetHeight;
+                    } else {
+                        this.computedHeight = this.height;
+                    }
+                }
+            },
+            get parent() {
+                if (this.parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+                    return this.parentNode.host;
+                }
+                return this.parentNode;
+            },
+            attached: function() {
+                this.async(this.notifyResize, 1);
+            },
+            ready: function () {
+                this._result = this.querySelector('#resultField');
+                this._toolbar = this.querySelector('paper-toolbar');
+                this._inkPaper = this.querySelector('myscript-ink-paper');
             }
-        },
-        _doRecognition: function () {
-            this._progress.indeterminate = true;
-            this._recognizer.doSimpleRecognition(this._instanceId, this._components.concat(this._inkManager.getStrokes())).then(
-                    function success(response) {
-                        this._progress.indeterminate = false;
-                        this._result.setResult(response);
-                        this._instanceId = response.instanceId;
-                        this._renderer.clear(this._canvas.$.canvas.getContext('2d'));
-                        this._renderer.drawRecognitionResult(this._inkManager.getStrokes(), response.result, this._canvas.$.canvas.getContext('2d'));
-                        this.fire('myscript-recognition-result', response);
-                    }.bind(this),
-                    function error(response) {
-                        this._progress.indeterminate = false;
-                        this._result.setResult(response.message);
-                        this.fire('myscript-recognition-result', response);
-                    }.bind(this)
-            );
-        },
-        ready: function () {
+        });
 
-            this._result = this.querySelector('myscript-result');
-            this._toolbar = this.querySelector('myscript-toolbar');
-            this._toolbar.disableDeleteButton(true);
-            this._toolbar.disableUndoButton(true);
-            this._toolbar.disableRedoButton(true);
-            this._toolbar.disableInfoButton(false);
-            this._inkManager = this.querySelector('myscript-ink-manager');
-            this._renderer = this.querySelector('myscript-renderer');
-            this._recognizer = this.querySelector('myscript-recognizer');
-            this._progress = this.querySelector('paper-progress');
-
-            this._canvas = this.querySelector('myscript-canvas');
-
-            this._content = this.querySelector('#myscript-math-content');
-
-            this._instanceId = '';
-            this._components = [];
-
-        }
-    });
-
-})();
+    })();
 </script>
