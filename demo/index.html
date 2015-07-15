@@ -37,7 +37,8 @@
     <myscript-math application-key="af5f7b94-85e6-458c-8336-38f572e2f494"
                    hmac-key="39989a38-7136-46ef-9e6e-45c7eae1f147"
                    timeout="2000"
-                   on-latex="recognized">
+                   on-latex="recognized"
+        on-changed="changed">
     </myscript-math>
 </template>
 <script>
@@ -60,6 +61,10 @@
             app.recognized = function (e) {
                 result.innerHTML = '';
                 katex.render(e.detail, result, {displayMode: true});
+            };
+
+            app.changed = function (e) {
+                result.innerHTML = '';
             };
         });
     })(document);

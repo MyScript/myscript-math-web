@@ -3,9 +3,10 @@ Copyright © MyScript.
 LICENSE: github.com/MyScriptWebComponents/myscript-math/blob/master/LICENSE
 -->
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-icons/av-icons.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icons/av-icons.html">
+<link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
@@ -34,13 +35,13 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
     <template>
         <paper-toolbar>
             <paper-icon-button id="delete" icon="delete"
-                               on-tap="_delete" disabled="hasUndo">
+                               on-tap="_delete">
             </paper-icon-button>
             <paper-icon-button id="undo" icon="undo"
-                               on-tap="_undo" disabled="!hasUndo">
+                               on-tap="_undo" disabled="{{!hasUndo}}">
             </paper-icon-button>
             <paper-icon-button id="redo" icon="redo"
-                               on-tap="_redo" disabled="!hasRedo">
+                               on-tap="_redo" disabled="{{!hasRedo}}">
             </paper-icon-button>
             <paper-icon-button id="info" icon="info"
                                on-tap="_info">
@@ -65,7 +66,8 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                             height="{{ computedHeight }}"
                             timeout="{{ timeout }}"
                             on-result="_onRecognized"
-                            on-error="_onError">
+                            on-error="_onError"
+                            on-changed="_onChanged">
         </myscript-ink-paper>
     </template>
 </dom-module>
@@ -141,6 +143,16 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                 hmacKey: {
                     type: String,
                     notify: true
+                },
+                hasUndo: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                },
+                hasRedo: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
                 }
             },
             behaviors: [
@@ -180,7 +192,13 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
             _onError: function (e) {
                 var result = e.detail;
             },
-            _onResize: function() {
+            _onChanged: function (e) {
+                if (e.detail) {
+                    this.hasUndo = e.detail.hasUndo;
+                    this.hasRedo = e.detail.hasRedo;
+                }
+            },
+            _onResize: function () {
                 if (this._inkPaper) {
                     if (!this.width && (this.parent.offsetWidth > 0)) {
                         this.computedWidth = this.parent.offsetWidth;
@@ -189,7 +207,12 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                     }
 
                     if (!this.height && (this.parent.offsetHeight > 0)) {
-                        this.computedHeight = this.parent.offsetHeight - this._toolbar.offsetHeight;
+                        this.computedHeight = this.parent.offsetHeight;
+                        for (var i in this.parent.children) {
+                            if (this.parent.children[i].offsetHeight) {
+                                this.computedHeight -= this.parent.children[i].offsetHeight;
+                            }
+                        }
                     } else {
                         this.computedHeight = this.height;
                     }
@@ -201,11 +224,10 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                 }
                 return this.parentNode;
             },
-            attached: function() {
+            attached: function () {
                 this.async(this.notifyResize, 1);
             },
             ready: function () {
-                this._toolbar = this.querySelector('paper-toolbar');
                 this._inkPaper = this.querySelector('myscript-ink-paper');
             }
         });
