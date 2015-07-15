@@ -30,25 +30,17 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
         paper-toolbar {
             --paper-toolbar-background: #00a7cf;
         }
-
-        #resultField {
-            border: 1px solid #ddd;
-            margin: 1px;
-            min-height: 40px;
-            line-height: 40px;
-        }
     </style>
     <template>
-        <div id="resultField" flex></div>
         <paper-toolbar>
             <paper-icon-button id="delete" icon="delete"
-                               on-tap="_delete" disabled="_hasUndo">
+                               on-tap="_delete" disabled="hasUndo">
             </paper-icon-button>
             <paper-icon-button id="undo" icon="undo"
-                               on-tap="_undo" disabled="!_hasUndo">
+                               on-tap="_undo" disabled="!hasUndo">
             </paper-icon-button>
             <paper-icon-button id="redo" icon="redo"
-                               on-tap="_redo" disabled="!_hasRedo">
+                               on-tap="_redo" disabled="!hasRedo">
             </paper-icon-button>
             <paper-icon-button id="info" icon="info"
                                on-tap="_info">
@@ -160,14 +152,8 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
             _delete: function () {
                 this._inkPaper.clear();
             },
-            _hasUndo: function () {
-                this._inkPaper.hasUndo();
-            },
             _undo: function () {
                 this._inkPaper.undo();
-            },
-            _hasRedo: function () {
-                this._inkPaper.hasRedo();
             },
             _redo: function () {
                 this._inkPaper.redo();
@@ -179,13 +165,15 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                 this._inkPaper.recognize();
             },
             _onRecognized: function (e) {
-                this._result.innerHTML = '';
-
                 var result = e.detail;
                 var resultElements = result.getMathDocument().getResultElements();
                 for (var res in resultElements) {
                     if (resultElements[res] instanceof MyScript.MathLaTexResultElement) {
-                        this._result.innerHTML = resultElements[res].getValue(); // TODO render KaTeX
+                        this.fire('latex', resultElements[res].getValue());
+                    } else if (resultElements[res] instanceof MyScript.MathMathMLResultElement) {
+                        this.fire('mathml', resultElements[res].getValue());
+                    } else if (resultElements[res] instanceof MyScript.MathSymbolTreeResultElement) {
+                        this.fire('symboltree', resultElements[res].getRoot());
                     }
                 }
             },
@@ -201,7 +189,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                     }
 
                     if (!this.height && (this.parent.offsetHeight > 0)) {
-                        this.computedHeight = this.parent.offsetHeight - this._result.offsetHeight - this._toolbar.offsetHeight;
+                        this.computedHeight = this.parent.offsetHeight - this._toolbar.offsetHeight;
                     } else {
                         this.computedHeight = this.height;
                     }
@@ -217,7 +205,6 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                 this.async(this.notifyResize, 1);
             },
             ready: function () {
-                this._result = this.querySelector('#resultField');
                 this._toolbar = this.querySelector('paper-toolbar');
                 this._inkPaper = this.querySelector('myscript-ink-paper');
             }
