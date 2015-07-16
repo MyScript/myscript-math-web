@@ -28,8 +28,20 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
 -->
 <dom-module id="myscript-math">
     <style>
+        :host {
+            display: block;
+        }
         paper-toolbar {
             --paper-toolbar-background: #00a7cf;
+        }
+        /*calc from paper-toolbar height*/
+        myscript-ink-paper {
+            height: calc(100% - 64px);
+        }
+        @media (max-width: 639px) {
+            myscript-ink-paper {
+                height: calc(100% - 56px);
+            }
         }
     </style>
     <template>
@@ -62,12 +74,10 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                             type="MATH"
                             application-key="{{ applicationKey }}"
                             hmac-key="{{ hmacKey }}"
-                            width="{{ computedWidth }}"
-                            height="{{ computedHeight }}"
                             timeout="{{ timeout }}"
-                            on-result="_onRecognized"
-                            on-error="_onError"
-                            on-changed="_onChanged">
+                            on-changed="_onChanged"
+                            on-success="_onSuccess"
+                            on-failure="_onFailure">
         </myscript-ink-paper>
     </template>
 </dom-module>
@@ -76,6 +86,26 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
     (function () {
         Polymer({
             is: 'myscript-math',
+            /**
+             * Fired when a LaTeX recognition result is successfully received.
+             *
+             * @event latex
+             */
+            /**
+             * Fired when a MathML recognition result is successfully received.
+             *
+             * @event mathml
+             */
+            /**
+             * Fired when a SymbolTree recognition result is successfully received.
+             *
+             * @event symboltree
+             */
+            /**
+             * Fired when the content of the InkPaper changes.
+             *
+             * @event changed
+             */
             properties: {
                 /**
                  * Url to use for MyScript handwriting recognition server
@@ -84,30 +114,6 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                  * @type String
                  */
                 url: String,
-                /**
-                 * The myscript-ink-paper width
-                 *
-                 * <b>Warning</b>: This is <b>not</b> the myscript-math width, but the canvas one.
-                 *
-                 * @attribute width
-                 * @type Number
-                 */
-                width: {
-                    type: Number,
-                    notify: true
-                },
-                /**
-                 * The myscript-ink-paper height
-                 *
-                 * <b>Warning</b>: This is <b>not</b> the myscript-math height, but the canvas one.
-                 *
-                 * @attribute height
-                 * @type Number
-                 */
-                height: {
-                    type: Number,
-                    notify: true
-                },
                 /**
                  * Recognition timeout
                  *
@@ -144,22 +150,26 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                     type: String,
                     notify: true
                 },
+                /**
+                 * @private
+                 * @attribute has-undo
+                 * @type Boolean
+                 */
                 hasUndo: {
                     type: Boolean,
                     notify: true,
                     value: false
                 },
+                /**
+                 * @private
+                 * @attribute has-redo
+                 * @type Boolean
+                 */
                 hasRedo: {
-                    type: Boolean,
+                    type: String,
                     notify: true,
                     value: false
                 }
-            },
-            behaviors: [
-                Polymer.IronResizableBehavior
-            ],
-            listeners: {
-                'iron-resize': '_onResize'
             },
             _delete: function () {
                 this._inkPaper.clear();
@@ -177,6 +187,25 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                 this._inkPaper.recognize();
             },
             _onRecognized: function (e) {
+                this.fire(e.type, e.detail);
+            },
+            _onError: function (e) {
+                this.fire(e.type, e.detail);
+            },
+            _onChanged: function (e) {
+                if (e.detail) {
+                    this.hasUndo = e.detail.hasUndo;
+                    this.hasRedo = e.detail.hasRedo;
+                }
+                this.fire(e.type, e.detail);
+            },
+            /**
+             * Recognition success listener
+             *
+             * @private
+             * @method _onSuccess
+             */
+            _onSuccess: function (e) {
                 var result = e.detail;
                 var resultElements = result.getMathDocument().getResultElements();
                 for (var res in resultElements) {
@@ -188,44 +217,18 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                         this.fire('symboltree', resultElements[res].getRoot());
                     }
                 }
+                this.fire('result', e.detail);
+                this.fire(e.type, e.detail);
             },
-            _onError: function (e) {
-                var result = e.detail;
-            },
-            _onChanged: function (e) {
-                if (e.detail) {
-                    this.hasUndo = e.detail.hasUndo;
-                    this.hasRedo = e.detail.hasRedo;
-                }
-            },
-            _onResize: function () {
-                if (this._inkPaper) {
-                    if (!this.width && (this.parent.offsetWidth > 0)) {
-                        this.computedWidth = this.parent.offsetWidth;
-                    } else {
-                        this.computedWidth = this.width;
-                    }
-
-                    if (!this.height && (this.parent.offsetHeight > 0)) {
-                        this.computedHeight = this.parent.offsetHeight;
-                        for (var i in this.parent.children) {
-                            if (this.parent.children[i].offsetHeight) {
-                                this.computedHeight -= this.parent.children[i].offsetHeight;
-                            }
-                        }
-                    } else {
-                        this.computedHeight = this.height;
-                    }
-                }
-            },
-            get parent() {
-                if (this.parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-                    return this.parentNode.host;
-                }
-                return this.parentNode;
-            },
-            attached: function () {
-                this.async(this.notifyResize, 1);
+            /**
+             * Failure listener
+             *
+             * @private
+             * @method _onFailure
+             */
+            _onFailure: function (e) {
+                this.fire('error', e.detail);
+                this.fire(e.type, e.detail);
             },
             ready: function () {
                 this._inkPaper = this.querySelector('myscript-ink-paper');
