@@ -8,6 +8,7 @@ LICENSE: github.com/MyScriptWebComponents/myscript-math/blob/master/LICENSE
 <link rel="import" href="../iron-icons/av-icons.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../myscript-ink-paper/myscript-ink-paper.html">
@@ -31,13 +32,16 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
         :host {
             display: block;
         }
+
         paper-toolbar {
             --paper-toolbar-background: #00a7cf;
         }
+
         /*calc from paper-toolbar height*/
         myscript-ink-paper {
             height: calc(100% - 64px);
         }
+
         @media (max-width: 639px) {
             myscript-ink-paper {
                 height: calc(100% - 56px);
@@ -55,6 +59,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
             <paper-icon-button id="redo" icon="redo"
                                on-tap="_redo" disabled="{{!hasRedo}}">
             </paper-icon-button>
+            <span class="flex"></span>
             <paper-icon-button id="info" icon="info"
                                on-tap="_info">
             </paper-icon-button>
@@ -70,7 +75,8 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                 <paper-button dialog-confirm autofocus>Close</paper-button>
             </div>
         </paper-dialog>
-        <myscript-ink-paper url="{{url}}"
+        <myscript-ink-paper host="{{ host }}"
+                            protocol="{{ protocol }}"
                             type="MATH"
                             application-key="{{ applicationKey }}"
                             hmac-key="{{ hmacKey }}"
@@ -79,6 +85,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                             on-success="_onSuccess"
                             on-failure="_onFailure">
         </myscript-ink-paper>
+        <paper-toast id="error"></paper-toast>
     </template>
 </dom-module>
 
@@ -108,15 +115,34 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
              */
             properties: {
                 /**
-                 * Url to use for MyScript handwriting recognition server
+                 * The current recognition protocol (e.g. REST, or WebSocket <b>ONLY</b> for TEXT and MATH)
                  *
-                 * @attribute url
+                 * @private
+                 * @attribute protocol
                  * @type String
+                 * @default 'REST'
                  */
-                url: String,
+                protocol: {
+                    type: String,
+                    notify: true,
+                    value: 'WebSocket'
+                },
+                /**
+                 * The current recognition service host
+                 *
+                 * @private
+                 * @attribute host
+                 * @type String
+                 * @default 'cloud.myscript.com'
+                 */
+                host: {
+                    type: String,
+                    notify: true
+                },
                 /**
                  * Recognition timeout
                  *
+                 * @private
                  * @attribute timeout
                  * @type Number
                  * @default 2000
@@ -173,6 +199,10 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
             },
             _delete: function () {
                 this._inkPaper.clear();
+                // FIXME ugly hack
+                this.fire('latex');
+                this.fire('mathml');
+                this.fire('symboltree');
             },
             _undo: function () {
                 this._inkPaper.undo();
@@ -207,15 +237,22 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
              */
             _onSuccess: function (e) {
                 var result = e.detail;
-                var resultElements = result.getMathDocument().getResultElements();
-                for (var res in resultElements) {
-                    if (resultElements[res] instanceof MyScript.MathLaTexResultElement) {
-                        this.fire('latex', resultElements[res].getValue());
-                    } else if (resultElements[res] instanceof MyScript.MathMathMLResultElement) {
-                        this.fire('mathml', resultElements[res].getValue());
-                    } else if (resultElements[res] instanceof MyScript.MathSymbolTreeResultElement) {
-                        this.fire('symboltree', resultElements[res].getRoot());
+                if (result && (result instanceof MyScript.AbstractResult || result instanceof
+                    MyScript.AbstractRecoResponseWSMessage)) {
+                    var resultElements = result.getMathDocument().getResultElements();
+                    for (var res in resultElements) {
+                        if (resultElements[res] instanceof MyScript.MathLaTexResultElement) {
+                            this.fire('latex', resultElements[res].getValue());
+                        } else if (resultElements[res] instanceof MyScript.MathMathMLResultElement) {
+                            this.fire('mathml', resultElements[res].getValue());
+                        } else if (resultElements[res] instanceof MyScript.MathSymbolTreeResultElement) {
+                            this.fire('symboltree', resultElements[res].getRoot());
+                        }
                     }
+                } else {
+                    this.fire('latex');
+                    this.fire('mathml');
+                    this.fire('symboltree');
                 }
                 this.fire('result', e.detail);
                 this.fire(e.type, e.detail);
@@ -229,9 +266,12 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
             _onFailure: function (e) {
                 this.fire('error', e.detail);
                 this.fire(e.type, e.detail);
+                this._paperToast.text = (typeof e.detail === 'object') ? JSON.stringify(e.detail) : e.detail;
+                this._paperToast.show();
             },
             ready: function () {
                 this._inkPaper = this.querySelector('myscript-ink-paper');
+                this._paperToast = this.querySelector('paper-toast');
             }
         });
 
