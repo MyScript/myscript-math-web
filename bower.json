@@ -35,7 +35,8 @@
         "paper-toast": "polymerelements/paper-toast#1.0.x",
         "paper-progress": "polymerelements/paper-progress#1.0.x",
         "paper-icon-button": "polymerelements/paper-icon-button#1.0.x",
-        "myscript-ink-paper": "https://zen.visionobjects.com/git/WS/Polymer/myscript-ink-paper.git#1.1.x"
+        "myscript-ink-paper": "https://zen.visionobjects.com/git/WS/Polymer/myscript-ink-paper.git#1.1.x",
+        "myscript-result": "https://zen.visionobjects.com/git/WS/Polymer/myscript-result.git#1.1.x"
     },
     "devDependencies": {
         "iron-component-page": "polymerelements/iron-component-page#1.0.x",

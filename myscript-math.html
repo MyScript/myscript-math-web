@@ -12,6 +12,7 @@ LICENSE: github.com/MyScriptWebComponents/myscript-math/blob/master/LICENSE
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../myscript-ink-paper/myscript-ink-paper.html">
+<link rel="import" href="../myscript-result/myscript-result.html">
 <!--
 The `myscript-math` is a turnkey solution for those who need to quickly implement MyScript Math recognition.
 
@@ -49,6 +50,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
         }
     </style>
     <template>
+        <myscript-result></myscript-result>
         <paper-toolbar>
             <paper-icon-button id="delete" icon="delete"
                                on-tap="_delete">
@@ -78,8 +80,8 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
         <myscript-ink-paper host="{{ host }}"
                             protocol="{{ protocol }}"
                             type="MATH"
-                            application-key="{{ applicationKey }}"
-                            hmac-key="{{ hmacKey }}"
+                            application-key="{{ applicationkey }}"
+                            hmac-key="{{ hmackey }}"
                             timeout="{{ timeout }}"
                             on-changed="_onChanged"
                             on-success="_onSuccess"
@@ -159,7 +161,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                  * @attribute application-key
                  * @type String
                  */
-                applicationKey: {
+                applicationkey: {
                     type: String,
                     notify: true
                 },
@@ -172,7 +174,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                  * @attribute hmac-key
                  * @type String
                  */
-                hmacKey: {
+                hmackey: {
                     type: String,
                     notify: true
                 },
@@ -236,7 +238,8 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
              * @method _onSuccess
              */
             _onSuccess: function (e) {
-                var result = e.detail;
+
+                /*var result = e.detail;
                 if (result && (result instanceof MyScript.AbstractResult || result instanceof
                     MyScript.AbstractRecoResponseWSMessage)) {
                     var resultElements = result.getMathDocument().getResultElements();
@@ -254,8 +257,9 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                     this.fire('mathml');
                     this.fire('symboltree');
                 }
-                this.fire('result', e.detail);
+                this.fire('result', e.detail);*/
                 this.fire(e.type, e.detail);
+                this._myscriptResult.setResult(e.detail);
             },
             /**
              * Failure listener
@@ -272,6 +276,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
             ready: function () {
                 this._inkPaper = this.querySelector('myscript-ink-paper');
                 this._paperToast = this.querySelector('paper-toast');
+                this._myscriptResult = this.querySelector('myscript-result');
             }
         });
 
