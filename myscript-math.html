@@ -201,10 +201,8 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
             },
             _delete: function () {
                 this._inkPaper.clear();
-                // FIXME ugly hack
-                this.fire('latex');
-                this.fire('mathml');
-                this.fire('symboltree');
+                //this._myscriptResult.setResult("");
+                this.fire('result');
             },
             _undo: function () {
                 this._inkPaper.undo();
@@ -231,6 +229,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                 }
                 this.fire(e.type, e.detail);
             },
+
             /**
              * Recognition success listener
              *
@@ -239,27 +238,11 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
              */
             _onSuccess: function (e) {
 
-                /*var result = e.detail;
-                if (result && (result instanceof MyScript.AbstractResult || result instanceof
-                    MyScript.AbstractRecoResponseWSMessage)) {
-                    var resultElements = result.getMathDocument().getResultElements();
-                    for (var res in resultElements) {
-                        if (resultElements[res] instanceof MyScript.MathLaTexResultElement) {
-                            this.fire('latex', resultElements[res].getValue());
-                        } else if (resultElements[res] instanceof MyScript.MathMathMLResultElement) {
-                            this.fire('mathml', resultElements[res].getValue());
-                        } else if (resultElements[res] instanceof MyScript.MathSymbolTreeResultElement) {
-                            this.fire('symboltree', resultElements[res].getRoot());
-                        }
-                    }
-                } else {
-                    this.fire('latex');
-                    this.fire('mathml');
-                    this.fire('symboltree');
-                }
-                this.fire('result', e.detail);*/
-                this.fire(e.type, e.detail);
-                this._myscriptResult.setResult(e.detail);
+                var result = e.detail;
+                this.fire('result', result);
+                //this.fire(e.type, e.detail);
+                this._result.setResult(result);
+
             },
             /**
              * Failure listener
@@ -276,7 +259,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
             ready: function () {
                 this._inkPaper = this.querySelector('myscript-ink-paper');
                 this._paperToast = this.querySelector('paper-toast');
-                this._myscriptResult = this.querySelector('myscript-result');
+                this._result = this.querySelector('myscript-result');
             }
         });
 
