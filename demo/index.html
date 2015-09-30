@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
-    <title>myscript-math</title>
+    <title>myscript-math demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../../iron-localstorage/iron-localstorage.html">
     <link rel="import" href="../../paper-input/paper-input.html">
     <link rel="import" href="../myscript-math.html">
-    <link rel="import" href="../katex.html">
+
 </head>
 <style>
     html, body {
@@ -17,29 +17,11 @@
         padding: 0;
         margin: 0;
     }
-
-    #result {
-        height: 100px;
-        overflow: auto;
-    }
-
     #authenticationKeys {
         min-height: 72px;
     }
-
-    #math-input {
-        height: calc(100% - 172px);
-    }
-
-    .katex-display {
-        display: block;
-        margin: 0;
-        text-align: center;
-        font-size: xx-large;
-    }
-
-    .katex-display .katex {
-        padding: 5px 0;
+    myscript-math {
+        height: calc(100% - 180px);
     }
 </style>
 <body unresolved>
@@ -47,59 +29,34 @@
     <iron-localstorage id="applicationkey"
                        name="input-demo-applicationkey"
                        autoSaveDisabled="true"
-                       value="{{applicationKey}}">
+                       value="{{applicationkey}}">
     </iron-localstorage>
     <iron-localstorage id="hmackey"
                        name="input-demo-hmackey"
                        autoSaveDisabled="true"
-                       value="{{hmacKey}}">
+                       value="{{hmackey}}">
     </iron-localstorage>
 
     <form is="iron-form" id="authenticationKeys">
         <div class="horizontal around-justified layout">
-            <paper-input label="applicationKey"
+            <paper-input label="applicationkey"
                          auto-validate pattern="[a-zA-Z0-9\-]*"
                          error-message="invalid character"
-                         value="{{applicationKey}}"
+                         value="{{applicationkey}}"
                          class="flex">
             </paper-input>
-            <paper-input label="hmacKey"
+            <paper-input label="hmackey"
                          auto-validate pattern="[a-zA-Z0-9\-]*"
                          error-message="invalid character"
-                         value="{{hmacKey}}"
+                         value="{{hmackey}}"
                          class="flex">
             </paper-input>
         </div>
     </form>
-    <div id="result" flex></div>
-    <myscript-math id="math-input"
-                   applicationkey="{{applicationKey}}"
-                   hmackey="{{hmacKey}}"
+    <myscript-math applicationkey="{{applicationkey}}"
+                   hmackey="{{hmackey}}"
                    on-latex="recognized">
     </myscript-math>
 </template>
-<script>
-    (function (document) {
-        'use strict';
-        // Grab a reference to our auto-binding template
-        // and give it some initial binding values
-        // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
-        var app = document.querySelector('#app');
-        // Listen for template bound event to know when bindings
-        // have resolved and content has been stamped to the page
-        app.addEventListener('template-bound', function () {
-            console.log('Our app is ready to rock!');
-        });
-        // See https://github.com/Polymer/polymer/issues/1381
-        window.addEventListener('WebComponentsReady', function () {
-            document.querySelector('body').removeAttribute('unresolved');
-            var result = document.querySelector('#result');
-
-            app.recognized = function (e) {
-                katex.render(e.detail, result, {displayMode: true});
-            };
-        });
-    })(document);
-</script>
 </body>
 </html>

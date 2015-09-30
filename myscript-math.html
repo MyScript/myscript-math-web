@@ -11,8 +11,12 @@ LICENSE: github.com/MyScriptWebComponents/myscript-math/blob/master/LICENSE
 <link rel="import" href="../paper-toast/paper-toast.html">
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../myscript-ink-paper/myscript-ink-paper.html">
+<link rel="import" href="../myscript-common-element/myscript-common-element.html">
 <link rel="import" href="../myscript-result/myscript-result.html">
+<link rel="import" href="../katex.html">
+
+
+
 <!--
 The `myscript-math` is a turnkey solution for those who need to quickly implement MyScript Math recognition.
 
@@ -29,28 +33,9 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
 @demo demo/index.html Basic Demo
 -->
 <dom-module id="myscript-math">
-    <style>
-        :host {
-            display: block;
-        }
-
-        paper-toolbar {
-            --paper-toolbar-background: #00a7cf;
-        }
-
-        /*calc from paper-toolbar height*/
-        myscript-ink-paper {
-            height: calc(100% - 64px);
-        }
-
-        @media (max-width: 639px) {
-            myscript-ink-paper {
-                height: calc(100% - 56px);
-            }
-        }
-    </style>
+    <link rel="import" type="css" href="myscript-math.css">
     <template>
-        <myscript-result></myscript-result>
+        <div id="resultField">[[latexresult]]</div>
         <paper-toolbar>
             <paper-icon-button id="delete" icon="delete"
                                on-tap="_delete">
@@ -80,8 +65,8 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
         <myscript-ink-paper host="{{ host }}"
                             protocol="{{ protocol }}"
                             type="MATH"
-                            application-key="{{ applicationkey }}"
-                            hmac-key="{{ hmackey }}"
+                            applicationkey="{{ applicationkey }}"
+                            hmackey="{{ hmackey }}"
                             timeout="{{ timeout }}"
                             on-changed="_onChanged"
                             on-success="_onSuccess"
@@ -117,12 +102,12 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
              */
             properties: {
                 /**
-                 * The current recognition protocol (e.g. REST, or WebSocket <b>ONLY</b> for TEXT and MATH)
+                 * The current recognition protocol (e.g. REST, or WebSocket.)
                  *
                  * @private
                  * @attribute protocol
                  * @type String
-                 * @default 'REST'
+                 * @default 'WebSocket'
                  */
                 protocol: {
                     type: String,
@@ -158,7 +143,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                  * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com.<br>
                  * <b>Warning</b>: This parameter is <b>mandatory</b> and it's value should be a string.
                  *
-                 * @attribute application-key
+                 * @attribute applicationkey
                  * @type String
                  */
                 applicationkey: {
@@ -171,7 +156,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                  *
                  * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
                  *
-                 * @attribute hmac-key
+                 * @attribute hmackey
                  * @type String
                  */
                 hmackey: {
@@ -197,6 +182,14 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                     type: String,
                     notify: true,
                     value: false
+                },
+                /**
+                 *
+                 */
+                latexresult: {
+                    type: String,
+                    notify: true,
+                    value: ""
                 }
             },
             _delete: function () {
@@ -237,12 +230,23 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
              * @method _onSuccess
              */
             _onSuccess: function (e) {
-
                 var result = e.detail;
                 this.fire('result', result);
-                //this.fire(e.type, e.detail);
-                this._result.setResult(result);
-
+                if(typeof result !== "string" ) {
+                    if(result.getMathDocument && result.getMathDocument().getResultElements().length > 0) {
+                        var resultElements = result.getMathDocument().getResultElements();
+                        for (var res in resultElements) {
+                            if (resultElements[res] instanceof MyScript.MathLaTexResultElement) {
+                                this.latexresult = katex.render(resultElements[res].getValue(), this._resultField);
+                                //resultElements[res].getValue();
+                            }
+                        }
+                    } else {
+                        this.latexresult = "";
+                    }
+                }else {
+                    this.latexresult = result;
+                }
             },
             /**
              * Failure listener
@@ -259,7 +263,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
             ready: function () {
                 this._inkPaper = this.querySelector('myscript-ink-paper');
                 this._paperToast = this.querySelector('paper-toast');
-                this._result = this.querySelector('myscript-result');
+                this._resultField = this.querySelector('#resultField');
             }
         });
 
