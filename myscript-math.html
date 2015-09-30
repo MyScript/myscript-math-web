@@ -12,8 +12,7 @@ LICENSE: github.com/MyScriptWebComponents/myscript-math/blob/master/LICENSE
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
-<link rel="import" href="../myscript-result/myscript-result.html">
-<link rel="import" href="../katex.html">
+<link rel="import" href="./katex.html">
 
 
 
@@ -33,7 +32,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
 @demo demo/index.html Basic Demo
 -->
 <dom-module id="myscript-math">
-    <link rel="import" type="css" href="myscript-math.css">
+    <link rel="import" type="css" href="./myscript-math.css">
     <template>
         <div id="resultField">[[latexresult]]</div>
         <paper-toolbar>
@@ -62,7 +61,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                 <paper-button dialog-confirm autofocus>Close</paper-button>
             </div>
         </paper-dialog>
-        <myscript-ink-paper host="{{ host }}"
+        <myscript-common-element host="{{ host }}"
                             protocol="{{ protocol }}"
                             type="MATH"
                             applicationkey="{{ applicationkey }}"
@@ -71,7 +70,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                             on-changed="_onChanged"
                             on-success="_onSuccess"
                             on-failure="_onFailure">
-        </myscript-ink-paper>
+        </myscript-common-element>
         <paper-toast id="error"></paper-toast>
     </template>
 </dom-module>
@@ -96,7 +95,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
              * @event symboltree
              */
             /**
-             * Fired when the content of the InkPaper changes.
+             * Fired when the content of the capture canvas changes.
              *
              * @event changed
              */
@@ -193,21 +192,21 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                 }
             },
             _delete: function () {
-                this._inkPaper.clear();
+                this._myscriptCommonElement.clear();
                 //this._myscriptResult.setResult("");
                 this.fire('result');
             },
             _undo: function () {
-                this._inkPaper.undo();
+                this._myscriptCommonElement.undo();
             },
             _redo: function () {
-                this._inkPaper.redo();
+                this._myscriptCommonElement.redo();
             },
             _info: function () {
                 this.$.infodialog.toggle();
             },
             _recognize: function () {
-                this._inkPaper.recognize();
+                this._myscriptCommonElement.recognize();
             },
             _onRecognized: function (e) {
                 this.fire(e.type, e.detail);
@@ -261,7 +260,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                 this._paperToast.show();
             },
             ready: function () {
-                this._inkPaper = this.querySelector('myscript-ink-paper');
+                this._myscriptCommonElement = this.querySelector('myscript-common-element');
                 this._paperToast = this.querySelector('paper-toast');
                 this._resultField = this.querySelector('#resultField');
             }

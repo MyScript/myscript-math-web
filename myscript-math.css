@@ -7,12 +7,12 @@ paper-toolbar {
 }
 
 /*calc from paper-toolbar height*/
-myscript-ink-paper {
+myscript-common-element {
     height: calc(100% - 64px);
 }
 
 @media (max-width: 639px) {
-    myscript-ink-paper {
+    myscript-common-element {
         height: calc(100% - 56px);
     }
 }
