@@ -1,10 +1,9 @@
 :host {
     display: block;
+    --paper-fab-background: #00A7CF;
+    --paper-fab-keyboard-focus-background: #00A7CF;
 }
 
-paper-toolbar {
-    --paper-toolbar-background: #00a7cf;
-}
 
 /*calc from paper-toolbar height*/
 myscript-common-element {
@@ -23,3 +22,16 @@ myscript-common-element {
     min-height: 60px;
     line-height: 60px;
 }
+
+#buttons {
+    position: absolute;
+    z-index: 2;
+
+}
+
+paper-fab {
+    background: #00A7CF;
+
+}
+
+
