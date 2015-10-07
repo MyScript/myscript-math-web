@@ -31,7 +31,7 @@
         "iron-icons": "polymerelements/iron-icons#1.0.x",
         "iron-resizable-behavior": "polymerelements/iron-resizable-behavior#1.0.x",
         "katex" : "katex#v0.5.x",
-        "myscript-common-element": "https://zen.visionobjects.com/git/WS/Polymer/myscript-common-element.git#*",
+        "myscript-common-element": "https://zen.visionobjects.com/git/WS/Polymer/myscript-common-element.git#master",
         "paper-button": "polymerelements/paper-button#1.0.x",
         "paper-dialog": "polymerelements/paper-dialog#1.0.x",
         "paper-icon-button": "polymerelements/paper-icon-button#1.0.x",
