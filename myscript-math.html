@@ -205,7 +205,6 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                 }
                 this.fire(e.type, e.detail);
             },
-
             /**
              * Recognition success listener
              *
@@ -220,8 +219,8 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                         var resultElements = result.getMathDocument().getResultElements();
                         for (var res in resultElements) {
                             if (resultElements[res] instanceof MyScript.MathLaTexResultElement) {
-                                this.latexresult = katex.render(resultElements[res].getValue(), this._resultField);
-                                //resultElements[res].getValue();
+                                katex.render(resultElements[res].getValue(), this._resultField);
+                                this.latexresult = resultElements[res].getValue();
                             }
                         }
                     } else {
