@@ -6,8 +6,6 @@ LICENSE: github.com/MyScriptWebComponents/myscript-math/blob/master/LICENSE
 <link rel="import" href="../iron-icons/av-icons.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
-<link rel="stylesheet" href="../katex/dist/katex.min.css">
-<script type="text/javascript" src="../katex/dist/katex.min.js"></script>
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
@@ -33,6 +31,8 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
 -->
 <dom-module id="myscript-math">
     <link rel="import" type="css" href="./myscript-math.css">
+    <link rel="stylesheet" href="../katex/dist/katex.min.css">
+    <script type="text/javascript" src="../katex/dist/katex.min.js"></script>
     <template>
         <div id="resultField">[[latexresult]]</div>
         <div id="buttons">
@@ -52,6 +52,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                             on-failure="_onFailure">
         </myscript-common-element>
         <paper-toast id="error"></paper-toast>
+
     </template>
 </dom-module>
 
