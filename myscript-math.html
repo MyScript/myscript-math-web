@@ -8,7 +8,6 @@ LICENSE: github.com/MyScriptWebComponents/myscript-math/blob/master/LICENSE
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
 <link rel="import" href="../paper-button/paper-button.html">
-<link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
@@ -34,7 +33,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
     <link rel="stylesheet" href="../katex/dist/katex.min.css">
     <script type="text/javascript" src="../katex/dist/katex.min.js"></script>
     <template>
-        <div id="resultField">[[latexresult]]</div>
+        <div id="resultField"></div>
         <div id="buttons">
             <paper-fab id="delete" mini icon="delete" title="delete" on-tap="_delete"></paper-fab>
             <paper-fab id="undo" mini icon="undo" title="undo" on-tap="_undo" disabled="{{ !hasUndo }}"></paper-fab>
@@ -170,14 +169,13 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                  */
                 latexresult: {
                     type: String,
-                    notify: true,
-                    value: ""
+                    notify: true
                 }
             },
             _delete: function () {
                 this._myscriptCommonElement.clear();
+                this._resultField.innerHTML =  "";
                 this.latexresult = "";
-                //this._myscriptResult.setResult("");
                 this.fire('result');
             },
             _undo: function () {
@@ -185,18 +183,6 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
             },
             _redo: function () {
                 this._myscriptCommonElement.redo();
-            },
-            _info: function () {
-                this.$.infodialog.toggle();
-            },
-            _recognize: function () {
-                this._myscriptCommonElement.recognize();
-            },
-            _onRecognized: function (e) {
-                this.fire(e.type, e.detail);
-            },
-            _onError: function (e) {
-                this.fire(e.type, e.detail);
             },
             _onChanged: function (e) {
                 if (e.detail) {
@@ -224,10 +210,10 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                             }
                         }
                     } else {
-                        this.latexresult = "";
+                        this._resultField.innerHTML =  "";
                     }
                 }else {
-                    this.latexresult = result;
+                    this._resultField.innerHTML =  result;
                 }
             },
             /**
@@ -237,15 +223,14 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
              * @method _onFailure
              */
             _onFailure: function (e) {
-                this.fire('error', e.detail);
                 this.fire(e.type, e.detail);
                 this._paperToast.text = (typeof e.detail === 'object') ? JSON.stringify(e.detail) : e.detail;
                 this._paperToast.show();
             },
             ready: function () {
+                this._resultField = this.querySelector('#resultField');
                 this._myscriptCommonElement = this.querySelector('myscript-common-element');
                 this._paperToast = this.querySelector('paper-toast');
-                this._resultField = this.querySelector('#resultField');
             }
         });
 
