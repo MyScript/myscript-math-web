@@ -209,7 +209,12 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                         for (var res in resultElements) {
                             if (resultElements[res] instanceof MyScript.MathLaTexResultElement) {
                                 if(!this.hideresult){
-                                    katex.render(resultElements[res].getValue(), this._resultField);
+                                    try {
+                                        katex.render(resultElements[res].getValue(), this._resultField);
+                                    }
+                                    catch (e) {
+                                        this._resultField.innerHTML = "<span>Invalid KaTeX mathemathic expression.</span>";
+                                    }
                                 }
                                 this.latexresult = resultElements[res].getValue();
                             }
