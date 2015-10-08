@@ -199,7 +199,6 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
              */
             _onSuccess: function (e) {
                 var result = e.detail;
-                this.fire('result', result);
                 if(typeof result !== "string" ) {
                     if(result.getMathDocument && result.getMathDocument().getResultElements().length > 0) {
                         var resultElements = result.getMathDocument().getResultElements();
@@ -215,6 +214,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                 }else {
                     this._resultField.innerHTML =  result;
                 }
+                this.fire('result', result);
             },
             /**
              * Failure listener
