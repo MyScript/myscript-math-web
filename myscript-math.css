@@ -16,14 +16,14 @@ myscript-common-element {
     }
 }
 
-#resultField {
+.resultField {
     border: 1px solid #ddd;
     margin: 1px;
     min-height: 60px;
     line-height: 60px;
 }
 
-#buttons {
+.buttons {
     position: absolute;
     z-index: 2;
 
@@ -33,5 +33,10 @@ paper-fab {
     background: #00A7CF;
 
 }
+
+.myscript-math-container {
+    height: 100%;
+}
+
 
 

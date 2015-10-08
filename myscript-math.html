@@ -29,25 +29,26 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
     <link rel="stylesheet" href="../katex/dist/katex.min.css">
     <script type="text/javascript" src="../katex/dist/katex.min.js"></script>
     <template>
-        <div id="resultField"></div>
-        <div id="buttons">
-            <paper-fab id="delete" mini icon="delete" title="delete" on-tap="_delete"></paper-fab>
-            <paper-fab id="undo" mini icon="undo" title="undo" on-tap="_undo" disabled="{{ !hasUndo }}"></paper-fab>
-            <paper-fab id="redo" mini icon="redo" title="redo" on-tap="_redo" disabled="{{ !hasRedo }}"></paper-fab>
+        <div class="myscript-math-container">
+            <div class="resultField" hidden="[[hideresult]]"></div>
+            <div class="buttons" hidden="[[hidebuttons]]">
+                <paper-fab class="delete" mini icon="delete" title="delete" on-tap="_delete"></paper-fab>
+                <paper-fab class="undo" mini icon="undo" title="undo" on-tap="_undo" disabled="{{ !hasUndo }}"></paper-fab>
+                <paper-fab class="redo" mini icon="redo" title="redo" on-tap="_redo" disabled="{{ !hasRedo }}"></paper-fab>
+            </div>
+
+            <myscript-common-element host="{{ host }}"
+                                     protocol="{{ protocol }}"
+                                     type="MATH"
+                                     applicationkey="{{ applicationkey }}"
+                                     hmackey="{{ hmackey }}"
+                                     timeout="{{ timeout }}"
+                                     on-changed="_onChanged"
+                                     on-success="_onSuccess"
+                                     on-failure="_onFailure">
+            </myscript-common-element>
+            <paper-toast class="error"></paper-toast>
         </div>
-
-        <myscript-common-element host="{{ host }}"
-                            protocol="{{ protocol }}"
-                            type="MATH"
-                            applicationkey="{{ applicationkey }}"
-                            hmackey="{{ hmackey }}"
-                            timeout="{{ timeout }}"
-                            on-changed="_onChanged"
-                            on-success="_onSuccess"
-                            on-failure="_onFailure">
-        </myscript-common-element>
-        <paper-toast id="error"></paper-toast>
-
     </template>
 </dom-module>
 
@@ -149,6 +150,20 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                     value: false
                 },
                 /**
+                 * hide the buttons
+                 */
+                hidebuttons: {
+                    type: Boolean,
+                    value: false
+                },
+                /**
+                 * hide the result div.
+                 */
+                hideresult: {
+                    type: Boolean,
+                    value: false
+                },
+                /**
                  * Recognition result in latex format.
                  * @attribute latexresult
                  * @type String
@@ -160,7 +175,9 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
             },
             _delete: function () {
                 this._myscriptCommonElement.clear();
-                this._resultField.innerHTML =  "";
+                if(!this.hideresult) {
+                    this._resultField.innerHTML = "";
+                }
                 this.latexresult = "";
                 this.fire('myscript-math-delete');
             },
@@ -185,20 +202,27 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
              */
             _onSuccess: function (e) {
                 var result = e.detail;
-                if(typeof result !== "string" ) {
-                    if(result.getMathDocument && result.getMathDocument().getResultElements().length > 0) {
+
+                if (typeof result !== "string") {
+                    if (result.getMathDocument && result.getMathDocument().getResultElements().length > 0) {
                         var resultElements = result.getMathDocument().getResultElements();
                         for (var res in resultElements) {
                             if (resultElements[res] instanceof MyScript.MathLaTexResultElement) {
-                                katex.render(resultElements[res].getValue(), this._resultField);
+                                if(!this.hideresult){
+                                    katex.render(resultElements[res].getValue(), this._resultField);
+                                }
                                 this.latexresult = resultElements[res].getValue();
                             }
                         }
                     } else {
-                        this._resultField.innerHTML =  "";
+                        if(!this.hideresult) {
+                            this._resultField.innerHTML = "";
+                        }
                     }
-                }else {
-                    this._resultField.innerHTML =  result;
+                } else {
+                    if(!this.hideresult) {
+                        this._resultField.innerHTML = result;
+                    }
                 }
                 this.fire('myscript-math-result', result);
             },
