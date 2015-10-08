@@ -37,7 +37,22 @@
                        value="{{hmackey}}">
     </iron-localstorage>
 
-
+    <form is="iron-form" id="authenticationKeys">
+        <div class="horizontal around-justified layout">
+            <paper-input label="applicationkey"
+                         auto-validate pattern="[a-zA-Z0-9\-]*"
+                         error-message="invalid character"
+                         value="{{applicationkey}}"
+                         class="flex">
+            </paper-input>
+            <paper-input label="hmackey"
+                         auto-validate pattern="[a-zA-Z0-9\-]*"
+                         error-message="invalid character"
+                         value="{{hmackey}}"
+                         class="flex">
+            </paper-input>
+        </div>
+    </form>
     <myscript-math applicationkey="{{applicationkey}}"
                    hmackey="{{hmackey}}">
     </myscript-math>
