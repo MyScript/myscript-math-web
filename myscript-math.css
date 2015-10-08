@@ -16,7 +16,7 @@ myscript-common-element {
     }
 }
 
-.resultField {
+#resultField {
     border: 1px solid #ddd;
     margin: 1px;
     min-height: 60px;

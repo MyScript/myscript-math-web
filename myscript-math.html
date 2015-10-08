@@ -30,7 +30,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
     <script type="text/javascript" src="../katex/dist/katex.min.js"></script>
     <template>
         <div class="myscript-math-container">
-            <div class="resultField" hidden="[[hideresult]]"></div>
+            <div id="resultField" hidden="[[hideresult]]"></div>
             <div class="buttons" hidden="[[hidebuttons]]">
                 <paper-fab class="delete" mini icon="delete" title="delete" on-tap="_delete"></paper-fab>
                 <paper-fab class="undo" mini icon="undo" title="undo" on-tap="_undo" disabled="{{ !hasUndo }}"></paper-fab>
