@@ -3,22 +3,18 @@ Copyright © MyScript.
 LICENSE: github.com/MyScriptWebComponents/myscript-math/blob/master/LICENSE
 -->
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-icons/av-icons.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
-<link rel="import" href="../myscript-common-element/myscript-common-element.html">
-<link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
-<link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
-<link rel="import" href="../paper-toolbar/paper-toolbar.html">
+<!-- Import MyScript common element to add handwriting recognition -->
+<link rel="import" href="../myscript-common-element/myscript-common-element.html">
 
 <!--
 The `myscript-math` is a turnkey solution for those who need to quickly implement MyScript Math recognition.
 
 ##### Example
 
-    <myscript-math application-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmac-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"></myscript-math>
+    <myscript-math applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"></myscript-math>
 
 @group MyScript Elements
 @element myscript-math
@@ -60,7 +56,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
         Polymer({
             is: 'myscript-math',
             /**
-             * Fired when a recognition result is successfully received.
+             * Fired when a math recognition result is successfully received.
              *
              * @event myscript-math-result
              */
@@ -153,7 +149,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                     value: false
                 },
                 /**
-                 * Recogntion result in latex format.
+                 * Recognition result in latex format.
                  * @attribute latexresult
                  * @type String
                  */
