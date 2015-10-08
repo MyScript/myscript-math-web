@@ -60,19 +60,9 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
         Polymer({
             is: 'myscript-math',
             /**
-             * Fired when a LaTeX recognition result is successfully received.
+             * Fired when a recognition result is successfully received.
              *
-             * @event latex
-             */
-            /**
-             * Fired when a MathML recognition result is successfully received.
-             *
-             * @event mathml
-             */
-            /**
-             * Fired when a SymbolTree recognition result is successfully received.
-             *
-             * @event symboltree
+             * @event myscript-math-result
              */
             /**
              * Fired when the content of the capture canvas changes.
@@ -176,7 +166,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                 this._myscriptCommonElement.clear();
                 this._resultField.innerHTML =  "";
                 this.latexresult = "";
-                this.fire('result');
+                this.fire('myscript-math-delete');
             },
             _undo: function () {
                 this._myscriptCommonElement.undo();
@@ -214,7 +204,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                 }else {
                     this._resultField.innerHTML =  result;
                 }
-                this.fire('result', result);
+                this.fire('myscript-math-result', result);
             },
             /**
              * Failure listener
