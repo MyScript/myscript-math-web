@@ -29,14 +29,15 @@
     ],
     "dependencies": {
         "polymer": "Polymer/polymer#1.1.x",
-        "iron-icons": "polymerelements/iron-icons#1.0.x",
-        "paper-fab": "polymerelements/paper-fab#1.0.x",
-        "paper-toast": "polymerelements/paper-toast#1.0.x",
+        "iron-icons": "PolymerElements/iron-icons#1.0.x",
+        "paper-fab": "PolymerElements/paper-fab#1.0.x",
+        "paper-toast": "PolymerElements/paper-toast#1.0.x",
         "katex" : "katex#v0.5.x",
-        "myscript-common-element": "https://zen.visionobjects.com/git/WS/Polymer/myscript-common-element.git#master"
+        "iron-flex-layout": "PolymerElements/iron-flex-layout#1.0.x",
+        "myscript-common-element": "https://zen.visionobjects.com/git/WS/Polymer/myscript-common-element.git#1.1.x"
     },
     "devDependencies": {
-        "iron-component-page": "polymerelements/iron-component-page#1.0.x",
+        "iron-component-page": "PolymerElements/iron-component-page#1.0.x",
         "iron-localstorage": "PolymerElements/iron-localstorage#1.0.x",
         "paper-input": "PolymerElements/paper-input#1.0.x",
         "web-component-tester": "*"
