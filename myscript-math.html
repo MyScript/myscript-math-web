@@ -29,26 +29,24 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
     <link rel="stylesheet" href="../katex/dist/katex.min.css">
     <script type="text/javascript" src="../katex/dist/katex.min.js"></script>
     <template>
-        <div class="myscript-math-container">
-            <div id="resultField" hidden="[[hideresult]]"></div>
-            <div class="buttons" hidden="[[hidebuttons]]">
-                <paper-fab class="delete" mini icon="delete" title="delete" on-tap="_delete"></paper-fab>
-                <paper-fab class="undo" mini icon="undo" title="undo" on-tap="_undo" disabled="{{ !hasUndo }}"></paper-fab>
-                <paper-fab class="redo" mini icon="redo" title="redo" on-tap="_redo" disabled="{{ !hasRedo }}"></paper-fab>
-            </div>
-
-            <myscript-common-element host="{{ host }}"
-                                     protocol="{{ protocol }}"
-                                     type="MATH"
-                                     applicationkey="{{ applicationkey }}"
-                                     hmackey="{{ hmackey }}"
-                                     timeout="{{ timeout }}"
-                                     on-changed="_onChanged"
-                                     on-success="_onSuccess"
-                                     on-failure="_onFailure">
-            </myscript-common-element>
-            <paper-toast class="error"></paper-toast>
+        <div id="resultField" hidden="[[hideresult]]"></div>
+        <div class="horizontal layout buttons" hidden="[[hidebuttons]]">
+            <paper-fab class="delete" mini icon="delete" title="delete" on-tap="_delete"></paper-fab>
+            <paper-fab class="undo" mini icon="undo" title="undo" on-tap="_undo" disabled="{{ !hasUndo }}"></paper-fab>
+            <paper-fab class="redo" mini icon="redo" title="redo" on-tap="_redo" disabled="{{ !hasRedo }}"></paper-fab>
         </div>
+
+        <myscript-common-element host="{{ host }}"
+                                 protocol="{{ protocol }}"
+                                 type="MATH"
+                                 applicationkey="{{ applicationkey }}"
+                                 hmackey="{{ hmackey }}"
+                                 timeout="{{ timeout }}"
+                                 on-changed="_onChanged"
+                                 on-success="_onSuccess"
+                                 on-failure="_onFailure">
+        </myscript-common-element>
+        <paper-toast class="error"></paper-toast>
     </template>
 </dom-module>
 
