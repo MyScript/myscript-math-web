@@ -1,6 +1,6 @@
 Third Party Software and Licenses.
 
-Myscript-math web component is using the following third party software:
+Myscript-math-web is using the following third party software:
 
 - Polymer
 

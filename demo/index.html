@@ -2,11 +2,11 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
-    <title>myscript-math demo</title>
+    <title>myscript-math-web demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../../iron-localstorage/iron-localstorage.html">
     <link rel="import" href="../../paper-input/paper-input.html">
-    <link rel="import" href="../myscript-math.html">
+    <link rel="import" href="../myscript-math-web.html">
 
 </head>
 <style>
@@ -20,7 +20,7 @@
     #authenticationKeys {
         min-height: 72px;
     }
-    myscript-math {
+    myscript-math-web {
         height: calc(100% - 180px);
     }
 </style>
@@ -53,9 +53,9 @@
             </paper-input>
         </div>
     </form>
-    <myscript-math applicationkey="{{applicationkey}}"
+    <myscript-math-web applicationkey="{{applicationkey}}"
                    hmackey="{{hmackey}}">
-    </myscript-math>
+    </myscript-math-web>
 </template>
 </body>
 </html>

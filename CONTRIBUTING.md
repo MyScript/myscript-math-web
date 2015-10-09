@@ -24,7 +24,7 @@ Local testing can be done using the `web-component-tester` engine through a web 
 MyScript Web Components supports all major browsers. Unfortunately, it is hard to test new changes so if you can, please test your changes in as many browsers as possible.
 
 Simply navigate to the `/test` directory of your element to run its tests. If
-you are using [Polyserve](https://github.com/PolymerLabs/polyserve): `http://localhost:8080/components/myscript-math/test/`
+you are using [Polyserve](https://github.com/PolymerLabs/polyserve): `http://localhost:8080/components/myscript-math-web/test/`
 
 ### web-component-tester
 

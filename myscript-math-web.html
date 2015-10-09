@@ -10,22 +10,22 @@ LICENSE: github.com/MyScriptWebComponents/myscript-math/blob/master/LICENSE
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
 
 <!--
-The `myscript-math` is a turnkey solution for those who need to quickly implement MyScript Math recognition.
+The `myscript-math-web` is a turnkey solution for those who need to quickly implement MyScript Math recognition.
 
 ##### Example
 
-    <myscript-math applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"></myscript-math>
+    <myscript-math-web applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"></myscript-math-web>
 
 @group MyScript Elements
-@element myscript-math
+@element myscript-math-web
 @blurb MyScript HTML5 Math Element to help developers integrate math handwriting recognition.
 @status alpha
-@homepage http://myscriptwebcomponents.github.io/myscript-math
+@homepage http://myscriptwebcomponents.github.io/myscript-math-web
 
 @demo demo/index.html Basic Demo
 -->
-<dom-module id="myscript-math">
-    <link rel="import" type="css" href="./myscript-math.css">
+<dom-module id="myscript-math-web">
+    <link rel="import" type="css" href="./myscript-math-web.css">
     <link rel="stylesheet" href="../katex/dist/katex.min.css">
     <script type="text/javascript" src="../katex/dist/katex.min.js"></script>
     <template>
@@ -53,11 +53,16 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
 <script>
     (function () {
         Polymer({
-            is: 'myscript-math',
+            is: 'myscript-math-web',
             /**
              * Fired when a math recognition result is successfully received.
              *
-             * @event myscript-math-result
+             * @event myscript-math-web-result
+             */
+            /**
+             * Fired when delete is done.
+             *
+             * @event myscript-math-web-delete
              */
             /**
              * Fired when the content of the capture canvas changes.
@@ -177,7 +182,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                     this._resultField.innerHTML = "";
                 }
                 this.latexresult = "";
-                this.fire('myscript-math-delete');
+                this.fire('myscript-math-web-delete');
             },
             _undo: function () {
                 this._myscriptCommonElement.undo();
@@ -227,7 +232,7 @@ The `myscript-math` is a turnkey solution for those who need to quickly implemen
                         this._resultField.innerHTML = result;
                     }
                 }
-                this.fire('myscript-math-result', result);
+                this.fire('myscript-math-web-result', result);
             },
             /**
              * Failure listener
