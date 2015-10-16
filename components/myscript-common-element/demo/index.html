@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <title>myscript-ink-paper</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../iron-localstorage/iron-localstorage.html">
+    <link rel="import" href="../../iron-icons/iron-icons.html">
+    <link rel="import" href="../../iron-icons/av-icons.html">
+    <link rel="import" href="../../paper-fab/paper-fab.html">
+    <link rel="import" href="../../paper-toast/paper-toast.html">
+    <link rel="import" href="../../paper-input/paper-input.html">
+    <link rel="import" href="../myscript-common-element.html">
+</head>
+<style>
+    html, body {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    #buttons {
+        position: absolute;
+        z-index: 2;
+    }
+
+    #result {
+        height: 100px;
+        text-align: center;
+        font-size: xx-large;
+    }
+
+    #authenticationKeys {
+        min-height: 72px;
+    }
+
+    myscript-common-element {
+        height: calc(100% - 172px);
+    }
+</style>
+<body unresolved>
+<template id="app" is="dom-bind">
+    <iron-localstorage id="applicationkey"
+                       name="input-demo-applicationkey"
+                       autoSaveDisabled="true"
+                       value="{{applicationkey}}">
+    </iron-localstorage>
+    <iron-localstorage id="hmackey"
+                       name="input-demo-hmackey"
+                       autoSaveDisabled="true"
+                       value="{{hmackey}}">
+    </iron-localstorage>
+
+    <form is="iron-form" id="authenticationKeys">
+        <div class="horizontal around-justified layout">
+            <paper-input label="applicationkey"
+                         auto-validate pattern="[a-zA-Z0-9\-]*"
+                         error-message="invalid character"
+                         value="{{applicationkey}}"
+                         class="flex">
+            </paper-input>
+            <paper-input label="hmackey"
+                         auto-validate pattern="[a-zA-Z0-9\-]*"
+                         error-message="invalid character"
+                         value="{{hmackey}}"
+                         class="flex">
+            </paper-input>
+        </div>
+    </form>
+    <div id="result"></div>
+    <div id="buttons">
+        <paper-fab id="clear" mini icon="delete" title="delete" on-tap="clear"></paper-fab>
+        <paper-fab id="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !hasUndo }}"></paper-fab>
+        <paper-fab id="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !hasRedo }}"></paper-fab>
+    </div>
+    <myscript-common-element protocol="WebSocket"
+                        type="TEXT"
+                        applicationkey="{{ applicationkey }}"
+                        hmackey="{{ hmackey }}"
+                        on-result="recognized"
+                        on-error="error"
+                        on-changed="_onChanged">
+    </myscript-common-element>
+    <paper-toast id="error" text="Recognition failed"></paper-toast>
+</template>
+<script>
+    (function (document) {
+        'use strict';
+        // Grab a reference to our auto-binding template
+        // and give it some initial binding values
+        // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
+        var app = document.querySelector('#app');
+        // Listen for template bound event to know when bindings
+        // have resolved and content has been stamped to the page
+        app.addEventListener('template-bound', function () {
+            console.log('Our app is ready to rock!');
+        });
+        // See https://github.com/Polymer/polymer/issues/1381
+        window.addEventListener('WebComponentsReady', function () {
+            document.querySelector('body').removeAttribute('unresolved');
+            var input = document.querySelector('myscript-common-element'),
+                alert = document.querySelector('#error'),
+                result = document.querySelector('#result');
+
+            app.hasRedo = app.hasUndo = false;
+
+            app._onChanged = function (e) {
+                app.hasUndo = e.detail.hasUndo;
+                app.hasRedo = e.detail.hasRedo;
+            };
+
+            app.clear = function () {
+                input.clear();
+                result.innerHTML = '';
+            };
+            app.undo = function () {
+                input.undo();
+            };
+            app.redo = function () {
+                input.redo();
+            };
+            app.error = function error() {
+                alert.show();
+            };
+            app.recognized = function (e) {
+                result.innerHTML = e.detail.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
+            };
+        });
+    })(document);
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+:host {
+    display: block;
+    --paper-fab-background: #00A7CF;
+    --paper-fab-keyboard-focus-background: #00A7CF;
+}
+
+
+/*calc from paper-toolbar height*/
+myscript-common-element {
+    height: calc(100% - 64px);
+}
+
+@media (max-width: 639px) {
+    myscript-common-element {
+        height: calc(100% - 56px);
+    }
+}
+
+#resultField {
+    border: 1px solid #ddd;
+    margin: 1px;
+    min-height: 60px;
+    line-height: 60px;
+}
+
+.buttons {
+    position: absolute;
+    z-index: 2;
+
+}
+
+paper-fab {
+    background: #00A7CF;
+
+}
+
+

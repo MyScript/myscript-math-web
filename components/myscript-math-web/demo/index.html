@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <title>myscript-math-web demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../iron-localstorage/iron-localstorage.html">
+    <link rel="import" href="../../paper-input/paper-input.html">
+    <link rel="import" href="../myscript-math-web.html">
+
+</head>
+<style>
+    html, body {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    #authenticationKeys {
+        min-height: 72px;
+    }
+    myscript-math-web {
+        height: calc(100% - 180px);
+    }
+</style>
+<body unresolved>
+<template id="app" is="dom-bind">
+    <iron-localstorage id="applicationkey"
+                       name="input-demo-applicationkey"
+                       autoSaveDisabled="true"
+                       value="{{applicationkey}}">
+    </iron-localstorage>
+    <iron-localstorage id="hmackey"
+                       name="input-demo-hmackey"
+                       autoSaveDisabled="true"
+                       value="{{hmackey}}">
+    </iron-localstorage>
+
+    <form is="iron-form" id="authenticationKeys">
+        <div class="horizontal around-justified layout">
+            <paper-input label="applicationkey"
+                         auto-validate pattern="[a-zA-Z0-9\-]*"
+                         error-message="invalid character"
+                         value="{{applicationkey}}"
+                         class="flex">
+            </paper-input>
+            <paper-input label="hmackey"
+                         auto-validate pattern="[a-zA-Z0-9\-]*"
+                         error-message="invalid character"
+                         value="{{hmackey}}"
+                         class="flex">
+            </paper-input>
+        </div>
+    </form>
+    <myscript-math-web applicationkey="{{applicationkey}}"
+                   hmackey="{{hmackey}}">
+    </myscript-math-web>
+</template>
+</body>
+</html>
