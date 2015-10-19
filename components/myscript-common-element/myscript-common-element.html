@@ -86,8 +86,34 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_typeChanged'
             },
             /**
+             * The current recognition language (e.g. en_US, fr_FR, ...)
+             *
+             * @attribute language
+             * @type String
+             * @default 'en_US'
+             */
+            language: {
+                type: String,
+                notify: true,
+                value: "en_US",
+                observer: '_languageChanged'
+            },
+            /**
+             * Math result types (e.g. LATEX, MATHML, SYMBOLTREE)
+             *
+             * @attribute resulttypes
+             * @type Array
+             */
+            resulttypes: {
+                type: Array,
+                notify: true,
+                value: [],
+                observer: '_resulttypesChanged'
+            },
+            /**
              * The current recognition protocol (e.g. REST, or WebSocket <b>ONLY</b> for TEXT and MATH)
              *
+             * @private
              * @attribute protocol
              * @type String
              * @default 'REST'
@@ -111,7 +137,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             /**
              * The recognition timeout (-1 = disabled, 0 = immediate, 0 > deferred)
              *
-             * @attribute timeout
+             * @attribute timeout, only use for HTTP
              * @type Number
              * @default 2000
              */
@@ -160,11 +186,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             'iron-resize': '_onResize'
         },
         /**
-         * Clear all context
+         * Delete all context
          *
-         * @method clear
+         * @method delete
          */
-        clear: function () {
+        delete: function () {
             if (this._inkPaper) {
                 this._inkPaper.clear();
             }
@@ -240,6 +266,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                     this.fire('error', err);
                 }
             }.bind(this));
+
+            this._languageChanged();
+            this._resulttypesChanged();
         },
         /**
          * Resize listener
@@ -329,6 +358,29 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             if (this._inkPaper) {
                 this._inkPaper.setType(this.type);
             }
+        },
+        /**
+         * Recognition language changed observer
+         *
+         * @private
+         * @method _languageChanged
+         */
+        _languageChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setLanguage(this.language);
+            }
+        },
+        /**
+         * Math Recognition result types changed observer
+         *
+         * @private
+         * @method _resulttypesChanged
+         */
+        _resulttypesChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setResultTypes(this.resulttypes);
+            }
         }
+
     });
 </script>

@@ -44,7 +44,7 @@
   "_resolution": {
     "type": "version",
     "tag": "1.1.0-beta2",
-    "commit": "e8c91223da552c8b9d9e68c1fdd3a7877c44a394"
+    "commit": "285c3ae7404c4040831530a93e6db6b20c063685"
   },
   "_source": "https://zen.visionobjects.com/git/WS/Polymer/myscript-common-element.git",
   "_target": "1.1.x",
