@@ -340,13 +340,21 @@ documentation page including demos (if available).
     },
 
     _getDefaultActive: function() {
-      function findMatch(el) {
-        return el && el.contentHref && el.contentHref.indexOf(mainFile) > 0;
-      }
-
+      var matchedPage;
       var url = this._srcUrl || this.base;
       var mainFile = url.replace(_baseUrl(this.base), '');
-      var matchedPage = this.docElements.find(findMatch) || this.docBehaviors.find(findMatch);
+
+      function findMatch(list) {
+        for (var item, i = 0; i < list.length; i++) {
+          item = list[i];
+          if (item && item.contentHref && item.contentHref.indexOf(mainFile) > 0) {
+            return item;
+          }
+        }
+        return null;
+      }
+      
+      matchedPage = findMatch(this.docElements) || findMatch(this.docBehaviors);
 
       if (matchedPage) {
         return matchedPage.is;

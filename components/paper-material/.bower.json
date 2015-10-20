@@ -39,7 +39,7 @@
     "tag": "v1.0.3",
     "commit": "2e99c0754edb817518f59313d2533ccc2e1ab82a"
   },
-  "_source": "git://github.com/polymerelements/paper-material.git",
+  "_source": "git://github.com/PolymerElements/paper-material.git",
   "_target": "^1.0.0",
-  "_originalSource": "polymerelements/paper-material"
+  "_originalSource": "PolymerElements/paper-material"
 }
