@@ -183,7 +183,7 @@ iron-request can be used to perform XMLHttpRequests.
      *     async By default, all requests are sent asynchronously. To send synchronous requests,
      *         set to true.
      *     body The content for the request body for POST method.
-     *     headers HTTP request headers.
+     *     headers HTTP request headers. All keys must be lower case.
      *     handleAs The response type. Default is 'text'.
      *     withCredentials Whether or not to send credentials on the request. Default is false.
      *   timeout: (Number|undefined)
@@ -241,20 +241,28 @@ iron-request can be used to perform XMLHttpRequests.
         options.async !== false
       );
 
-      if (options.headers) {
-        Object.keys(options.headers).forEach(function (requestHeader) {
-          xhr.setRequestHeader(
-            requestHeader,
-            options.headers[requestHeader]
-          );
-        }, this);
+      var acceptType = {
+        'json': 'application/json',
+        'text': 'text/plain',
+        'html': 'text/html',
+        'xml': 'application/xml',
+        'arraybuffer': 'application/octet-stream'
+      }[options.handleAs];
+      var headers = options.headers || {};
+      if (acceptType && !headers['accept']) {
+        headers['accept'] = acceptType;
       }
+      Object.keys(headers).forEach(function (requestHeader) {
+        if (/[A-Z]/.test(requestHeader)) {
+          console.error('Headers must be lower case, got', requestHeader);
+        }
+        xhr.setRequestHeader(
+          requestHeader,
+          headers[requestHeader]
+        );
+      }, this);
 
-      var contentType;
-      if (options.headers) {
-        contentType = options.headers['Content-Type'];
-      }
-      var body = this._encodeBodyObject(options.body, contentType);
+      var body = this._encodeBodyObject(options.body, headers['content-type']);
 
       // In IE, `xhr.responseType` is an empty string when the response
       // returns. Hence, caching it as `xhr._responseType`.

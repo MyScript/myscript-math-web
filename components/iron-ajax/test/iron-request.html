@@ -126,6 +126,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           options.handleAs = 'json';
 
           request.send(options);
+          expect(server.requests.length).to.be.equal(1);
+          expect(server.requests[0].requestHeaders['accept']).to.be.equal(
+              'application/json');
           server.respond();
 
           return request.completes.then(function() {
@@ -139,6 +142,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           options.async = false;
 
           request.send(options);
+          expect(server.requests.length).to.be.equal(1);
+          expect(server.requests[0].requestHeaders['accept']).to.be.equal(
+              'application/json');
           server.respond();
 
           return request.completes.then(function() {

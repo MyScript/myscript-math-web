@@ -55,6 +55,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  debounce-duration="150"></iron-ajax>
     </template>
   </test-fixture>
+  <test-fixture id='BlankUrl'>
+    <template>
+      <iron-ajax auto handle-as='text'></iron-ajax>
+    </template>
+  </test-fixture>
   <!-- note(rictic):
        This makes us dependent on a third-party server, but we need to be able
        to check what headers the browser actually sends on the wire.
@@ -194,6 +199,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var options = ajax.toRequestOptions();
 
           expect(Object.keys(options.headers).length).to.be.equal(0);
+        });
+      });
+
+      suite('when url isn\'t set yet', function() {
+        test('we don\'t fire any automatic requests', function() {
+          expect(server.requests.length).to.be.equal(0);
+          ajax = fixture('BlankUrl');
+
+          return timePasses(1).then(function() {
+            // We don't make any requests.
+            expect(server.requests.length).to.be.equal(0);
+
+            // Explicitly asking for the request to fire works.
+            ajax.generateRequest();
+            expect(server.requests.length).to.be.equal(1);
+            server.requests = [];
+
+            // Explicitly setting url to '' works too.
+            ajax = fixture('BlankUrl');
+            ajax.url = '';
+            return timePasses(1);
+          }).then(function() {
+            expect(server.requests.length).to.be.equal(1);
+          });
         });
       });
 
@@ -590,6 +619,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             expect(typeof(ajax.lastResponse)).to.be.equal('string');
           });
 
+          expect(server.requests.length).to.be.equal(1);
+          expect(server.requests[0].requestHeaders['accept']).to.be.equal(
+            'text/plain');
           server.respond();
 
           return promise;
@@ -661,6 +693,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var promise = request.completes.then(function () {
             expect(typeof(ajax.lastResponse)).to.be.equal('object');
           });
+
+          expect(server.requests.length).to.be.equal(1);
+          expect(server.requests[0].requestHeaders['accept']).to.be.equal(
+            'application/json');
 
           server.respond();
 

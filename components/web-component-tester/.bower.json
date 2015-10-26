@@ -32,13 +32,13 @@
     "sinonjs": "^1.14.1",
     "accessibility-developer-tools": "GoogleChrome/accessibility-developer-tools#^2.7.0"
   },
-  "version": "3.3.26",
+  "version": "3.3.29",
   "homepage": "https://github.com/Polymer/web-component-tester",
-  "_release": "3.3.26",
+  "_release": "3.3.29",
   "_resolution": {
     "type": "version",
-    "tag": "v3.3.26",
-    "commit": "4ad4ec98145a59829a6a8948f45b8156e24169c5"
+    "tag": "v3.3.29",
+    "commit": "36c5c78738c704676d07c3e1955f36e081bbce60"
   },
   "_source": "git://github.com/Polymer/web-component-tester.git",
   "_target": "*",

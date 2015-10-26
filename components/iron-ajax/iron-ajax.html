@@ -69,8 +69,7 @@ element.
        * The URL target of the request.
        */
       url: {
-        type: String,
-        value: ''
+        type: String
       },
 
       /**
@@ -242,6 +241,8 @@ element.
        *
        * The type of the response is determined by the value of `handleAs` at
        * the time that the request was generated.
+       * 
+       * @type {Object}
        */
       lastResponse: {
         type: Object,
@@ -251,6 +252,8 @@ element.
 
       /**
        * lastRequest's error, if any.
+       * 
+       * @type {Object}
        */
       lastError: {
         type: Object,
@@ -353,13 +356,15 @@ element.
         contentType = 'application/x-www-form-urlencoded';
       }
       if (contentType) {
-        headers['Content-Type'] = contentType;
+        headers['content-type'] = contentType;
       }
       var header;
 
       if (this.headers instanceof Object) {
         for (header in this.headers) {
-          headers[header] = this.headers[header].toString();
+          // Normalize headers in lower case to make it easier for iron-request
+          // to reason about them.
+          headers[header.toLowerCase()] = this.headers[header].toString();
         }
       }
 
@@ -381,7 +386,7 @@ element.
      */
     toRequestOptions: function() {
       return {
-        url: this.requestUrl,
+        url: this.requestUrl || '',
         method: this.method,
         headers: this.requestHeaders,
         body: this.body,
@@ -462,7 +467,7 @@ element.
 
     _requestOptionsChanged: function() {
       this.debounce('generate-request', function() {
-        if (!this.url && this.url !== '') {
+        if (this.url == null) {
           return;
         }
 

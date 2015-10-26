@@ -12,6 +12,7 @@ LICENSE: github.com/MyScriptWebComponents/myscript-math-web/blob/master/LICENSE
 
 <!--
 The `myscript-math-web` is a turnkey solution for those who need to quickly implement MyScript Math recognition.
+See a live demo [here](demo/index.html)
 
 ##### Example
 
@@ -23,7 +24,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 @status alpha
 @homepage http://myscriptwebcomponents.github.io/myscript-math-web
 
-@demo demo/index.html Basic Demo
 -->
 <dom-module id="myscript-math-web">
     <link rel="import" type="css" href="./myscript-math-web.css">
@@ -73,9 +73,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
              */
             properties: {
                 /**
-                 * The current recognition protocol (e.g. REST, or WebSocket.)
+                 * The current recognition protocol (e.g. REST, or WebSocket.) We strongly recommend WebSocket.
                  *
-                 * @private
                  * @attribute protocol
                  * @type String
                  * @default 'WebSocket'

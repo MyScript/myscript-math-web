@@ -98,8 +98,9 @@ paper-toolbar a:hover, paper-toolbar a:hover iron-icon, paper-toolbar a.iron-sel
 }
 
 #docs {
+  max-width: var(--iron-component-page-max-width, 48em);
+  @apply(--iron-component-page-container);
   padding: 20px;
-  max-width: 48em;
   margin: 0 auto;
 }
 
