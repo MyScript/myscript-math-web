@@ -20,14 +20,14 @@ The easy way to integrate mathematical expression handwriting recognition in you
 </html>
 ```    
 
-Test [it live](http://myscript.github.io/myscript-math-web/index.html/demo) !
+Test [it live](http://myscript.github.io/myscript-math-web/index.html/demo/) !
 
 ## What is it about ?
 myscript-math-web is a web component that could be used in every web application (whatever the javascript library you are using) to bring handwriting recognition. It integrates all what you need :
 - Signal capture
-- Nice rendering
+- Nice digital ink rendering
 - Plug with MyScript CDK to bring Handwriting recognition
-- Rendering section with [Katex](http://khan.github.io/KaTeX/)
+- Mathematical formulas display section build with [Katex](http://khan.github.io/KaTeX/)
 
 ## Installation
 
