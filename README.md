@@ -20,7 +20,7 @@ The easy way to integrate mathematical expression handwriting recognition in you
 </html>
 ```    
 
-Test [it live](http://myscript.github.io/myscript-math-web/index.html?view=demo) !
+Test [it live](http://myscript.github.io/myscript-math-web/index.html/demo) !
 
 ## What is it about ?
 myscript-math-web is a web component that could be used in every web application (whatever the javascript library you are using) to bring handwriting recognition. It integrates all what you need :
@@ -64,7 +64,7 @@ Myscript-math-web requires a valid [MyScript Developer account](https://dev.mysc
 
 The API reference (html tag if you are unfamiliar with web components terminology) could be browse on [http://myscript.github.io/myscript-math-web/](http://myscript.github.io/myscript-math-web/) 
 
-If you want use the component in a customized way please take time to read the full the [developer guide](http://doc.myscript.com/MyScriptJS/1.0/index.html).
+If you want use the component in a customized way please take time to read the full the [developer guide](http://dev.myscript.com).
 
 ## Contribute
 
