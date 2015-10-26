@@ -16,14 +16,6 @@
 <body>
 
 <iron-component-page></iron-component-page>
-<script>
-    //Show demo if parameter view=demo is set in url
-    window.addEventListener('WebComponentsReady', function (e) {
-        if (window.location.search && "?view=demo".toUpperCase() === window.location.search.toUpperCase()) {
-            document.querySelector('iron-component-page').view = "demo";
-        }
-    });
-</script>
 
 </body>
 </html>
