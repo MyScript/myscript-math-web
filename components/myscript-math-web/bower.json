@@ -38,8 +38,6 @@
     },
     "devDependencies": {
         "iron-component-page": "PolymerElements/iron-component-page#1.0.x",
-        "iron-localstorage": "PolymerElements/iron-localstorage#1.0.x",
-        "paper-input": "PolymerElements/paper-input#1.0.x",
         "web-component-tester": "*"
     }
 }
