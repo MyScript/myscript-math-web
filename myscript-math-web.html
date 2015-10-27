@@ -57,7 +57,7 @@ See a live demo [here](demo/index.html)
         Polymer({
             is: 'myscript-math-web',
             /**
-             * Fired when the content of the capture canvas changes.
+             * Fired when the capture canvas content changes.
              *
              * @event changed
              */
@@ -67,13 +67,13 @@ See a live demo [here](demo/index.html)
              * @event myscript-math-web-result
              */
             /**
-             * Fired when delete is done.
+             * Fired when the Delete action is done.
              *
              * @event myscript-math-web-delete
              */
             properties: {
                 /**
-                 * The current recognition protocol (e.g. REST, or WebSocket.) We strongly recommend WebSocket.
+                 * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
                  *
                  * @attribute protocol
                  * @type String
@@ -85,7 +85,7 @@ See a live demo [here](demo/index.html)
                     value: 'WebSocket'
                 },
                 /**
-                 * The current recognition service host
+                 * The current recognition service host.
                  *
                  * @private
                  * @attribute host
@@ -97,7 +97,7 @@ See a live demo [here](demo/index.html)
                     notify: true
                 },
                 /**
-                 * Recognition timeout, only use for HTTP
+                 * Recognition timeout, only use for HTTP.
                  *
                  * @private
                  * @attribute timeout
@@ -110,8 +110,8 @@ See a live demo [here](demo/index.html)
                 },
                 /**
                  * Application key to use for recognition on MyScript handwriting recognition server.<br>
-                 * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com.<br>
-                 * <b>Warning</b>: This parameter is <b>mandatory</b> and it's value should be a string.
+                 * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br>
+                 * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
                  *
                  * @attribute applicationkey
                  * @type String
@@ -124,7 +124,7 @@ See a live demo [here](demo/index.html)
                  * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
                  * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
                  *
-                 * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
+                 * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
                  *
                  * @attribute hmackey
                  * @type String
@@ -154,7 +154,7 @@ See a live demo [here](demo/index.html)
                     value: false
                 },
                 /**
-                 * Hide the buttons
+                 * Hide the buttons (Trash, Undo, Redo).
                  *
                  * @attribute hidebuttons
                  * @type Boolean
@@ -164,7 +164,7 @@ See a live demo [here](demo/index.html)
                     value: false
                 },
                 /**
-                 * Hide the result div.
+                 * Hide the result div tag.
                  *
                  * @attribute hideresult
                  * @type Boolean
@@ -174,7 +174,7 @@ See a live demo [here](demo/index.html)
                     value: false
                 },
                 /**
-                 * Math result types (e.g. LATEX, MATHML, SYMBOLTREE)
+                 * Math result types (LATEX, MATHML or SYMBOLTREE).
                  *
                  * @attribute resulttypes
                  * @type Array
@@ -195,7 +195,7 @@ See a live demo [here](demo/index.html)
                 }
             },
             /**
-             * Delete action
+             * Delete action.
              *
              * @method delete
              */
@@ -208,7 +208,7 @@ See a live demo [here](demo/index.html)
                 this.fire('myscript-math-web-delete');
             },
             /**
-             * Undo action
+             * Undo action.
              *
              * @method undo
              */
@@ -216,7 +216,7 @@ See a live demo [here](demo/index.html)
                 this._myscriptCommonElement.undo();
             },
             /**
-             * Redo action
+             * Redo action.
              *
              * @method redo
              */
@@ -231,7 +231,7 @@ See a live demo [here](demo/index.html)
                 this.fire(e.type, e.detail);
             },
             /**
-             * Recognition success listener
+             * Recognition success listener.
              *
              * @private
              * @method _onSuccess
@@ -263,7 +263,7 @@ See a live demo [here](demo/index.html)
                 this.fire('myscript-math-web-result', this.result);
             },
             /**
-             * Failure listener
+             * Failure listener.
              *
              * @private
              * @method _onFailure
