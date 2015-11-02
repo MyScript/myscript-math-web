@@ -1,7 +1,7 @@
 myscript-math-web
 =================
 
-The easy way to integrate handwriting recognition in your web app.
+The easy way to integrate mathematical expressions handwriting recognition in your web app.
 
 <a href="myscript.github.io/"><img src="math.gif" /></a>
 
