@@ -44,7 +44,7 @@
   "_resolution": {
     "type": "version",
     "tag": "1.1.0-beta4",
-    "commit": "c3396d3d449ef42b4becf5fe39c2abbed2798806"
+    "commit": "668296b6cd82c7ac44ca4ee6e4f0cb41c8c96309"
   },
   "_source": "https://zen.visionobjects.com/git/WS/Polymer/myscript-math-web.git",
   "_target": "1.1.0-beta4",
