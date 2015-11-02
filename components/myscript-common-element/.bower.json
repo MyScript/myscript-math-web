@@ -1,16 +1,9 @@
 {
   "name": "myscript-common-element",
-  "version": "1.1.0-beta3",
+  "version": "1.1.0-beta4",
   "description": "MyScript Common Element to help developer for integrate handwriting recognition.",
   "keywords": [
-    "web-component",
-    "web-components",
-    "polymer",
-    "myscript",
-    "myscriptjs",
-    "myscriptwebcomponents",
-    "handwriting",
-    "recognition"
+    "myscript"
   ],
   "main": "myscript-common-element.html",
   "license": "Apache-2",
@@ -33,18 +26,13 @@
   },
   "devDependencies": {
     "iron-component-page": "polymerelements/iron-component-page#1.0.x",
-    "iron-localstorage": "PolymerElements/iron-localstorage#1.0.x",
-    "iron-icons": "polymerelements/iron-icons#1.0.x",
-    "paper-fab": "polymerelements/paper-fab#1.0.x",
-    "paper-input": "PolymerElements/paper-input#1.0.x",
-    "paper-toast": "polymerelements/paper-toast#1.0.x",
     "web-component-tester": "*"
   },
-  "_release": "1.1.0-beta3",
+  "_release": "1.1.0-beta4",
   "_resolution": {
     "type": "version",
-    "tag": "1.1.0-beta3",
-    "commit": "8b6ae69abcdee724d5c52394a7c587d9c14d6b93"
+    "tag": "1.1.0-beta4",
+    "commit": "8bbe79c1effb17307a02871d6fac16206fa02120"
   },
   "_source": "https://zen.visionobjects.com/git/WS/Polymer/myscript-common-element.git",
   "_target": "1.1.x",

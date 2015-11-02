@@ -38,11 +38,11 @@
     "q": "1.4.x",
     "handjs": "*"
   },
-  "_release": "929f10994b",
+  "_release": "b4dd3629e3",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "929f10994be469025548083652a9dae3db565a4b"
+    "commit": "b4dd3629e3aed0c515d5033a1e9b053a9b87a9c7"
   },
   "_source": "https://zen.visionobjects.com/git/WS/MyScriptJS.git",
   "_target": "master",

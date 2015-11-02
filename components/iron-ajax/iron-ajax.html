@@ -241,7 +241,7 @@ element.
        *
        * The type of the response is determined by the value of `handleAs` at
        * the time that the request was generated.
-       * 
+       *
        * @type {Object}
        */
       lastResponse: {
@@ -252,7 +252,7 @@ element.
 
       /**
        * lastRequest's error, if any.
-       * 
+       *
        * @type {Object}
        */
       lastError: {
@@ -362,9 +362,7 @@ element.
 
       if (this.headers instanceof Object) {
         for (header in this.headers) {
-          // Normalize headers in lower case to make it easier for iron-request
-          // to reason about them.
-          headers[header.toLowerCase()] = this.headers[header].toString();
+          headers[header] = this.headers[header].toString();
         }
       }
 

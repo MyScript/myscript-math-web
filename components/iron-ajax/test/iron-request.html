@@ -152,6 +152,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           });
         });
 
+        test('headers are sent up', function() {
+          var options = Object.create(successfulRequestOptions);
+          options.headers = {
+            'foo': 'bar',
+            'accept': 'this should override the default'
+          };
+          request.send(options);
+          expect(server.requests.length).to.be.equal(1);
+          var fakeXhr = server.requests[0]
+          expect(fakeXhr.requestHeaders['foo']).to.be.equal(
+              'bar');
+          expect(fakeXhr.requestHeaders['accept']).to.be.equal(
+              'this should override the default');
+        });
+
+        test('headers are deduped by lowercasing', function() {
+          var options = Object.create(successfulRequestOptions);
+          options.headers = {
+            'foo': 'bar',
+            'Foo': 'bar',
+            'fOo': 'bar',
+            'Accept': 'this should also override the default'
+          };
+          request.send(options);
+          expect(server.requests.length).to.be.equal(1);
+          var fakeXhr = server.requests[0]
+          expect(Object.keys(fakeXhr.requestHeaders).length).to.be.equal(2);
+          expect(fakeXhr.requestHeaders['foo']).to.be.equal(
+              'bar');
+          expect(fakeXhr.requestHeaders['accept']).to.be.equal(
+              'this should also override the default');
+        });
       });
 
       suite('special cases', function() {

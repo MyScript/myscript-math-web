@@ -183,7 +183,7 @@ iron-request can be used to perform XMLHttpRequests.
      *     async By default, all requests are sent asynchronously. To send synchronous requests,
      *         set to true.
      *     body The content for the request body for POST method.
-     *     headers HTTP request headers. All keys must be lower case.
+     *     headers HTTP request headers.
      *     handleAs The response type. Default is 'text'.
      *     withCredentials Whether or not to send credentials on the request. Default is false.
      *   timeout: (Number|undefined)
@@ -221,6 +221,7 @@ iron-request can be used to perform XMLHttpRequests.
         this.rejectCompletes(new Error('Request aborted.'));
       }.bind(this));
 
+
       // Called after all of the above.
       xhr.addEventListener('loadend', function () {
         this._updateStatus();
@@ -248,7 +249,13 @@ iron-request can be used to perform XMLHttpRequests.
         'xml': 'application/xml',
         'arraybuffer': 'application/octet-stream'
       }[options.handleAs];
-      var headers = options.headers || {};
+      var headers = options.headers || Object.create(null);
+      var newHeaders = Object.create(null);
+      for (var key in headers) {
+        newHeaders[key.toLowerCase()] = headers[key];
+      }
+      headers = newHeaders;
+
       if (acceptType && !headers['accept']) {
         headers['accept'] = acceptType;
       }

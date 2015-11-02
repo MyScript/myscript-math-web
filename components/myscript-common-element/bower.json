@@ -3,14 +3,7 @@
     "version": "1.1.0",
     "description": "MyScript Common Element to help developer for integrate handwriting recognition.",
     "keywords": [
-        "web-component",
-        "web-components",
-        "polymer",
-        "myscript",
-        "myscriptjs",
-        "myscriptwebcomponents",
-        "handwriting",
-        "recognition"
+        "myscript"
     ],
     "main": "myscript-common-element.html",
     "license": "Apache-2",
@@ -33,11 +26,6 @@
     },
     "devDependencies": {
         "iron-component-page": "polymerelements/iron-component-page#1.0.x",
-        "iron-localstorage": "PolymerElements/iron-localstorage#1.0.x",
-        "iron-icons": "polymerelements/iron-icons#1.0.x",
-        "paper-fab": "polymerelements/paper-fab#1.0.x",
-        "paper-input": "PolymerElements/paper-input#1.0.x",
-        "paper-toast": "polymerelements/paper-toast#1.0.x",
         "web-component-tester": "*"
     }
 }
