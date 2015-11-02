@@ -20,7 +20,7 @@ The easy way to integrate handwriting recognition in your web app.
 </html>
 ```    
 
-[Test it live](http://myscript.github.io/myscript-math-web/index.html/demo/)!
+[Test it live](http://myscript.github.io/myscript-math-web/demo/)!
 
 ## What is it about?
 
