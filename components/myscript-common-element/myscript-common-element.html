@@ -1,0 +1,385 @@
+<!--
+Copyright © MyScript.
+LICENSE: github.com/MyScriptWebComponents/myscript-common-element/blob/master/LICENSE
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../myscript/myscript.html">
+<!--
+The `myscript-common-element` is a web component wrapper around MyScriptJS InkPaper.
+
+##### Example
+
+    var recognized = function (e) {
+        result.innerHTML = e.detail.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
+    };
+
+    var error = function (e) {
+        if (e) {
+            result.innerHTML = e;
+        }
+    };
+    ...
+    <myscript-common-element
+        protocol="WebSocket"
+        type="TEXT"
+        applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        on-error="error"
+        on-result="recognized">
+    </myscript-common-element>
+
+@group MyScript Elements
+@element myscript-common-element
+@blurb MyScript InkPaper to help developer for integrate handwriting recognition.
+@status beta
+@homepage https://github.com/MyScript/myscript-common-element/
+
+-->
+<dom-module id="myscript-common-element">
+    <style>
+        :host {
+            display: block;
+        }
+
+        #myscript-input-area {
+            height: 100%;
+            width: 100%;
+            min-height: 300px;
+            min-width: 400px;
+        }
+    </style>
+    <template>
+        <div id="myscript-input-area" on-changed="_onChanged" on-success="_onSuccess" on-failure="_onFailure"></div>
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: 'myscript-common-element',
+        /**
+         * Fired when a recognition result is successfully received.
+         *
+         * @event myscript-common-element-result
+         */
+        /**
+         * Fired when a recognition error occurred.
+         *
+         * @event error
+         */
+        /**
+         * Fired when the content of the InkPaper changes.
+         *
+         * @event changed
+         */
+        properties: {
+            /**
+             * The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)
+             *
+             * @attribute type
+             * @type String
+             * @default 'TEXT'
+             */
+            type: {
+                type: String,
+                notify: true,
+                observer: '_typeChanged'
+            },
+            /**
+             * The current recognition language (e.g. en_US, fr_FR, ...)
+             *
+             * @attribute language
+             * @type String
+             * @default 'en_US'
+             */
+            language: {
+                type: String,
+                notify: true,
+                value: "en_US",
+                observer: '_languageChanged'
+            },
+            /**
+             * Math result types (e.g. LATEX, MATHML, SYMBOLTREE)
+             *
+             * @attribute resulttypes
+             * @type Array
+             */
+            resulttypes: {
+                type: Array,
+                notify: true,
+                value: [],
+                observer: '_resulttypesChanged'
+            },
+            /**
+             * The current recognition protocol (e.g. REST, or WebSocket <b>ONLY</b> for TEXT and MATH)
+             *
+             * @private
+             * @attribute protocol
+             * @type String
+             * @default 'REST'
+             */
+            protocol: {
+                type: String,
+                notify: true
+            },
+            /**
+             * The current recognition service host
+             *
+             * @private
+             * @attribute host
+             * @type String
+             * @default 'cloud.myscript.com'
+             */
+            host: {
+                type: String,
+                notify: true
+            },
+            /**
+             * The recognition timeout (-1 = disabled, 0 = immediate, 0 > deferred)
+             *
+             * @attribute timeout, only use for HTTP
+             * @type Number
+             * @default 2000
+             */
+            timeout: {
+                type: Number,
+                notify: true,
+                observer: '_timeoutChanged'
+            },
+            /**
+             * Application key to use for recognition on MyScript handwriting recognition server.<br>
+             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com.<br>
+             * <b>Warning</b> : This parameter is <b>mandatory</b> and it's value should be a string.
+             *
+             * @attribute applicationkey
+             * @type String
+             */
+            applicationkey: {
+                type: String,
+                notify: true,
+                observer: '_applicationkeyChanged'
+            },
+            /**
+             * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
+             * You have to create your own hmac key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
+             * <b>Warning</b> : This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
+             *
+             * @attribute hmackey
+             * @type String
+             */
+            hmackey: {
+                type: String,
+                notify: true,
+                observer: '_hmackeyChanged'
+            },
+            /**
+             * A object with MyScriptJS option used to build the common element.
+             */
+            options : {
+                type: Object
+            }
+        },
+        behaviors: [
+            Polymer.IronResizableBehavior
+        ],
+        listeners: {
+            'iron-resize': '_onResize'
+        },
+        /**
+         * Delete all context
+         *
+         * @method delete
+         */
+        delete: function () {
+            if (this._inkPaper) {
+                this._inkPaper.clear();
+            }
+        },
+        /**
+         * Undo action, and launch recognition if timeout is set
+         *
+         * @method undo
+         */
+        undo: function () {
+            if (this._inkPaper) {
+                this._inkPaper.undo();
+            }
+        },
+        /**
+         * Redo action, and launch recognition if timeout is set
+         *
+         * @method redo
+         */
+        redo: function () {
+            if (this._inkPaper) {
+                this._inkPaper.redo();
+            }
+        },
+        /**
+         * Launch recognition
+         *
+         * @method recognize
+         */
+        recognize: function () {
+            if (this._inkPaper) {
+                this._inkPaper.recognize();
+            }
+        },
+        /**
+         * Get parent
+         *
+         * @private
+         * @method parent
+         */
+        get parent() {
+            if (this.parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+                return this.parentNode.host;
+            }
+            return this.parentNode;
+        },
+        attached: function () {
+            this.async(this.notifyResize, 1);
+        },
+        ready: function () {
+            this._inputArea = this.querySelector('#myscript-input-area');
+
+            var configOptions = this.option;
+            //Create option object if non set
+            if(!configOptions) {
+                configOptions = {};
+            }
+
+            configOptions.host= this.host;
+            configOptions.protocol= this.protocol;
+            configOptions.type = this.type;
+            configOptions.width = this.offsetWidth;
+            configOptions.height = this.offsetHeight;
+            configOptions.timeout = this.timeout;
+            configOptions.applicationKey = this.applicationkey;
+            configOptions.hmacKey = this.hmackey;
+
+            this._inkPaper = new MyScript.InkPaper(this._inputArea, configOptions, function (data, err) {
+                if (data) {
+                    this.fire('myscript-common-element-result', data);
+                }
+                if (err) {
+                    this.fire('error', err);
+                }
+            }.bind(this));
+
+            this._languageChanged();
+            this._resulttypesChanged();
+        },
+        /**
+         * Resize listener
+         *
+         * @private
+         * @method _onResize
+         */
+        _onResize: function () {
+            if (this._inkPaper) {
+
+                if (this.offsetWidth && (this.offsetWidth > 0)) {
+                    this._inkPaper.setWidth(this.offsetWidth);
+                }
+
+                if (this.offsetHeight && (this.offsetHeight > 0)) {
+                    this._inkPaper.setHeight(this.offsetHeight);
+                }
+            }
+        },
+        /**
+         * Changed listener
+         *
+         * @private
+         * @method _onChanged
+         */
+        _onChanged: function (e) {
+            this.fire(e.type, e.detail);
+        },
+        /**
+         * Success listener
+         *
+         * @private
+         * @method _onSuccess
+         */
+        _onSuccess: function (e) {
+            this.fire(e.type, e.detail);
+        },
+        /**
+         * Failure listener
+         *
+         * @private
+         * @method _onFailure
+         */
+        _onFailure: function (e) {
+            this.fire(e.type, e.detail);
+        },
+        /**
+         * Application key changed observer
+         *
+         * @private
+         * @method _applicationKeyChanged
+         */
+        _applicationkeyChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setApplicationKey(this.applicationkey);
+            }
+        },
+        /**
+         * HMAC key changed observer
+         *
+         * @private
+         * @method _hmacKeyChanged
+         */
+        _hmackeyChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setHmacKey(this.hmackey);
+            }
+        },
+        /**
+         * Timeout changed observer
+         *
+         * @private
+         * @method _timeoutChanged
+         */
+        _timeoutChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setTimeout(this.timeout);
+            }
+        },
+        /**
+         * Recognition type changed observer
+         *
+         * @private
+         * @method _typeChanged
+         */
+        _typeChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setType(this.type);
+            }
+        },
+        /**
+         * Recognition language changed observer
+         *
+         * @private
+         * @method _languageChanged
+         */
+        _languageChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setLanguage(this.language);
+            }
+        },
+        /**
+         * Math Recognition result types changed observer
+         *
+         * @private
+         * @method _resulttypesChanged
+         */
+        _resulttypesChanged: function () {
+            if (this._inkPaper) {
+                this._inkPaper.setResultTypes(this.resulttypes);
+            }
+        }
+
+    });
+</script>
