@@ -20,7 +20,7 @@ The easy way to integrate mathematical expressions handwriting recognition in yo
 </html>
 ```    
 
-[Test it live](http://myscript.github.io/myscript-math-web/demo/)!
+[Test it live](http://myscript.github.io/myscript-math-web/components/myscript-math-web/demo/)!
 
 ## What is it about?
 

@@ -1,6 +1,6 @@
 {
   "name": "myscript",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "main": [
     "./dist/myscript.js",
     "./dist/myscript.css"
@@ -39,11 +39,11 @@
     "q": "1.4.x",
     "handjs": "*"
   },
-  "_release": "1.1.1",
+  "_release": "1.1.2",
   "_resolution": {
     "type": "version",
-    "tag": "v1.1.1",
-    "commit": "f87cc90372b136b47e2be7dce5aaceffc55ab164"
+    "tag": "v1.1.2",
+    "commit": "ec0e705b3aa75700277e2c0458b0604c734a0ed4"
   },
   "_source": "git://github.com/MyScript/MyScriptJS.git",
   "_target": "1.1.x",
