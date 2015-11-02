@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <title>myscript-math-web demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../myscript-math-web.html">
+
+</head>
+<style>
+    html, body {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    myscript-math-web {
+        height: calc(100% - 70px);
+    }
+</style>
+<body unresolved>
+<template id="app" is="dom-bind">
+    <myscript-math-web
+        applicationkey='22eda92c-10af-40d8-abea-fd4093c17d81'
+        hmackey='a1fa759f-b3ce-4091-9fd4-d34bb870c601'
+        host='webdemo.myscript.com'
+        >
+    </myscript-math-web>
+</template>
+</body>
+</html>

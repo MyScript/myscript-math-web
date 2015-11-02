@@ -1,0 +1,22 @@
+{
+  "name": "handjs",
+  "main": "hand.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "*.json",
+    "README.md"
+  ],
+  "dependencies": {},
+  "homepage": "https://github.com/greenplumm/handjs",
+  "_release": "a44cede36e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "a44cede36ed768cd26e08ee18eee9d7cea2d8bdd"
+  },
+  "_source": "git://github.com/greenplumm/handjs.git",
+  "_target": "*",
+  "_originalSource": "handjs"
+}

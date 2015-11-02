@@ -1,0 +1,43 @@
+{
+    "name": "myscript-math-web",
+    "version": "1.1.0",
+    "description": "HTML5 Element easing integration of MyScript math handwriting recognition in your web-page",
+    "keywords": [
+        "web-component",
+        "web-components",
+        "polymer",
+        "myscript",
+        "education",
+        "write",
+        "math",
+        "handwriting",
+        "recognition"
+    ],
+    "main": "myscript-math-web.html",
+    "license": "Apache-2",
+    "homepage": "https://github.com/MyScriptWebComponents/myscript-math-web/",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/MyScriptWebComponents/myscript-math-web.git"
+    },
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "tests",
+        "test"
+    ],
+    "dependencies": {
+        "polymer": "Polymer/polymer#1.2.x",
+        "iron-icons": "PolymerElements/iron-icons#1.0.x",
+        "paper-fab": "PolymerElements/paper-fab#1.0.x",
+        "paper-toast": "PolymerElements/paper-toast#1.0.x",
+        "katex" : "katex#v0.5.x",
+        "iron-flex-layout": "PolymerElements/iron-flex-layout#1.0.x",
+        "myscript-common-element": "myscript-common-element#1.1.x"
+    },
+    "devDependencies": {
+        "iron-component-page": "PolymerElements/iron-component-page#1.0.x",
+        "web-component-tester": "*"
+    }
+}
