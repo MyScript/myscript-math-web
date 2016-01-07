@@ -3,7 +3,13 @@ include Makefile.inc
 ALL:
 
 .PHONY: ALL \
+	watch dev \
 	escrow
+
+watch:
+
+dev:
+	@polyserve
 
 escrow:
 	@rm -rf escrow/ && mkdir -p escrow/
