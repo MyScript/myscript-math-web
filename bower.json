@@ -1,6 +1,6 @@
 {
     "name": "myscript-math-web",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "HTML5 Element easing integration of MyScript math handwriting recognition in your web-page",
     "keywords": [
         "web-component",
