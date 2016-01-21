@@ -33,17 +33,17 @@ See a live demo [here](demo/index.html)
         <div id="resultField" hidden="[[hideresult]]"></div>
         <div class="horizontal layout buttons" hidden="[[hidebuttons]]">
             <paper-fab class="delete" mini icon="delete" title="delete" on-tap="delete"></paper-fab>
-            <paper-fab class="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canundo }}"></paper-fab>
-            <paper-fab class="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canredo }}"></paper-fab>
+            <paper-fab class="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canUndo }}"></paper-fab>
+            <paper-fab class="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canRedo }}"></paper-fab>
         </div>
 
         <myscript-common-element host="{{ host }}"
                                  protocol="{{ protocol }}"
                                  type="MATH"
-                                 resulttypes="{{ resulttypes }}"
                                  applicationkey="{{ applicationkey }}"
                                  hmackey="{{ hmackey }}"
                                  timeout="{{ timeout }}"
+                                 math-parameters="{{ mathParameters }}"
                                  on-changed="_onChanged"
                                  on-success="_onSuccess"
                                  on-failure="_onFailure">
@@ -135,20 +135,20 @@ See a live demo [here](demo/index.html)
                 },
                 /**
                  * @private
-                 * @attribute canundo
+                 * @attribute canUndo
                  * @type Boolean
                  */
-                canundo: {
+                canUndo: {
                     type: Boolean,
                     notify: true,
                     value: false
                 },
                 /**
                  * @private
-                 * @attribute canredo
+                 * @attribute canRedo
                  * @type Boolean
                  */
-                canredo: {
+                canRedo: {
                     type: Boolean,
                     notify: true,
                     value: false
@@ -185,6 +185,18 @@ See a live demo [here](demo/index.html)
                     notify: true
                 },
                 /**
+                 * Recognition parameters for the math recognition.<br>
+                 *
+                 * @private
+                 * @attribute math-parameters
+                 * @type Object
+                 */
+                mathParameters: {
+                    type: Object,
+                    notify: true,
+                    computed: '_computeMathParameters(resulttypes)'
+                },
+                /**
                  * Recognition result.
                  * @attribute result
                  * @type Array
@@ -200,7 +212,7 @@ See a live demo [here](demo/index.html)
              * @method delete
              */
             delete: function () {
-                this._myscriptCommonElement.delete();
+                this._myscriptCommonElement.clear();
                 if(!this.hideresult) {
                     this._resultField.innerHTML = "";
                 }
@@ -225,8 +237,8 @@ See a live demo [here](demo/index.html)
             },
             _onChanged: function (e) {
                 if (e.detail) {
-                    this.canundo = e.detail.canUndo;
-                    this.canredo = e.detail.canRedo;
+                    this.canUndo = e.detail.canUndo;
+                    this.canRedo = e.detail.canRedo;
                 }
                 this.fire(e.type, e.detail);
             },
@@ -259,7 +271,7 @@ See a live demo [here](demo/index.html)
                 } else {
                     this._resultField.innerHTML = "";
                 }
-
+                this.fire(e.type, e.detail);
                 this.fire('myscript-math-web-result', this.result);
             },
             /**
@@ -277,6 +289,11 @@ See a live demo [here](demo/index.html)
                 this._resultField = this.querySelector('#resultField');
                 this._myscriptCommonElement = this.querySelector('myscript-common-element');
                 this._paperToast = this.querySelector('paper-toast');
+            },
+            _computeMathParameters: function (resulttypes) {
+                var parameters = new MyScript.MathParameter();
+                parameters.setResultTypes(resulttypes);
+                return parameters;
             }
         });
 
