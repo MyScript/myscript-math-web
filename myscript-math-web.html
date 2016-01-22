@@ -249,6 +249,12 @@ See a live demo [here](demo/index.html)
                     computed: '_computeMathMLResult(result)'
                 }
             },
+            behaviors: [
+                Polymer.IronResizableBehavior
+            ],
+            listeners: {
+                'iron-resize': '_onResize'
+            },
             /**
              * Delete action.
              *
@@ -311,6 +317,17 @@ See a live demo [here](demo/index.html)
                 this.fire(e.type, e.detail);
                 this._paperToast.text = (typeof e.detail === 'object') ? JSON.stringify(e.detail) : e.detail;
                 this._paperToast.show();
+            },
+            /**
+             * Resize listener
+             *
+             * @private
+             * @method _onResize
+             */
+            _onResize: function () {
+                if (this._myscriptCommonElement) {
+                    this._myscriptCommonElement._onResize();
+                }
             },
             ready: function () {
                 this._resultField = this.querySelector('#resultField');
