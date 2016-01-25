@@ -81,7 +81,7 @@ See a live demo [here](demo/index.html)
                 protocol: {
                     type: String,
                     notify: true,
-                    value: 'WebSocket'
+                    value: MyScript.Protocol.WS
                 },
                 /**
                  * The current recognition service host.
@@ -352,13 +352,13 @@ See a live demo [here](demo/index.html)
                 return result;
             },
             _computeLaTeXResult: function (result) {
-                if (result && result.hasOwnProperty('LATEX')) {
+                if (result && result.hasOwnProperty(MyScript.ResultType.Math.LATEX)) {
                     return result.LATEX;
                 }
                 return undefined;
             },
             _computeMathMLResult: function (result) {
-                if (result && result.hasOwnProperty('MATHML')) {
+                if (result && result.hasOwnProperty(MyScript.ResultType.Math.MATHML)) {
                     return result.MATHML;
                 }
                 return undefined;
