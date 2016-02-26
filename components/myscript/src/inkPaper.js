@@ -20,20 +20,21 @@
         this.components = [];
         this.redoComponents = [];
         this.lastNonRecoComponentIdx = 0;
-        this.callback = callback;
+        this.resultCallback = callback;
+        this.changeCallback = undefined;
         this.options = { // Default options
-            type: 'TEXT',
-            protocol: 'REST',
+            type: scope.RecognitionType.TEXT,
+            protocol: scope.Protocol.REST,
             width: 400,
             height: 300,
             timeout: 2000,
             typeset: false,
             components: [],
-            textParameters: {},
-            mathParameters: {},
-            shapeParameters: {},
-            musicParameters: {},
-            analyzerParameters: {}
+            textParameters: new scope.TextParameter(),
+            mathParameters: new scope.MathParameter(),
+            shapeParameters: new scope.ShapeParameter(),
+            musicParameters: new scope.MusicParameter(),
+            analyzerParameters: new scope.AnalyzerParameter()
         };
 
         // Capture
@@ -99,16 +100,16 @@
     /**
      * Set the network protocol (REST or WebSocket)
      *
-     * @param {String} protocol
+     * @param {'REST'|'WebSocket'} protocol
      */
-    InkPaper.prototype._setProtocol = function (protocol) {
+    InkPaper.prototype.setProtocol = function (protocol) {
         switch (protocol) {
-            case 'REST':
+            case scope.Protocol.REST:
                 this._selectedRecognizer = this._selectedRESTRecognizer;
                 break;
-            case 'WebSocket':
-                this._selectedRecognizer = this._selectedWSRecognizer;
+            case scope.Protocol.WS:
                 this.setTimeout(-1); // FIXME hack to avoid border issues
+                this._selectedRecognizer = this._selectedWSRecognizer;
                 break;
             default:
                 throw new Error('Unknown protocol: ' + protocol);
@@ -119,32 +120,45 @@
     };
 
     /**
+     * Get the network protocol (REST or WebSocket)
+     *
+     * @returns {'REST'|'WebSocket'}
+     */
+    InkPaper.prototype.getProtocol = function () {
+        if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
+            return scope.Protocol.WS;
+        } else {
+            return scope.Protocol.REST;
+        }
+    };
+
+    /**
      * Set recognition type
      *
      * @method setType
-     * @param {'TEXT'|'MATH'|'SHAPE'|'ANALYZER'|'MUSIC'} type
+     * @param {'TEXT'|'MATH'|'SHAPE'|'MUSIC'|'ANALYZER'} type
      */
     InkPaper.prototype.setType = function (type) {
         switch (type) {
-            case 'TEXT':
+            case scope.RecognitionType.TEXT:
                 this._selectedRenderer = this._textRenderer;
                 this._selectedRESTRecognizer = this._textRecognizer;
                 this._selectedWSRecognizer = this._textWSRecognizer;
                 break;
-            case 'MATH':
+            case scope.RecognitionType.MATH:
                 this._selectedRenderer = this._mathRenderer;
                 this._selectedRESTRecognizer = this._mathRecognizer;
                 this._selectedWSRecognizer = this._mathWSRecognizer;
                 break;
-            case 'SHAPE':
+            case scope.RecognitionType.SHAPE:
                 this._selectedRenderer = this._shapeRenderer;
                 this._selectedRESTRecognizer = this._shapeRecognizer;
                 break;
-            case 'MUSIC':
+            case scope.RecognitionType.MUSIC:
                 this._selectedRenderer = this._musicRenderer;
                 this._selectedRESTRecognizer = this._musicRecognizer;
                 break;
-            case 'ANALYZER':
+            case scope.RecognitionType.ANALYZER:
                 this._selectedRenderer = this._analyzerRenderer;
                 this._selectedRESTRecognizer = this._analyzerRecognizer;
                 break;
@@ -157,31 +171,28 @@
     };
 
     /**
-     * Set recognition language
+     * Get recognition type
      *
-     * @method setLanguage
-     * @param  String language
+     * @method getType
+     * @returns {'TEXT'|'MATH'|'SHAPE'|'MUSIC'|'ANALYZER'} type
      */
-    InkPaper.prototype.setLanguage = function (language) {
-        if(this.options.type === 'TEXT'){
-            this.isStarted = false;
-            this._selectedWSRecognizer.resetWSRecognition();
-            this._selectedWSRecognizer.getParameters().setLanguage(language);
+    InkPaper.prototype.getType = function () {
+        if (this._selectedRenderer instanceof scope.TextRenderer) {
+            return scope.RecognitionType.TEXT;
         }
-    };
-
-    /**
-     * Set math recognition format result types
-     *
-     * @method setResultTypes
-     * @param  Array resultTypes
-     */
-    InkPaper.prototype.setResultTypes = function (resultTypes) {
-        if(this.options.type === 'MATH'){
-            this.isStarted = false;
-            this._selectedWSRecognizer.resetWSRecognition();
-            this._selectedWSRecognizer.getParameters().setResultTypes(resultTypes.map(function(x) { return x.toUpperCase(); }));
+        if (this._selectedRenderer instanceof scope.MathRenderer) {
+            return scope.RecognitionType.MATH;
         }
+        if (this._selectedRenderer instanceof scope.ShapeRenderer) {
+            return scope.RecognitionType.SHAPE;
+        }
+        if (this._selectedRenderer instanceof scope.MusicRenderer) {
+            return scope.RecognitionType.MUSIC;
+        }
+        if (this._selectedRenderer instanceof scope.AnalyzerRenderer) {
+            return scope.RecognitionType.ANALYZER;
+        }
+        throw new Error('Unknown type');
     };
 
     /**
@@ -245,13 +256,47 @@
     };
 
     /**
+     * Set recognition language
+     *
+     * @deprecated Use setTextParameters instead
+     * @method setLanguage
+     * @param  String language
+     */
+    InkPaper.prototype.setLanguage = function (language) {
+        if(this.options.type === scope.RecognitionType.TEXT){
+            this.isStarted = false;
+            this._selectedWSRecognizer.resetWSRecognition();
+            this._selectedWSRecognizer.getParameters().setLanguage(language);
+        }
+    };
+
+    /**
+     * Set math recognition format result types
+     *
+     * @deprecated Use setMathParameters instead
+     * @method setResultTypes
+     * @param  Array resultTypes
+     */
+    InkPaper.prototype.setResultTypes = function (resultTypes) {
+        if(this.options.type === scope.RecognitionType.MATH){
+            this.isStarted = false;
+            this._selectedWSRecognizer.resetWSRecognition();
+            this._selectedWSRecognizer.getParameters().setResultTypes(resultTypes.map(function(x) { return x.toUpperCase(); }));
+        }
+    };
+
+    /**
      * Set text recognition parameters
      *
      * @method setTextParameters
-     * @param {TextParameters} textParameters
+     * @param {TextParameter} textParameters
      */
     InkPaper.prototype.setTextParameters = function (textParameters) {
         if (textParameters) {
+            if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
+                this.isStarted = false;
+                this._selectedRecognizer.resetWSRecognition();
+            }
             for (var i in textParameters) {
                 if (textParameters[i] !== undefined) {
                     this._textRecognizer.getParameters()[i] = textParameters[i]; // Override options
@@ -263,13 +308,27 @@
     };
 
     /**
+     * Get text recognition parameters
+     *
+     * @method getTextParameters
+     * @returns {TextParameter} textParameters
+     */
+    InkPaper.prototype.getTextParameters = function () {
+        return this._textRecognizer.getParameters();
+    };
+
+    /**
      * Set math recognition parameters
      *
      * @method setMathParameters
-     * @param {MathParameters} mathParameters
+     * @param {MathParameter} mathParameters
      */
     InkPaper.prototype.setMathParameters = function (mathParameters) {
         if (mathParameters) {
+            if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
+                this.isStarted = false;
+                this._selectedRecognizer.resetWSRecognition();
+            }
             for (var i in mathParameters) {
                 if (mathParameters[i] !== undefined) {
                     this._mathRecognizer.getParameters()[i] = mathParameters[i]; // Override options
@@ -280,13 +339,27 @@
     };
 
     /**
+     * Get math recognition parameters
+     *
+     * @method getMathParameters
+     * @returns {MathParameter} mathParameters
+     */
+    InkPaper.prototype.getMathParameters = function () {
+        return this._mathRecognizer.getParameters();
+    };
+
+    /**
      * Set shape recognition parameters
      *
      * @method setShapeParameters
-     * @param {ShapeParameters} shapeParameters
+     * @param {ShapeParameter} shapeParameters
      */
     InkPaper.prototype.setShapeParameters = function (shapeParameters) {
         if (shapeParameters) {
+            if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
+                this.isStarted = false;
+                this._selectedRecognizer.resetWSRecognition();
+            }
             for (var i in shapeParameters) {
                 if (shapeParameters[i] !== undefined) {
                     this._shapeRecognizer.getParameters()[i] = shapeParameters[i]; // Override options
@@ -296,13 +369,27 @@
     };
 
     /**
+     * Get shape recognition parameters
+     *
+     * @method getShapeParameters
+     * @returns {ShapeParameter} shapeParameters
+     */
+    InkPaper.prototype.getShapeParameters = function () {
+        return this._shapeRecognizer.getParameters();
+    };
+
+    /**
      * Set music recognition parameters
      *
      * @method setMusicParameters
-     * @param {MusicParameters} musicParameters
+     * @param {MusicParameter} musicParameters
      */
     InkPaper.prototype.setMusicParameters = function (musicParameters) {
         if (musicParameters) {
+            if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
+                this.isStarted = false;
+                this._selectedRecognizer.resetWSRecognition();
+            }
             for (var i in musicParameters) {
                 if (musicParameters[i] !== undefined) {
                     this._musicRecognizer.getParameters()[i] = musicParameters[i]; // Override options
@@ -312,19 +399,76 @@
     };
 
     /**
+     * Get music recognition parameters
+     *
+     * @method getMusicParameters
+     * @returns {MusicParameter} musicParameters
+     */
+    InkPaper.prototype.getMusicParameters = function () {
+        return this._musicRecognizer.getParameters();
+    };
+
+    /**
      * Set analyzer recognition parameters
      *
      * @method setAnalyzerParameters
-     * @param {AnalyzerParameters} analyzerParameters
+     * @param {AnalyzerParameter} analyzerParameters
      */
     InkPaper.prototype.setAnalyzerParameters = function (analyzerParameters) {
         if (analyzerParameters) {
+            if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
+                this.isStarted = false;
+                this._selectedRecognizer.resetWSRecognition();
+            }
             for (var i in analyzerParameters) {
                 if (analyzerParameters[i] !== undefined) {
                     this._analyzerRecognizer.getParameters()[i] = analyzerParameters[i]; // Override options
                 }
             }
         }
+    };
+
+    /**
+     * Get analyzer recognition parameters
+     *
+     * @method getAnalyzerParameters
+     * @returns {AnalyzerParameter} analyzerParameters
+     */
+    InkPaper.prototype.getAnalyzerParameters = function () {
+        return this._analyzerRecognizer.getParameters();
+    };
+
+    /**
+     * Set pen parameters
+     *
+     * @method setPenParameters
+     * @param {PenParameters} penParameters
+     */
+    InkPaper.prototype.setPenParameters = function (penParameters) {
+        if (penParameters) {
+            for (var i in penParameters) {
+                if (penParameters[i] !== undefined) {
+                    this._selectedRenderer.getParameters()[i] = penParameters[i]; // Override options
+                }
+            }
+            var params = this._selectedRenderer.getParameters();
+            this._inkGrabber.setParameters(params); // Override options
+            this._textRenderer.setParameters(params); // Override options
+            this._mathRenderer.setParameters(params); // Override options
+            this._shapeRenderer.setParameters(params); // Override options
+            this._musicRenderer.setParameters(params); // Override options
+            this._analyzerRenderer.setParameters(params); // Override options
+        }
+    };
+
+    /**
+     * Get pen parameters
+     *
+     * @method getPenParameters
+     * @returns {PenParameters} penParameters
+     */
+    InkPaper.prototype.getPenParameters = function () {
+        return this._selectedRenderer.getParameters();
     };
 
     /**
@@ -358,11 +502,12 @@
 
         // Recognition type
         this.setType(options.type);
-        this._setProtocol(options.protocol);
+        this.setProtocol(options.protocol);
         this.setTimeout(options.timeout);
         this.setApplicationKey(options.applicationKey);
         this.setHmacKey(options.hmacKey);
 
+        this.setPenParameters(options.penParameters);
         this.setTypeset(options.typeset);
 
         this.setWidth(options.width);
@@ -424,12 +569,35 @@
      * Set the recognition callback
      *
      * @method setCallback
+     * @deprecated Use setResultCallback instead
      * @param {Function} callback callback function
      * @param {Object} callback.data The recognition result
      * @param {Object} callback.err The err to the callback
      */
     InkPaper.prototype.setCallback = function (callback) {
-        this.callback = callback;
+        this.resultCallback = callback;
+    };
+
+    /**
+     * Set the change callback
+     *
+     * @method setChangeCallback
+     * @param {Function} callback callback function
+     * @param {Object} callback.data The inkPaper state
+     */
+    InkPaper.prototype.setChangeCallback = function (changeCallback) {
+        this.changeCallback = changeCallback;
+    };
+
+    /**
+     * Set the recognition result callback
+     *
+     * @method setResultCallback
+     * @param {Function} callback callback function
+     * @param {Object} callback.data The recognition result
+     */
+    InkPaper.prototype.setResultCallback = function (callback) {
+        this.resultCallback = callback;
     };
 
     /**
@@ -463,11 +631,14 @@
 
             if (this._selectedRecognizer instanceof scope.ShapeRecognizer) {
                 this.lastNonRecoComponentIdx = 0;
-                this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
-                this._instanceId = undefined;
+                if (this._instanceId) {
+                    this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
+                    this._inkGrabber.clear();
+                    this._instanceId = undefined;
+                }
             }
             this._initRenderingCanvas();
-            this._element.dispatchEvent(new CustomEvent('changed', {detail: {canUndo: this.canUndo(), canRedo: this.canRedo()}}));
+            this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
 
             if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
                 this.isStarted = false;
@@ -478,6 +649,8 @@
                     this._timerId = setTimeout(this.recognize.bind(this), this.getTimeout());
                 } else if (this.getTimeout() > -1) {
                     this.recognize();
+                } else {
+                    this._onResult();
                 }
             }
         }
@@ -504,11 +677,14 @@
 
             if (this._selectedRecognizer instanceof scope.ShapeRecognizer) {
                 this.lastNonRecoComponentIdx = 0;
-                this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
-                this._instanceId = undefined;
+                if (this._instanceId) {
+                    this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
+                    this._inkGrabber.clear();
+                    this._instanceId = undefined;
+                }
             }
             this._initRenderingCanvas();
-            this._element.dispatchEvent(new CustomEvent('changed', {detail: {canUndo: this.canUndo(), canRedo: this.canRedo()}}));
+            this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
 
             if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
                 this.recognize();
@@ -518,6 +694,8 @@
                     this._timerId = setTimeout(this.recognize.bind(this), this.getTimeout());
                 } else if (this.getTimeout() > -1) {
                     this.recognize();
+                } else {
+                    this._onResult();
                 }
             }
         }
@@ -530,7 +708,10 @@
      */
     InkPaper.prototype.clear = function () {
         if (this._selectedRecognizer instanceof scope.ShapeRecognizer) {
-            this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
+            if (this._instanceId) {
+                this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
+                this._instanceId = undefined;
+            }
         }
         this.components = [];
         this.redoComponents = [];
@@ -539,7 +720,7 @@
         this._instanceId = undefined;
 
         this._initRenderingCanvas();
-        this._element.dispatchEvent(new CustomEvent('changed', {detail: {canUndo: this.canUndo(), canRedo: this.canRedo()}}));
+        this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
 
         if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
             this.isStarted = false;
@@ -550,6 +731,8 @@
                 this._timerId = setTimeout(this.recognize.bind(this), this.getTimeout());
             } else if (this.getTimeout() > -1) {
                 this.recognize();
+            } else {
+                this._onResult();
             }
         }
     };
@@ -569,9 +752,19 @@
      * @param {Date} [t] timeStamp
      */
     InkPaper.prototype._down = function (x, y, t) {
+
+        if(this._captureCanvas.clientHeight != this._captureCanvas.height){
+            this._captureCanvas.height = this._captureCanvas.clientHeight;
+            this._renderingCanvas.height = this._renderingCanvas.clientHeight;
+        }
+        if(this._captureCanvas.clientWidth != this._captureCanvas.width){
+            this._captureCanvas.width = this._captureCanvas.clientWidth;
+            this._renderingCanvas.width = this._renderingCanvas.clientWidth;
+        }
+
         if (this.canRedo()) {
             this.redoComponents = [];
-            this._element.dispatchEvent(new CustomEvent('changed', {detail: {canUndo: this.canUndo(), canRedo: this.canRedo()}}));
+            this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
         }
         this._inkGrabber.startCapture(x, y, t);
     };
@@ -605,8 +798,7 @@
         this._selectedRenderer.drawComponent(stroke);
 
         this.components.push(stroke);
-
-        this._element.dispatchEvent(new CustomEvent('changed', {detail: {canUndo: this.canUndo(), canRedo: this.canRedo()}}));
+        this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
 
         if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
             if (!this._selectedRecognizer.isOpen() && !this._selectedRecognizer.isConnecting()) {
@@ -675,8 +867,7 @@
                         return this._parseResult(data, input);
                     }.bind(this),
                     function (error) {
-                        this.callback(undefined, error);
-                        this._element.dispatchEvent(new CustomEvent('failure', {detail: error}));
+                        this._onResult(undefined, error);
                         return error;
                     }.bind(this)
                 ).done();
@@ -685,9 +876,26 @@
             this.isStarted = false;
             this._selectedRenderer.clear();
             this._initRenderingCanvas();
-            this._element.dispatchEvent(new CustomEvent('success'));
-            this.callback();
+            this._onResult();
         }
+    };
+
+    InkPaper.prototype._onResult = function (data, err) {
+        if (this.resultCallback) {
+            this.resultCallback(data, err);
+        }
+        if (err) {
+            this._element.dispatchEvent(new CustomEvent('failure', {detail: err}));
+        } else {
+            this._element.dispatchEvent(new CustomEvent('success', {detail: data}));
+        }
+    };
+
+    InkPaper.prototype._onChange = function (changes) {
+        if (this.changeCallback) {
+            this.changeCallback(changes)
+        }
+        this._element.dispatchEvent(new CustomEvent('changed', {detail: changes}));
     };
 
     InkPaper.prototype._parseResult = function (data, input) {
@@ -695,8 +903,7 @@
         if (!this._instanceId) {
             this._instanceId = data.getInstanceId();
         } else if (this._instanceId !== data.getInstanceId()) {
-            this.callback(data);
-            this._element.dispatchEvent(new CustomEvent('success', {detail: data}));
+            this._onResult(data);
             return data;
         }
 
@@ -705,8 +912,7 @@
             this._selectedRenderer.drawRecognitionResult(input, data.getDocument());
         }
 
-        this.callback(data);
-        this._element.dispatchEvent(new CustomEvent('success', {detail: data}));
+        this._onResult(data);
         return data;
     };
 
@@ -762,6 +968,13 @@
                 pointerId = undefined;
             }
         }, false);
+        element.addEventListener('pointerleave', function (e) {
+            if (pointerId === e.pointerId) {
+                e.preventDefault();
+                console.log('pointerenter');
+                console.log(e);
+            }
+        }, false);
 
         element.addEventListener('pointerleave', function (e) {
             if (pointerId === e.pointerId) {
@@ -791,10 +1004,21 @@
         this._selectedRenderer.drawComponents(this._getOptions().components.concat(components));
     };
 
+    /**
+     *
+     * @param message
+     * @param error
+     * @returns {boolean} false no immediate replay needed, true when the call need to be replay ASAP
+     * @private
+     */
     InkPaper.prototype._handleMessage = function (message, error) {
+        var replayNeeded = false;
         if (error) {
-            this.callback(undefined, error);
-            this._element.dispatchEvent(new CustomEvent('failure', {detail: error}));
+            replayNeeded = true;
+            this._instanceId = undefined;
+            this.isStarted = false;
+            this.lastNonRecoComponentIdx = 0;
+            this._onResult(undefined, error);
         }
 
         if (message) {
@@ -806,6 +1030,7 @@
                     this._selectedWSRecognizer.takeUpHmacChallenge (this.getApplicationKey(), message.getChallenge(), this.getHmacKey());
                     break;
                 case 'init':
+                    this.isStarted = false;
                     this._initialized = true;
                     this._instanceId = undefined;
                     this.lastNonRecoComponentIdx = 0;
@@ -827,6 +1052,7 @@
                 }
             }
         }
+        return replayNeeded;
     };
 
     /**
@@ -845,6 +1071,7 @@
         return canvas;
     }
 
+
     /**
      * Tool to get proper coordinates
      *
@@ -853,22 +1080,12 @@
      * @param {Element} element
      * @returns {Object}
      */
-    function _getCoordinates(e, element) {
-        var x;
-        var y;
-        if (e.pageX || e.pageY) {
-            x = e.pageX;
-            y = e.pageY;
-        } else {
-            x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-            y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-        }
-        x -= element.offsetLeft;
-        y -= element.offsetTop;
-
+    function _getCoordinates(e, container) {
+        if (e.changedTouches) e = e.changedTouches[0];
+        var rect = container.getBoundingClientRect();
         return {
-            x: x,
-            y: y,
+            x: e.clientX - rect.left - container.clientLeft,
+            y: e.clientY - rect.top - container.clientTop,
             t: e.timeStamp
         };
     }

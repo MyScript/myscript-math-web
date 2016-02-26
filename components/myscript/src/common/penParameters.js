@@ -2,27 +2,28 @@
 
 (function (scope) {
     /**
-     * Parameters used for both input and output canvas draw. Default values:
-     * color: 'black';
-     * rectColor: 'rgba(0, 0, 0, 0.2)';
-     * font: 'Times New Roman';
-     * decoration: '';
-     * width: 4;
-     * pressureType: 'SIMULATED';
-     * alpha: '1.0';
-     * showBoundingBoxes: false;
+     * Parameters used for both input and output canvas draw.
      *
      * @class PenParameters
      * @constructor
      */
-    function PenParameters() {
-        this.color = 'black';
+    function PenParameters(obj) {
+        this.color = 'rgba(0, 0, 0, 0.9)';
         this.rectColor = 'rgba(0, 0, 0, 0.2)';
         this.font = 'Times New Roman';
-        this.decoration = '';
+        this.decoration = 'normal';
         this.width = 4;
         this.pressureType = 'SIMULATED';
         this.alpha = '1.0';
+        if (obj) {
+            this.color = obj.color;
+            this.rectColor = obj.rectColor;
+            this.font = obj.font;
+            this.decoration = obj.decoration;
+            this.width = obj.width;
+            this.pressureType = obj.pressureType;
+            this.alpha = obj.alpha;
+        }
     }
 
     /**
@@ -128,6 +129,7 @@
     /**
      * Get the pressure renderer parameter
      *
+     * @deprecated
      * @method getPressureType
      * @returns {String} The pressure type
      */
@@ -138,6 +140,7 @@
     /**
      * Set the pressure renderer parameter
      *
+     * @deprecated
      * @method setPressureType
      * @param {String} pressureType
      */
@@ -148,6 +151,7 @@
     /**
      * Get the alpha renderer parameter
      *
+     * @deprecated Use a rgba() color
      * @method getAlpha
      * @returns {String} The alpha
      */
@@ -158,6 +162,7 @@
     /**
      * Set the alpha renderer parameter
      *
+     * @deprecated Use a rgba() color
      * @method setAlpha
      * @param {String} alpha
      */

@@ -1,8 +1,3 @@
-/*
- myscript - The JavaScript library for the MyScript Cloud recognition service
- Version: 1.1.2
- License: Apache-2.0
- */
 /**
  * Polyfills
  */
@@ -56,8 +51,49 @@
  * @requires CryptoJS
  */
 /*global MyScript:true */
-MyScript = {};
-'use strict';
+MyScript = {
+    RecognitionType: {
+        TEXT: 'TEXT',
+        MATH: 'MATH',
+        SHAPE: 'SHAPE',
+        MUSIC: 'MUSIC',
+        ANALYZER: 'ANALYZER'
+    },
+    InputMode: {
+        CURSIVE: 'CURSIVE',
+        ISOLATED: 'ISOLATED',
+        SUPERIMPOSED: 'SUPERIMPOSED',
+        VERTICAL: 'VERTICAL'
+    },
+    InputType: {
+        CHAR: 'CHAR',
+        WORD: 'WORD',
+        SINGLE_LINE_TEXT: 'SINGLE_LINE_TEXT',
+        MULTI_LINE_TEXT: 'MULTI_LINE_TEXT'
+    },
+    ResultDetail: {
+        TEXT: 'TEXT',
+        WORD: 'WORD',
+        CHARACTER: 'CHARACTER'
+    },
+    ResultType: {
+        Math: {
+            LATEX: 'LATEX',
+            MATHML: 'MATHML',
+            SYMBOLTREE: 'SYMBOLTREE'
+        },
+        Music: {
+            MUSICXML: 'MUSICXML',
+            SCORETREE: 'SCORETREE'
+        }
+    },
+    Protocol: {
+        WS: 'WebSocket',
+        REST: 'REST'
+    }
+};
+
+
 
 (function (scope) {
     /**
@@ -117,7 +153,7 @@ MyScript = {};
     // Export
     scope.Point = Point;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -302,7 +338,7 @@ MyScript = {};
     // Export
     scope.QuadraticPoint = QuadraticPoint;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -428,7 +464,7 @@ MyScript = {};
     // Export
     scope.Rectangle = Rectangle;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -632,31 +668,32 @@ MyScript = {};
     // Export
     scope.InkManager = InkManager;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
-     * Parameters used for both input and output canvas draw. Default values:
-     * color: 'black';
-     * rectColor: 'rgba(0, 0, 0, 0.2)';
-     * font: 'Times New Roman';
-     * decoration: '';
-     * width: 4;
-     * pressureType: 'SIMULATED';
-     * alpha: '1.0';
-     * showBoundingBoxes: false;
+     * Parameters used for both input and output canvas draw.
      *
      * @class PenParameters
      * @constructor
      */
-    function PenParameters() {
-        this.color = 'black';
+    function PenParameters(obj) {
+        this.color = 'rgba(0, 0, 0, 0.9)';
         this.rectColor = 'rgba(0, 0, 0, 0.2)';
         this.font = 'Times New Roman';
-        this.decoration = '';
+        this.decoration = 'normal';
         this.width = 4;
         this.pressureType = 'SIMULATED';
         this.alpha = '1.0';
+        if (obj) {
+            this.color = obj.color;
+            this.rectColor = obj.rectColor;
+            this.font = obj.font;
+            this.decoration = obj.decoration;
+            this.width = obj.width;
+            this.pressureType = obj.pressureType;
+            this.alpha = obj.alpha;
+        }
     }
 
     /**
@@ -762,6 +799,7 @@ MyScript = {};
     /**
      * Get the pressure renderer parameter
      *
+     * @deprecated
      * @method getPressureType
      * @returns {String} The pressure type
      */
@@ -772,6 +810,7 @@ MyScript = {};
     /**
      * Set the pressure renderer parameter
      *
+     * @deprecated
      * @method setPressureType
      * @param {String} pressureType
      */
@@ -782,6 +821,7 @@ MyScript = {};
     /**
      * Get the alpha renderer parameter
      *
+     * @deprecated Use a rgba() color
      * @method getAlpha
      * @returns {String} The alpha
      */
@@ -792,6 +832,7 @@ MyScript = {};
     /**
      * Set the alpha renderer parameter
      *
+     * @deprecated Use a rgba() color
      * @method setAlpha
      * @param {String} alpha
      */
@@ -802,7 +843,8 @@ MyScript = {};
     // Export
     scope.PenParameters = PenParameters;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -829,7 +871,7 @@ MyScript = {};
     // Export
     scope.RenderingParameters = RenderingParameters;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -968,40 +1010,11 @@ MyScript = {};
         return new scope.Rectangle({x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin});
     };
 
-    /**
-     * This method is use to calculate the slope.
-     *
-     * @method getComputedSlope
-     * @param {Point} pA Point A
-     * @param {Point} pB Point B
-     * @returns {Number}
-     */
-    MathUtils.getComputedSlope = function (pA, pB) {
-        return (pB.getY() - pA.getY()) / (pB.getX() - pA.getX());
-    };
-
-    /**
-     * This method is use to calculate the sheath points.
-     *
-     * @method getSheathPoints
-     * @param {Point} originPoint Origin point
-     * @param {Number} slope Slope
-     * @param {Number} delta Delta
-     * @returns {Object}
-     */
-    MathUtils.getSheathPoints = function (originPoint, slope, delta) {
-        var x = Math.sqrt(Math.pow(delta, 2) / (1 + 1 / (Math.pow(slope, 2))));
-        var y = -(1/slope) * x;
-        return {
-            p1: new scope.Point({x: x + originPoint.getX(), y: y + originPoint.getY()}),
-            p2: new scope.Point({x: -x + originPoint.getX(), y: -y + originPoint.getY()})
-        };
-    };
-
     // Export
     scope.MathUtils = MathUtils;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -1030,7 +1043,7 @@ MyScript = {};
     // Export
     scope.AbstractWSMessage = AbstractWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -1085,7 +1098,7 @@ MyScript = {};
     // Export
     scope.AbstractComponent = AbstractComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -1237,7 +1250,7 @@ MyScript = {};
     // Export
     scope.Stroke = Stroke;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -1333,10 +1346,18 @@ MyScript = {};
         this.color = color;
     };
 
+    /**
+     * @deprecated Use a rgba() color
+     * @param alpha
+     */
     StrokeComponent.prototype.getAlpha = function () {
         return this.alpha;
     };
 
+    /**
+     * @deprecated Use a rgba() color
+     * @param alpha
+     */
     StrokeComponent.prototype.setAlpha = function (alpha) {
         this.alpha = alpha;
     };
@@ -1403,7 +1424,12 @@ MyScript = {};
         var ratio = 1.0;
         var distance = this.computeD(x, y);
         var length = this.computeL(x, y);
-        if (distance < 10) {
+
+        if(length === 0) {
+            ratio = 0.5;
+        } else if(distance == length){
+            ratio = 1.0;
+        } else  if (distance < 10) {
             ratio = 0.2 + Math.pow(0.1 * distance, 0.4);
         } else if (distance > length - 10) {
             ratio = 0.2 + Math.pow(0.1 * (length - distance), 0.4);
@@ -1427,7 +1453,8 @@ MyScript = {};
     // Export
     scope.StrokeComponent = StrokeComponent;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -1506,7 +1533,7 @@ MyScript = {};
     // Export
     scope.CharacterInputComponent = CharacterInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -1563,7 +1590,7 @@ MyScript = {};
     // Export
     scope.CharacterInputComponentAlternate = CharacterInputComponentAlternate;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -1578,7 +1605,7 @@ MyScript = {};
     // Export
     scope.AbstractParameter = AbstractParameter;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -1593,7 +1620,7 @@ MyScript = {};
     // Export
     scope.AbstractRecognitionInput = AbstractRecognitionInput;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -1659,10 +1686,31 @@ MyScript = {};
         this.hmac = hmac;
     };
 
+    /**
+     * Get recognition input
+     *
+     * @method getRecognitionInput
+     * @returns {AbstractRecognitionInput} input
+     */
+    AbstractRecognitionData.prototype.getRecognitionInput = function () {
+        throw new Error('not implemented');
+    };
+
+    /**
+     * Set text input
+     *
+     * @method setRecognitionInput
+     * @param {AbstractRecognitionInput} input
+     */
+    AbstractRecognitionData.prototype.setRecognitionInput = function (input) { // jshint ignore:line
+        throw new Error('not implemented');
+    };
+
     // Export
     scope.AbstractRecognitionData = AbstractRecognitionData;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -1708,7 +1756,7 @@ MyScript = {};
     // Export
     scope.RecognitionLanguagesData = RecognitionLanguagesData;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -1737,7 +1785,7 @@ MyScript = {};
     // Export
     scope.AbstractStartRequestWSMessage = AbstractStartRequestWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -1786,7 +1834,7 @@ MyScript = {};
     // Export
     scope.AbstractContinueRequestWSMessage = AbstractContinueRequestWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -1875,7 +1923,7 @@ MyScript = {};
     // Export
     scope.ChallengeRequestWSMessage = ChallengeRequestWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -1924,7 +1972,7 @@ MyScript = {};
     // Export
     scope.InitRequestWSMessage = InitRequestWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -1953,7 +2001,7 @@ MyScript = {};
     // Export
     scope.ResetRequestWSMessage = ResetRequestWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -2000,7 +2048,7 @@ MyScript = {};
     // Export
     scope.AbstractTextInputComponent = AbstractTextInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -2069,7 +2117,7 @@ MyScript = {};
     // Export
     scope.CharInputComponent = CharInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -2138,7 +2186,7 @@ MyScript = {};
     // Export
     scope.StringInputComponent = StringInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -2199,7 +2247,7 @@ MyScript = {};
     // Export
     scope.TextInputUnit = TextInputUnit;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -2248,7 +2296,7 @@ MyScript = {};
      * Get input mode
      *
      * @method getInputMode
-     * @returns {String}
+     * @returns {'CURSIVE'|'ISOLATED'|'SUPERIMPOSED'|'VERTICAL'}
      */
     TextParameter.prototype.getInputMode = function () {
         return this.textInputMode;
@@ -2258,7 +2306,7 @@ MyScript = {};
      * Set input mode
      *
      * @method setInputMode
-     * @param {String} inputMode
+     * @param {'CURSIVE'|'ISOLATED'|'SUPERIMPOSED'|'VERTICAL'} inputMode
      */
     TextParameter.prototype.setInputMode = function (inputMode) {
         this.textInputMode = inputMode;
@@ -2348,7 +2396,7 @@ MyScript = {};
      * Get result detail (e.g. TEXT, WORD ...)
      *
      * @method getResultDetail
-     * @returns {String}
+     * @returns {'TEXT'|'WORD'|'CHARACTER'}
      */
     TextParameter.prototype.getResultDetail = function () {
         return this.resultDetail;
@@ -2358,7 +2406,7 @@ MyScript = {};
      * Set result detail (e.g. TEXT, WORD ...)
      *
      * @method setResultDetail
-     * @param {String} resultDetail
+     * @param {'TEXT'|'WORD'|'CHARACTER'} resultDetail
      */
     TextParameter.prototype.setResultDetail = function (resultDetail) {
         this.resultDetail = resultDetail;
@@ -2387,7 +2435,8 @@ MyScript = {};
     // Export
     scope.TextParameter = TextParameter;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -2622,7 +2671,7 @@ MyScript = {};
     // Export
     scope.TextProperties = TextProperties;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -2692,7 +2741,7 @@ MyScript = {};
     // Export
     scope.TextRecognitionInput = TextRecognitionInput;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -2718,8 +2767,9 @@ MyScript = {};
     /**
      * Get text input
      *
+     * @deprecated Use getRecognitionInput instead
      * @method getTextRecognitionInput
-     * @returns {TextRecognitionInput} inputMode
+     * @returns {TextRecognitionInput} input
      */
     TextRecognitionData.prototype.getTextRecognitionInput = function () {
         return this.textInput;
@@ -2728,6 +2778,7 @@ MyScript = {};
     /**
      * Set text input
      *
+     * @deprecated Use setRecognitionInput instead
      * @method setTextRecognitionInput
      * @param {TextRecognitionInput} input
      */
@@ -2735,10 +2786,31 @@ MyScript = {};
         this.textInput = JSON.stringify(input);
     };
 
+    /**
+     * Get text input
+     *
+     * @method getRecognitionInput
+     * @returns {TextRecognitionInput} input
+     */
+    TextRecognitionData.prototype.getRecognitionInput = function () {
+        return this.textInput;
+    };
+
+    /**
+     * Set text input
+     *
+     * @method setRecognitionInput
+     * @param {TextRecognitionInput} input
+     */
+    TextRecognitionData.prototype.setRecognitionInput = function (input) {
+        this.textInput = JSON.stringify(input);
+    };
+
     // Export
     scope.TextRecognitionData = TextRecognitionData;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -2806,7 +2878,7 @@ MyScript = {};
     // Export
     scope.TextStartRequestWSMessage = TextStartRequestWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -2854,7 +2926,7 @@ MyScript = {};
     // Export
     scope.TextContinueRequestWSMessage = TextContinueRequestWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -2941,7 +3013,7 @@ MyScript = {};
     // Export
     scope.ShapeParameter = ShapeParameter;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3027,7 +3099,7 @@ MyScript = {};
     // Export
     scope.ShapeRecognitionInput = ShapeRecognitionInput;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3053,6 +3125,7 @@ MyScript = {};
     /**
      * Get shape input
      *
+     * @deprecated Use getRecognitionInput instead
      * @method getShapeRecognitionInput
      * @returns {ShapeRecognitionInput}
      */
@@ -3063,6 +3136,7 @@ MyScript = {};
     /**
      * Set shape input
      *
+     * @deprecated Use setRecognitionInput instead
      * @method setShapeRecognitionInput
      * @param {ShapeRecognitionInput} input
      */
@@ -3070,10 +3144,31 @@ MyScript = {};
         this.shapeInput = JSON.stringify(input);
     };
 
+    /**
+     * Get shape input
+     *
+     * @method getRecognitionInput
+     * @returns {ShapeRecognitionInput}
+     */
+    ShapeRecognitionData.prototype.getRecognitionInput = function () {
+        return this.shapeInput;
+    };
+
+    /**
+     * Set shape input
+     *
+     * @method setRecognitionInput
+     * @param {ShapeRecognitionInput} input
+     */
+    ShapeRecognitionData.prototype.setRecognitionInput = function (input) {
+        this.shapeInput = JSON.stringify(input);
+    };
+
     // Export
     scope.ShapeRecognitionData = ShapeRecognitionData;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -3182,7 +3277,7 @@ MyScript = {};
     // Export
     scope.MathParameter = MathParameter;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3307,7 +3402,7 @@ MyScript = {};
     // Export
     scope.MathRecognitionInput = MathRecognitionInput;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3333,6 +3428,7 @@ MyScript = {};
     /**
      * Get math input
      *
+     * @deprecated Use getRecognitionInput instead
      * @method getMathRecognitionInput
      * @returns {MathRecognitionInput}
      */
@@ -3343,18 +3439,39 @@ MyScript = {};
     /**
      * Set math input
      *
+     * @deprecated Use setRecognitionInput instead
      * @method setMathRecognitionInput
      * @param {MathRecognitionInput} input
      */
     MathRecognitionData.prototype.setMathRecognitionInput = function (input) {
         this.mathInput = JSON.stringify(input);
+    };
 
+    /**
+     * Get math input
+     *
+     * @method getRecognitionInput
+     * @returns {MathRecognitionInput}
+     */
+    MathRecognitionData.prototype.getRecognitionInput = function () {
+        return this.mathInput;
+    };
+
+    /**
+     * Set math input
+     *
+     * @method setRecognitionInput
+     * @param {MathRecognitionInput} input
+     */
+    MathRecognitionData.prototype.setRecognitionInput = function (input) {
+        this.mathInput = JSON.stringify(input);
     };
 
     // Export
     scope.MathRecognitionData = MathRecognitionData;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -3422,7 +3539,7 @@ MyScript = {};
     // Export
     scope.MathStartRequestWSMessage = MathStartRequestWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3471,7 +3588,7 @@ MyScript = {};
     // Export
     scope.MathContinueRequestWSMessage = MathContinueRequestWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3518,7 +3635,7 @@ MyScript = {};
     // Export
     scope.AbstractMusicInputComponent = AbstractMusicInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3565,7 +3682,7 @@ MyScript = {};
     // Export
     scope.MusicAccidentalInputComponent = MusicAccidentalInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3612,7 +3729,7 @@ MyScript = {};
     // Export
     scope.MusicArpeggiateInputComponent = MusicArpeggiateInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3660,7 +3777,7 @@ MyScript = {};
     // Export
     scope.MusicBarInputComponent = MusicBarInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3708,7 +3825,7 @@ MyScript = {};
     // Export
     scope.MusicBeamInputComponent = MusicBeamInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3757,7 +3874,7 @@ MyScript = {};
     // Export
     scope.MusicClefInputComponent = MusicClefInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3805,7 +3922,7 @@ MyScript = {};
     // Export
     scope.MusicDecorationInputComponent = MusicDecorationInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3852,7 +3969,7 @@ MyScript = {};
     // Export
     scope.MusicDotsInputComponent = MusicDotsInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3899,7 +4016,7 @@ MyScript = {};
     // Export
     scope.MusicHeadInputComponent = MusicHeadInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3926,7 +4043,7 @@ MyScript = {};
     // Export
     scope.MusicLedgerLineInputComponent = MusicLedgerLineInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -3973,7 +4090,7 @@ MyScript = {};
     // Export
     scope.MusicRestInputComponent = MusicRestInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -4020,7 +4137,7 @@ MyScript = {};
     // Export
     scope.MusicStemInputComponent = MusicStemInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -4067,7 +4184,7 @@ MyScript = {};
     // Export
     scope.MusicTieOrSlurInputComponent = MusicTieOrSlurInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -4114,7 +4231,7 @@ MyScript = {};
     // Export
     scope.MusicTimeSignatureInputComponent = MusicTimeSignatureInputComponent;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -4192,7 +4309,7 @@ MyScript = {};
     // Export
     scope.MusicStaff = MusicStaff;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -4321,7 +4438,7 @@ MyScript = {};
     // Export
     scope.MusicParameter = MusicParameter;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -4467,7 +4584,7 @@ MyScript = {};
     // Export
     scope.MusicRecognitionInput = MusicRecognitionInput;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -4493,6 +4610,7 @@ MyScript = {};
     /**
      * Get music input
      *
+     * @deprecated Use getRecognitionInput instead
      * @method getMusicRecognitionInput
      * @returns {MusicRecognitionInput}
      */
@@ -4503,6 +4621,7 @@ MyScript = {};
     /**
      * Set music input
      *
+     * @deprecated Use setRecognitionInput instead
      * @method setMusicRecognitionInput
      * @param {MusicRecognitionInput} input
      */
@@ -4510,10 +4629,31 @@ MyScript = {};
         this.musicInput = JSON.stringify(input);
     };
 
+    /**
+     * Get music input
+     *
+     * @method getRecognitionInput
+     * @returns {MusicRecognitionInput}
+     */
+    MusicRecognitionData.prototype.getRecognitionInput = function () {
+        return this.musicInput;
+    };
+
+    /**
+     * Set music input
+     *
+     * @method setRecognitionInput
+     * @param {MusicRecognitionInput} input
+     */
+    MusicRecognitionData.prototype.setRecognitionInput = function (input) {
+        this.musicInput = JSON.stringify(input);
+    };
+
     // Export
     scope.MusicRecognitionData = MusicRecognitionData;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -4583,7 +4723,7 @@ MyScript = {};
     // Export
     scope.AnalyzerParameter = AnalyzerParameter;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -4650,7 +4790,7 @@ MyScript = {};
     // Export
     scope.AnalyzerRecognitionInput = AnalyzerRecognitionInput;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -4676,6 +4816,7 @@ MyScript = {};
     /**
      * Get analyzer input
      *
+     * @deprecated Use getRecognitionInput instead
      * @method getAnalyzerRecognitionInput
      * @returns {AnalyzerRecognitionInput}
      */
@@ -4686,6 +4827,7 @@ MyScript = {};
     /**
      * Set analyzer input
      *
+     * @deprecated Use setRecognitionInput instead
      * @method setAnalyzerRecognitionInput
      * @param {AnalyzerRecognitionInput} input
      */
@@ -4693,10 +4835,31 @@ MyScript = {};
         this.analyzerInput = JSON.stringify(input);
     };
 
+    /**
+     * Get analyzer input
+     *
+     * @method getRecognitionInput
+     * @returns {AnalyzerRecognitionInput}
+     */
+    AnalyzerRecognitionData.prototype.getRecognitionInput = function () {
+        return this.analyzerInput;
+    };
+
+    /**
+     * Set analyzer input
+     *
+     * @method setRecognitionInput
+     * @param {AnalyzerRecognitionInput} input
+     */
+    AnalyzerRecognitionData.prototype.setRecognitionInput = function (input) {
+        this.analyzerInput = JSON.stringify(input);
+    };
+
     // Export
     scope.AnalyzerRecognitionData = AnalyzerRecognitionData;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -4735,7 +4898,7 @@ MyScript = {};
     // Export
     scope.AbstractResult = AbstractResult;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -4786,7 +4949,7 @@ MyScript = {};
     // Export
     scope.AbstractRecoResponseWSMessage = AbstractRecoResponseWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -4827,7 +4990,7 @@ MyScript = {};
     // Export
     scope.ChallengeResponseWSMessage = ChallengeResponseWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -4868,7 +5031,7 @@ MyScript = {};
     // Export
     scope.ErrorResponseWSMessage = ErrorResponseWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -4896,7 +5059,7 @@ MyScript = {};
     // Export
     scope.InitResponseWSMessage = InitResponseWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -4924,7 +5087,7 @@ MyScript = {};
     // Export
     scope.ResetResponseWSMessage = ResetResponseWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5009,7 +5172,7 @@ MyScript = {};
     // Export
     scope.TextInkRange = TextInkRange;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5098,7 +5261,7 @@ MyScript = {};
     // Export
     scope.TextCandidate = TextCandidate;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5213,7 +5376,7 @@ MyScript = {};
     // Export
     scope.TextDocument = TextDocument;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5255,7 +5418,7 @@ MyScript = {};
     // Export
     scope.TextResult = TextResult;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5330,7 +5493,7 @@ MyScript = {};
     scope.TextSegment = TextSegment;
 })(MyScript);
 
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5376,7 +5539,7 @@ MyScript = {};
     // Export
     scope.TextTagItem = TextTagItem;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5418,7 +5581,7 @@ MyScript = {};
     // Export
     scope.TextResponseWSMessage = TextResponseWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5531,7 +5694,7 @@ MyScript = {};
     // Export
     scope.AbstractShapePrimitive = AbstractShapePrimitive;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5600,7 +5763,7 @@ MyScript = {};
     // Export
     scope.ShapeCandidate = ShapeCandidate;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5651,7 +5814,7 @@ MyScript = {};
     // Export
     scope.ShapeDocument = ShapeDocument;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5747,7 +5910,7 @@ MyScript = {};
     // Export
     scope.ShapeEllipse = ShapeEllipse;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5775,7 +5938,7 @@ MyScript = {};
     // Export
     scope.ShapeErased = ShapeErased;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5837,7 +6000,7 @@ MyScript = {};
     // Export
     scope.ShapeInkRange = ShapeInkRange;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5889,7 +6052,7 @@ MyScript = {};
     // Export
     scope.ShapeLine = ShapeLine;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -5917,7 +6080,7 @@ MyScript = {};
     // Export
     scope.ShapeNotRecognized = ShapeNotRecognized;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6003,7 +6166,7 @@ MyScript = {};
     // Export
     scope.ShapeRecognized = ShapeRecognized;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6045,7 +6208,7 @@ MyScript = {};
     // Export
     scope.ShapeResult = ShapeResult;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6089,7 +6252,7 @@ MyScript = {};
     // Export
     scope.ShapeScratchOut = ShapeScratchOut;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6195,7 +6358,7 @@ MyScript = {};
     // Export
     scope.ShapeSegment = ShapeSegment;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6235,7 +6398,7 @@ MyScript = {};
     // Export
     scope.MathNode = MathNode;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6340,7 +6503,7 @@ MyScript = {};
     scope.MathNonTerminalNode = MathNonTerminalNode;
 })(MyScript);
 
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6400,7 +6563,7 @@ MyScript = {};
     scope.MathResultElement = MathResultElement;
 })(MyScript);
 (function (scope) {
-    'use strict';
+    
     /**
      * Math rule node
      *
@@ -6491,7 +6654,7 @@ MyScript = {};
     // Export
     scope.MathRuleNode = MathRuleNode;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6563,7 +6726,7 @@ MyScript = {};
     // Export
     scope.MathDocument = MathDocument;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6614,7 +6777,7 @@ MyScript = {};
     // Export
     scope.MathInkRange = MathInkRange;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6655,7 +6818,7 @@ MyScript = {};
     // Export
     scope.MathLaTexResultElement = MathLaTexResultElement;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6696,7 +6859,7 @@ MyScript = {};
     // Export
     scope.MathMathMLResultElement = MathMathMLResultElement;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6738,7 +6901,7 @@ MyScript = {};
     // Export
     scope.MathResult = MathResult;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6784,7 +6947,7 @@ MyScript = {};
     // Export
     scope.MathScratchOut = MathScratchOut;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6876,7 +7039,7 @@ MyScript = {};
     scope.MathSymbolTreeResultElement = MathSymbolTreeResultElement;
 })(MyScript);
 
-'use strict';
+
 
 (function (scope) {
     /**
@@ -6960,7 +7123,7 @@ MyScript = {};
     scope.MathTerminalNode = MathTerminalNode;
 })(MyScript);
 
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7000,7 +7163,7 @@ MyScript = {};
     // Export
     scope.MathTerminalNodeCandidate = MathTerminalNodeCandidate;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7063,7 +7226,7 @@ MyScript = {};
     scope.MathBorderData = MathBorderData;
 })(MyScript);
 
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7105,7 +7268,7 @@ MyScript = {};
     scope.MathBorderNonTerminalNode = MathBorderNonTerminalNode;
 })(MyScript);
 
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7168,7 +7331,7 @@ MyScript = {};
     scope.MathCellData = MathCellData;
 })(MyScript);
 
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7210,7 +7373,7 @@ MyScript = {};
     scope.MathCellNonTerminalNode = MathCellNonTerminalNode;
 })(MyScript);
 
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7251,7 +7414,7 @@ MyScript = {};
     scope.MathTableData = MathTableData;
 })(MyScript);
 
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7293,7 +7456,7 @@ MyScript = {};
     scope.MathTableRuleNode = MathTableRuleNode;
 })(MyScript);
 
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7335,7 +7498,7 @@ MyScript = {};
     // Export
     scope.MathResponseWSMessage = MathResponseWSMessage;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7376,7 +7539,7 @@ MyScript = {};
     // Export
     scope.MusicElement = MusicElement;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7425,7 +7588,7 @@ MyScript = {};
     // Export
     scope.MusicResultElement = MusicResultElement;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7466,7 +7629,7 @@ MyScript = {};
     // Export
     scope.MusicAccidental = MusicAccidental;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7507,7 +7670,7 @@ MyScript = {};
     // Export
     scope.MusicAnnotation = MusicAnnotation;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7548,7 +7711,7 @@ MyScript = {};
     // Export
     scope.MusicArpeggiate = MusicArpeggiate;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7644,7 +7807,7 @@ MyScript = {};
     // Export
     scope.MusicBar = MusicBar;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7780,7 +7943,7 @@ MyScript = {};
     // Export
     scope.MusicBeam = MusicBeam;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -7949,7 +8112,7 @@ MyScript = {};
     // Export
     scope.MusicChord = MusicChord;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -8066,7 +8229,7 @@ MyScript = {};
     // Export
     scope.MusicClef = MusicClef;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -8138,7 +8301,7 @@ MyScript = {};
     // Export
     scope.MusicDecoration = MusicDecoration;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -8204,7 +8367,7 @@ MyScript = {};
     // Export
     scope.MusicDocument = MusicDocument;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -8245,7 +8408,7 @@ MyScript = {};
     // Export
     scope.MusicDots = MusicDots;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -8286,7 +8449,7 @@ MyScript = {};
     // Export
     scope.MusicHead = MusicHead;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -8337,7 +8500,7 @@ MyScript = {};
     // Export
     scope.MusicInputRange = MusicInputRange;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -8392,7 +8555,7 @@ MyScript = {};
     // Export
     scope.MusicKeySignature = MusicKeySignature;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -8432,7 +8595,7 @@ MyScript = {};
     // Export
     scope.MusicKeySignatureData = MusicKeySignatureData;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -8460,7 +8623,7 @@ MyScript = {};
     // Export
     scope.MusicLedgerLine = MusicLedgerLine;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -8725,7 +8888,7 @@ MyScript = {};
     // Export
     scope.MusicNote = MusicNote;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -8820,7 +8983,7 @@ MyScript = {};
     // Export
     scope.MusicPart = MusicPart;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -8871,7 +9034,7 @@ MyScript = {};
     // Export
     scope.MusicPitchData = MusicPitchData;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9009,7 +9172,7 @@ MyScript = {};
     // Export
     scope.MusicRest = MusicRest;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9051,7 +9214,7 @@ MyScript = {};
     // Export
     scope.MusicResult = MusicResult;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9083,7 +9246,7 @@ MyScript = {};
     // Export
     scope.MusicScore = MusicScore;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9124,7 +9287,7 @@ MyScript = {};
     // Export
     scope.MusicScoreTreeResultElement = MusicScoreTreeResultElement;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9170,7 +9333,7 @@ MyScript = {};
     // Export
     scope.MusicScratchOut = MusicScratchOut;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9211,7 +9374,7 @@ MyScript = {};
     // Export
     scope.MusicSlur = MusicSlur;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9252,7 +9415,7 @@ MyScript = {};
     // Export
     scope.MusicStem = MusicStem;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9293,7 +9456,7 @@ MyScript = {};
     // Export
     scope.MusicTie = MusicTie;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9355,7 +9518,7 @@ MyScript = {};
     // Export
     scope.MusicTimeModificationData = MusicTimeModificationData;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9418,7 +9581,7 @@ MyScript = {};
     // Export
     scope.MusicTimeSignature = MusicTimeSignature;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9459,7 +9622,7 @@ MyScript = {};
     // Export
     scope.MusicTupletBracket = MusicTupletBracket;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9525,7 +9688,7 @@ MyScript = {};
     // Export
     scope.MusicTuplet = MusicTuplet;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9566,7 +9729,7 @@ MyScript = {};
     // Export
     scope.MusicXMLResultElement = MusicXMLResultElement;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9595,7 +9758,7 @@ MyScript = {};
     // Export
     scope.AnalyzerElement = AnalyzerElement;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9636,7 +9799,7 @@ MyScript = {};
     // Export
     scope.AnalyzerCell = AnalyzerCell;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9800,7 +9963,7 @@ MyScript = {};
     // Export
     scope.AnalyzerCellData = AnalyzerCellData;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9905,7 +10068,7 @@ MyScript = {};
     // Export
     scope.AnalyzerDocument = AnalyzerDocument;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -9945,7 +10108,7 @@ MyScript = {};
     // Export
     scope.AnalyzerElementReference = AnalyzerElementReference;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -10011,7 +10174,7 @@ MyScript = {};
     // Export
     scope.AnalyzerGroup = AnalyzerGroup;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -10062,7 +10225,7 @@ MyScript = {};
     // Export
     scope.AnalyzerInkRange = AnalyzerInkRange;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -10103,7 +10266,7 @@ MyScript = {};
     // Export
     scope.AnalyzerLine = AnalyzerLine;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -10143,7 +10306,7 @@ MyScript = {};
     // Export
     scope.AnalyzerLineData = AnalyzerLineData;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -10194,7 +10357,7 @@ MyScript = {};
     // Export
     scope.AnalyzerRecognizedStroke = AnalyzerRecognizedStroke;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -10236,7 +10399,7 @@ MyScript = {};
     // Export
     scope.AnalyzerResult = AnalyzerResult;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -10276,7 +10439,7 @@ MyScript = {};
     // Export
     scope.AnalyzerStrokeType = AnalyzerStrokeType;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -10359,7 +10522,7 @@ MyScript = {};
     // Export
     scope.AnalyzerTable = AnalyzerTable;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -10399,7 +10562,7 @@ MyScript = {};
     // Export
     scope.AnalyzerTableData = AnalyzerTableData;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -10479,7 +10642,7 @@ MyScript = {};
     // Export
     scope.AnalyzerTextLine = AnalyzerTextLine;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -10601,7 +10764,7 @@ MyScript = {};
     // Export
     scope.AnalyzerTextLineData = AnalyzerTextLineData;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -10656,7 +10819,7 @@ MyScript = {};
     // Export
     scope.AnalyzerUnderline = AnalyzerUnderline;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -10696,7 +10859,7 @@ MyScript = {};
     // Export
     scope.AnalyzerUnderlineData = AnalyzerUnderlineData;
 })(MyScript);
-'use strict';
+
 
 (function (scope, Q) {
     /**
@@ -10752,7 +10915,7 @@ MyScript = {};
      * @param {Object} data
      * @returns {Promise}
      */
-    NetworkInterface.prototype.xhr = function (type, url, data) {
+    NetworkInterface.xhr = function (type, url, data) {
 
         var deferred = Q.defer();
 
@@ -10802,74 +10965,54 @@ MyScript = {};
      * @param {Object} params
      * @returns {Promise}
      */
-    NetworkInterface.prototype.get = function (src, params) {
+    NetworkInterface.get = function (src, params) {
         if (params) {
             src += '?' + NetworkInterface.transformRequest(params);
         }
-        return this.xhr('GET', src).then(
-            function success(response) {
-                return response;
-            }, function error(response) {
-                throw response;
-            });
+        return scope.NetworkInterface.xhr('GET', src, undefined);
     };
 
     /**
      * Put request
      *
      * @method put
-     * @param {String} src
+     * @param {String} url
      * @param {Object} data
      * @returns {Promise}
      */
-    NetworkInterface.prototype.put = function (url, data) {
-        return this.xhr('PUT', url, data).then(
-            function success(response) {
-                return response;
-            }, function error(response) {
-                throw response;
-            });
+    NetworkInterface.put = function (url, data) {
+        return scope.NetworkInterface.xhr('PUT', url, data);
     };
 
     /**
      * Post request
      *
      * @method post
-     * @param {String} src
+     * @param {String} url
      * @param {Object} data
      * @returns {Promise}
      */
-    NetworkInterface.prototype.post = function (url, data) {
-        return this.xhr('POST', url, data).then(
-            function success(response) {
-                return response;
-            }, function error(response) {
-                throw response;
-            });
+    NetworkInterface.post = function (url, data) {
+        return scope.NetworkInterface.xhr('POST', url, data);
     };
 
     /**
      * Delete request
      *
      * @method delete
-     * @param {String} src
+     * @param {String} url
      * @param {Object} data
      * @returns {Promise}
      */
-    NetworkInterface.prototype.delete = function (url, data) {
-        return this.xhr('DELETE', url, data).then(
-            function success(response) {
-                return response;
-            }, function error(response) {
-                throw response;
-            });
+    NetworkInterface.delete = function (url, data) {
+        return scope.NetworkInterface.xhr('DELETE', url, data);
     };
 
     // Export
     scope.NetworkInterface = NetworkInterface;
 })(MyScript, Q);
 
-'use strict';
+
 /* jshint ignore:start */
 
 (function (scope, Q) {
@@ -10951,7 +11094,7 @@ MyScript = {};
 })(MyScript, Q);
 /* jshint ignore:end */
 
-'use strict';
+
 
 (function (scope, CryptoJS) {
     /**
@@ -10966,7 +11109,6 @@ MyScript = {};
         if (host) {
             this.setHost(host);
         }
-        this.http = new scope.NetworkInterface();
     }
 
     /**
@@ -10992,6 +11134,26 @@ MyScript = {};
     };
 
     /**
+     * Get parameters
+     *
+     * @method getParameters
+     * @returns {AbstractParameter}
+     */
+    AbstractRecognizer.prototype.getParameters = function () {
+        return this.parameters;
+    };
+
+    /**
+     * Set parameters
+     *
+     * @method setParameters
+     * @param {AbstractParameter} parameters
+     */
+    AbstractRecognizer.prototype.setParameters = function (parameters) {
+        this.parameters = parameters;
+    };
+
+    /**
      * Get the recognition languages available for an application and a specific inputMode
      *
      * @method getAvailableLanguageList
@@ -11004,7 +11166,7 @@ MyScript = {};
         data.setApplicationKey(applicationKey);
         data.setInputMode(inputMode);
 
-        return this.http.get('https://' + this.host + '/api/v3.0/recognition/rest/text/languages.json', data).then(
+        return scope.NetworkInterface.get('https://' + this.getHost() + '/api/v3.0/recognition/rest/text/languages.json', data).then(
             function success(response) {
                 return response.result;
             },
@@ -11015,21 +11177,202 @@ MyScript = {};
     };
 
     /**
+     * Do REST recognition
+     *
+     * @method doRestRecognition
+     * @param {AbstractRecognitionData} data
+     * @param {String} applicationKey
+     * @param {String} hmacKey
+     * @param {String} instanceId
+     * @returns {Promise}
+     */
+    AbstractRecognizer.prototype.doRestRecognition = function (data, applicationKey, hmacKey, instanceId) {
+        data.setApplicationKey(applicationKey);
+        data.setInstanceId(instanceId);
+        if (hmacKey) {
+            data.setHmac(_computeHmac(data.getRecognitionInput(), applicationKey, hmacKey));
+        }
+
+        if (data instanceof scope.TextRecognitionData) {
+            return _doTextRecognition(this.getHost(), data);
+        } else if (data instanceof scope.ShapeRecognitionData) {
+            return _doShapeRecognition(this.getHost(), data);
+        } else if (data instanceof scope.MathRecognitionData) {
+            return _doMathRecognition(this.getHost(), data);
+        } else if (data instanceof scope.MusicRecognitionData) {
+            return _doMusicRecognition(this.getHost(), data);
+        } else if (data instanceof scope.AnalyzerRecognitionData) {
+            return _doAnalyzerRecognition(this.getHost(), data);
+        } else {
+            throw new Error('not implemented');
+        }
+    };
+
+    /**
+     * Clear REST recognition
+     *
+     * @method clearRestRecognition
+     * @param {String} instanceId
+     * @returns {Promise}
+     */
+    AbstractRecognizer.prototype.clearRestRecognition = function (instanceId) {
+        var data = {
+            instanceSessionId: instanceId
+        };
+        return _clearShapeRecognition(this.getHost(), data);
+    };
+
+    /**
+     * Do text recognition
+     *
+     * @private
+     * @method _doTextRecognition
+     * @param {String} host
+     * @param {TextRecognitionData} data
+     * @returns {Promise}
+     */
+    var _doTextRecognition = function (host, data) {
+        return scope.NetworkInterface.post('https://' + host + '/api/v3.0/recognition/rest/text/doSimpleRecognition.json', data).then(
+            function success(response) {
+                return new scope.TextResult(response);
+            },
+            function error(response) {
+                return response;
+            }
+        );
+    };
+
+    /**
+     * Do shape recognition
+     *
+     * @private
+     * @method _doShapeRecognition
+     * @param {String} host
+     * @param {ShapeRecognitionData} data
+     * @returns {Promise}
+     */
+    var _doShapeRecognition = function (host, data) {
+        return scope.NetworkInterface.post('https://' + host + '/api/v3.0/recognition/rest/shape/doSimpleRecognition.json', data).then(
+            function success(response) {
+                return new scope.ShapeResult(response);
+            },
+            function error(response) {
+                return response;
+            }
+        );
+    };
+
+    /**
+     * Clear shape recognition
+     *
+     * @private
+     * @method _clearShapeRecognition
+     * @param {String} host
+     * @param {Object} data
+     * @returns {Promise}
+     */
+    var _clearShapeRecognition = function (host, data) {
+        return scope.NetworkInterface.post('https://' + host + '/api/v3.0/recognition/rest/shape/clearSessionId.json', data).then(
+            function success(response) {
+                return new scope.ShapeResult(response);
+            },
+            function error(response) {
+                return response;
+            }
+        );
+    };
+
+    /**
+     * Do shape recognition
+     *
+     * @private
+     * @method _doMathRecognition
+     * @param {String} host
+     * @param {MathRecognitionData} data
+     * @returns {Promise}
+     */
+    var _doMathRecognition = function (host, data) {
+        return scope.NetworkInterface.post('https://' + host + '/api/v3.0/recognition/rest/math/doSimpleRecognition.json', data).then(
+            function success(response) {
+                return new scope.MathResult(response);
+            },
+            function error(response) {
+                return response;
+            }
+        );
+    };
+
+    /**
+     * Do music recognition
+     *
+     * @private
+     * @method _doMusicRecognition
+     * @param {String} host
+     * @param {MusicRecognitionData} data
+     * @returns {Promise}
+     */
+    var _doMusicRecognition = function (host, data) {
+        return scope.NetworkInterface.post('https://' + host + '/api/v3.0/recognition/rest/music/doSimpleRecognition.json', data).then(
+            function success(response) {
+                return new scope.MusicResult(response);
+            },
+            function error(response) {
+                return response;
+            }
+        );
+    };
+
+    /**
+     * Do analyzer recognition
+     *
+     * @method _doAnalyzerRecognition
+     * @param {String} host
+     * @param {AnalyzerRecognitionData} data
+     * @returns {Promise}
+     */
+    var _doAnalyzerRecognition = function (host, data) {
+        return scope.NetworkInterface.post('https://' + host + '/api/v3.0/recognition/rest/analyzer/doSimpleRecognition.json', data).then(
+            function success(response) {
+                return new scope.AnalyzerResult(response);
+            },
+            function error(response) {
+                return response;
+            }
+        );
+    };
+
+    /**
      * Compute HMAC signature for server authentication
      *
+     * @deprecated
      * @method computeHmac
      * @param {String} applicationKey
      * @param {String} data
      * @param {String} hmacKey
      */
     AbstractRecognizer.prototype.computeHmac = function (applicationKey, data, hmacKey) {
-        var jsonInput = (typeof data === 'object') ? JSON.stringify(data) : data;
+        return _computeHmac(data, applicationKey, hmacKey);
+    };
+
+    /**
+     * Compute HMAC signature for server authentication
+     *
+     * @private
+     * @method _computeHmac
+     * @param {AbstractRecognitionInput} input
+     * @param {String} applicationKey
+     * @param {String} hmacKey
+     */
+    var _computeHmac = function (input, applicationKey, hmacKey) {
+        var jsonInput = (typeof input === 'object') ? JSON.stringify(input) : input;
         return CryptoJS.HmacSHA512(jsonInput, applicationKey + hmacKey).toString(CryptoJS.enc.Hex);
     };
+
     // Export
     scope.AbstractRecognizer = AbstractRecognizer;
 })(MyScript, CryptoJS);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -11145,7 +11488,7 @@ MyScript = {};
     // Export
     scope.AbstractWSRecognizer = AbstractWSRecognizer;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -11174,26 +11517,6 @@ MyScript = {};
     TextRecognizer.prototype.constructor = TextRecognizer;
 
     /**
-     * Get parameters
-     *
-     * @method getParameters
-     * @returns {TextParameter}
-     */
-    TextRecognizer.prototype.getParameters = function () {
-        return this.parameters;
-    };
-
-    /**
-     * Set parameters
-     *
-     * @method setParameters
-     * @param {TextParameter} parameters
-     */
-    TextRecognizer.prototype.setParameters = function (parameters) {
-        this.parameters = parameters;
-    };
-
-    /**
      * Do text recognition
      *
      * @method doSimpleRecognition
@@ -11214,27 +11537,15 @@ MyScript = {};
         input.setInputUnits(inputUnits);
 
         var data = new scope.TextRecognitionData();
-        data.setApplicationKey(applicationKey);
-        data.setTextRecognitionInput(input);
-        data.setInstanceId(instanceId);
-        if (hmacKey) {
-            data.setHmac(this.computeHmac(applicationKey, input, hmacKey));
-        }
-
-        return this.http.post('https://' + this.host + '/api/v3.0/recognition/rest/text/doSimpleRecognition.json', data).then(
-            function success(response) {
-                return new scope.TextResult(response);
-            },
-            function error(response) {
-                throw response;
-            }
-        );
+        data.setRecognitionInput(input);
+        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, data, applicationKey, hmacKey, instanceId); // super
     };
 
     // Export
     scope.TextRecognizer = TextRecognizer;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -11356,7 +11667,7 @@ MyScript = {};
     // Export
     scope.TextWSRecognizer = TextWSRecognizer;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -11383,26 +11694,6 @@ MyScript = {};
     ShapeRecognizer.prototype.constructor = ShapeRecognizer;
 
     /**
-     * Get parameters
-     *
-     * @method getParameters
-     * @returns {ShapeParameter}
-     */
-    ShapeRecognizer.prototype.getParameters = function () {
-        return this.parameters;
-    };
-
-    /**
-     * Set parameters
-     *
-     * @method setParameters
-     * @param {ShapeParameter} parameters
-     */
-    ShapeRecognizer.prototype.setParameters = function (parameters) {
-        this.parameters = parameters;
-    };
-
-    /**
      * Do shape recognition
      *
      * @method doSimpleRecognition
@@ -11424,21 +11715,8 @@ MyScript = {};
         input.setRejectDetectionSensitivity(params.getRejectDetectionSensitivity());
 
         var data = new scope.ShapeRecognitionData();
-        data.setApplicationKey(applicationKey);
-        data.setShapeRecognitionInput(input);
-        data.setInstanceId(instanceId);
-        if (hmacKey) {
-            data.setHmac(this.computeHmac(applicationKey, input, hmacKey));
-        }
-
-        return this.http.post('https://' + this.host + '/api/v3.0/recognition/rest/shape/doSimpleRecognition.json', data).then(
-            function success(response) {
-                return new scope.ShapeResult(response);
-            },
-            function error(response) {
-                throw response;
-            }
-        );
+        data.setRecognitionInput(input);
+        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, data, applicationKey, hmacKey, instanceId); // super
     };
 
     /**
@@ -11450,25 +11728,14 @@ MyScript = {};
      * @returns {Promise}
      */
     ShapeRecognizer.prototype.clearShapeRecognitionSession = function (applicationKey, instanceId) {
-
-        var data = {
-            instanceSessionId: instanceId
-        };
-
-        return this.http.post('https://' + this.host + '/api/v3.0/recognition/rest/shape/clearSessionId.json', data).then(
-            function success(response) {
-                return response;
-            },
-            function error(response) {
-                throw response;
-            }
-        );
+        return scope.AbstractRecognizer.prototype.clearRestRecognition.call(this, instanceId); // super
     };
 
     // Export
     scope.ShapeRecognizer = ShapeRecognizer;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -11495,26 +11762,6 @@ MyScript = {};
     MathRecognizer.prototype.constructor = MathRecognizer;
 
     /**
-     * Get parameters
-     *
-     * @method getParameters
-     * @returns {MathParameter}
-     */
-    MathRecognizer.prototype.getParameters = function () {
-        return this.parameters;
-    };
-
-    /**
-     * Set parameters
-     *
-     * @method setParameters
-     * @param {MathParameter} parameters
-     */
-    MathRecognizer.prototype.setParameters = function (parameters) {
-        this.parameters = parameters;
-    };
-
-    /**
      * Do math recognition
      *
      * @method doSimpleRecognition
@@ -11538,27 +11785,15 @@ MyScript = {};
         input.setUserResources(params.getUserResources());
 
         var data = new scope.MathRecognitionData();
-        data.setApplicationKey(applicationKey);
-        data.setMathRecognitionInput(input);
-        data.setInstanceId(instanceId);
-        if (hmacKey) {
-            data.setHmac(this.computeHmac(applicationKey, input, hmacKey));
-        }
-
-        return this.http.post('https://' + this.host + '/api/v3.0/recognition/rest/math/doSimpleRecognition.json', data).then(
-            function success(response) {
-                return new scope.MathResult(response);
-            },
-            function error(response) {
-                throw response;
-            }
-        );
+        data.setRecognitionInput(input);
+        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, data, applicationKey, hmacKey, instanceId); // super
     };
 
     // Export
     scope.MathRecognizer = MathRecognizer;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -11678,7 +11913,7 @@ MyScript = {};
     // Export
     scope.MathWSRecognizer = MathWSRecognizer;
 })(MyScript);
-'use strict';
+
 
 (function (scope) {
     /**
@@ -11705,26 +11940,6 @@ MyScript = {};
     MusicRecognizer.prototype.constructor = MusicRecognizer;
 
     /**
-     * Get parameters
-     *
-     * @method getParameters
-     * @returns {MusicParameter}
-     */
-    MusicRecognizer.prototype.getParameters = function () {
-        return this.parameters;
-    };
-
-    /**
-     * Set parameters
-     *
-     * @method setParameters
-     * @param {MusicParameter} parameters
-     */
-    MusicRecognizer.prototype.setParameters = function (parameters) {
-        this.parameters = parameters;
-    };
-
-    /**
      * Do music recognition
      *
      * @method doSimpleRecognition
@@ -11749,27 +11964,15 @@ MyScript = {};
         input.setUserResources(params.getUserResources());
 
         var data = new scope.MusicRecognitionData();
-        data.setApplicationKey(applicationKey);
-        data.setMusicRecognitionInput(input);
-        data.setInstanceId(instanceId);
-        if (hmacKey) {
-            data.setHmac(this.computeHmac(applicationKey, input, hmacKey));
-        }
-
-        return this.http.post('https://' + this.host + '/api/v3.0/recognition/rest/music/doSimpleRecognition.json', data).then(
-            function success(response) {
-                return new scope.MusicResult(response);
-            },
-            function error(response) {
-                throw response;
-            }
-        );
+        data.setRecognitionInput(input);
+        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, data, applicationKey, hmacKey, instanceId); // super
     };
 
     // Export
     scope.MusicRecognizer = MusicRecognizer;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -11796,26 +11999,6 @@ MyScript = {};
     AnalyzerRecognizer.prototype.constructor = AnalyzerRecognizer;
 
     /**
-     * Get parameters
-     *
-     * @method getParameters
-     * @returns {AnalyzerParameter}
-     */
-    AnalyzerRecognizer.prototype.getParameters = function () {
-        return this.parameters;
-    };
-
-    /**
-     * Set parameters
-     *
-     * @method setParameters
-     * @param {AnalyzerParameter} parameters
-     */
-    AnalyzerRecognizer.prototype.setParameters = function (parameters) {
-        this.parameters = parameters;
-    };
-
-    /**
      * Do analyzer recognition
      *
      * @method doSimpleRecognition
@@ -11836,27 +12019,15 @@ MyScript = {};
         input.setParameters(params);
 
         var data = new scope.AnalyzerRecognitionData();
-        data.setApplicationKey(applicationKey);
-        data.setAnalyzerRecognitionInput(input);
-        data.setInstanceId(instanceId);
-        if (hmacKey) {
-            data.setHmac(this.computeHmac(applicationKey, input, hmacKey));
-        }
-
-        return this.http.post('https://' + this.host + '/api/v3.0/recognition/rest/analyzer/doSimpleRecognition.json', data).then(
-            function success(response) {
-                return new scope.AnalyzerResult(response);
-            },
-            function error(response) {
-                return response;
-            }
-        );
+        data.setRecognitionInput(input);
+        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, data, applicationKey, hmacKey, instanceId); // super
     };
 
     // Export
     scope.AnalyzerRecognizer = AnalyzerRecognizer;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -12023,7 +12194,6 @@ MyScript = {};
         try {
             this.getContext().fillStyle = params.getRectColor();
             this.getContext().strokeStyle = params.getColor();
-            this.getContext().globalAlpha = params.getAlpha();
             this.getContext().lineWidth = 0.5 * params.getWidth();
             this.getContext().fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
         } finally {
@@ -12083,7 +12253,7 @@ MyScript = {};
      * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
      */
     AbstractRenderer.prototype.drawStrokes = function (strokes, context, parameters) {
-        for(var i = 0; i < strokes.length;i++){
+        for (var i = 0; i < strokes.length; i++) {
             this.drawStroke(strokes[i], context, parameters);
         }
     };
@@ -12095,20 +12265,20 @@ MyScript = {};
     function _computeLinksPoints(point, angle, width) {
         var radius = point.p * width;
         return [{
-            x : (point.x - Math.sin(angle) * radius),
-            y : (point.y + Math.cos(angle) * radius)
+            x: (point.x - Math.sin(angle) * radius),
+            y: (point.y + Math.cos(angle) * radius)
         }, {
-            x : (point.x + Math.sin(angle) * radius),
-            y : (point.y - Math.cos(angle) * radius)
+            x: (point.x + Math.sin(angle) * radius),
+            y: (point.y - Math.cos(angle) * radius)
         }
         ];
     }
 
     function _computeMiddlePoint(point1, point2) {
         return {
-            x : ((point2.x + point1.x) / 2),
-            y : ((point2.y + point1.y) / 2),
-            p : ((point2.p + point1.p) / 2)
+            x: ((point2.x + point1.x) / 2),
+            y: ((point2.y + point1.y) / 2),
+            p: ((point2.p + point1.p) / 2)
         };
     }
 
@@ -12116,9 +12286,8 @@ MyScript = {};
         return Math.atan2(end.y - begin.y, end.x - begin.x);
     }
 
-    function _fill(context, color, alpha) {
+    function _fill(context, color) {
         if (color !== undefined) {
-            context.globalAlpha = alpha;
             context.fillStyle = color;
             context.fill();
         }
@@ -12136,8 +12305,8 @@ MyScript = {};
         var length = stroke.getLength();
         var width = stroke.getWidth();
         var firstPoint = stroke.getPointByIndex(0);
-        if (length < 3){
-            context.arc(firstPoint.x, firstPoint.y, width * 0.2, 0, Math.PI * 2, true);
+        if (length < 3) {
+            context.arc(firstPoint.x, firstPoint.y, width * 0.6, 0, Math.PI * 2, true);
         } else {
             context.arc(firstPoint.x, firstPoint.y, width * firstPoint.p, 0, Math.PI * 2, true);
             _renderLine(context, firstPoint, _computeMiddlePoint(firstPoint, stroke.getPointByIndex(1)), width);
@@ -12147,14 +12316,14 @@ MyScript = {};
             //context.arc(first.x, first.y, width * first.p, 0, Math.PI * 2, true);
 
             var nbquadratics = length - 2;
-            for (var i = 0; i < nbquadratics; i++){
+            for (var i = 0; i < nbquadratics; i++) {
                 _renderQuadratic(context, _computeMiddlePoint(stroke.getPointByIndex(i), stroke.getPointByIndex(i + 1)), _computeMiddlePoint(stroke.getPointByIndex(i + 1), stroke.getPointByIndex(i + 2)), stroke.getPointByIndex(i + 1), width);
             }
             _renderLine(context, _computeMiddlePoint(stroke.getPointByIndex(length - 2), stroke.getPointByIndex(length - 1)), stroke.getPointByIndex(length - 1), width);
             _renderFinal(context, stroke.getPointByIndex(length - 2), stroke.getPointByIndex(length - 1), width);
         }
         context.closePath();
-        _fill(context, stroke.getColor(), stroke.getAlpha());
+        _fill(context, stroke.getColor());
     }
 
     function _renderFinal(context, begin, end, width) {
@@ -12342,7 +12511,6 @@ MyScript = {};
         try {
             context.fillStyle = parameters.getColor();
             context.strokeStyle = parameters.getColor();
-            context.globalAlpha = parameters.getAlpha();
             context.lineWidth = 1;
 
             context.beginPath();
@@ -12588,7 +12756,8 @@ MyScript = {};
     // Export
     scope.AbstractRenderer = AbstractRenderer;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -12649,10 +12818,16 @@ MyScript = {};
      * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
      */
     TextRenderer.prototype.drawComponents = function (components, context, parameters) {
+        if (context) {
+            this._setContext(context);
+        }
+        if (parameters) {
+            this.setParameters(parameters);
+        }
         for (var i in components) {
             var component = components[i];
             if (component instanceof scope.AbstractTextInputComponent) {
-                this.drawTextComponent(component, context, parameters);
+                _drawTextComponent(component, this.getContext(), this.getParameters());
             } else if (component instanceof scope.AbstractComponent) {
                 scope.AbstractRenderer.prototype.drawComponent.call(this, component, context, parameters); // super
             } else {
@@ -12664,6 +12839,7 @@ MyScript = {};
     /**
      * Draw text component
      *
+     * @deprecated
      * @method drawTextComponent
      * @param {AbstractTextInputComponent} component
      * @param {Object} [context] DEPRECATED, use renderer constructor instead
@@ -12676,10 +12852,23 @@ MyScript = {};
         if (parameters) {
             this.setParameters(parameters);
         }
+        _drawTextComponent(component, this.getContext(), this.getParameters());
+    };
+
+    /**
+     * Draw text component
+     *
+     * @private
+     * @method _drawTextComponent
+     * @param {AbstractTextInputComponent} component
+     * @param {Object} context
+     * @param {PenParameters} parameters
+     */
+    var _drawTextComponent = function (component, context, parameters) {
         if (component instanceof scope.CharInputComponent) {
-            _drawChar(component, this.getContext(), this.getParameters());
+            _drawChar(component, context, parameters);
         } else if (component instanceof scope.StringInputComponent) {
-            _drawString(component, this.getContext(), this.getParameters());
+            _drawString(component, context, parameters);
         } else {
             throw new Error('Component not implemented: ' + component.getType());
         }
@@ -12715,7 +12904,7 @@ MyScript = {};
     scope.TextRenderer = TextRenderer;
 })(MyScript);
 
-'use strict';
+
 
 (function (scope) {
     /**
@@ -12766,10 +12955,16 @@ MyScript = {};
      * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
      */
     ShapeRenderer.prototype.drawComponents = function (components, context, parameters) {
+        if (context) {
+            this._setContext(context);
+        }
+        if (parameters) {
+            this.setParameters(parameters);
+        }
         for (var i in components) {
             var component = components[i];
             if (component instanceof scope.AbstractShapePrimitive) {
-                this.drawShapePrimitive(component, context, parameters);
+                _drawShapePrimitive(component, this.getContext(), this.getParameters());
             } else if (component instanceof scope.AbstractComponent) {
                 scope.AbstractRenderer.prototype.drawComponent.call(this, component, context, parameters); // super
             } else {
@@ -12803,9 +12998,15 @@ MyScript = {};
      * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
      */
     ShapeRenderer.prototype.drawShapeSegment = function (components, segment, context, parameters) {
+        if (context) {
+            this._setContext(context);
+        }
+        if (parameters) {
+            this.setParameters(parameters);
+        }
         var candidate = segment.getSelectedCandidate();
         if (candidate instanceof scope.ShapeRecognized) {
-            this.drawShapeRecognized(candidate, context, parameters);
+            _drawShapeRecognized(candidate, this.getContext(), this.getParameters());
         } else if (candidate instanceof scope.ShapeNotRecognized) {
             this.drawShapeNotRecognized(components, segment.getInkRanges(), context, parameters);
         } else {
@@ -12816,13 +13017,20 @@ MyScript = {};
     /**
      * This method allow you to draw recognized shape
      *
+     * @deprecated
      * @method drawShapeRecognized
      * @param {ShapeRecognized} shapeRecognized
      * @param {Object} [context] DEPRECATED, use renderer constructor instead
      * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
      */
     ShapeRenderer.prototype.drawShapeRecognized = function (shapeRecognized, context, parameters) {
-        this.drawComponents(shapeRecognized.getPrimitives(), context, parameters);
+        if (context) {
+            this._setContext(context);
+        }
+        if (parameters) {
+            this.setParameters(parameters);
+        }
+        _drawShapeRecognized(shapeRecognized, this.getContext(), this.getParameters());
     };
 
     /**
@@ -12835,34 +13043,33 @@ MyScript = {};
      * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
      */
     ShapeRenderer.prototype.drawShapeNotRecognized = function (components, inkRanges, context, parameters) {
-        var notRecognized = [];
-        for (var i in inkRanges) {
-            notRecognized.concat(this.extractStroke(components, inkRanges[i]));
-        }
+        var notRecognized = _extractShapeNotRecognized(components, inkRanges);
         this.drawComponents(notRecognized, context, parameters);
     };
 
     /**
      * Draw shape primitive
      *
+     * @deprecated
      * @method drawShapePrimitive
      * @param {AbstractShapePrimitive} primitive
      * @param {Object} [context] DEPRECATED, use renderer constructor instead
      * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
      */
     ShapeRenderer.prototype.drawShapePrimitive = function (primitive, context, parameters) {
-        if (primitive instanceof scope.ShapeEllipse) {
-            this.drawShapeEllipse(primitive, context, parameters);
-        } else if (primitive instanceof scope.ShapeLine) {
-            this.drawShapeLine(primitive, context, parameters);
-        } else {
-            throw new Error('Primitive not implemented: ' + primitive.getType());
+        if (context) {
+            this._setContext(context);
         }
+        if (parameters) {
+            this.setParameters(parameters);
+        }
+        _drawShapePrimitive(primitive, this.getContext(), this.getParameters());
     };
 
     /**
      * Draw shape line
      *
+     * @deprecated
      * @method drawShapeLine
      * @param {ShapeLine} shapeLine
      * @param {Object} [context] DEPRECATED, use renderer constructor instead
@@ -12875,19 +13082,13 @@ MyScript = {};
         if (parameters) {
             this.setParameters(parameters);
         }
-
-        _drawLine(shapeLine.getFirstPoint(), shapeLine.getLastPoint(), this.getContext(), this.getParameters());
-        if (shapeLine.hasBeginDecoration() && shapeLine.getBeginDecoration() === 'ARROW_HEAD') {
-            _drawArrowHead(shapeLine.getFirstPoint(), shapeLine.getBeginTangentAngle(), 12.0, this.getContext(), this.getParameters());
-        }
-        if (shapeLine.hasEndDecoration() && shapeLine.getEndDecoration() === 'ARROW_HEAD') {
-            _drawArrowHead(shapeLine.getLastPoint(), shapeLine.getEndTangentAngle(), 12.0, this.getContext(), this.getParameters());
-        }
+        _drawShapeLine(shapeLine, this.getContext(), this.getParameters());
     };
 
     /**
      * Draw shape ellipse
      *
+     * @deprecated
      * @method drawShapeEllipse
      * @param {ShapeEllipse} shapeEllipse
      * @param {Object} [context] DEPRECATED, use renderer constructor instead
@@ -12900,7 +13101,72 @@ MyScript = {};
         if (parameters) {
             this.setParameters(parameters);
         }
+        _drawShapeEllipse(shapeEllipse, this.getContext(), this.getParameters());
+    };
 
+    /**
+     * This method allow you to draw recognized shape
+     *
+     * @private
+     * @method _drawShapeRecognized
+     * @param {ShapeRecognized} shapeRecognized
+     * @param {Object} context
+     * @param {PenParameters} parameters
+     */
+    var _drawShapeRecognized = function (shapeRecognized, context, parameters) {
+        for (var i in shapeRecognized.getPrimitives()) {
+            _drawShapePrimitive(shapeRecognized.getPrimitives()[i], context, parameters);
+        }
+    };
+
+    /**
+     * Draw shape primitive
+     *
+     * @private
+     * @method _drawShapePrimitive
+     * @param {AbstractShapePrimitive} primitive
+     * @param {Object} context
+     * @param {PenParameters} parameters
+     */
+    var _drawShapePrimitive = function (primitive, context, parameters) {
+        if (primitive instanceof scope.ShapeEllipse) {
+            _drawShapeEllipse(primitive, context, parameters);
+        } else if (primitive instanceof scope.ShapeLine) {
+            _drawShapeLine(primitive, context, parameters);
+        } else {
+            throw new Error('Primitive not implemented: ' + primitive.getType());
+        }
+    };
+
+    /**
+     * Draw shape line
+     *
+     * @private
+     * @method _drawShapeLine
+     * @param {ShapeLine} shapeLine
+     * @param {Object} context
+     * @param {PenParameters} parameters
+     */
+    var _drawShapeLine = function (shapeLine, context, parameters) {
+        _drawLine(shapeLine.getFirstPoint(), shapeLine.getLastPoint(), context, parameters);
+        if (shapeLine.hasBeginDecoration() && shapeLine.getBeginDecoration() === 'ARROW_HEAD') {
+            _drawArrowHead(shapeLine.getFirstPoint(), shapeLine.getBeginTangentAngle(), 12.0, context, parameters);
+        }
+        if (shapeLine.hasEndDecoration() && shapeLine.getEndDecoration() === 'ARROW_HEAD') {
+            _drawArrowHead(shapeLine.getLastPoint(), shapeLine.getEndTangentAngle(), 12.0, context, parameters);
+        }
+    };
+
+    /**
+     * Draw shape ellipse
+     *
+     * @private
+     * @method _drawShapeEllipse
+     * @param {ShapeEllipse} shapeEllipse
+     * @param {Object} context
+     * @param {PenParameters} parameters
+     */
+    var _drawShapeEllipse = function (shapeEllipse, context, parameters) {
         var points = _drawEllipseArc(
             shapeEllipse.getCenter(),
             shapeEllipse.getMaxRadius(),
@@ -12908,14 +13174,27 @@ MyScript = {};
             shapeEllipse.getOrientation(),
             shapeEllipse.getStartAngle(),
             shapeEllipse.getSweepAngle(),
-            this.getContext(), this.getParameters());
+            context, parameters);
 
         if (shapeEllipse.hasBeginDecoration() && shapeEllipse.getBeginDecoration() === 'ARROW_HEAD') {
-            _drawArrowHead(points[0], shapeEllipse.getBeginTangentAngle(), 12.0, this.getContext(), this.getParameters());
+            _drawArrowHead(points[0], shapeEllipse.getBeginTangentAngle(), 12.0, context, parameters);
         }
         if (shapeEllipse.hasEndDecoration() && shapeEllipse.getEndDecoration() === 'ARROW_HEAD') {
-            _drawArrowHead(points[1], shapeEllipse.getEndTangentAngle(), 12.0, this.getContext(), this.getParameters());
+            _drawArrowHead(points[1], shapeEllipse.getEndTangentAngle(), 12.0, context, parameters);
         }
+    };
+
+    /**
+     * Get strokes from shape inkRange
+     *
+     * @deprecated
+     * @method extractStroke
+     * @param {Stroke[]} strokes
+     * @param {ShapeInkRange} inkRange
+     * @result {Stroke[]} List of strokes from inkRange
+     */
+    ShapeRenderer.prototype.extractStroke = function (strokes, inkRange) {
+        return _extractShapeNotRecognized(strokes, inkRange);
     };
 
     /**
@@ -12954,7 +13233,6 @@ MyScript = {};
         try {
             context.fillStyle = parameters.getColor();
             context.strokeStyle = parameters.getColor();
-            context.globalAlpha = parameters.getAlpha();
             context.lineWidth = 0.5 * parameters.getWidth();
 
             context.beginPath();
@@ -13005,7 +13283,6 @@ MyScript = {};
         try {
             context.fillStyle = parameters.getColor();
             context.strokeStyle = parameters.getColor();
-            context.globalAlpha = parameters.getAlpha();
             context.lineWidth = 0.5 * parameters.getWidth();
 
             context.beginPath();
@@ -13052,7 +13329,6 @@ MyScript = {};
         try {
             context.fillStyle = parameters.getColor();
             context.strokeStyle = parameters.getColor();
-            context.globalAlpha = parameters.getAlpha();
             context.lineWidth = 0.5 * parameters.getWidth();
 
             context.moveTo(headPoint.getX(), headPoint.getY());
@@ -13069,40 +13345,47 @@ MyScript = {};
     };
 
     /**
-     * Get strokes from shape inkRange
+     * Return non-scratched out components
      *
-     * @method extractStroke
-     * @param {Stroke[]} strokes
-     * @param {ShapeInkRange} inkRange
-     * @result {Stroke[]} List of strokes from inkRange
+     * @private
+     * @param components
+     * @param inkRanges
+     * @returns {*}
      */
-    ShapeRenderer.prototype.extractStroke = function (strokes, inkRange) {
-        var result = [],
-            firstPointIndex = Math.floor(inkRange.getFirstPoint()),
-            lastPointIndex = Math.ceil(inkRange.getLastPoint());
+    var _extractShapeNotRecognized = function (components, inkRanges) {
+        var result = [];
 
-        for (var strokeIndex = inkRange.getFirstStroke(); strokeIndex <= inkRange.getLastStroke(); strokeIndex++) {
-            var currentStroke = strokes[strokeIndex - 1];
-            var currentStrokePointCount = currentStroke.getX().length;
+        for (var i in inkRanges) {
+            var inkRange = inkRanges[i];
 
-            var newStroke = new scope.Stroke(), x = [], y = [];
+            var firstPointIndex = Math.floor(inkRange.getFirstPoint());
+            var lastPointIndex = Math.ceil(inkRange.getLastPoint());
 
-            for (var pointIndex = firstPointIndex; (strokeIndex === inkRange.getLastStroke() && pointIndex <= lastPointIndex && pointIndex < currentStrokePointCount) || (strokeIndex !== inkRange.getLastStroke() && pointIndex < currentStrokePointCount); pointIndex++) {
-                x.push(currentStroke.getX()[pointIndex]);
-                y.push(currentStroke.getY()[pointIndex]);
+            for (var strokeIndex = inkRange.getFirstStroke(); strokeIndex <= inkRange.getLastStroke(); strokeIndex++) {
+                var currentStroke = components[strokeIndex - 1];
+                var currentStrokePointCount = currentStroke.getX().length;
+
+                var newStroke = new scope.Stroke(), x = [], y = [];
+
+                for (var pointIndex = firstPointIndex; (strokeIndex === inkRange.getLastStroke() && pointIndex <= lastPointIndex && pointIndex < currentStrokePointCount) || (strokeIndex !== inkRange.getLastStroke() && pointIndex < currentStrokePointCount); pointIndex++) {
+                    x.push(currentStroke.getX()[pointIndex]);
+                    y.push(currentStroke.getY()[pointIndex]);
+                }
+
+                newStroke.setX(x);
+                newStroke.setY(y);
+                result.push(newStroke);
             }
-
-            newStroke.setX(x);
-            newStroke.setY(y);
-            result.push(newStroke);
         }
         return result;
+
     };
 
     // Export
     scope.ShapeRenderer = ShapeRenderer;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -13137,7 +13420,7 @@ MyScript = {};
      * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
      */
     MathRenderer.prototype.drawRecognitionResult = function (components, recognitionResult, context, parameters) {
-        var notScratchOutComponents = this.removeScratchOut(components, recognitionResult.getScratchOutResults());
+        var notScratchOutComponents = _removeMathScratchOut(components, recognitionResult.getScratchOutResults());
         this.drawComponents(notScratchOutComponents, context, parameters);
     };
 
@@ -13163,11 +13446,24 @@ MyScript = {};
     /**
      * Remove scratch out from input components
      *
+     * @deprecated
      * @param {AbstractComponent[]} components
      * @param {MathScratchOut[]} scratchOutResults
      * @returns {AbstractComponent[]} notScratchOutComponents
      */
     MathRenderer.prototype.removeScratchOut = function (components, scratchOutResults) {
+        return _removeMathScratchOut(components, scratchOutResults);
+    };
+
+    /**
+     * Return non-scratched out components
+     *
+     * @private
+     * @param components
+     * @param scratchOutResults
+     * @returns {*}
+     */
+    var _removeMathScratchOut = function (components, scratchOutResults) {
         if (!scratchOutResults || scratchOutResults.length === 0) {
             return components;
         }
@@ -13197,7 +13493,8 @@ MyScript = {};
     // Export
     scope.MathRenderer = MathRenderer;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -13232,50 +13529,26 @@ MyScript = {};
      * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
      */
     MusicRenderer.prototype.drawRecognitionResult = function (components, recognitionResult, context, parameters) {
-        var notScratchOutComponents = this.removeScratchOut(components, recognitionResult.getScratchOutResults());
+        var notScratchOutComponents = _removeMusicScratchOut(components, recognitionResult.getScratchOutResults());
         this.drawComponents(notScratchOutComponents, context, parameters);
     };
 
     /**
      * Remove scratch out from input components
      *
+     * @deprecated
      * @param {AbstractComponent[]} components
      * @param {MusicScratchOut[]} scratchOutResults
      * @returns {AbstractComponent[]} notScratchOutComponents
      */
     MusicRenderer.prototype.removeScratchOut = function (components, scratchOutResults) {
-        if (!scratchOutResults || scratchOutResults.length === 0) {
-            return components;
-        }
-
-        var cloneComponents = components.slice(0);
-        var componentsToRemove = [];
-
-        for (var k in scratchOutResults) {
-            if (scratchOutResults[k].getErasedInputRanges()) {
-                for (var n in scratchOutResults[k].getErasedInputRanges()) {
-                    componentsToRemove.push(scratchOutResults[k].getErasedInputRanges()[n].getComponent());
-                }
-                for (var p in scratchOutResults[k].getInputRanges()) {
-                    componentsToRemove.push(scratchOutResults[k].getInputRanges()[p].getComponent());
-                }
-            }
-        }
-
-        componentsToRemove.sort(function (a, b) {
-            return b - a;
-        });
-
-        for (var z in componentsToRemove) {
-            cloneComponents.splice(componentsToRemove[z], 1);
-        }
-        return cloneComponents;
+        return _removeMusicScratchOut(components, scratchOutResults);
     };
 
     /**
      * Draw staff on the HTML5 canvas
      *
-     * @method staffDrawing
+     * @method drawStaff
      * @param {MusicStaff} staff
      * @param {Object} [context] DEPRECATED, use renderer constructor instead
      * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
@@ -13287,23 +13560,7 @@ MyScript = {};
         if (parameters) {
             this.setParameters(parameters);
         }
-
-        var staffHeight = staff.getTop() + ((staff.getCount() - 1) * staff.getGap());
-//            var staves = Math.floor(context.canvas.clientHeight / staff.height);
-        var staves = 1;
-
-        this.getContext().beginPath();
-
-        // Drawing horizontal staff lines
-        for (var i = 0; i < staves; i++) {
-            var offset = staffHeight * i;
-            for (var j = 0; j < staff.getCount(); j++) {
-                this.getContext().moveTo(0, (staff.getTop() + offset) + j * staff.getGap());
-                this.getContext().lineTo(this.getContext().canvas.clientWidth, (staff.getTop() + offset) + j * staff.getGap());
-            }
-        }
-
-        this.getContext().stroke();
+        _drawStaff(staff, this.getContext(), this.getParameters());
     };
 
     /**
@@ -13315,10 +13572,16 @@ MyScript = {};
      * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
      */
     MusicRenderer.prototype.drawComponents = function (components, context, parameters) {
+        if (context) {
+            this._setContext(context);
+        }
+        if (parameters) {
+            this.setParameters(parameters);
+        }
         for (var i in components) {
             var component = components[i];
             if (component instanceof scope.AbstractMusicInputComponent) {
-                this.drawMusicNode(component, context, parameters);
+                _drawMusicNode(component, this.getContext(), this.getParameters());
             } else if (component instanceof scope.AbstractComponent) {
                 scope.AbstractRenderer.prototype.drawComponent.call(this, component, context, parameters); // super
             } else {
@@ -13342,32 +13605,73 @@ MyScript = {};
         if (parameters) {
             this.setParameters(parameters);
         }
+        _drawMusicNode(component, this.getContext(), this.getParameters());
+    };
+
+    /**
+     * Draw staff on the HTML5 canvas
+     *
+     * @private
+     * @method _drawStaff
+     * @param {MusicStaff} staff
+     * @param {Object} context
+     * @param {PenParameters} parameters
+     */
+    var _drawStaff = function (staff, context, parameters) {
+        var staffHeight = staff.getTop() + ((staff.getCount() - 1) * staff.getGap());
+//            var staves = Math.floor(context.canvas.clientHeight / staff.height);
+        var staves = 1;
+
+        context.beginPath();
+
+        // Drawing horizontal staff lines
+        for (var i = 0; i < staves; i++) {
+            var offset = staffHeight * i;
+            for (var j = 0; j < staff.getCount(); j++) {
+                context.moveTo(0, (staff.getTop() + offset) + j * staff.getGap());
+                context.lineTo(context.canvas.clientWidth, (staff.getTop() + offset) + j * staff.getGap());
+            }
+        }
+
+        context.stroke();
+    };
+
+    /**
+     * Draw music node
+     *
+     * @private
+     * @method _drawMusicNode
+     * @param {AbstractMusicInputComponent} component
+     * @param {Object} context
+     * @param {PenParameters} parameters
+     */
+    var _drawMusicNode = function (component, context, parameters) {
         if (component instanceof scope.MusicAccidentalInputComponent) {
-            _drawAccidental(component, this.getContext(), this.getParameters());
+            _drawAccidental(component, context, parameters);
         } else if (component instanceof scope.MusicArpeggiateInputComponent) {
-            _drawArpeggiate(component, this.getContext(), this.getParameters());
+            _drawArpeggiate(component, context, parameters);
         } else if (component instanceof scope.MusicBarInputComponent) {
-            _drawBar(component, this.getContext(), this.getParameters());
+            _drawBar(component, context, parameters);
         } else if (component instanceof scope.MusicBeamInputComponent) {
-            _drawBeam(component, this.getContext(), this.getParameters());
+            _drawBeam(component, context, parameters);
         } else if (component instanceof scope.MusicClefInputComponent) {
-            _drawClef(component, this.getContext(), this.getParameters());
+            _drawClef(component, context, parameters);
         } else if (component instanceof scope.MusicDecorationInputComponent) {
-            _drawDecoration(component, this.getContext(), this.getParameters());
+            _drawDecoration(component, context, parameters);
         } else if (component instanceof scope.MusicDotsInputComponent) {
-            _drawDots(component, this.getContext(), this.getParameters());
+            _drawDots(component, context, parameters);
         } else if (component instanceof scope.MusicHeadInputComponent) {
-            _drawHead(component, this.getContext(), this.getParameters());
+            _drawHead(component, context, parameters);
         } else if (component instanceof scope.MusicLedgerLineInputComponent) {
-            _drawLedgerLine(component, this.getContext(), this.getParameters());
+            _drawLedgerLine(component, context, parameters);
         } else if (component instanceof scope.MusicRestInputComponent) {
-            _drawRest(component, this.getContext(), this.getParameters());
+            _drawRest(component, context, parameters);
         } else if (component instanceof scope.MusicStemInputComponent) {
-            _drawStem(component, this.getContext(), this.getParameters());
+            _drawStem(component, context, parameters);
         } else if (component instanceof scope.MusicTieOrSlurInputComponent) {
-            _drawTieOrSlur(component, this.getContext(), this.getParameters());
+            _drawTieOrSlur(component, context, parameters);
         } else if (component instanceof scope.MusicTimeSignatureInputComponent) {
-            _drawTimeSignature(component, this.getContext(), this.getParameters());
+            _drawTimeSignature(component, context, parameters);
         } else {
             throw new Error('Node not implemented: ' + component.getType());
         }
@@ -13563,10 +13867,48 @@ MyScript = {};
         throw new Error('not implemented');
     };
 
+    /**
+     * Return non-scratched out components
+     *
+     * @private
+     * @param components
+     * @param scratchOutResults
+     * @returns {*}
+     */
+    var _removeMusicScratchOut = function (components, scratchOutResults) {
+        if (!scratchOutResults || scratchOutResults.length === 0) {
+            return components;
+        }
+
+        var cloneComponents = components.slice(0);
+        var componentsToRemove = [];
+
+        for (var k in scratchOutResults) {
+            if (scratchOutResults[k].getErasedInputRanges()) {
+                for (var n in scratchOutResults[k].getErasedInputRanges()) {
+                    componentsToRemove.push(scratchOutResults[k].getErasedInputRanges()[n].getComponent());
+                }
+                for (var p in scratchOutResults[k].getInputRanges()) {
+                    componentsToRemove.push(scratchOutResults[k].getInputRanges()[p].getComponent());
+                }
+            }
+        }
+
+        componentsToRemove.sort(function (a, b) {
+            return b - a;
+        });
+
+        for (var z in componentsToRemove) {
+            cloneComponents.splice(componentsToRemove[z], 1);
+        }
+        return cloneComponents;
+    };
+
     // Export
     scope.MusicRenderer = MusicRenderer;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -13622,11 +13964,17 @@ MyScript = {};
      * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
      */
     AnalyzerRenderer.prototype.drawRecognitionResult = function (components, recognitionResult, context, parameters) {
+        if (context) {
+            this._setContext(context);
+        }
+        if (parameters) {
+            this.setParameters(parameters);
+        }
         if (this.isTypesetting()) {
             this.shapeRenderer.drawShapes(components, recognitionResult.getShapes(), context, parameters);
-            this.drawTables(components, recognitionResult.getTables(), context, parameters);
-            this.drawTextLines(components, recognitionResult.getTextLines(), context, parameters);
-//        this.drawGroups(strokes, recognitionResult.getGroups(), context); // TODO: not implemented
+            _drawTables(components, recognitionResult.getTables(), this.getContext(), this.getParameters());
+            _drawTextLines(components, recognitionResult.getTextLines(), this.getContext(), this.getParameters());
+            //_drawGroups(components, recognitionResult.getGroups(), this.getContext(), this.getParameters()); // TODO: not implemented
         } else {
             this.drawComponents(components, context, parameters);
         }
@@ -13656,6 +14004,7 @@ MyScript = {};
     /**
      * Draw table
      *
+     * @deprecated
      * @method drawTables
      * @param {AbstractComponent[]} components
      * @param {AnalyzerTable[]} tables
@@ -13672,19 +14021,17 @@ MyScript = {};
         for (var i in tables) {
             if (this.getShowBoundingBoxes()) {
                 for (var j in tables[i].getCells()) {
-                    this.drawCell(tables[i].getCells()[j], context);
+                    _drawCell(tables[i].getCells()[j], this.getContext(), this.getParameters());
                 }
             }
-            for (var k in tables[i].getLines()) {
-                var data = tables[i].getLines()[k].getData();
-                _drawLine(data.getP1(), data.getP2(), this.getContext(), this.getParameters());
-            }
         }
+        _drawTables(components, tables, this.getContext(), this.getParameters());
     };
 
     /**
      * Draw the text line
      *
+     * @deprecated
      * @method drawTextLines
      * @param {AbstractComponent[]} components
      * @param {AnalyzerTextLine[]} textLines
@@ -13692,28 +14039,26 @@ MyScript = {};
      * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
      */
     AnalyzerRenderer.prototype.drawTextLines = function (components, textLines, context, parameters) {
+        if (context) {
+            this._setContext(context);
+        }
+        if (parameters) {
+            this.setParameters(parameters);
+        }
         for (var i in textLines) {
             var textLine = textLines[i];
             var data = textLine.getData();
-            if (data) {
-                if (this.getShowBoundingBoxes()) {
-                    this.drawRectangle(data.getBoundingBox(), context, parameters);
-                }
-
-                var text = textLine.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
-                this.drawText(data.getBoundingBox(), text, data.getJustificationType(), data.getTextHeight(), data.getBaselinePos(), context, parameters);
-
-                var underlines = textLine.getUnderlineList();
-                for (var j in underlines) {
-                    this.drawUnderline(data.getBoundingBox(), underlines[j], text, data.getTextHeight(), data.getBaselinePos() + data.getTextHeight() / 10, context, parameters);
-                }
+            if (data && this.getShowBoundingBoxes()) {
+                this.drawRectangle(data.getBoundingBox(), context, parameters);
             }
         }
+        _drawTextLines(components, textLines, this.getContext(), this.getParameters());
     };
 
     /**
      * Draw text on analyser
      *
+     * @deprecated
      * @method drawText
      * @param {Rectangle} boundingBox
      * @param {String} text
@@ -13730,27 +14075,13 @@ MyScript = {};
         if (parameters) {
             this.setParameters(parameters);
         }
-        var params = this.getParameters();
-
-        this.getContext().save();
-        try {
-            this.getContext().fillStyle = params.getColor();
-            this.getContext().strokeStyle = params.getColor();
-            this.getContext().globalAlpha = params.getAlpha();
-            this.getContext().lineWidth = 0.5 * params.getWidth();
-            this.getContext().font = params.getDecoration() + textHeight + 'px ' + params.getFont();
-            this.getContext().textAlign = (justificationType === 'CENTER') ? 'center' : 'left';
-
-            this.getContext().fillText(text, boundingBox.getX(), baseline, boundingBox.getWidth());
-
-        } finally {
-            this.getContext().restore();
-        }
+        _drawText(boundingBox, text, justificationType, textHeight, baseline, this.getContext(), this.getParameters());
     };
 
     /**
      * Draw Underline
      *
+     * @deprecated
      * @method drawUnderline
      * @param {Rectangle} boundingBox
      * @param {AnalyzerUnderline} underline
@@ -13766,25 +14097,13 @@ MyScript = {};
         if (parameters) {
             this.setParameters(parameters);
         }
-
-        var params = this.getParameters();
-        var topLeft = boundingBox.getTopLeftPoint();
-        var firstCharacter = underline.getData().getFirstCharacter();
-        var lastCharacter = underline.getData().getLastCharacter();
-
-        this.getContext().font = params.getDecoration() + textHeight + 'px ' + params.getFont();
-
-        var textMetrics = this.getContext().measureText(text.substring(0, firstCharacter));
-        var x1 = topLeft.x + textMetrics.width;
-
-        textMetrics = this.getContext().measureText(text.substring(firstCharacter, lastCharacter + 1));
-        var x2 = x1 + textMetrics.width;
-        _drawLine(new scope.Point({x: x1, y: baseline}), new scope.Point({x: x2, y: baseline}), this.getContext(), params);
+        _drawUnderline(boundingBox, underline, text, textHeight, baseline, this.getContext(), this.getParameters());
     };
 
     /**
      * Draw Groups
      *
+     * @deprecated
      * @method drawGroups
      * @param {AbstractComponent[]} components
      * @param {AnalyzerGroup[]} groups
@@ -13792,12 +14111,13 @@ MyScript = {};
      * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
      */
     AnalyzerRenderer.prototype.drawGroups = function (components, groups, context, parameters) { // jshint ignore:line
-        throw new Error('not implemented');
+        _drawGroups(components, groups, this.getContext(), this.getParameters());
     };
 
     /**
      * Draw a cell
      *
+     * @deprecated
      * @method drawCell
      * @param {AnalyzerCell} cell
      * @param {Object} [context] DEPRECATED, use renderer constructor instead
@@ -13805,7 +14125,153 @@ MyScript = {};
      */
     AnalyzerRenderer.prototype.drawCell = function (cell, context, parameters) {
         if (cell.getData()) {
-            this.drawRectangle(cell.getData().getBoundingBox(), context, parameters);
+            if (context) {
+                this._setContext(context);
+            }
+            if (parameters) {
+                this.setParameters(parameters);
+            }
+            _drawCell(cell, this.getContext(), this.getParameters());
+        }
+    };
+
+    /**
+     * Draw table
+     *
+     * @private
+     * @method _drawTables
+     * @param {AbstractComponent[]} components
+     * @param {AnalyzerTable[]} tables
+     * @param {Object} context
+     * @param {PenParameters} parameters
+     */
+    var _drawTables = function (components, tables, context, parameters) {
+        for (var i in tables) {
+            for (var k in tables[i].getLines()) {
+                var data = tables[i].getLines()[k].getData();
+                _drawLine(data.getP1(), data.getP2(), context, parameters);
+            }
+        }
+    };
+
+    /**
+     * Draw the text line
+     *
+     * @private
+     * @method _drawTextLines
+     * @param {AbstractComponent[]} components
+     * @param {AnalyzerTextLine[]} textLines
+     * @param {Object} context
+     * @param {PenParameters} parameters
+     */
+    var _drawTextLines = function (components, textLines, context, parameters) {
+        for (var i in textLines) {
+            var textLine = textLines[i];
+            var data = textLine.getData();
+            if (data) {
+                var text = textLine.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
+                _drawText(data.getBoundingBox(), text, data.getJustificationType(), data.getTextHeight(), data.getBaselinePos(), context, parameters);
+
+                var underlines = textLine.getUnderlineList();
+                for (var j in underlines) {
+                    _drawUnderline(data.getBoundingBox(), underlines[j], text, data.getTextHeight(), data.getBaselinePos() + data.getTextHeight() / 10, context, parameters);
+                }
+            }
+        }
+    };
+
+    /**
+     * Draw text on analyser
+     *
+     * @private
+     * @method _drawText
+     * @param {Rectangle} boundingBox
+     * @param {String} text
+     * @param {String} justificationType
+     * @param {Number} textHeight
+     * @param {Number} baseline
+     * @param {Object} context
+     * @param {PenParameters} parameters
+     */
+    var _drawText = function (boundingBox, text, justificationType, textHeight, baseline, context, parameters) {
+        context.save();
+        try {
+            context.fillStyle = parameters.getColor();
+            context.strokeStyle = parameters.getColor();
+            context.lineWidth = 0.5 * parameters.getWidth();
+            context.font = parameters.getDecoration() + ' ' + textHeight + 'px' + ' ' + parameters.getFont();
+            context.textAlign = (justificationType === 'CENTER') ? 'center' : 'left';
+
+            context.fillText(text, boundingBox.getX(), baseline);
+
+        } finally {
+            context.restore();
+        }
+    };
+
+    /**
+     * Draw Groups
+     *
+     * @private
+     * @method _drawGroups
+     * @param {AbstractComponent[]} components
+     * @param {AnalyzerGroup[]} groups
+     * @param {Object} context
+     * @param {PenParameters} parameters
+     */
+    var _drawGroups = function (components, groups, context, parameters) { // jshint ignore:line
+        throw new Error('not implemented');
+    };
+
+
+    /**
+     * Draw Underline
+     *
+     * @private
+     * @method _drawUnderline
+     * @param {Rectangle} boundingBox
+     * @param {AnalyzerUnderline} underline
+     * @param {String} text
+     * @param {Number} textHeight
+     * @param {Object} context
+     * @param {PenParameters} parameters
+     */
+    var _drawUnderline = function (boundingBox, underline, text, textHeight, baseline, context, parameters) {
+        var topLeft = boundingBox.getTopLeftPoint();
+        var firstCharacter = underline.getData().getFirstCharacter();
+        var lastCharacter = underline.getData().getLastCharacter();
+
+        context.font = parameters.getDecoration() + ' ' + textHeight + 'px' + ' ' + parameters.getFont();
+
+        var textMetrics = context.measureText(text.substring(0, firstCharacter));
+        var x1 = topLeft.x + textMetrics.width;
+
+        textMetrics = context.measureText(text.substring(firstCharacter, lastCharacter + 1));
+        var x2 = x1 + textMetrics.width;
+        _drawLine(new scope.Point({x: x1, y: baseline}), new scope.Point({x: x2, y: baseline}), context, parameters);
+    };
+
+    /**
+     * Draw a cell
+     *
+     * @private
+     * @method _drawCell
+     * @param {AnalyzerCell} cell
+     * @param {Object} context
+     * @param {PenParameters} parameters
+     */
+    var _drawCell = function (cell, context, parameters) {
+        if (cell.getData()) {
+            var rectangle = cell.getData().getBoundingBox();
+            context.save();
+            try {
+                context.fillStyle = parameters.getRectColor();
+                context.strokeStyle = parameters.getColor();
+                context.lineWidth = 0.5 * parameters.getWidth();
+                context.fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
+            } finally {
+                context.restore();
+            }
         }
     };
 
@@ -13824,7 +14290,6 @@ MyScript = {};
         try {
             context.fillStyle = parameters.getColor();
             context.strokeStyle = parameters.getColor();
-            context.globalAlpha = parameters.getAlpha();
             context.lineWidth = 0.5 * parameters.getWidth();
 
             context.beginPath();
@@ -13839,7 +14304,8 @@ MyScript = {};
     // Export
     scope.AnalyzerRenderer = AnalyzerRenderer;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -13892,7 +14358,6 @@ MyScript = {};
             this.stroke = new scope.StrokeComponent();
             this.stroke.setColor(this.penParameters.getColor());
             this.stroke.setWidth(this.penParameters.getWidth());
-            this.stroke.setAlpha(this.penParameters.getAlpha());
             this.stroke.addPoint(x, y, t);
             this.clear();
             this.drawStroke(this.stroke);
@@ -13925,7 +14390,8 @@ MyScript = {};
     // Export
     scope.InkGrabber = InkGrabber;
 })(MyScript);
-'use strict';
+
+
 
 (function (scope) {
     /**
@@ -13947,20 +14413,21 @@ MyScript = {};
         this.components = [];
         this.redoComponents = [];
         this.lastNonRecoComponentIdx = 0;
-        this.callback = callback;
+        this.resultCallback = callback;
+        this.changeCallback = undefined;
         this.options = { // Default options
-            type: 'TEXT',
-            protocol: 'REST',
+            type: scope.RecognitionType.TEXT,
+            protocol: scope.Protocol.REST,
             width: 400,
             height: 300,
             timeout: 2000,
             typeset: false,
             components: [],
-            textParameters: {},
-            mathParameters: {},
-            shapeParameters: {},
-            musicParameters: {},
-            analyzerParameters: {}
+            textParameters: new scope.TextParameter(),
+            mathParameters: new scope.MathParameter(),
+            shapeParameters: new scope.ShapeParameter(),
+            musicParameters: new scope.MusicParameter(),
+            analyzerParameters: new scope.AnalyzerParameter()
         };
 
         // Capture
@@ -14026,16 +14493,16 @@ MyScript = {};
     /**
      * Set the network protocol (REST or WebSocket)
      *
-     * @param {String} protocol
+     * @param {'REST'|'WebSocket'} protocol
      */
-    InkPaper.prototype._setProtocol = function (protocol) {
+    InkPaper.prototype.setProtocol = function (protocol) {
         switch (protocol) {
-            case 'REST':
+            case scope.Protocol.REST:
                 this._selectedRecognizer = this._selectedRESTRecognizer;
                 break;
-            case 'WebSocket':
-                this._selectedRecognizer = this._selectedWSRecognizer;
+            case scope.Protocol.WS:
                 this.setTimeout(-1); // FIXME hack to avoid border issues
+                this._selectedRecognizer = this._selectedWSRecognizer;
                 break;
             default:
                 throw new Error('Unknown protocol: ' + protocol);
@@ -14046,32 +14513,45 @@ MyScript = {};
     };
 
     /**
+     * Get the network protocol (REST or WebSocket)
+     *
+     * @returns {'REST'|'WebSocket'}
+     */
+    InkPaper.prototype.getProtocol = function () {
+        if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
+            return scope.Protocol.WS;
+        } else {
+            return scope.Protocol.REST;
+        }
+    };
+
+    /**
      * Set recognition type
      *
      * @method setType
-     * @param {'TEXT'|'MATH'|'SHAPE'|'ANALYZER'|'MUSIC'} type
+     * @param {'TEXT'|'MATH'|'SHAPE'|'MUSIC'|'ANALYZER'} type
      */
     InkPaper.prototype.setType = function (type) {
         switch (type) {
-            case 'TEXT':
+            case scope.RecognitionType.TEXT:
                 this._selectedRenderer = this._textRenderer;
                 this._selectedRESTRecognizer = this._textRecognizer;
                 this._selectedWSRecognizer = this._textWSRecognizer;
                 break;
-            case 'MATH':
+            case scope.RecognitionType.MATH:
                 this._selectedRenderer = this._mathRenderer;
                 this._selectedRESTRecognizer = this._mathRecognizer;
                 this._selectedWSRecognizer = this._mathWSRecognizer;
                 break;
-            case 'SHAPE':
+            case scope.RecognitionType.SHAPE:
                 this._selectedRenderer = this._shapeRenderer;
                 this._selectedRESTRecognizer = this._shapeRecognizer;
                 break;
-            case 'MUSIC':
+            case scope.RecognitionType.MUSIC:
                 this._selectedRenderer = this._musicRenderer;
                 this._selectedRESTRecognizer = this._musicRecognizer;
                 break;
-            case 'ANALYZER':
+            case scope.RecognitionType.ANALYZER:
                 this._selectedRenderer = this._analyzerRenderer;
                 this._selectedRESTRecognizer = this._analyzerRecognizer;
                 break;
@@ -14084,31 +14564,28 @@ MyScript = {};
     };
 
     /**
-     * Set recognition language
+     * Get recognition type
      *
-     * @method setLanguage
-     * @param  String language
+     * @method getType
+     * @returns {'TEXT'|'MATH'|'SHAPE'|'MUSIC'|'ANALYZER'} type
      */
-    InkPaper.prototype.setLanguage = function (language) {
-        if(this.options.type === 'TEXT'){
-            this.isStarted = false;
-            this._selectedWSRecognizer.resetWSRecognition();
-            this._selectedWSRecognizer.getParameters().setLanguage(language);
+    InkPaper.prototype.getType = function () {
+        if (this._selectedRenderer instanceof scope.TextRenderer) {
+            return scope.RecognitionType.TEXT;
         }
-    };
-
-    /**
-     * Set math recognition format result types
-     *
-     * @method setResultTypes
-     * @param  Array resultTypes
-     */
-    InkPaper.prototype.setResultTypes = function (resultTypes) {
-        if(this.options.type === 'MATH'){
-            this.isStarted = false;
-            this._selectedWSRecognizer.resetWSRecognition();
-            this._selectedWSRecognizer.getParameters().setResultTypes(resultTypes.map(function(x) { return x.toUpperCase(); }));
+        if (this._selectedRenderer instanceof scope.MathRenderer) {
+            return scope.RecognitionType.MATH;
         }
+        if (this._selectedRenderer instanceof scope.ShapeRenderer) {
+            return scope.RecognitionType.SHAPE;
+        }
+        if (this._selectedRenderer instanceof scope.MusicRenderer) {
+            return scope.RecognitionType.MUSIC;
+        }
+        if (this._selectedRenderer instanceof scope.AnalyzerRenderer) {
+            return scope.RecognitionType.ANALYZER;
+        }
+        throw new Error('Unknown type');
     };
 
     /**
@@ -14172,13 +14649,47 @@ MyScript = {};
     };
 
     /**
+     * Set recognition language
+     *
+     * @deprecated Use setTextParameters instead
+     * @method setLanguage
+     * @param  String language
+     */
+    InkPaper.prototype.setLanguage = function (language) {
+        if(this.options.type === scope.RecognitionType.TEXT){
+            this.isStarted = false;
+            this._selectedWSRecognizer.resetWSRecognition();
+            this._selectedWSRecognizer.getParameters().setLanguage(language);
+        }
+    };
+
+    /**
+     * Set math recognition format result types
+     *
+     * @deprecated Use setMathParameters instead
+     * @method setResultTypes
+     * @param  Array resultTypes
+     */
+    InkPaper.prototype.setResultTypes = function (resultTypes) {
+        if(this.options.type === scope.RecognitionType.MATH){
+            this.isStarted = false;
+            this._selectedWSRecognizer.resetWSRecognition();
+            this._selectedWSRecognizer.getParameters().setResultTypes(resultTypes.map(function(x) { return x.toUpperCase(); }));
+        }
+    };
+
+    /**
      * Set text recognition parameters
      *
      * @method setTextParameters
-     * @param {TextParameters} textParameters
+     * @param {TextParameter} textParameters
      */
     InkPaper.prototype.setTextParameters = function (textParameters) {
         if (textParameters) {
+            if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
+                this.isStarted = false;
+                this._selectedRecognizer.resetWSRecognition();
+            }
             for (var i in textParameters) {
                 if (textParameters[i] !== undefined) {
                     this._textRecognizer.getParameters()[i] = textParameters[i]; // Override options
@@ -14190,13 +14701,27 @@ MyScript = {};
     };
 
     /**
+     * Get text recognition parameters
+     *
+     * @method getTextParameters
+     * @returns {TextParameter} textParameters
+     */
+    InkPaper.prototype.getTextParameters = function () {
+        return this._textRecognizer.getParameters();
+    };
+
+    /**
      * Set math recognition parameters
      *
      * @method setMathParameters
-     * @param {MathParameters} mathParameters
+     * @param {MathParameter} mathParameters
      */
     InkPaper.prototype.setMathParameters = function (mathParameters) {
         if (mathParameters) {
+            if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
+                this.isStarted = false;
+                this._selectedRecognizer.resetWSRecognition();
+            }
             for (var i in mathParameters) {
                 if (mathParameters[i] !== undefined) {
                     this._mathRecognizer.getParameters()[i] = mathParameters[i]; // Override options
@@ -14207,13 +14732,27 @@ MyScript = {};
     };
 
     /**
+     * Get math recognition parameters
+     *
+     * @method getMathParameters
+     * @returns {MathParameter} mathParameters
+     */
+    InkPaper.prototype.getMathParameters = function () {
+        return this._mathRecognizer.getParameters();
+    };
+
+    /**
      * Set shape recognition parameters
      *
      * @method setShapeParameters
-     * @param {ShapeParameters} shapeParameters
+     * @param {ShapeParameter} shapeParameters
      */
     InkPaper.prototype.setShapeParameters = function (shapeParameters) {
         if (shapeParameters) {
+            if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
+                this.isStarted = false;
+                this._selectedRecognizer.resetWSRecognition();
+            }
             for (var i in shapeParameters) {
                 if (shapeParameters[i] !== undefined) {
                     this._shapeRecognizer.getParameters()[i] = shapeParameters[i]; // Override options
@@ -14223,13 +14762,27 @@ MyScript = {};
     };
 
     /**
+     * Get shape recognition parameters
+     *
+     * @method getShapeParameters
+     * @returns {ShapeParameter} shapeParameters
+     */
+    InkPaper.prototype.getShapeParameters = function () {
+        return this._shapeRecognizer.getParameters();
+    };
+
+    /**
      * Set music recognition parameters
      *
      * @method setMusicParameters
-     * @param {MusicParameters} musicParameters
+     * @param {MusicParameter} musicParameters
      */
     InkPaper.prototype.setMusicParameters = function (musicParameters) {
         if (musicParameters) {
+            if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
+                this.isStarted = false;
+                this._selectedRecognizer.resetWSRecognition();
+            }
             for (var i in musicParameters) {
                 if (musicParameters[i] !== undefined) {
                     this._musicRecognizer.getParameters()[i] = musicParameters[i]; // Override options
@@ -14239,19 +14792,76 @@ MyScript = {};
     };
 
     /**
+     * Get music recognition parameters
+     *
+     * @method getMusicParameters
+     * @returns {MusicParameter} musicParameters
+     */
+    InkPaper.prototype.getMusicParameters = function () {
+        return this._musicRecognizer.getParameters();
+    };
+
+    /**
      * Set analyzer recognition parameters
      *
      * @method setAnalyzerParameters
-     * @param {AnalyzerParameters} analyzerParameters
+     * @param {AnalyzerParameter} analyzerParameters
      */
     InkPaper.prototype.setAnalyzerParameters = function (analyzerParameters) {
         if (analyzerParameters) {
+            if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
+                this.isStarted = false;
+                this._selectedRecognizer.resetWSRecognition();
+            }
             for (var i in analyzerParameters) {
                 if (analyzerParameters[i] !== undefined) {
                     this._analyzerRecognizer.getParameters()[i] = analyzerParameters[i]; // Override options
                 }
             }
         }
+    };
+
+    /**
+     * Get analyzer recognition parameters
+     *
+     * @method getAnalyzerParameters
+     * @returns {AnalyzerParameter} analyzerParameters
+     */
+    InkPaper.prototype.getAnalyzerParameters = function () {
+        return this._analyzerRecognizer.getParameters();
+    };
+
+    /**
+     * Set pen parameters
+     *
+     * @method setPenParameters
+     * @param {PenParameters} penParameters
+     */
+    InkPaper.prototype.setPenParameters = function (penParameters) {
+        if (penParameters) {
+            for (var i in penParameters) {
+                if (penParameters[i] !== undefined) {
+                    this._selectedRenderer.getParameters()[i] = penParameters[i]; // Override options
+                }
+            }
+            var params = this._selectedRenderer.getParameters();
+            this._inkGrabber.setParameters(params); // Override options
+            this._textRenderer.setParameters(params); // Override options
+            this._mathRenderer.setParameters(params); // Override options
+            this._shapeRenderer.setParameters(params); // Override options
+            this._musicRenderer.setParameters(params); // Override options
+            this._analyzerRenderer.setParameters(params); // Override options
+        }
+    };
+
+    /**
+     * Get pen parameters
+     *
+     * @method getPenParameters
+     * @returns {PenParameters} penParameters
+     */
+    InkPaper.prototype.getPenParameters = function () {
+        return this._selectedRenderer.getParameters();
     };
 
     /**
@@ -14285,11 +14895,12 @@ MyScript = {};
 
         // Recognition type
         this.setType(options.type);
-        this._setProtocol(options.protocol);
+        this.setProtocol(options.protocol);
         this.setTimeout(options.timeout);
         this.setApplicationKey(options.applicationKey);
         this.setHmacKey(options.hmacKey);
 
+        this.setPenParameters(options.penParameters);
         this.setTypeset(options.typeset);
 
         this.setWidth(options.width);
@@ -14351,12 +14962,35 @@ MyScript = {};
      * Set the recognition callback
      *
      * @method setCallback
+     * @deprecated Use setResultCallback instead
      * @param {Function} callback callback function
      * @param {Object} callback.data The recognition result
      * @param {Object} callback.err The err to the callback
      */
     InkPaper.prototype.setCallback = function (callback) {
-        this.callback = callback;
+        this.resultCallback = callback;
+    };
+
+    /**
+     * Set the change callback
+     *
+     * @method setChangeCallback
+     * @param {Function} callback callback function
+     * @param {Object} callback.data The inkPaper state
+     */
+    InkPaper.prototype.setChangeCallback = function (changeCallback) {
+        this.changeCallback = changeCallback;
+    };
+
+    /**
+     * Set the recognition result callback
+     *
+     * @method setResultCallback
+     * @param {Function} callback callback function
+     * @param {Object} callback.data The recognition result
+     */
+    InkPaper.prototype.setResultCallback = function (callback) {
+        this.resultCallback = callback;
     };
 
     /**
@@ -14390,11 +15024,14 @@ MyScript = {};
 
             if (this._selectedRecognizer instanceof scope.ShapeRecognizer) {
                 this.lastNonRecoComponentIdx = 0;
-                this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
-                this._instanceId = undefined;
+                if (this._instanceId) {
+                    this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
+                    this._inkGrabber.clear();
+                    this._instanceId = undefined;
+                }
             }
             this._initRenderingCanvas();
-            this._element.dispatchEvent(new CustomEvent('changed', {detail: {canUndo: this.canUndo(), canRedo: this.canRedo()}}));
+            this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
 
             if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
                 this.isStarted = false;
@@ -14405,6 +15042,8 @@ MyScript = {};
                     this._timerId = setTimeout(this.recognize.bind(this), this.getTimeout());
                 } else if (this.getTimeout() > -1) {
                     this.recognize();
+                } else {
+                    this._onResult();
                 }
             }
         }
@@ -14431,11 +15070,14 @@ MyScript = {};
 
             if (this._selectedRecognizer instanceof scope.ShapeRecognizer) {
                 this.lastNonRecoComponentIdx = 0;
-                this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
-                this._instanceId = undefined;
+                if (this._instanceId) {
+                    this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
+                    this._inkGrabber.clear();
+                    this._instanceId = undefined;
+                }
             }
             this._initRenderingCanvas();
-            this._element.dispatchEvent(new CustomEvent('changed', {detail: {canUndo: this.canUndo(), canRedo: this.canRedo()}}));
+            this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
 
             if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
                 this.recognize();
@@ -14445,6 +15087,8 @@ MyScript = {};
                     this._timerId = setTimeout(this.recognize.bind(this), this.getTimeout());
                 } else if (this.getTimeout() > -1) {
                     this.recognize();
+                } else {
+                    this._onResult();
                 }
             }
         }
@@ -14457,7 +15101,10 @@ MyScript = {};
      */
     InkPaper.prototype.clear = function () {
         if (this._selectedRecognizer instanceof scope.ShapeRecognizer) {
-            this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
+            if (this._instanceId) {
+                this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
+                this._instanceId = undefined;
+            }
         }
         this.components = [];
         this.redoComponents = [];
@@ -14466,7 +15113,7 @@ MyScript = {};
         this._instanceId = undefined;
 
         this._initRenderingCanvas();
-        this._element.dispatchEvent(new CustomEvent('changed', {detail: {canUndo: this.canUndo(), canRedo: this.canRedo()}}));
+        this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
 
         if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
             this.isStarted = false;
@@ -14477,6 +15124,8 @@ MyScript = {};
                 this._timerId = setTimeout(this.recognize.bind(this), this.getTimeout());
             } else if (this.getTimeout() > -1) {
                 this.recognize();
+            } else {
+                this._onResult();
             }
         }
     };
@@ -14496,9 +15145,19 @@ MyScript = {};
      * @param {Date} [t] timeStamp
      */
     InkPaper.prototype._down = function (x, y, t) {
+
+        if(this._captureCanvas.clientHeight != this._captureCanvas.height){
+            this._captureCanvas.height = this._captureCanvas.clientHeight;
+            this._renderingCanvas.height = this._renderingCanvas.clientHeight;
+        }
+        if(this._captureCanvas.clientWidth != this._captureCanvas.width){
+            this._captureCanvas.width = this._captureCanvas.clientWidth;
+            this._renderingCanvas.width = this._renderingCanvas.clientWidth;
+        }
+
         if (this.canRedo()) {
             this.redoComponents = [];
-            this._element.dispatchEvent(new CustomEvent('changed', {detail: {canUndo: this.canUndo(), canRedo: this.canRedo()}}));
+            this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
         }
         this._inkGrabber.startCapture(x, y, t);
     };
@@ -14532,8 +15191,7 @@ MyScript = {};
         this._selectedRenderer.drawComponent(stroke);
 
         this.components.push(stroke);
-
-        this._element.dispatchEvent(new CustomEvent('changed', {detail: {canUndo: this.canUndo(), canRedo: this.canRedo()}}));
+        this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
 
         if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
             if (!this._selectedRecognizer.isOpen() && !this._selectedRecognizer.isConnecting()) {
@@ -14602,8 +15260,7 @@ MyScript = {};
                         return this._parseResult(data, input);
                     }.bind(this),
                     function (error) {
-                        this.callback(undefined, error);
-                        this._element.dispatchEvent(new CustomEvent('failure', {detail: error}));
+                        this._onResult(undefined, error);
                         return error;
                     }.bind(this)
                 ).done();
@@ -14612,9 +15269,26 @@ MyScript = {};
             this.isStarted = false;
             this._selectedRenderer.clear();
             this._initRenderingCanvas();
-            this._element.dispatchEvent(new CustomEvent('success'));
-            this.callback();
+            this._onResult();
         }
+    };
+
+    InkPaper.prototype._onResult = function (data, err) {
+        if (this.resultCallback) {
+            this.resultCallback(data, err);
+        }
+        if (err) {
+            this._element.dispatchEvent(new CustomEvent('failure', {detail: err}));
+        } else {
+            this._element.dispatchEvent(new CustomEvent('success', {detail: data}));
+        }
+    };
+
+    InkPaper.prototype._onChange = function (changes) {
+        if (this.changeCallback) {
+            this.changeCallback(changes)
+        }
+        this._element.dispatchEvent(new CustomEvent('changed', {detail: changes}));
     };
 
     InkPaper.prototype._parseResult = function (data, input) {
@@ -14622,8 +15296,7 @@ MyScript = {};
         if (!this._instanceId) {
             this._instanceId = data.getInstanceId();
         } else if (this._instanceId !== data.getInstanceId()) {
-            this.callback(data);
-            this._element.dispatchEvent(new CustomEvent('success', {detail: data}));
+            this._onResult(data);
             return data;
         }
 
@@ -14632,8 +15305,7 @@ MyScript = {};
             this._selectedRenderer.drawRecognitionResult(input, data.getDocument());
         }
 
-        this.callback(data);
-        this._element.dispatchEvent(new CustomEvent('success', {detail: data}));
+        this._onResult(data);
         return data;
     };
 
@@ -14689,6 +15361,13 @@ MyScript = {};
                 pointerId = undefined;
             }
         }, false);
+        element.addEventListener('pointerleave', function (e) {
+            if (pointerId === e.pointerId) {
+                e.preventDefault();
+                console.log('pointerenter');
+                console.log(e);
+            }
+        }, false);
 
         element.addEventListener('pointerleave', function (e) {
             if (pointerId === e.pointerId) {
@@ -14718,10 +15397,21 @@ MyScript = {};
         this._selectedRenderer.drawComponents(this._getOptions().components.concat(components));
     };
 
+    /**
+     *
+     * @param message
+     * @param error
+     * @returns {boolean} false no immediate replay needed, true when the call need to be replay ASAP
+     * @private
+     */
     InkPaper.prototype._handleMessage = function (message, error) {
+        var replayNeeded = false;
         if (error) {
-            this.callback(undefined, error);
-            this._element.dispatchEvent(new CustomEvent('failure', {detail: error}));
+            replayNeeded = true;
+            this._instanceId = undefined;
+            this.isStarted = false;
+            this.lastNonRecoComponentIdx = 0;
+            this._onResult(undefined, error);
         }
 
         if (message) {
@@ -14733,6 +15423,7 @@ MyScript = {};
                     this._selectedWSRecognizer.takeUpHmacChallenge (this.getApplicationKey(), message.getChallenge(), this.getHmacKey());
                     break;
                 case 'init':
+                    this.isStarted = false;
                     this._initialized = true;
                     this._instanceId = undefined;
                     this.lastNonRecoComponentIdx = 0;
@@ -14754,6 +15445,7 @@ MyScript = {};
                 }
             }
         }
+        return replayNeeded;
     };
 
     /**
@@ -14772,6 +15464,7 @@ MyScript = {};
         return canvas;
     }
 
+
     /**
      * Tool to get proper coordinates
      *
@@ -14780,22 +15473,12 @@ MyScript = {};
      * @param {Element} element
      * @returns {Object}
      */
-    function _getCoordinates(e, element) {
-        var x;
-        var y;
-        if (e.pageX || e.pageY) {
-            x = e.pageX;
-            y = e.pageY;
-        } else {
-            x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-            y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-        }
-        x -= element.offsetLeft;
-        y -= element.offsetTop;
-
+    function _getCoordinates(e, container) {
+        if (e.changedTouches) e = e.changedTouches[0];
+        var rect = container.getBoundingClientRect();
         return {
-            x: x,
-            y: y,
+            x: e.clientX - rect.left - container.clientLeft,
+            y: e.clientY - rect.top - container.clientTop,
             t: e.timeStamp
         };
     }
@@ -14803,4 +15486,3 @@ MyScript = {};
     // Export
     scope.InkPaper = InkPaper;
 })(MyScript);
-//# sourceMappingURL=myscript.js.map
