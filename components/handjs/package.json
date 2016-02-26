@@ -1,0 +1,47 @@
+{
+  "name": "handjs",
+  "version": "1.3.9",
+  "description": "Starting in September 2012, Microsoft proposed a specification for unifying touch, pen and mouse events called pointer events.",
+  "main": "hand.js",
+  "devDependencies": {
+    "gulp": "^3.6.2",
+    "gulp-clean": "^0.3.0",
+    "gulp-concat": "^2.2.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^0.3.0",
+    "gulp-util": "^2.2.14",
+    "through": "^2.3.4",
+    "gulp-param": "0.6.3"
+  },
+  "bin": {
+    "HandJS": "hand.1.3.8.js"
+  },
+  "dependencies": {
+    "gulp": "^3.8.11",
+    "gulp-rename": "^1.2.2",
+    "gulp-clean": "^0.3.1",
+    "gulp-param": "^0.6.3",
+    "gulp-uglify": "^0.3.2",
+    "gulp-concat": "^2.5.2",
+    "gulp-util": "^2.2.20",
+    "through": "^2.3.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deltakosh/handjs.git"
+  },
+  "keywords": [
+    "Pointer",
+    "touch",
+    "event"
+  ],
+  "author": "David Catuhe",
+  "license": "Apache 2",
+  "bugs": {
+    "url": "https://github.com/deltakosh/handjs/issues"
+  },
+  "homepage": "https://github.com/deltakosh/handjs"
+}

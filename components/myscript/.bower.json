@@ -1,0 +1,51 @@
+{
+  "name": "myscript",
+  "version": "1.1.2",
+  "main": [
+    "./dist/myscript.js",
+    "./dist/myscript.css"
+  ],
+  "description": "The JavaScript library for the MyScript Cloud recognition service",
+  "keywords": [
+    "myscript",
+    "javascript",
+    "developer",
+    "handwriting",
+    "recognition",
+    "cloud"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://myscript.github.io/MyScriptJS/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/MyScript/MyScriptJS.git"
+  },
+  "ignore": [
+    "**/.*",
+    "package.json",
+    "node_modules",
+    "bower_components",
+    "test",
+    "resources",
+    "docker",
+    "Makefile",
+    "Gruntfile.js",
+    "build.json",
+    "dist/docs",
+    "dist/samples"
+  ],
+  "dependencies": {
+    "cryptojslib": "3.1.x",
+    "q": "1.4.x",
+    "handjs": "*"
+  },
+  "_release": "1.1.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.2",
+    "commit": "ec0e705b3aa75700277e2c0458b0604c734a0ed4"
+  },
+  "_source": "git://github.com/MyScript/MyScriptJS.git",
+  "_target": "1.1.x",
+  "_originalSource": "myscript"
+}
