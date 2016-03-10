@@ -30,7 +30,7 @@ See a live demo [here](demo/index.html)
     <link rel="stylesheet" href="../katex/dist/katex.min.css">
     <script type="text/javascript" src="../katex/dist/katex.min.js"></script>
     <template>
-        <div id="resultField" hidden="[[hideresult]]"></div>
+        <div id="resultField" class="container flex-center-justified" flex hidden="[[hideresult]]"></div>
         <div class="horizontal layout buttons" hidden="[[hidebuttons]]">
             <paper-fab class="delete" mini icon="delete" title="delete" on-tap="delete" disabled="{{ !canClear }}"></paper-fab>
             <paper-fab class="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canUndo }}"></paper-fab>

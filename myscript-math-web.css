@@ -4,7 +4,6 @@
     --paper-fab-keyboard-focus-background: #00A7CF;
 }
 
-
 /*calc from paper-toolbar height*/
 myscript-common-element {
     height: calc(100% - 64px);
@@ -17,24 +16,14 @@ myscript-common-element {
 }
 
 #resultField {
-    border: 1px solid #ddd;
-    margin: 1px;
-    min-height: 60px;
-    height : 60px;
-    max-height : 60px;
-    overflow: hidden;
-    line-height: 60px;
+    min-height: 100px;
+    max-height: 100px;
+    overflow: auto;
+    text-align: center;
+    font-size: xx-large;
 }
 
 .buttons {
     position: absolute;
     z-index: 2;
-
 }
-
-paper-fab {
-    background: #00A7CF;
-
-}
-
-
