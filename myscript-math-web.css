@@ -23,6 +23,10 @@ myscript-common-element {
     font-size: xx-large;
 }
 
+span.katex {
+    line-height: inherit;
+}
+
 .buttons {
     position: absolute;
     z-index: 2;
