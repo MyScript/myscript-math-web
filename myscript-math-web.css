@@ -8,10 +8,8 @@ myscript-common-element {
     height: 100%;
 }
 
-@media (max-width: 639px) {
-    myscript-common-element {
-        height: 100%;
-    }
+myscript-common-element.result {
+    height: calc(100% - 100px);
 }
 
 #resultField {
