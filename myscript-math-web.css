@@ -4,14 +4,13 @@
     --paper-fab-keyboard-focus-background: #00A7CF;
 }
 
-/*calc from paper-toolbar height*/
 myscript-common-element {
-    height: calc(100% - 64px);
+    height: 100%;
 }
 
 @media (max-width: 639px) {
     myscript-common-element {
-        height: calc(100% - 56px);
+        height: 100%;
     }
 }
 
