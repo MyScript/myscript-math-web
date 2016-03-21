@@ -12,12 +12,12 @@ myscript-common-element.result {
     height: calc(100% - 100px);
 }
 
-#resultField {
-    min-height: 100px;
-    max-height: 100px;
+.resultField {
     overflow: auto;
     text-align: center;
     font-size: xx-large;
+    min-height: 100px;
+    max-height: 100px;
 }
 
 span.katex {
@@ -25,6 +25,11 @@ span.katex {
 }
 
 .buttons {
-    position: absolute;
-    z-index: 2;
+    float: left;
+    display: flex;
+    display: -webkit-flex;
+}
+
+paper-fab {
+    z-index: 3;
 }

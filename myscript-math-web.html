@@ -30,14 +30,14 @@ See a live demo [here](demo/index.html)
     <link rel="stylesheet" href="../katex/dist/katex.min.css">
     <script type="text/javascript" src="../katex/dist/katex.min.js"></script>
     <template>
-        <div id="resultField" class="flex-center-justified" flex hidden="[[hideresult]]">
+        <div class="resultField" hidden="[[hideresult]]">
             <span hidden="[[hasKatex]]">[[latex]]</span>
             <span id="katex-result"></span>
         </div>
-        <div class="horizontal layout buttons" hidden="[[hidebuttons]]">
-            <paper-fab class="delete" mini icon="delete" title="delete" on-tap="delete" disabled="{{ !canClear }}"></paper-fab>
-            <paper-fab class="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canUndo }}"></paper-fab>
-            <paper-fab class="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canRedo }}"></paper-fab>
+        <div class="buttons" hidden="[[hidebuttons]]">
+            <paper-fab mini icon="delete" title="delete" on-tap="delete" disabled="{{ !canClear }}" hidden="[[hidebuttons]]"></paper-fab>
+            <paper-fab mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canUndo }}" hidden="[[hidebuttons]]"></paper-fab>
+            <paper-fab mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canRedo }}" hidden="[[hidebuttons]]"></paper-fab>
         </div>
         <myscript-common-element host="{{ host }}"
                                  protocol="{{ protocol }}"
