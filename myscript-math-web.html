@@ -96,7 +96,8 @@ See a live demo [here](demo/index.html)
                  */
                 host: {
                     type: String,
-                    notify: true
+                    notify: true,
+                    value: 'cloud.myscript.com'
                 },
                 /**
                  * Recognition timeout, only use for HTTP.
@@ -108,7 +109,8 @@ See a live demo [here](demo/index.html)
                  */
                 timeout: {
                     type: Number,
-                    notify: true
+                    notify: true,
+                    value: 2000
                 },
                 /**
                  * Application key to use for recognition on MyScript handwriting recognition server.<br>
@@ -272,7 +274,6 @@ See a live demo [here](demo/index.html)
              */
             delete: function () {
                 this._myscriptCommonElement.clear();
-                this.result = undefined;
                 this._katexField.innerHTML = '';
                 this.fire('myscript-math-web-delete');
             },
@@ -305,15 +306,14 @@ See a live demo [here](demo/index.html)
              * @private
              * @method _onSuccess
              */
-            _onSuccess: function (e) {
-                this.result = e.detail;
+            _onSuccess: function (e) {;
                 if (e.detail && e.detail.getMathDocument) {
                     this.mathDocument = e.detail.getMathDocument();
                 } else {
                     this.mathDocument = new MyScript.MathDocument();
                 }
                 this.fire(e.type, e.detail);
-                this.fire('myscript-math-web-result', this.result);
+                this.fire('myscript-math-web-result', e.detail);
             },
             /**
              * Failure listener.
