@@ -37,7 +37,7 @@
         "myscript-common-element": "myscript-common-element#1.1.x"
     },
     "devDependencies": {
-        "iron-component-page": "PolymerElements/iron-component-page#1.0.x",
+        "iron-component-page": "PolymerElements/iron-component-page#1.1.x",
         "web-component-tester": "*"
     }
 }
