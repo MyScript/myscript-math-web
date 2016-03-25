@@ -17,7 +17,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 
     <myscript-math-web
         applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
+        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        resulttypes="['LATEX']">
     </myscript-math-web>
 
 @demo
@@ -32,7 +33,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
     <link rel="import" type="css" href="./myscript-math-web.css">
     <template>
         <div class="resultField" hidden="[[hideresult]]">
-            <span>[[ latex ]]</span>
+            <span>[[ mathml ]]</span>
         </div>
         <div class="buttons" hidden="[[hidebuttons]]">
             <paper-fab mini icon="delete" title="delete" on-tap="delete" disabled="{{ !canClear }}" hidden="[[hidebuttons]]"></paper-fab>
@@ -45,7 +46,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                                  applicationkey="{{ applicationkey }}"
                                  hmackey="{{ hmackey }}"
                                  timeout="{{ timeout }}"
-                                 math-parameters="{{ mathParameters }}"
+                                 math-parameters="{{ _mathParameters }}"
                                  on-changed="_onChanged"
                                  on-success="_onSuccess"
                                  on-failure="_onFailure">
@@ -75,9 +76,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         properties: {
             /**
              * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
-             *
-             * @attribute protocol
-             * @type String
              * @default 'WebSocket'
              */
             protocol: {
@@ -87,10 +85,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             },
             /**
              * The current recognition service host.
-             *
-             * @private
-             * @attribute host
-             * @type String
              * @default 'cloud.myscript.com'
              */
             host: {
@@ -99,11 +93,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 value: 'cloud.myscript.com'
             },
             /**
-             * Recognition timeout, only use for HTTP.
-             *
-             * @private
-             * @attribute timeout
-             * @type Number
+             * The recognition timeout, only use for HTTP.
              * @default 2000
              */
             timeout: {
@@ -112,25 +102,19 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 value: 2000
             },
             /**
-             * Application key to use for recognition on MyScript handwriting recognition server.<br>
-             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br>
+             * Application key to use for recognition on MyScript handwriting recognition server.<br />
+             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
              * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
-             *
-             * @attribute applicationkey
-             * @type String
              */
             applicationkey: {
                 type: String,
-                notify: true
+                notify: true,
+                observer: '_applicationKeyChanged'
             },
             /**
-             * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
-             * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
-             *
+             * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
+             * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
              * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
-             *
-             * @attribute hmackey
-             * @type String
              */
             hmackey: {
                 type: String,
@@ -138,8 +122,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             },
             /**
              * @private
-             * @attribute canUndo
-             * @type Boolean
              */
             canUndo: {
                 type: Boolean,
@@ -148,8 +130,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             },
             /**
              * @private
-             * @attribute canRedo
-             * @type Boolean
              */
             canRedo: {
                 type: Boolean,
@@ -158,8 +138,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             },
             /**
              * @private
-             * @attribute canClear
-             * @type Boolean
              */
             canClear: {
                 type: Boolean,
@@ -167,20 +145,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 computed: '_computeCanClear(canUndo, canRedo)'
             },
             /**
-             * Hide the buttons (Trash, Undo, Redo).
-             *
-             * @attribute hidebuttons
-             * @type Boolean
+             * If set to true, hide the buttons (Trash, Undo, Redo).
              */
             hidebuttons: {
                 type: Boolean,
                 value: false
             },
             /**
-             * Hide the result div tag.
-             *
-             * @attribute hideresult
-             * @type Boolean
+             * If set to true, hide the result div tag.
              */
             hideresult: {
                 type: Boolean,
@@ -198,24 +170,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 value: [],
                 notify: true
             },
-            /**
-             * Recognition parameters for the math recognition.<br>
-             *
-             * @private
-             * @attribute math-parameters
-             * @type Object
-             */
-            mathParameters: {
+            _mathParameters: {
                 type: Object,
                 notify: true,
                 computed: '_computeMathParameters(resulttypes)'
             },
             /**
-             * Math recognition result document.<br>
-             *
+             * The math recognition result document.
              * @private
-             * @attribute math-document
-             * @type Object
              */
             mathDocument: {
                 type: Object,
@@ -223,40 +185,35 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 notify: true
             },
             /**
-             * Recognition result.
-             * @attribute result
-             * @type Object
+             * The recognition result.
              */
             result: {
                 type: Object,
                 notify: true,
+                readOnly: true,
                 computed: '_computeResult(mathDocument)'
             },
             /**
-             * LaTeX result.
-             * @attribute latex
-             * @type String
+             * The LaTeX result.
              */
             latex: {
                 type: String,
                 notify: true,
+                readOnly: true,
                 computed: '_computeLaTeXResult(result)'
             },
             /**
-             * MathML result.
-             * @attribute mathml
-             * @type String
+             * The MathML result.
              */
             mathml: {
                 type: String,
                 notify: true,
+                readOnly: true,
                 computed: '_computeMathMLResult(result)'
             }
         },
         /**
-         * Delete action.
-         *
-         * @method delete
+         * Delete the  current document.
          */
         delete: function () {
             this._myscriptCommonElement.clear();
@@ -264,17 +221,13 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             this.fire('myscript-math-web-delete');
         },
         /**
-         * Undo action.
-         *
-         * @method undo
+         * Undo the last action.
          */
         undo: function () {
             this._myscriptCommonElement.undo();
         },
         /**
-         * Redo action.
-         *
-         * @method redo
+         * Redo the last action.
          */
         redo: function () {
             this._myscriptCommonElement.redo();

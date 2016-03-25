@@ -20,10 +20,6 @@ myscript-common-element.result {
     max-height: 100px;
 }
 
-span.katex {
-    line-height: inherit;
-}
-
 .buttons {
     float: left;
     display: flex;
