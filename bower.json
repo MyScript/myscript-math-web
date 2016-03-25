@@ -33,7 +33,6 @@
         "paper-fab": "PolymerElements/paper-fab#1.0.x",
         "paper-toast": "PolymerElements/paper-toast#1.0.x",
         "iron-flex-layout": "PolymerElements/iron-flex-layout#1.0.x",
-        "katex" : "katex#v0.5.x",
         "myscript-common-element": "myscript-common-element#1.1.x"
     },
     "devDependencies": {

@@ -4,11 +4,9 @@ LICENSE: github.com/MyScriptWebComponents/myscript-math-web/blob/master/LICENSE
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
-<link rel="stylesheet" href="../katex/dist/katex.min.css">
-<script type="text/javascript" src="../katex/dist/katex.min.js"></script>
+
 <!-- Import MyScript common element to add handwriting recognition -->
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
 
@@ -34,8 +32,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
     <link rel="import" type="css" href="./myscript-math-web.css">
     <template>
         <div class="resultField" hidden="[[hideresult]]">
-            <span hidden="[[hasKatex]]">[[latex]]</span>
-            <span id="katex-result"></span>
+            <span>[[ latex ]]</span>
         </div>
         <div class="buttons" hidden="[[hidebuttons]]">
             <paper-fab mini icon="delete" title="delete" on-tap="delete" disabled="{{ !canClear }}" hidden="[[hidebuttons]]"></paper-fab>
@@ -246,16 +243,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 computed: '_computeLaTeXResult(result)'
             },
             /**
-             * has KaTeX result.
-             * @attribute has-katex
-             * @type Boolean
-             */
-            hasKatex: {
-                type: Boolean,
-                notify: true,
-                computed: '_computeKaTeXResult(latex)'
-            },
-            /**
              * MathML result.
              * @attribute mathml
              * @type String
@@ -266,9 +253,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 computed: '_computeMathMLResult(result)'
             }
         },
-        observers: [
-            'updateKaTeX(hasKatex, latex)'
-        ],
         /**
          * Delete action.
          *
@@ -362,18 +346,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 return result.MATHML;
             }
             return undefined;
-        },
-        _computeKaTeXResult: function (latex) {
-            return (katex && latex)? true: false;
-        },
-        updateKaTeX: function (hasKatex, latex) {
-            if (hasKatex) {
-                try {
-                    katex.render(latex, this._katexField);
-                } catch (e) {
-                    this._katexField.innerHTML = '<span>Invalid KaTeX mathemathic expression.</span>';
-                }
-            }
         },
         _hideresultChanged: function (hideresult) {
             if (this._myscriptCommonElement) {
