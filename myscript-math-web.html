@@ -32,21 +32,21 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 <dom-module id="myscript-math-web">
     <link rel="import" type="css" href="./myscript-math-web.css">
     <template>
-        <div class="resultField" hidden="[[hideresult]]">
-            <span>[[ mathml ]]</span>
+        <div class="resultField" hidden="[[ hideresult ]]">
+            <span>[[ latex ]]</span>
         </div>
-        <div class="buttons" hidden="[[hidebuttons]]">
-            <paper-fab mini icon="delete" title="delete" on-tap="delete" disabled="{{ !canClear }}" hidden="[[hidebuttons]]"></paper-fab>
-            <paper-fab mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canUndo }}" hidden="[[hidebuttons]]"></paper-fab>
-            <paper-fab mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canRedo }}" hidden="[[hidebuttons]]"></paper-fab>
+        <div class="buttons" hidden="[[ hidebuttons ]]">
+            <paper-fab mini icon="delete" title="delete" on-tap="delete" disabled="[[ !canClear ]]" hidden="[[ hidebuttons ]]"></paper-fab>
+            <paper-fab mini icon="undo" title="undo" on-tap="undo" disabled="[[ !canUndo ]]" hidden="[[ hidebuttons ]]"></paper-fab>
+            <paper-fab mini icon="redo" title="redo" on-tap="redo" disabled="[[ !canRedo ]]" hidden="[[ hidebuttons ]]"></paper-fab>
         </div>
-        <myscript-common-element host="{{ host }}"
-                                 protocol="{{ protocol }}"
+        <myscript-common-element host="[[ host ]]"
+                                 protocol="[[ protocol ]]"
                                  type="MATH"
-                                 applicationkey="{{ applicationkey }}"
-                                 hmackey="{{ hmackey }}"
-                                 timeout="{{ timeout }}"
-                                 math-parameters="{{ _mathParameters }}"
+                                 applicationkey="[[ applicationkey ]]"
+                                 hmackey="[[ hmackey ]]"
+                                 timeout="[[ timeout ]]"
+                                 math-parameters="[[ _mathParameters ]]"
                                  on-changed="_onChanged"
                                  on-success="_onSuccess"
                                  on-failure="_onFailure">
