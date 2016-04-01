@@ -1,33 +1,22 @@
 <!--
 Copyright © MyScript.
-LICENSE: github.com/MyScriptWebComponents/myscript-math-web/blob/master/LICENSE
+LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
-
-<!-- Import MyScript common element to add handwriting recognition -->
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
 
 <!--
 The `myscript-math-web` is a turnkey solution for those who need to quickly implement MyScript Math recognition.
 
-##### Example
-
     <myscript-math-web
         applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        resulttypes="['LATEX']">
+        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
     </myscript-math-web>
 
 @demo
-@group MyScript Elements
-@element myscript-math-web
-@blurb MyScript HTML5 Math Element to help developers integrate math handwriting recognition.
-@status alpha
-@homepage https://myscriptwebcomponents.github.io/myscript-math-web
-
 -->
 <dom-module id="myscript-math-web">
     <link rel="import" type="css" href="./myscript-math-web.css">
@@ -36,9 +25,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             <span>[[ latex ]]</span>
         </div>
         <div class="buttons" hidden="[[ hidebuttons ]]">
-            <paper-fab mini icon="delete" title="delete" on-tap="delete" disabled="[[ !canClear ]]" hidden="[[ hidebuttons ]]"></paper-fab>
-            <paper-fab mini icon="undo" title="undo" on-tap="undo" disabled="[[ !canUndo ]]" hidden="[[ hidebuttons ]]"></paper-fab>
-            <paper-fab mini icon="redo" title="redo" on-tap="redo" disabled="[[ !canRedo ]]" hidden="[[ hidebuttons ]]"></paper-fab>
+            <paper-fab mini icon="delete" title="clear" on-tap="_clear" disabled="[[ !canClear ]]" hidden="[[ hidebuttons ]]"></paper-fab>
+            <paper-fab mini icon="undo" title="undo" on-tap="_undo" disabled="[[ !canUndo ]]" hidden="[[ hidebuttons ]]"></paper-fab>
+            <paper-fab mini icon="redo" title="redo" on-tap="_redo" disabled="[[ !canRedo ]]" hidden="[[ hidebuttons ]]"></paper-fab>
         </div>
         <myscript-common-element host="[[ host ]]"
                                  protocol="[[ protocol ]]"
@@ -49,7 +38,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                                  math-parameters="[[ _mathParameters ]]"
                                  on-changed="_onChanged"
                                  on-success="_onSuccess"
-                                 on-failure="_onFailure">
+                                 on-error="_onError">
         </myscript-common-element>
         <paper-toast class="error"></paper-toast>
     </template>
@@ -59,19 +48,17 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
     Polymer({
         is: 'myscript-math-web',
         /**
-         * Fired when the capture canvas content changes.
-         *
-         * @event changed
-         */
-        /**
          * Fired when a math recognition result is successfully received.
          *
          * @event myscript-math-web-result
          */
         /**
-         * Fired when the Delete action is done.
-         *
-         * @event myscript-math-web-delete
+         * Fired when a recognition error occurred.
+         * @event error
+         */
+        /**
+         * Fired when the content of the myscript-math-web changes.
+         * @event changed
          */
         properties: {
             /**
@@ -80,25 +67,20 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
              */
             protocol: {
                 type: String,
-                notify: true,
                 value: MyScript.Protocol.WS
             },
             /**
              * The current recognition service host.
-             * @default 'cloud.myscript.com'
              */
             host: {
                 type: String,
-                notify: true,
                 value: 'cloud.myscript.com'
             },
             /**
              * The recognition timeout, only use for HTTP.
-             * @default 2000
              */
             timeout: {
                 type: Number,
-                notify: true,
                 value: 2000
             },
             /**
@@ -107,9 +89,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
              * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
              */
             applicationkey: {
-                type: String,
-                notify: true,
-                observer: '_applicationKeyChanged'
+                type: String
             },
             /**
              * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
@@ -117,8 +97,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
              * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
              */
             hmackey: {
-                type: String,
-                notify: true
+                type: String
             },
             /**
              * @private
@@ -142,7 +121,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             canClear: {
                 type: Boolean,
                 notify: true,
-                computed: '_computeCanClear(canUndo, canRedo)'
+                value: false
             },
             /**
              * If set to true, hide the buttons (Trash, Undo, Redo).
@@ -161,23 +140,19 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             },
             /**
              * Math result types (LATEX, MATHML or SYMBOLTREE).
-             *
-             * @attribute resulttypes
-             * @type Array
              */
             resulttypes: {
                 type: Array,
-                value: [],
-                notify: true
+                value: []
             },
             _mathParameters: {
                 type: Object,
-                notify: true,
                 computed: '_computeMathParameters(resulttypes)'
             },
             /**
              * The math recognition result document.
              * @private
+             * @default {}
              */
             mathDocument: {
                 type: Object,
@@ -185,7 +160,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 notify: true
             },
             /**
-             * The recognition result.
+             * <b>Deprecated</b>: Use latex or mathml result directly<br />
              */
             result: {
                 type: Object,
@@ -212,40 +187,45 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 computed: '_computeMathMLResult(result)'
             }
         },
-        /**
-         * Delete the  current document.
-         */
-        delete: function () {
+        _clear: function () {
             this._myscriptCommonElement.clear();
-            this._katexField.innerHTML = '';
-            this.fire('myscript-math-web-delete');
+        },
+        _undo: function () {
+            this._myscriptCommonElement.undo();
+        },
+        _redo: function () {
+            this._myscriptCommonElement.redo();
         },
         /**
+         * <b>Deprecated</b><br />
+         * Clear the  current document.
+         */
+        delete: function () {
+            this._clear();
+        },
+        /**
+         * <b>Deprecated</b><br />
          * Undo the last action.
          */
         undo: function () {
-            this._myscriptCommonElement.undo();
+            this._undo();
         },
         /**
+         * <b>Deprecated</b><br />
          * Redo the last action.
          */
         redo: function () {
-            this._myscriptCommonElement.redo();
+            this._redo();
         },
         _onChanged: function (e) {
             if (e.detail) {
                 this.canUndo = e.detail.canUndo;
                 this.canRedo = e.detail.canRedo;
+                this.canClear = this.canUndo || this.canRedo;
             }
             this.fire(e.type, e.detail);
         },
-        /**
-         * Recognition success listener.
-         *
-         * @private
-         * @method _onSuccess
-         */
-        _onSuccess: function (e) {;
+        _onSuccess: function (e) {
             if (e.detail && e.detail.getMathDocument) {
                 this.mathDocument = e.detail.getMathDocument();
             } else {
@@ -254,19 +234,12 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             this.fire(e.type, e.detail);
             this.fire('myscript-math-web-result', e.detail);
         },
-        /**
-         * Failure listener.
-         *
-         * @private
-         * @method _onFailure
-         */
-        _onFailure: function (e) {
+        _onError: function (e) {
             this.fire(e.type, e.detail);
             this._paperToast.text = (typeof e.detail === 'object') ? JSON.stringify(e.detail) : e.detail;
             this._paperToast.show();
         },
         ready: function () {
-            this._katexField = this.querySelector('#katex-result');
             this._myscriptCommonElement = this.querySelector('myscript-common-element');
             this._paperToast = this.querySelector('paper-toast');
             this._hideresultChanged(this.hideresult);

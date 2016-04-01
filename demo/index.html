@@ -23,10 +23,27 @@
 <body unresolved>
 <template id="app" is="dom-bind">
     <myscript-math-web
-        host="webdemo.myscript.com"
-        applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
-        hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601">
+        host="[[ host ]]"
+        applicationkey="[[ applicationKey ]]"
+        hmackey="[[ hmacKey ]]">
     </myscript-math-web>
 </template>
 </body>
+<script>
+    (function (document) {
+        'use strict';
+        var template = document.querySelector('#app');
+        template.addEventListener('template-bound', function () {
+            console.log('Our app is ready to rock!');
+        });
+        // See https://github.com/Polymer/polymer/issues/1381
+        window.addEventListener('WebComponentsReady', function () {
+            document.querySelector('body').removeAttribute('unresolved');
+
+            template.host = 'webdemo.myscript.com';
+            template.applicationKey = '22eda92c-10af-40d8-abea-fd4093c17d81';
+            template.hmacKey = 'a1fa759f-b3ce-4091-9fd4-d34bb870c601';
+        });
+    })(document);
+</script>
 </html>

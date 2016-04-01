@@ -35,7 +35,6 @@
         "myscript-common-element": "https://zen.visionobjects.com/git/WS/Polymer/myscript-common-element.git#master"
     },
     "devDependencies": {
-        "iron-component-page": "PolymerElements/iron-component-page#1.1.x",
-        "web-component-tester": "*"
+        "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
     }
 }
