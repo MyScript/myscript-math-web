@@ -31,7 +31,6 @@
         "polymer": "Polymer/polymer#1.4.x",
         "iron-icons": "PolymerElements/iron-icons#1.1.x",
         "paper-fab": "PolymerElements/paper-fab#1.2.x",
-        "paper-toast": "PolymerElements/paper-toast#1.2.x",
         "myscript-common-element": "https://zen.visionobjects.com/git/WS/Polymer/myscript-common-element.git#master"
     },
     "devDependencies": {

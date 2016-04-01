@@ -3,7 +3,7 @@ myscript-math-web
 
 The easy way to integrate mathematical expressions handwriting recognition in your web app.
 
-<a href="http://myscript.github.io/myscript-math-web/components/myscript-math-web/demo/"><img src="math.gif" /></a>
+<a href="https://myscript.github.io/myscript-math-web/components/myscript-math-web/demo/"><img src="math.gif" /></a>
 
 ```html
 <html>
@@ -51,7 +51,7 @@ myscript-math-web is a web component that can be used in every web application (
 
 ## Documentation 
 
-The API Reference is available here: [https://myscript.github.io/myscript-math-web/](http://myscript.github.io/myscript-math-web/) 
+The API Reference is available here: [https://myscript.github.io/myscript-math-web/](https://myscript.github.io/myscript-math-web/) 
 
 ## Contribute
 
