@@ -15,10 +15,10 @@
     ],
     "main": "myscript-math-web.html",
     "license": "Apache-2",
-    "homepage": "https://github.com/MyScriptWebComponents/myscript-math-web/",
+    "homepage": "https://myscript.github.io/myscript-math-web/components/myscript-math-web/",
     "repository": {
         "type": "git",
-        "url": "git://github.com/MyScriptWebComponents/myscript-math-web.git"
+        "url": "git://github.com/MyScript/myscript-math-web.git"
     },
     "ignore": [
         "**/.*",
