@@ -3,6 +3,7 @@ include Makefile.inc
 ALL: purge clean prepare
 
 .PHONY: ALL \
+	purge clean prepare \
 	watch dev \
 	escrow
 
