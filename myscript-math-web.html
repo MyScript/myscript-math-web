@@ -3,8 +3,6 @@ Copyright © MyScript.
 LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
 
 <!--
@@ -18,15 +16,27 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 @demo
 -->
 <dom-module id="myscript-math-web">
-    <link rel="import" type="css" href="./myscript-math-web.css">
+    <style>
+        :host {
+            display: block;
+        }
+        myscript-common-element {
+            height: 100%;
+        }
+        myscript-common-element.result {
+            height: calc(100% - 100px);
+        }
+        .resultField {
+            overflow: auto;
+            text-align: center;
+            font-size: xx-large;
+            min-height: 100px;
+            max-height: 100px;
+        }
+    </style>
     <template>
         <div class="resultField" hidden="[[ hideresult ]]">
             <span>[[ latex ]]</span>
-        </div>
-        <div class="buttons" hidden="[[ hidebuttons ]]">
-            <paper-fab mini icon="delete" title="clear" on-tap="_clear" disabled="[[ !canClear ]]" hidden="[[ hidebuttons ]]"></paper-fab>
-            <paper-fab mini icon="undo" title="undo" on-tap="_undo" disabled="[[ !canUndo ]]" hidden="[[ hidebuttons ]]"></paper-fab>
-            <paper-fab mini icon="redo" title="redo" on-tap="_redo" disabled="[[ !canRedo ]]" hidden="[[ hidebuttons ]]"></paper-fab>
         </div>
         <myscript-common-element host="[[ host ]]"
                                  protocol="[[ protocol ]]"
@@ -34,6 +44,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                                  applicationkey="[[ applicationkey ]]"
                                  hmackey="[[ hmackey ]]"
                                  timeout="[[ timeout ]]"
+                                 hidebuttons="[[ hidebuttons ]]"
                                  math-parameters="[[ _mathParameters ]]"
                                  can-undo="{{ canUndo }}"
                                  can-redo="{{ canRedo }}"
@@ -227,9 +238,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         ready: function () {
             this._myscriptCommonElement = this.querySelector('myscript-common-element');
             this._hideresultChanged(this.hideresult);
-        },
-        _computeCanClear: function (canUndo, canRedo) {
-            return canUndo || canRedo;
         },
         _computeMathParameters: function (resulttypes) {
             var parameters = new MyScript.MathParameter();
