@@ -46,9 +46,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                                  timeout="[[ timeout ]]"
                                  hidebuttons="[[ hidebuttons ]]"
                                  math-parameters="[[ _mathParameters ]]"
-                                 can-undo="{{ canUndo }}"
-                                 can-redo="{{ canRedo }}"
-                                 can-clear="{{ canClear }}"
+                                 can-undo="{{ canundo }}"
+                                 can-redo="{{ canredo }}"
+                                 can-clear="{{ canclear }}"
                                  on-changed="_onChanged"
                                  on-success="_onSuccess"
                                  on-error="_onError">
@@ -116,17 +116,26 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             hmackey: {
                 type: String
             },
-            canUndo: {
+            /**
+             * @private
+             */
+            canundo: {
                 type: Boolean,
                 notify: true,
                 value: false
             },
-            canRedo: {
+            /**
+             * @private
+             */
+            canredo: {
                 type: Boolean,
                 notify: true,
                 value: false
             },
-            canClear: {
+            /**
+             * @private
+             */
+            canclear: {
                 type: Boolean,
                 notify: true,
                 value: false
