@@ -5,8 +5,6 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 <link rel="import" href="../polymer/polymer.html">
 <script src="../KaTeX/dist/katex.min.js"></script>
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
-
-
 <!--
 The `myscript-math-web` is a turnkey solution for those who need to quickly implement MyScript Math recognition.
 
@@ -45,10 +43,10 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                                  hmackey="[[ hmackey ]]"
                                  timeout="[[ timeout ]]"
                                  hidebuttons="[[ hidebuttons ]]"
-                                 math-parameters="[[ _mathParameters ]]"
-                                 can-undo="{{ canundo }}"
-                                 can-redo="{{ canredo }}"
-                                 can-clear="{{ canclear }}"
+                                 mathparameters="[[ _mathParameters ]]"
+                                 canundo="{{ canundo }}"
+                                 canredo="{{ canredo }}"
+                                 canclear="{{ canclear }}"
                                  on-changed="_onChanged"
                                  on-success="_onSuccess"
                                  on-error="_onError">
@@ -171,7 +169,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
              * @private
              * @default {}
              */
-            mathDocument: {
+            mathdocument: {
                 type: Object,
                 value: new MyScript.MathDocument(),
                 notify: true
@@ -183,7 +181,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 type: Object,
                 notify: true,
                 readOnly: true,
-                computed: '_computeResult(mathDocument)'
+                computed: '_computeResult(mathdocument)'
             },
             /**
              * The LaTeX result.
@@ -238,9 +236,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         },
         _onSuccess: function (e) {
             if (e.detail && e.detail.getMathDocument) {
-                this.mathDocument = e.detail.getMathDocument();
+                this.mathdocument = e.detail.getMathDocument();
             } else {
-                this.mathDocument = new MyScript.MathDocument();
+                this.mathdocument = new MyScript.MathDocument();
             }
             this.fire(e.type, e.detail);
             this.fire('myscript-math-web-result', e.detail);
