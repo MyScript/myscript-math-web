@@ -1,0 +1,17 @@
+# Change Log
+
+## [v1.2.0](https://github.com/MyScript/myscript-math-web/tree/v1.2.0) (2016-04-06)
+
+### Features
+- Mutable `host` attribute
+- Mutable `protocol` attribute
+- New `latex` output attribute to get LaTeX result
+- New `mathml` output attribute to get MathML result
+- Replace undo/redo/clear/recognize buttons by the `myscript-common-element` ones
+- Replace the error panel by the `myscript-common-element` ones
+- Upgrade from Polymer 1.2 to 1.4
+- Add docs/demo buttons on component page
+
+### Bugs
+- Fixes issue on resize due to CSS
+- Explicit default values on documentation 
