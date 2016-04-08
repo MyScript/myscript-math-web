@@ -13,7 +13,9 @@ purge:
 clean:
 
 prepare:
-	@bower install
+	@git remote add github $(GITHUB) > /dev/null; true
+	@git fetch --tags
+	@bower install && bower link
 
 watch:
 
