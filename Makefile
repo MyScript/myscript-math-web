@@ -1,6 +1,6 @@
 include Makefile.inc
 
-ALL: purge clean prepare
+ALL: purge clean prepare docker test
 
 .PHONY: ALL \
 	purge clean prepare \
@@ -15,7 +15,16 @@ clean:
 prepare:
 	@git remote add github $(GITHUB) > /dev/null; true
 	@git fetch --tags
-	@bower install && bower link
+	@bower link && \
+	bower link myscript && \
+	bower link myscript-common-element && \
+	bower install
+
+build:
+
+test:
+
+docker: build
 
 watch:
 
