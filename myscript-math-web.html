@@ -42,6 +42,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                                  applicationkey="[[ applicationkey ]]"
                                  hmackey="[[ hmackey ]]"
                                  timeout="[[ timeout ]]"
+                                 ssl="[[ ssl ]]"
                                  hidebuttons="[[ hidebuttons ]]"
                                  mathparameters="[[ _mathParameters ]]"
                                  canundo="{{ canundo }}"
@@ -201,6 +202,13 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 notify: true,
                 readOnly: true,
                 computed: '_computeMathMLResult(result)'
+            },
+            /**
+             * @private
+             */
+            ssl: {
+                type: Boolean,
+                value: true
             }
         },
         _clear: function () {
