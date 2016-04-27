@@ -30,7 +30,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#1.4.x",
     "myscript-common-element": "https://zen.visionobjects.com/git/WS/Polymer/myscript-common-element.git#master",
-    "KaTeX": "katex#0.5.x"
+    "KaTeX": "katex#0.6.x"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
