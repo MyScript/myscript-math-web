@@ -28,11 +28,18 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             height: calc(100% - 100px);
         }
         .resultField {
-            overflow: auto;
+            font-size: medium;
+            overflow: hidden;
             text-align: center;
-            min-height: 100px;
-            max-height: 100px;
+            min-height: 95px;
+            max-height: 95px;
+            padding-top: 5px;
+
         }
+        .katex {
+            padding-top: 3px ;
+        }
+
     </style>
     <template>
         <div id="resultField" class="resultField" hidden="[[ hideresult ]]"></div>
