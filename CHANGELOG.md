@@ -11,6 +11,7 @@
 - Replace the error panel by the `myscript-common-element` ones
 - Upgrade from Polymer 1.2 to 1.4
 - Add docs/demo buttons on component page
+- Migration to Katex 0.6.0 (Matrix rendering)
 
 ### Bugs
 - Fixes issue on resize due to CSS
