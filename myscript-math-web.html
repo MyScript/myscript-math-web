@@ -199,6 +199,12 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         _redo: function () {
             this._myscriptCommonElement.redo();
         },
+        behaviors: [
+            Polymer.IronResizableBehavior
+        ],
+        listeners: {
+            'iron-resize': '_onResize'
+        },
         /**
          * Clear the  current document.
          */
@@ -224,6 +230,17 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         getStats: function () {
             if (this._myscriptCommonElement) {
                 return this._myscriptCommonElement.getStats();
+            }
+        },
+        /**
+         * Resize listener
+         *
+         * @private
+         * @method _onResize
+         */
+        _onResize: function () {
+            if (this._myscriptCommonElement) {
+                this._myscriptCommonElement._onResize();
             }
         },
         _onChanged: function (e) {
