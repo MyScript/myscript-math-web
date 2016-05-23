@@ -163,11 +163,16 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             },
             /**
              * Math result types (LATEX, MATHML or SYMBOLTREE).
+             * @type {Array<String>}
              */
             resulttypes: {
                 type: Array,
                 value: []
             },
+            /**
+             * Recognition parameters for the math recognition.
+             * @type {{resultTypes: Array<String>, columnarOperation: Boolean, userResources: Array<String>, scratchOutDetectionSensitivity: Number}}
+             */
             _mathParameters: {
                 type: Object,
                 computed: '_computeMathParameters(resulttypes)'
@@ -175,11 +180,11 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             /**
              * Recognition result.
              * @attribute result
-             * @type Object
+             * @type {Object<String, Object>}
              */
             result: {
                 type: Object,
-                notify: true,
+                notify: true
             },
             /**
              * @private
