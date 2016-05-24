@@ -29,7 +29,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#1.4.x",
-    "myscript-common-element": "https://zen.visionobjects.com/git/WS/Polymer/myscript-common-element.git#master",
+    "myscript-common-element": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-common-element.git#master",
     "KaTeX": "katex#0.6.x"
   },
   "devDependencies": {
