@@ -45,8 +45,8 @@
     "tag": "1.2.0-beta1",
     "commit": "79d7cd651e4a5d77562cdb92ddc828a2e20fe446"
   },
-  "_source": "https://zen.visionobjects.com/git/WS/MyScriptJS.git",
+  "_source": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git",
   "_target": "1.2.0-beta1",
-  "_originalSource": "https://zen.visionobjects.com/git/WS/MyScriptJS.git",
+  "_originalSource": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git",
   "_direct": true
 }

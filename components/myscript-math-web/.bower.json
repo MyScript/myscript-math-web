@@ -46,8 +46,8 @@
     "tag": "1.2.0-beta1",
     "commit": "45f5e70eeb64d4f4d8f2a538b6b6c44bd0584165"
   },
-  "_source": "https://zen.visionobjects.com/git/WS/Polymer/myscript-math-web.git",
+  "_source": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-math-web.git",
   "_target": "1.2.0-beta1",
-  "_originalSource": "https://zen.visionobjects.com/git/WS/Polymer/myscript-math-web.git",
+  "_originalSource": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-math-web.git",
   "_direct": true
 }
