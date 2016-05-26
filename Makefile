@@ -13,7 +13,6 @@ purge:
 clean:
 
 prepare:
-	@git remote add github $(GITHUB) > /dev/null; true
 	@git fetch --tags
 	@bower install
 
