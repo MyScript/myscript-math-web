@@ -29,7 +29,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#1.4.x",
-    "myscript-common-element": "myscript-common-element.git#*",
+    "myscript-common-element": "myscript-common-element.git#master",
     "KaTeX": "katex#0.6.x"
   },
   "devDependencies": {
