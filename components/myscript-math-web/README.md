@@ -3,7 +3,7 @@ myscript-math-web
 
 The easy way to integrate mathematical expressions handwriting recognition in your web app.
 
-<a href="http://myscript.github.io/myscript-math-web/components/myscript-math-web/demo/"><img src="math.gif" /></a>
+<a href="https://myscript.github.io/myscript-math-web/components/myscript-math-web/demo/"><img src="math.gif" /></a>
 
 ```html
 <html>
@@ -12,23 +12,22 @@ The easy way to integrate mathematical expressions handwriting recognition in yo
     <link rel="import" href="bower_components/myscript-math-web/myscript-math-web.html">
 </head>
 <body>
-    <myscript-math-web applicationkey="#PUT YOUR MYSCRIPT CDK APPLICATION KEY HERE#" 
+    <myscript-math-web 
+        applicationkey="#PUT YOUR MYSCRIPT CDK APPLICATION KEY HERE#" 
         hmackey="#PUT YOUR MYSCRIPT CDK HMAC KEY HERE#">
     </myscript-math-web>
-</template>
 </body>
 </html>
 ```    
 
-[Test it live](http://myscript.github.io/myscript-math-web/components/myscript-math-web/demo/)!
+[Test it live](https://myscript.github.io/myscript-math-web/components/myscript-math-web/)!
 
 ## What is it about?
 
 myscript-math-web is a web component that can be used in every web application (whatever the JavaScript library you are using) to bring handwriting recognition. It integrates all you need:  
 * Signal capture,
-* Nice digital ink rendering,  
-* Plug with MyScript CDK to bring handwriting recognition,  
-* Mathematical formulas display section build with [KaTeX](http://khan.github.io/KaTeX/).
+* Nice digital ink rendering,
+* Plug with MyScript CDK to bring handwriting recognition.
 
 ## Installation
 
@@ -52,7 +51,7 @@ myscript-math-web is a web component that can be used in every web application (
 
 ## Documentation 
 
-The API Reference is available here: [http://myscript.github.io/myscript-math-web/](http://myscript.github.io/myscript-math-web/) 
+The API Reference is available here: [https://myscript.github.io/myscript-math-web/](https://myscript.github.io/myscript-math-web/) 
 
 ## Contribute
 

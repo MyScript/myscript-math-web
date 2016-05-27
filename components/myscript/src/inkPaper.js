@@ -1,4 +1,5 @@
 'use strict';
+'use strict';
 
 (function (scope) {
     /**
@@ -22,9 +23,38 @@
         this.lastNonRecoComponentIdx = 0;
         this.resultCallback = callback;
         this.changeCallback = undefined;
+        this.canvasRatio = 1;
+
+        // Capture
+        this._captureCanvas = _createCanvas(element, 'ms-capture-canvas');
+        this._inkGrabber = new scope.InkGrabber(this._captureCanvas.getContext('2d'));
+
+        // Rendering
+        this._renderingCanvas = _createCanvas(element, 'ms-rendering-canvas');
+        this.canvasRatio = _getCanvasRatio(this._renderingCanvas);
+
+        this._textRenderer = new scope.TextRenderer(this._renderingCanvas.getContext('2d'));
+        this._mathRenderer = new scope.MathRenderer(this._renderingCanvas.getContext('2d'));
+        this._shapeRenderer = new scope.ShapeRenderer(this._renderingCanvas.getContext('2d'));
+        this._musicRenderer = new scope.MusicRenderer(this._renderingCanvas.getContext('2d'));
+        this._analyzerRenderer = new scope.AnalyzerRenderer(this._renderingCanvas.getContext('2d'));
+
+        // Recognition
+        this._textRecognizer = new scope.TextRecognizer();
+        this._mathRecognizer = new scope.MathRecognizer();
+        this._shapeRecognizer = new scope.ShapeRecognizer();
+        this._musicRecognizer = new scope.MusicRecognizer();
+        this._analyzerRecognizer = new scope.AnalyzerRecognizer();
+
+        this._textWSRecognizer = new scope.TextWSRecognizer(this._handleMessage.bind(this));
+        this._mathWSRecognizer = new scope.MathWSRecognizer(this._handleMessage.bind(this));
+
+        this._attachListeners(element);
+
         this.options = { // Default options
             type: scope.RecognitionType.TEXT,
             protocol: scope.Protocol.REST,
+            ssl: true,
             width: 400,
             height: 300,
             timeout: 2000,
@@ -37,31 +67,6 @@
             analyzerParameters: new scope.AnalyzerParameter()
         };
 
-        // Capture
-        this._captureCanvas = _createCanvas(element, 'ms-capture-canvas');
-        this._inkGrabber = new scope.InkGrabber(this._captureCanvas.getContext('2d'));
-
-        // Rendering
-        this._renderingCanvas = _createCanvas(element, 'ms-rendering-canvas');
-
-        this._textRenderer = new scope.TextRenderer(this._renderingCanvas.getContext('2d'));
-        this._mathRenderer = new scope.MathRenderer(this._renderingCanvas.getContext('2d'));
-        this._shapeRenderer = new scope.ShapeRenderer(this._renderingCanvas.getContext('2d'));
-        this._musicRenderer = new scope.MusicRenderer(this._renderingCanvas.getContext('2d'));
-        this._analyzerRenderer = new scope.AnalyzerRenderer(this._renderingCanvas.getContext('2d'));
-
-        // Recognition
-        this._textRecognizer = new scope.TextRecognizer(options? options.host : undefined);
-        this._mathRecognizer = new scope.MathRecognizer(options? options.host : undefined);
-        this._shapeRecognizer = new scope.ShapeRecognizer(options? options.host : undefined);
-        this._musicRecognizer = new scope.MusicRecognizer(options? options.host : undefined);
-        this._analyzerRecognizer = new scope.AnalyzerRecognizer(options? options.host : undefined);
-
-        this._textWSRecognizer = new scope.TextWSRecognizer(this._handleMessage.bind(this), options? options.host : undefined);
-        this._mathWSRecognizer = new scope.MathWSRecognizer(this._handleMessage.bind(this), options? options.host : undefined);
-
-        this._attachListeners(element);
-
         if (options) {
             for (var idx in options) {
                 if (options[idx] !== undefined) {
@@ -70,7 +75,31 @@
             }
         }
 
-        this._initialize(this._getOptions());
+        // Recognition type
+        this.setType(this.options.type);
+
+        this.setHost(this.options.host);
+        this.setSSL(this.options.ssl);
+
+        this.setTextParameters(this.options.textParameters); // jshint ignore:line
+        this.setMathParameters(this.options.mathParameters); // jshint ignore:line
+        this.setShapeParameters(this.options.shapeParameters); // jshint ignore:line
+        this.setMusicParameters(this.options.musicParameters); // jshint ignore:line
+        this.setAnalyzerParameters(this.options.analyzerParameters); // jshint ignore:line
+
+        this.setProtocol(this.options.protocol);
+        this.setTimeout(this.options.timeout);
+        this.setApplicationKey(this.options.applicationKey);
+        this.setHmacKey(this.options.hmacKey);
+
+        this.setPenParameters(this.options.penParameters);
+
+        this.setPrecision(this.options.precision);
+        this.setTypeset(this.options.typeset);
+        this.setComponents(this.options.components);
+
+        this.setWidth(this.options.width);
+        this.setHeight(this.options.height);
     }
 
     /**
@@ -80,8 +109,15 @@
      * @param {Number} width
      */
     InkPaper.prototype.setWidth = function (width) {
-        this._captureCanvas.width = width;
-        this._renderingCanvas.width = width;
+        if(width > 0){
+            this._captureCanvas.width = width * this.canvasRatio;
+            this._captureCanvas.style.width = width + 'px';
+            this._captureCanvas.getContext('2d').scale(this.canvasRatio, this.canvasRatio);
+
+            this._renderingCanvas.width = width * this.canvasRatio;
+            this._renderingCanvas.style.width = width + 'px';
+            this._renderingCanvas.getContext('2d').scale(this.canvasRatio, this.canvasRatio);
+        }
         this._initRenderingCanvas();
     };
 
@@ -92,8 +128,15 @@
      * @param {Number} height
      */
     InkPaper.prototype.setHeight = function (height) {
-        this._captureCanvas.height = height;
-        this._renderingCanvas.height = height;
+        if(height > 0){
+            this._captureCanvas.height = height * this.canvasRatio;
+            this._captureCanvas.style.height = height + 'px';
+            this._captureCanvas.getContext('2d').scale(this.canvasRatio, this.canvasRatio);
+
+            this._renderingCanvas.height = height * this.canvasRatio;
+            this._renderingCanvas.style.height = height + 'px';
+            this._renderingCanvas.getContext('2d').scale(this.canvasRatio, this.canvasRatio);
+        }
         this._initRenderingCanvas();
     };
 
@@ -216,6 +259,45 @@
     };
 
     /**
+     * Set the recognition precision
+     *
+     * @method setPrecision
+     * @param {Number} precision
+     */
+    InkPaper.prototype.setPrecision = function (precision) {
+        this._textRecognizer.setPrecision(precision);
+        this._textWSRecognizer.setPrecision(precision);
+        this._mathRecognizer.setPrecision(precision);
+        this._mathWSRecognizer.setPrecision(precision);
+        this._shapeRecognizer.setPrecision(precision);
+        this._musicRecognizer.setPrecision(precision);
+        this._analyzerRecognizer.setPrecision(precision);
+    };
+
+    /**
+     * Get the default components
+     *
+     * @method getComponents
+     * @return {Array} components
+     */
+    InkPaper.prototype.getComponents = function () {
+        return this.options.components;
+    };
+
+    /**
+     * Set the default components
+     *
+     * @method setComponents
+     * @param {Array} components
+     */
+    InkPaper.prototype.setComponents = function (components) {
+        this.options.components = components;
+        this._initRenderingCanvas();
+    };
+
+
+
+    /**
      * Get the application key
      *
      * @method getApplicationKey
@@ -263,7 +345,7 @@
      * @param  String language
      */
     InkPaper.prototype.setLanguage = function (language) {
-        if(this.options.type === scope.RecognitionType.TEXT){
+        if (this.options.type === scope.RecognitionType.TEXT) {
             this.isStarted = false;
             this._selectedWSRecognizer.resetWSRecognition();
             this._selectedWSRecognizer.getParameters().setLanguage(language);
@@ -278,10 +360,12 @@
      * @param  Array resultTypes
      */
     InkPaper.prototype.setResultTypes = function (resultTypes) {
-        if(this.options.type === scope.RecognitionType.MATH){
+        if (this.options.type === scope.RecognitionType.MATH) {
             this.isStarted = false;
             this._selectedWSRecognizer.resetWSRecognition();
-            this._selectedWSRecognizer.getParameters().setResultTypes(resultTypes.map(function(x) { return x.toUpperCase(); }));
+            this._selectedWSRecognizer.getParameters().setResultTypes(resultTypes.map(function (x) {
+                return x.toUpperCase();
+            }));
         }
     };
 
@@ -395,6 +479,7 @@
                     this._musicRecognizer.getParameters()[i] = musicParameters[i]; // Override options
                 }
             }
+            this._initRenderingCanvas();
         }
     };
 
@@ -486,53 +571,23 @@
     };
 
     /**
-     * @private
-     * @method _initialize
-     * @param {Object} options
-     */
-    InkPaper.prototype._initialize = function (options) {
-
-        this._setHost(options.host);
-
-        this.setTextParameters(options.textParameters); // jshint ignore:line
-        this.setMathParameters(options.mathParameters); // jshint ignore:line
-        this.setShapeParameters(options.shapeParameters); // jshint ignore:line
-        this.setMusicParameters(options.musicParameters); // jshint ignore:line
-        this.setAnalyzerParameters(options.analyzerParameters); // jshint ignore:line
-
-        // Recognition type
-        this.setType(options.type);
-        this.setProtocol(options.protocol);
-        this.setTimeout(options.timeout);
-        this.setApplicationKey(options.applicationKey);
-        this.setHmacKey(options.hmacKey);
-
-        this.setPenParameters(options.penParameters);
-        this.setTypeset(options.typeset);
-
-        this.setWidth(options.width);
-        this.setHeight(options.height);
-    };
-
-    /**
-     * Get options
-     *
-     * @private
-     * @method _getOptions
-     * @returns {Object}
-     */
-    InkPaper.prototype._getOptions = function () {
-        return this.options;
-    };
-
-    /**
      * Get available languages
      *
      * @method getAvailableLanguages
-     * @returns {Promise}
+     * @param {String} [inputMode] input mode
      */
-    InkPaper.prototype.getAvailableLanguages = function () {
-        return this._selectedRecognizer.getAvailableLanguageList(this.getApplicationKey(), this._textRecognizer.getParameters().getInputMode());
+    InkPaper.prototype.getAvailableLanguages = function (inputMode) {
+        this._selectedRESTRecognizer.getAvailableLanguageList(
+            this.getApplicationKey(),
+            inputMode ? inputMode : this._textRecognizer.getParameters().getInputMode()
+        ).then(
+            function (data) {
+                this._onResult(data);
+            }.bind(this),
+            function (error) {
+                this._onResult(undefined, error);
+            }.bind(this)
+        );
     };
 
     /**
@@ -638,7 +693,7 @@
                 }
             }
             this._initRenderingCanvas();
-            this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
+            this._onChange();
 
             if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
                 this.isStarted = false;
@@ -684,7 +739,7 @@
                 }
             }
             this._initRenderingCanvas();
-            this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
+            this._onChange();
 
             if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
                 this.recognize();
@@ -720,7 +775,7 @@
         this._instanceId = undefined;
 
         this._initRenderingCanvas();
-        this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
+        this._onChange();
 
         if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
             this.isStarted = false;
@@ -752,21 +807,32 @@
      * @param {Date} [t] timeStamp
      */
     InkPaper.prototype._down = function (x, y, t) {
-
-        if(this._captureCanvas.clientHeight != this._captureCanvas.height){
+        var sizeChanged = false;
+        if (this._captureCanvas.clientHeight != this._captureCanvas.height) {
             this._captureCanvas.height = this._captureCanvas.clientHeight;
             this._renderingCanvas.height = this._renderingCanvas.clientHeight;
+            sizeChanged = true;
         }
-        if(this._captureCanvas.clientWidth != this._captureCanvas.width){
+
+        if (this._captureCanvas.clientWidth != this._captureCanvas.width) {
             this._captureCanvas.width = this._captureCanvas.clientWidth;
             this._renderingCanvas.width = this._renderingCanvas.clientWidth;
+            sizeChanged = true;
+        }
+
+        //Safari trash the canvas content when heigth or width are modified.
+        if(sizeChanged){
+            this._initRenderingCanvas();
         }
 
         if (this.canRedo()) {
             this.redoComponents = [];
-            this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
+            this._onChange();
         }
+
         this._inkGrabber.startCapture(x, y, t);
+
+
     };
 
     /**
@@ -798,7 +864,7 @@
         this._selectedRenderer.drawComponent(stroke);
 
         this.components.push(stroke);
-        this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
+        this._onChange();
 
         if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
             if (!this._selectedRecognizer.isOpen() && !this._selectedRecognizer.isConnecting()) {
@@ -830,7 +896,7 @@
                     var inputWS = [];
                     if (this._selectedRecognizer instanceof scope.TextWSRecognizer) {
                         var inputUnitWS = new scope.TextInputUnit();
-                        inputUnitWS.setComponents(this._getOptions().components.concat(components.slice(this.lastNonRecoComponentIdx)));
+                        inputUnitWS.setComponents(this.getComponents().concat(components.slice(this.lastNonRecoComponentIdx)));
                         inputWS = [inputUnitWS];
                     } else {
                         inputWS = components.slice(this.lastNonRecoComponentIdx);
@@ -849,13 +915,13 @@
                 var input = [];
                 if (this._selectedRecognizer instanceof scope.TextRecognizer) {
                     var inputUnit = new scope.TextInputUnit();
-                    inputUnit.setComponents(this._getOptions().components.concat(components));
+                    inputUnit.setComponents(this.getComponents().concat(components));
                     input = [inputUnit];
                 } else if (this._selectedRecognizer instanceof scope.ShapeRecognizer) {
                     input = components.slice(this.lastNonRecoComponentIdx);
                     this.lastNonRecoComponentIdx = components.length;
                 } else {
-                    input = input.concat(this._getOptions().components, components);
+                    input = input.concat(this.getComponents(), components);
                 }
                 this._selectedRecognizer.doSimpleRecognition(
                     this.getApplicationKey(),
@@ -864,13 +930,12 @@
                     this.getHmacKey()
                 ).then(
                     function (data) {
-                        return this._parseResult(data, input);
+                        this._parseResult(data, input);
                     }.bind(this),
                     function (error) {
                         this._onResult(undefined, error);
-                        return error;
                     }.bind(this)
-                ).done();
+                );
             }
         } else {
             this.isStarted = false;
@@ -885,17 +950,25 @@
             this.resultCallback(data, err);
         }
         if (err) {
-            this._element.dispatchEvent(new CustomEvent('failure', {detail: err}));
+            this._element.dispatchEvent(new CustomEvent('failure', {detail: err})); // FIXME: mark as deprecated
+            this._element.dispatchEvent(new CustomEvent('error', {detail: err}));
         } else {
             this._element.dispatchEvent(new CustomEvent('success', {detail: data}));
         }
     };
 
-    InkPaper.prototype._onChange = function (changes) {
+    InkPaper.prototype._onChange = function () {
+        var data = {
+            canUndo: this.canUndo(),
+            undoLength: this.components.length,
+            canRedo: this.canRedo(),
+            redoLength: this.redoComponents.length
+        };
+
         if (this.changeCallback) {
-            this.changeCallback(changes)
+            this.changeCallback(data)
         }
-        this._element.dispatchEvent(new CustomEvent('changed', {detail: changes}));
+        this._element.dispatchEvent(new CustomEvent('changed', {detail: data}));
     };
 
     InkPaper.prototype._parseResult = function (data, input) {
@@ -917,17 +990,31 @@
     };
 
     /**
-     * Set recognition service host
+     * Set recognition service url
      *
-     * @private
      * @param {String} host
      */
-    InkPaper.prototype._setHost = function (host) {
+    InkPaper.prototype.setHost = function (host) {
         this._textRecognizer.setHost(host);
+        this._textWSRecognizer.setHost(host);
         this._mathRecognizer.setHost(host);
+        this._mathWSRecognizer.setHost(host);
         this._shapeRecognizer.setHost(host);
         this._musicRecognizer.setHost(host);
         this._analyzerRecognizer.setHost(host);
+    };
+
+    /**
+     * @private
+     */
+    InkPaper.prototype.setSSL = function (ssl) {
+        this._textRecognizer.setSSL(ssl);
+        this._textWSRecognizer.setSSL(ssl);
+        this._mathRecognizer.setSSL(ssl);
+        this._mathWSRecognizer.setSSL(ssl);
+        this._shapeRecognizer.setSSL(ssl);
+        this._musicRecognizer.setSSL(ssl);
+        this._analyzerRecognizer.setSSL(ssl);
     };
 
     /**
@@ -939,11 +1026,18 @@
     InkPaper.prototype._attachListeners = function (element) {
         var self = this;
         var pointerId;
+
+        //Desactivation of contextmenu to prevent safari to fire pointerdown only once
+        element.addEventListener("contextmenu", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            return false; }
+        );
+
         element.addEventListener('pointerdown', function (e) {
             if (!pointerId) {
                 pointerId = e.pointerId;
                 e.preventDefault();
-
                 var coord = _getCoordinates(e, element);
                 self._down(coord.x, coord.y, coord.t);
             }
@@ -971,18 +1065,8 @@
         element.addEventListener('pointerleave', function (e) {
             if (pointerId === e.pointerId) {
                 e.preventDefault();
-                console.log('pointerenter');
-                console.log(e);
-            }
-        }, false);
-
-        element.addEventListener('pointerleave', function (e) {
-            if (pointerId === e.pointerId) {
-                e.preventDefault();
-
                 var coord = _getCoordinates(e, element);
                 self._up(coord.x, coord.y, coord.t);
-
                 pointerId = undefined;
             }
         }, false);
@@ -997,11 +1081,9 @@
         if (this._selectedRecognizer instanceof scope.MusicRecognizer) {
             if (this._selectedRecognizer.getParameters().getStaff() instanceof scope.MusicStaff) {
                 this._selectedRenderer.drawStaff(this._selectedRecognizer.getParameters().getStaff());
-            } else {
-                throw new Error('Missing music staff');
             }
         }
-        this._selectedRenderer.drawComponents(this._getOptions().components.concat(components));
+        this._selectedRenderer.drawComponents(this.getComponents().concat(components));
     };
 
     /**
@@ -1027,7 +1109,7 @@
                     this._selectedWSRecognizer.initWSRecognition(this.getApplicationKey());
                     break;
                 case 'hmacChallenge':
-                    this._selectedWSRecognizer.takeUpHmacChallenge (this.getApplicationKey(), message.getChallenge(), this.getHmacKey());
+                    this._selectedWSRecognizer.takeUpHmacChallenge(this.getApplicationKey(), message.getChallenge(), this.getHmacKey());
                     break;
                 case 'init':
                     this.isStarted = false;
@@ -1046,14 +1128,131 @@
                     this._instanceId = undefined;
                     this.lastNonRecoComponentIdx = 0;
                     break;
-                default: {
+                default:
                     this._parseResult(message, this.components);
                     break;
-                }
             }
         }
         return replayNeeded;
     };
+
+    /**
+     * Return the stats allowing to monitor what ink size is send to the server.
+     * @returns Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+     */
+    InkPaper.prototype.getStats = function () {
+        var stats = {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'};
+        if(this.components){
+            stats.strokesCount = this.components.length;
+            var pointsCount = 0;
+            for(var strokeNb = 0; strokeNb < this.components.length; strokeNb++){
+                pointsCount = pointsCount + this.components[strokeNb].x.length;
+            }
+            stats.strokesCount = this.components.length;
+            stats.pointsCount = pointsCount;
+            //We start with 270 as it is the size in bytes. Make a real computation implies to recode a doRecogntion
+            var byteSize = 270;
+            byteSize = JSON.stringify(this.components).length;
+            stats.byteSize = byteSize;
+            if (byteSize < 270) {
+                stats.humanUnit = 'BYTE';
+                stats.byteSize = 0;
+                stats.humanSize  = 0;
+            } else if (byteSize < 2048) {
+                stats.humanUnit = 'BYTES';
+                stats.humanSize  = byteSize;
+            } else if (byteSize < 1024 * 1024) {
+                stats.humanUnit = 'KiB';
+                stats.humanSize = (byteSize / 1024).toFixed(2);
+            } else {
+                stats.humanUnit = 'MiB';
+                stats.humanSize = (byteSize / 1024 / 1024).toFixed(2);
+            }
+        }
+        return stats;
+    };
+
+    /**
+     *
+     * @param marginX the horizontal margin to apply (by default 10)
+     * @param marginY the vertical margin to apply (by default 10)
+     * @returns {ImageData} Build an ImageData object with content shrink to border of strokes.
+     * @private
+     */
+    InkPaper.prototype.getInkAsImageData = function (marginX, marginY) {
+        if(!marginX){
+            marginX = 10;
+        }
+        if(!marginY){
+            marginY = 10;
+        }
+        console.log({marginX : marginX, marginY : marginY});
+        if(this.components && this.components.length > 0){
+            var updatedStrokes ;
+            var strokesCount = this.components.length;
+            //Initializing min and max
+            var minX = this.components[0].x[0];
+            var maxX = this.components[0].x[0];
+            var minY = this.components[0].y[0];
+            var maxY = this.components[0].y[0];
+            // Computing the min and max for x and y
+            for(var strokeNb = 0; strokeNb < this.components.length; strokeNb++){
+                var pointCount = this.components[strokeNb].x.length;
+                for(var pointNb = 0; pointNb < pointCount; pointNb ++){
+                    var currentX = this.components[strokeNb].x[pointNb];
+                    var currentY = this.components[strokeNb].y[pointNb];
+                    if(currentX < minX){
+                        minX = currentX;
+                    }
+                    if(currentX > maxX){
+                        maxX = currentX;
+                    }
+                    if(currentY < minY){
+                        minY = currentY;
+                    }
+                    if(currentY > maxY){
+                        maxY = currentY;
+                    }
+                }
+            }
+            var nonDisplayCanvas = document.createElement('canvas');
+            nonDisplayCanvas.width = (maxX )+(2*marginX);
+            nonDisplayCanvas.height = (maxY )+(2*marginY)
+
+            var ctx =  nonDisplayCanvas.getContext("2d");
+
+            var imageRendered = new scope.ImageRenderer(ctx);
+            imageRendered.drawComponents(this.components, ctx);
+
+            // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/getImageData
+            var imageData = ctx.getImageData(minX-marginX, minY-marginY, (maxX-minX )+(2*marginX), (maxY-minY )+(2*marginY));
+            return imageData;
+        } else {
+            return;
+        }
+    };
+
+    /**
+     *
+     * @param marginX the horizontal margin to apply (by default 10)
+     * @param marginY the vertical margin to apply (by default 10)
+     * @returns {String} Build an String containg dataUrl with content shrink to border of strokes.
+     * @private
+     */
+    InkPaper.prototype.getInkAsPng = function (marginX, marginY) {
+        var imageRenderingCanvas = document.createElement('canvas');
+        imageRenderingCanvas.style.display = 'none';
+
+        var imageDataToRender = this.getInkAsImageData();
+        imageRenderingCanvas.width = imageDataToRender.width;
+        imageRenderingCanvas.style.width = imageDataToRender.width +'px';
+        imageRenderingCanvas.height = imageDataToRender.height;
+        imageRenderingCanvas.style.height = imageDataToRender.height +'px';
+        var ctx = imageRenderingCanvas.getContext('2d');
+        ctx.putImageData(imageDataToRender, 0, 0);
+        var ret = imageRenderingCanvas.toDataURL("image/png");
+        return ret;
+    }
 
     /**
      * Tool to create canvas
@@ -1069,6 +1268,27 @@
         canvas.id = id + '-' + count;
         parent.appendChild(canvas);
         return canvas;
+    }
+
+    /**
+     * Tool to get canvas ratio (retina display)
+     *
+     * @private
+     * @param {Element} canvas
+     * @returns {Number}
+     */
+    function _getCanvasRatio(canvas) {
+        if (canvas) {
+            var context = canvas.getContext('2d'),
+                devicePixelRatio = window.devicePixelRatio || 1,
+                backingStoreRatio = context.webkitBackingStorePixelRatio ||
+                    context.mozBackingStorePixelRatio ||
+                    context.msBackingStorePixelRatio ||
+                    context.oBackingStorePixelRatio ||
+                    context.backingStorePixelRatio || 1;
+            return devicePixelRatio / backingStoreRatio;
+        }
+        return 1;
     }
 
 

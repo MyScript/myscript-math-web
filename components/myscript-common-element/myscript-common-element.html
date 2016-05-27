@@ -1,56 +1,56 @@
 <!--
 Copyright © MyScript.
-LICENSE: github.com/MyScriptWebComponents/myscript-common-element/blob/master/LICENSE
+LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
 <link rel="import" href="../myscript/myscript.html">
 <!--
 The `myscript-common-element` is a web component wrapper around MyScriptJS InkPaper.
 
-##### Example
-
-    var recognized = function (e) {
-        result.innerHTML = e.detail.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
-    };
-
-    var error = function (e) {
-        if (e) {
-            result.innerHTML = e;
-        }
-    };
-    ...
     <myscript-common-element
-        protocol="WebSocket"
-        type="TEXT"
         applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
         hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        on-error="error"
-        on-result="recognized">
+        timeout="2000"
+        typeset="true"
+        shapeparameters="{
+            doBeautification: true
+        }">
     </myscript-common-element>
 
-@group MyScript Elements
-@element myscript-common-element
-@blurb MyScript InkPaper to help developer for integrate handwriting recognition.
-@status beta
-@homepage https://github.com/MyScript/myscript-common-element/
-
+@demo
 -->
 <dom-module id="myscript-common-element">
     <style>
         :host {
             display: block;
+            position: relative;
+            min-height: 100px;
+            min-width: 200px;
+            --paper-fab-background: #00A7CF;
+            --paper-fab-keyboard-focus-background: #00A7CF;
         }
-
-        #myscript-input-area {
-            height: 100%;
-            width: 100%;
-            min-height: 300px;
-            min-width: 400px;
+        .buttons {
+            float: left;
+            display: flex;
+            display: -webkit-flex;
+        }
+        paper-fab {
+            z-index: 3;
         }
     </style>
     <template>
-        <div id="myscript-input-area" on-changed="_onChanged" on-success="_onSuccess" on-failure="_onFailure"></div>
+        <div class="buttons" hidden="[[ hidebuttons ]]">
+            <paper-fab mini icon="delete" title="clear" on-tap="clear" disabled="[[ !canclear ]]" hidden="[[ _disableClear ]]"></paper-fab>
+            <paper-fab mini icon="undo" title="undo" on-tap="undo" disabled="[[ !canundo ]]" hidden="[[ _disableUndoRedo ]]"></paper-fab>
+            <paper-fab mini icon="redo" title="redo" on-tap="redo" disabled="[[ !canredo ]]" hidden="[[ _disableUndoRedo ]]"></paper-fab>
+            <paper-fab mini icon="send" title="recognize" on-tap="recognize" disabled="[[ !canclear ]]" hidden="[[ _disableRecognize ]]"></paper-fab>
+        </div>
+        <div id="myscript-input-area" on-changed="_onChanged" on-success="_onSuccess" on-error="_onError"></div>
+        <paper-toast class="fit-bottom"></paper-toast>
     </template>
 </dom-module>
 <script>
@@ -58,124 +58,225 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         is: 'myscript-common-element',
         /**
          * Fired when a recognition result is successfully received.
-         *
          * @event myscript-common-element-result
          */
         /**
          * Fired when a recognition error occurred.
-         *
          * @event error
          */
         /**
          * Fired when the content of the InkPaper changes.
-         *
          * @event changed
          */
         properties: {
             /**
+             * The current recognition service host
+             */
+            host: {
+                type: String,
+                value: 'cloud.myscript.com',
+                observer: '_hostChanged'
+            },
+            /**
+             * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
+             * @default 'WebSocket'
+             */
+            protocol: {
+                type: String,
+                value: MyScript.Protocol.REST,
+                observer: '_protocolChanged'
+            },
+            /**
+             * The recognition timeout, only use for HTTP.
+             */
+            timeout: {
+                type: Number,
+                value: 2000,
+                observer: '_timeoutChanged'
+            },
+            /**
+             * Application key to use for recognition on MyScript handwriting recognition server.<br />
+             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
+             * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
+             */
+            applicationkey: {
+                type: String,
+                observer: '_applicationKeyChanged'
+            },
+            /**
+             * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
+             * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
+             * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
+             */
+            hmackey: {
+                type: String,
+                observer: '_hmacKeyChanged'
+            },
+            /**
              * The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)
-             *
-             * @attribute type
-             * @type String
              * @default 'TEXT'
              */
             type: {
                 type: String,
-                notify: true,
+                value: MyScript.RecognitionType.TEXT,
                 observer: '_typeChanged'
             },
             /**
-             * The current recognition language (e.g. en_US, fr_FR, ...)
-             *
-             * @attribute language
-             * @type String
-             * @default 'en_US'
+             * <b>Deprecated</b>: Use textparameters.language instead of this property<br />
+             * @private
+             * @deprecated Use textparameters.language instead of this property
              */
             language: {
                 type: String,
-                notify: true,
-                value: "en_US",
+                value: 'en_US',
                 observer: '_languageChanged'
             },
             /**
-             * Math result types (e.g. LATEX, MATHML, SYMBOLTREE)
-             *
-             * @attribute resulttypes
-             * @type Array
+             * <b>Deprecated</b>: Use mathparameters.resultTypes or music-parameters.resultTypes instead of this property<br />
+             * @type {Array<String>}
+             * @private
+             * @deprecated Use mathparameters.resultTypes or music-parameters.resultTypes instead of this property
              */
             resulttypes: {
                 type: Array,
-                notify: true,
                 value: [],
-                observer: '_resulttypesChanged'
+                observer: '_resultTypesChanged'
             },
             /**
-             * The current recognition protocol (e.g. REST, or WebSocket <b>ONLY</b> for TEXT and MATH)
-             *
+             * Parameter to typeset, or not, the result onto the ink paper.<br /><br />
+             * <b>Warning</b> : For some recognition types, such as TEXT or MATH, this param will never be applied as typesetting is not available for these recognitions.
+             */
+            typeset: {
+                type: Boolean,
+                value: false,
+                observer: '_typesetChanged'
+            },
+            /**
+             * Recognition parameters for the text recognition.
+             * @type {{language: String, textInputMode: String, resultDetail: String, contentTypes: Array<String>, subsetKnowledges: Array<String>, userResources: Array<String>, userLkWords: Array<String>, textProperties: {textCandidateListSize: Number, wordCandidateListSize: Number, wordPredictionListSize: Number, wordCompletionListSize: Number, characterCandidateListSize: Number, enableOutOfLexicon: Boolean, discardCaseVariations: Boolean, discardAccentuationVariations: Boolean, disableSpatialOrdering: Boolean, glyphDistortion: Number, spellingDistortion: Number}}}
+             * @default {{language: 'en_US', textInputMode: 'CURSIVE'}}
+             */
+            textparameters: {
+                type: Object,
+                value: new MyScript.TextParameter(),
+                observer: '_textParametersChanged'
+            },
+            /**
+             * Recognition parameters for the math recognition.
+             * @type {{resultTypes: Array<String>, columnarOperation: Boolean, userResources: Array<String>, scratchOutDetectionSensitivity: Number}}
+             * @default {}
+             */
+            mathparameters: {
+                type: Object,
+                value: new MyScript.MathParameter(),
+                observer: '_mathParametersChanged'
+            },
+            /**
+             * Recognition parameters for the shape recognition.
+             * @type {{doBeautification: Boolean, rejectDetectionSensitivity: Boolean, userResources: Array<String>}}
+             * @default {}
+             */
+            shapeparameters: {
+                type: Object,
+                value: new MyScript.ShapeParameter(),
+                observer: '_shapeParametersChanged'
+            },
+            /**
+             * Recognition parameters for the music recognition.
+             * @type {{resultTypes: Array<String>, userResources: Array<String>, scratchOutDetectionSensitivity: Number, divisions: Number, staff: {count: Number, gap: Number, top: Number}}}
+             * @default {}
+             */
+            musicparameters: {
+                type: Object,
+                value: new MyScript.MusicParameter(),
+                observer: '_musicParametersChanged'
+            },
+            /**
+             * Recognition parameters for the analyzer recognition.
+             * @type {{coordinateResolution: Number}}
+             * @default {}
+             */
+            analyzerparameters: {
+                type: Object,
+                value: new MyScript.AnalyzerParameter(),
+                observer: '_analyzerParametersChanged'
+            },
+            /**
+             * Recognition input components.
+             * @type {Array<{type: String}>}
+             */
+            components: {
+                type: Array,
+                value: [],
+                observer: '_componentsChanged'
+            },
+            /**
+             * True if undo is available
              * @private
-             * @attribute protocol
-             * @type String
-             * @default 'REST'
              */
-            protocol: {
-                type: String,
-                notify: true
+            canundo: {
+                type: Boolean,
+                notify: true,
+                value: false
             },
             /**
-             * The current recognition service host
-             *
+             * True if redo is available
              * @private
-             * @attribute host
-             * @type String
-             * @default 'cloud.myscript.com'
              */
-            host: {
-                type: String,
-                notify: true
-            },
-            /**
-             * The recognition timeout (-1 = disabled, 0 = immediate, 0 > deferred)
-             *
-             * @attribute timeout, only use for HTTP
-             * @type Number
-             * @default 2000
-             */
-            timeout: {
-                type: Number,
+            canredo: {
+                type: Boolean,
                 notify: true,
-                observer: '_timeoutChanged'
+                value: false
             },
             /**
-             * Application key to use for recognition on MyScript handwriting recognition server.<br>
-             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com.<br>
-             * <b>Warning</b> : This parameter is <b>mandatory</b> and it's value should be a string.
-             *
-             * @attribute applicationkey
-             * @type String
+             * True if there is something to clear
+             * @private
+             * @default false
              */
-            applicationkey: {
-                type: String,
+            canclear: {
+                type: Boolean,
                 notify: true,
-                observer: '_applicationkeyChanged'
+                computed: '_computeCanClear(canundo, canredo)'
             },
             /**
-             * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
-             * You have to create your own hmac key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
-             * <b>Warning</b> : This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
-             *
-             * @attribute hmackey
-             * @type String
+             * If set to true, hide the buttons (Trash, Undo, Redo).
              */
-            hmackey: {
-                type: String,
+            hidebuttons: {
+                type: Boolean,
+                value: false
+            },
+            /**
+             * True if SSL is activated, false otherwise
+             * @private
+             */
+            ssl: {
+                type: Boolean,
+                value: true,
+                observer: '_sslChanged'
+            },
+            /**
+             * True if the undo/redo feature is disabled, false otherwise
+             */
+            _disableUndoRedo: {
+                type: Boolean,
                 notify: true,
-                observer: '_hmackeyChanged'
+                computed: '_computeDisableUndoRedo(hidebuttons)'
             },
             /**
-             * A object with MyScriptJS option used to build the common element.
+             * True if the clear feature is disabled, false otherwise
              */
-            options : {
-                type: Object
+            _disableClear: {
+                type: Boolean,
+                notify: true,
+                computed: '_computeDisableClear(hidebuttons)'
+            },
+            /**
+             * True if the recognize feature is disabled, false otherwise
+             */
+            _disableRecognize: {
+                type: Boolean,
+                notify: true,
+                computed: '_computeDisableRecognize(hidebuttons,timeout,protocol)'
             }
         },
         behaviors: [
@@ -185,19 +286,23 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             'iron-resize': '_onResize'
         },
         /**
-         * Delete all context
-         *
-         * @method delete
+         * Clear all context
          */
-        delete: function () {
+        clear: function () {
             if (this._inkPaper) {
                 this._inkPaper.clear();
             }
         },
         /**
+         * <b>Deprecated</b>: Use clear instead of delete<br />
+         * @deprecated Use clear instead of delete
+         * @private
+         */
+        delete: function () {
+            this.clear();
+        },
+        /**
          * Undo action, and launch recognition if timeout is set
-         *
-         * @method undo
          */
         undo: function () {
             if (this._inkPaper) {
@@ -206,8 +311,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Redo action, and launch recognition if timeout is set
-         *
-         * @method redo
          */
         redo: function () {
             if (this._inkPaper) {
@@ -216,8 +319,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         /**
          * Launch recognition
-         *
-         * @method recognize
          */
         recognize: function () {
             if (this._inkPaper) {
@@ -225,56 +326,45 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             }
         },
         /**
-         * Get parent
-         *
-         * @private
-         * @method parent
+         * Get available languages
+         * @param {String} inputMode Optional recognition input mode
          */
-        get parent() {
-            if (this.parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-                return this.parentNode.host;
+        getAvailableLanguages: function (inputMode) {
+            if (this._inkPaper) {
+                this._inkPaper.getAvailableLanguages(inputMode);
             }
-            return this.parentNode;
         },
-        attached: function () {
-            this.async(this.notifyResize, 1);
+        /**
+         * Return the stats allowing to monitor what ink size is send to the server.
+         * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+         */
+        getStats: function () {
+            if (this._inkPaper) {
+                return this._inkPaper.getStats();
+            }
         },
         ready: function () {
             this._inputArea = this.querySelector('#myscript-input-area');
-
-            var configOptions = this.option;
-            //Create option object if non set
-            if(!configOptions) {
-                configOptions = {};
-            }
-
-            configOptions.host= this.host;
-            configOptions.protocol= this.protocol;
-            configOptions.type = this.type;
-            configOptions.width = this.offsetWidth;
-            configOptions.height = this.offsetHeight;
-            configOptions.timeout = this.timeout;
-            configOptions.applicationKey = this.applicationkey;
-            configOptions.hmacKey = this.hmackey;
-
-            this._inkPaper = new MyScript.InkPaper(this._inputArea, configOptions, function (data, err) {
-                if (data) {
-                    this.fire('myscript-common-element-result', data);
-                }
-                if (err) {
-                    this.fire('error', err);
-                }
-            }.bind(this));
-
-            this._languageChanged();
-            this._resulttypesChanged();
+            this._paperToast = this.querySelector('paper-toast');
+            this._inkPaper = new MyScript.InkPaper(this._inputArea, {
+                host: this.host,
+                protocol: this.protocol,
+                ssl: this.ssl,
+                type : this.type,
+                width : this.offsetWidth,
+                height : this.offsetHeight,
+                timeout : this.timeout,
+                applicationKey : this.applicationkey,
+                hmacKey : this.hmackey,
+                typeset: this.typeset,
+                components : this.components,
+                textParameters : this.textparameters,
+                mathParameters : this.mathparameters,
+                shapeParameters : this.shapeparameters,
+                musicParameters : this.musicparameters,
+                analyzerParameters : this.analyzerparameters
+            });
         },
-        /**
-         * Resize listener
-         *
-         * @private
-         * @method _onResize
-         */
         _onResize: function () {
             if (this._inkPaper) {
 
@@ -287,99 +377,116 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 }
             }
         },
-        /**
-         * Changed listener
-         *
-         * @private
-         * @method _onChanged
-         */
         _onChanged: function (e) {
+            if (e.detail) {
+                this.canundo = e.detail.canUndo;
+                this.canredo = e.detail.canRedo;
+            }
             this.fire(e.type, e.detail);
         },
-        /**
-         * Success listener
-         *
-         * @private
-         * @method _onSuccess
-         */
         _onSuccess: function (e) {
             this.fire(e.type, e.detail);
+            this.fire('myscript-common-element-result', e.detail);
         },
-        /**
-         * Failure listener
-         *
-         * @private
-         * @method _onFailure
-         */
-        _onFailure: function (e) {
+        _onError: function (e) {
             this.fire(e.type, e.detail);
+            this._paperToast.text = e.detail.message;
+            this._paperToast.fitIn =
+            this._paperToast.show();
         },
-        /**
-         * Application key changed observer
-         *
-         * @private
-         * @method _applicationKeyChanged
-         */
-        _applicationkeyChanged: function () {
+        _computeCanClear: function (canUndo, canRedo) {
+            return canUndo || canRedo;
+        },
+        _computeDisableUndoRedo: function (hidebuttons) {
+            return hidebuttons;
+        },
+        _computeDisableClear: function (hidebuttons) {
+            return hidebuttons;
+        },
+        _computeDisableRecognize: function (hidebuttons,timeout,protocol) {
+            return hidebuttons || (protocol === MyScript.Protocol.WS) || (timeout >= 0);
+        },
+        _applicationKeyChanged: function (applicationKey) {
             if (this._inkPaper) {
-                this._inkPaper.setApplicationKey(this.applicationkey);
+                this._inkPaper.setApplicationKey(applicationKey);
             }
         },
-        /**
-         * HMAC key changed observer
-         *
-         * @private
-         * @method _hmacKeyChanged
-         */
-        _hmackeyChanged: function () {
+        _hmacKeyChanged: function (hmacKey) {
             if (this._inkPaper) {
-                this._inkPaper.setHmacKey(this.hmackey);
+                this._inkPaper.setHmacKey(hmacKey);
             }
         },
-        /**
-         * Timeout changed observer
-         *
-         * @private
-         * @method _timeoutChanged
-         */
-        _timeoutChanged: function () {
+        _timeoutChanged: function (timeout) {
             if (this._inkPaper) {
-                this._inkPaper.setTimeout(this.timeout);
+                this._inkPaper.setTimeout(timeout);
             }
         },
-        /**
-         * Recognition type changed observer
-         *
-         * @private
-         * @method _typeChanged
-         */
-        _typeChanged: function () {
+        _typeChanged: function (type) {
             if (this._inkPaper) {
-                this._inkPaper.setType(this.type);
+                this._inkPaper.setType(type);
             }
         },
-        /**
-         * Recognition language changed observer
-         *
-         * @private
-         * @method _languageChanged
-         */
-        _languageChanged: function () {
+        _languageChanged: function (language) {
             if (this._inkPaper) {
-                this._inkPaper.setLanguage(this.language);
+                this._inkPaper.getTextParameters().setLanguage(language);
+                this._inkPaper.setTextParameters(this._inkPaper.getTextParameters());
             }
         },
-        /**
-         * Math Recognition result types changed observer
-         *
-         * @private
-         * @method _resulttypesChanged
-         */
-        _resulttypesChanged: function () {
+        _resultTypesChanged: function (resultTypes) {
             if (this._inkPaper) {
-                this._inkPaper.setResultTypes(this.resulttypes);
+                this._inkPaper.getMathParameters().setResultTypes(resultTypes);
+                this._inkPaper.setMathParameters(this._inkPaper.getMathParameters());
+            }
+        },
+        _typesetChanged: function (typeset) {
+            if (this._inkPaper) {
+                this._inkPaper.setTypeset(typeset);
+            }
+        },
+        _textParametersChanged: function (textParameters) {
+            if (this._inkPaper) {
+                this._inkPaper.setTextParameters(textParameters);
+            }
+        },
+        _mathParametersChanged: function (mathParameters) {
+            if (this._inkPaper) {
+                this._inkPaper.setMathParameters(mathParameters);
+            }
+        },
+        _shapeParametersChanged: function (shapeParameters) {
+            if (this._inkPaper) {
+                this._inkPaper.setShapeParameters(shapeParameters);
+            }
+        },
+        _musicParametersChanged: function (musicParameters) {
+            if (this._inkPaper) {
+                this._inkPaper.setMusicParameters(musicParameters);
+            }
+        },
+        _analyzerParametersChanged: function (analyzerParameters) {
+            if (this._inkPaper) {
+                this._inkPaper.setAnalyzerParameters(analyzerParameters);
+            }
+        },
+        _protocolChanged: function (protocol) {
+            if (this._inkPaper) {
+                this._inkPaper.setProtocol(protocol);
+            }
+        },
+        _hostChanged: function (host) {
+            if (this._inkPaper) {
+                this._inkPaper.setHost(host);
+            }
+        },
+        _componentsChanged: function (components) {
+            if (this._inkPaper) {
+                this._inkPaper.setComponents(components);
+            }
+        },
+        _sslChanged: function (ssl) {
+            if (this._inkPaper) {
+                this._inkPaper.setSSL(ssl);
             }
         }
-
     });
 </script>

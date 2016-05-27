@@ -12,6 +12,23 @@
         scope.AbstractParameter.call(this, obj);
         this.resultTypes = [];
         this.userResources = [];
+        if (obj) {
+            if (obj.divisions) {
+                this.divisions = obj.divisions;
+            }
+            if (obj.staff) {
+                this.staff = new scope.MusicStaff(obj.staff);
+            }
+            if (obj.scratchOutDetectionSensitivity) {
+                this.scratchOutDetectionSensitivity = obj.scratchOutDetectionSensitivity;
+            }
+            if (obj.userResources) {
+                this.userResources = obj.userResources;
+            }
+            if (obj.resultTypes) {
+                this.resultTypes = obj.resultTypes;
+            }
+        }
     }
 
     /**

@@ -80,7 +80,8 @@ MyScript = {
         Math: {
             LATEX: 'LATEX',
             MATHML: 'MATHML',
-            SYMBOLTREE: 'SYMBOLTREE'
+            SYMBOLTREE: 'SYMBOLTREE',
+            OFFICEOPENXMLMATH : 'OFFICEOPENXMLMATH'
         },
         Music: {
             MUSICXML: 'MUSICXML',
@@ -1116,9 +1117,15 @@ MyScript = {
         this.y = [];
         this.t = [];
         if (obj) {
-            this.x = obj.x;
-            this.y = obj.y;
-            this.t = obj.t;
+            if (obj.x) {
+                this.x = obj.x;
+            }
+            if (obj.y) {
+                this.y = obj.y;
+            }
+            if (obj.t) {
+                this.t = obj.t;
+            }
         }
     }
 
@@ -1247,9 +1254,19 @@ MyScript = {
         return boundingBox;
     };
 
+    Stroke.prototype.toFixed = function (precision) {
+        if (precision !== undefined) {
+            for (var i in this.x) {
+                this.x[i] = this.x[i].toFixed(precision);
+                this.y[i] = this.y[i].toFixed(precision);
+            }
+        }
+    };
+
     // Export
     scope.Stroke = Stroke;
 })(MyScript);
+
 
 
 (function (scope) {
@@ -1269,12 +1286,24 @@ MyScript = {
         this.alpha = undefined;
         this.width = 0;
         if (obj) {
-            this.p = obj.p;
-            this.d = obj.p;
-            this.l = obj.l;
-            this.color = obj.color;
-            this.alpha = obj.alpha;
-            this.width = obj.width;
+            if (obj.p) {
+                this.p = obj.p;
+            }
+            if (obj.d) {
+                this.d = obj.d;
+            }
+            if (obj.l) {
+                this.l = obj.l;
+            }
+            if (obj.color) {
+                this.color = obj.color;
+            }
+            if (obj.alpha) {
+                this.alpha = obj.alpha;
+            }
+            if (obj.width) {
+                this.width = obj.width;
+            }
         }
     }
 
@@ -1464,10 +1493,20 @@ MyScript = {
      * @extends AbstractComponent
      * @constructor
      */
-    function CharacterInputComponent() {
+    function CharacterInputComponent(obj) {
         scope.AbstractComponent.call(this);
         this.type = 'inputCharacter';
         this.alternates = [];
+        if (obj) {
+            if (obj.alternates) {
+                for (var i in obj.alternates) {
+                    this.alternates.push(new scope.CharacterInputComponentAlternate(obj.alternates[i]));
+                }
+            }
+            if (obj.boundingBox) {
+                this.boundingBox = new scope.Rectangle(obj.boundingBox);
+            }
+        }
     }
 
     /**
@@ -1535,6 +1574,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Character input component alternate
@@ -1542,9 +1582,15 @@ MyScript = {
      * @class CharacterInputComponentAlternate
      * @constructor
      */
-    function CharacterInputComponentAlternate(alternate, probability) {
-        this.alternate = alternate;
-        this.probability = probability;
+    function CharacterInputComponentAlternate(obj) {
+        if (obj) {
+            if (obj.alternate) {
+                this.alternate = obj.alternate;
+            }
+            if (obj.probability) {
+                this.probability = obj.probability;
+            }
+        }
     }
 
     /**
@@ -1590,6 +1636,7 @@ MyScript = {
     // Export
     scope.CharacterInputComponentAlternate = CharacterInputComponentAlternate;
 })(MyScript);
+
 
 
 (function (scope) {
@@ -2011,8 +2058,13 @@ MyScript = {
      * @extends AbstractComponent
      * @constructor
      */
-    function AbstractTextInputComponent() {
+    function AbstractTextInputComponent(obj) {
         scope.AbstractComponent.call(this);
+        if (obj) {
+            if (obj.boundingBox) {
+                this.boundingBox = new scope.Rectangle(obj.boundingBox);
+            }
+        }
     }
 
     /**
@@ -2050,6 +2102,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Char input component
@@ -2058,8 +2111,14 @@ MyScript = {
      * @extends AbstractTextInputComponent
      * @constructor
      */
-    function CharInputComponent() {
+    function CharInputComponent(obj) {
+        scope.AbstractTextInputComponent.call(this, obj);
         this.type = 'char';
+        if (obj) {
+            if (obj.character) {
+                this.character = obj.character;
+            }
+        }
     }
 
     /**
@@ -2119,6 +2178,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * String input component
@@ -2127,8 +2187,14 @@ MyScript = {
      * @extends AbstractTextInputComponent
      * @constructor
      */
-    function StringInputComponent() {
+    function StringInputComponent(obj) {
+        scope.AbstractTextInputComponent.call(this, obj);
         this.type = 'string';
+        if (obj) {
+            if (obj.string) {
+                this.string = obj.string;
+            }
+        }
     }
 
     /**
@@ -2186,6 +2252,7 @@ MyScript = {
     // Export
     scope.StringInputComponent = StringInputComponent;
 })(MyScript);
+
 
 
 (function (scope) {
@@ -2260,6 +2327,32 @@ MyScript = {
     function TextParameter(obj) {
         scope.AbstractParameter.call(this, obj);
         this.textProperties = new scope.TextProperties();
+        if (obj) {
+            if (obj.language) {
+                this.language = obj.language;
+            }
+            if (obj.textInputMode) {
+                this.textInputMode = obj.textInputMode;
+            }
+            if (obj.contentTypes) {
+                this.contentTypes = obj.contentTypes;
+            }
+            if (obj.subsetKnowledges) {
+                this.subsetKnowledges = obj.subsetKnowledges;
+            }
+            if (obj.userResources) {
+                this.userResources = obj.userResources;
+            }
+            if (obj.userLkWords) {
+                this.userLkWords = obj.userLkWords;
+            }
+            if (obj.resultDetail) {
+                this.resultDetail = obj.resultDetail;
+            }
+            if (obj.textProperties) {
+                this.textProperties = new scope.TextProperties(obj.textProperties);
+            }
+        }
     }
 
     /**
@@ -2445,7 +2538,42 @@ MyScript = {
      * @class TextProperties
      * @constructor
      */
-    function TextProperties() {
+    function TextProperties(obj) {
+        if (obj) {
+            if (obj.textCandidateListSize) {
+                this.textCandidateListSize = obj.textCandidateListSize;
+            }
+            if (obj.wordCandidateListSize) {
+                this.wordCandidateListSize = obj.wordCandidateListSize;
+            }
+            if (obj.wordPredictionListSize) {
+                this.wordPredictionListSize = obj.wordPredictionListSize;
+            }
+            if (obj.wordCompletionListSize) {
+                this.wordCompletionListSize = obj.wordCompletionListSize;
+            }
+            if (obj.characterCandidateListSize) {
+                this.characterCandidateListSize = obj.characterCandidateListSize;
+            }
+            if (obj.discardCaseVariations) {
+                this.discardCaseVariations = obj.discardCaseVariations;
+            }
+            if (obj.discardAccentuationVariations) {
+                this.discardAccentuationVariations = obj.discardAccentuationVariations;
+            }
+            if (obj.disableSpatialOrdering) {
+                this.disableSpatialOrdering = obj.disableSpatialOrdering;
+            }
+            if (obj.glyphDistortion) {
+                this.glyphDistortion = obj.glyphDistortion;
+            }
+            if (obj.enableOutOfLexicon) {
+                this.enableOutOfLexicon = obj.enableOutOfLexicon;
+            }
+            if (obj.spellingDistortion) {
+                this.spellingDistortion = obj.spellingDistortion;
+            }
+        }
     }
 
     /**
@@ -2671,6 +2799,7 @@ MyScript = {
     // Export
     scope.TextProperties = TextProperties;
 })(MyScript);
+
 
 
 (function (scope) {
@@ -2938,6 +3067,17 @@ MyScript = {
      */
     function ShapeParameter(obj) {
         scope.AbstractParameter.call(this, obj);
+        if (obj) {
+            if (obj.rejectDetectionSensitivity) {
+                this.rejectDetectionSensitivity = obj.rejectDetectionSensitivity;
+            }
+            if (obj.doBeautification) {
+                this.doBeautification = obj.doBeautification;
+            }
+            if (obj.userResources) {
+                this.userResources = obj.userResources;
+            }
+        }
     }
 
     /**
@@ -3015,6 +3155,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Recognition input object for shape recognition
@@ -3035,6 +3176,34 @@ MyScript = {
      * Constructor property
      */
     ShapeRecognitionInput.prototype.constructor = ShapeRecognitionInput;
+
+    /**
+     * Get parameters
+     *
+     * @method getParameters
+     * @returns {ShapeParameter}
+     */
+    ShapeRecognitionInput.prototype.getParameters = function () {
+        return new ShapeParameter({
+            rejectDetectionSensitivity: this.rejectDetectionSensitivity,
+            doBeautification: this.doBeautification,
+            userResources: this.userResources
+        });
+    };
+
+    /**
+     * Set parameters
+     *
+     * @method setParameters
+     * @param {ShapeParameter} parameters
+     */
+    ShapeRecognitionInput.prototype.setParameters = function (parameters) {
+        if (parameters) {
+            this.rejectDetectionSensitivity = parameters.getRejectDetectionSensitivity();
+            this.doBeautification = parameters.hasBeautification();
+            this.userResources = parameters.getUserResources();
+        }
+    };
 
     /**
      * Get input components
@@ -3059,6 +3228,7 @@ MyScript = {
     /**
      * Get the beautification
      *
+     * @deprecated Use getParameters instead of getDoBeautification
      * @method getDoBeautification
      * @returns {Boolean}
      */
@@ -3069,6 +3239,7 @@ MyScript = {
     /**
      * Set the beautification
      *
+     * @deprecated Use setParameters instead of setDoBeautification
      * @method setDoBeautification
      * @param {Boolean} doBeautification
      */
@@ -3079,6 +3250,7 @@ MyScript = {
     /**
      * Get the sensitivity of the reject detection
      *
+     * @deprecated Use getParameters instead of getRejectDetectionSensitivity
      * @method getRejectDetectionSensitivity
      * @returns {Number}
      */
@@ -3089,6 +3261,7 @@ MyScript = {
     /**
      * Set the sensitivity of the reject detection
      *
+     * @deprecated Use setParameters instead of setRejectDetectionSensitivity
      * @method setRejectDetectionSensitivity
      * @param {Number} rejectDetectionSensitivity
      */
@@ -3099,6 +3272,7 @@ MyScript = {
     // Export
     scope.ShapeRecognitionInput = ShapeRecognitionInput;
 })(MyScript);
+
 
 
 (function (scope) {
@@ -3182,6 +3356,20 @@ MyScript = {
         scope.AbstractParameter.call(this, obj);
         this.resultTypes = [];
         this.userResources = [];
+        if (obj) {
+            if (obj.resultTypes) {
+                this.resultTypes = obj.resultTypes;
+            }
+            if (obj.columnarOperation) {
+                this.columnarOperation = obj.columnarOperation;
+            }
+            if (obj.userResources) {
+                this.userResources = obj.userResources;
+            }
+            if (obj.scratchOutDetectionSensitivity) {
+                this.scratchOutDetectionSensitivity = obj.scratchOutDetectionSensitivity;
+            }
+        }
     }
 
     /**
@@ -3279,6 +3467,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Recognition input object for math recognition
@@ -3299,6 +3488,36 @@ MyScript = {
      * Constructor property
      */
     MathRecognitionInput.prototype.constructor = MathRecognitionInput;
+
+    /**
+     * Get parameters
+     *
+     * @method getParameters
+     * @returns {MathParameter}
+     */
+    MathRecognitionInput.prototype.getParameters = function () {
+        return new MathParameter({
+            resultTypes: this.resultTypes,
+            columnarOperation: this.columnarOperation,
+            userResources: this.userResources,
+            scratchOutDetectionSensitivity: this.scratchOutDetectionSensitivity
+        });
+    };
+
+    /**
+     * Set parameters
+     *
+     * @method setParameters
+     * @param {MathParameter} parameters
+     */
+    MathRecognitionInput.prototype.setParameters = function (parameters) {
+        if (parameters) {
+            this.resultTypes = parameters.getResultTypes();
+            this.columnarOperation = parameters.isColumnar();
+            this.userResources = parameters.getUserResources();
+            this.scratchOutDetectionSensitivity = parameters.getScratchOutDetectionSensitivity();
+        }
+    };
 
     /**
      * Get input components
@@ -3323,6 +3542,7 @@ MyScript = {
     /**
      * Get the math result types (e.g. LaTex, MathML, SymbolTree)
      *
+     * @deprecated Use getParameters instead of getResultTypes
      * @method getResultTypes
      * @returns {Array}
      */
@@ -3333,6 +3553,7 @@ MyScript = {
     /**
      * Set the math result types (e.g. LaTex, MathML, SymbolTree)
      *
+     * @deprecated Use setParameters instead of setResultTypes
      * @method setResultTypes
      * @param {Array} resultTypes
      */
@@ -3343,6 +3564,7 @@ MyScript = {
     /**
      * Get the math result result orientation to columnar operations
      *
+     * @deprecated Use getParameters instead of isColumnar
      * @method isColumnar
      * @returns {Boolean}
      */
@@ -3353,6 +3575,7 @@ MyScript = {
     /**
      * Set the math result orientation to columnar operations
      *
+     * @deprecated Use setParameters instead of setColumnar
      * @method setColumnar
      * @param  {Boolean} columnar
      */
@@ -3363,6 +3586,7 @@ MyScript = {
     /**
      * Get the user resources
      *
+     * @deprecated Use getParameters instead of getUserResources
      * @method getUserResources
      * @returns {Array}
      */
@@ -3373,6 +3597,7 @@ MyScript = {
     /**
      * Set the user resources
      *
+     * @deprecated Use setParameters instead of setUserResources
      * @method setUserResources
      * @param {Array} userResources
      */
@@ -3383,6 +3608,7 @@ MyScript = {
     /**
      * Get the sensitivity of the scratch-out detection
      *
+     * @deprecated Use getParameters instead of getScratchOutDetectionSensitivity
      * @method getScratchOutDetectionSensitivity
      * @returns {Number}
      */
@@ -3393,15 +3619,19 @@ MyScript = {
     /**
      * Set the sensitivity of the scratch-out detection
      *
+     * @deprecated Use setParameters instead of setScratchOutDetectionSensitivity
      * @method setScratchOutDetectionSensitivity
      * @param {Number} scratchOutDetectionSensitivity
      */
     MathRecognitionInput.prototype.setScratchOutDetectionSensitivity = function (scratchOutDetectionSensitivity) {
         this.scratchOutDetectionSensitivity = scratchOutDetectionSensitivity;
     };
+
+
     // Export
     scope.MathRecognitionInput = MathRecognitionInput;
 })(MyScript);
+
 
 
 (function (scope) {
@@ -3598,8 +3828,13 @@ MyScript = {
      * @extends AbstractComponent
      * @constructor
      */
-    function AbstractMusicInputComponent() {
+    function AbstractMusicInputComponent(obj) {
         scope.AbstractComponent.call(this);
+        if (obj) {
+            if (obj.boundingBox) {
+                this.boundingBox = new scope.Rectangle(obj.boundingBox);
+            }
+        }
     }
 
     /**
@@ -3637,6 +3872,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Accidental input component
@@ -3645,8 +3881,14 @@ MyScript = {
      * @extends AbstractMusicInputComponent
      * @constructor
      */
-    function MusicAccidentalInputComponent() {
+    function MusicAccidentalInputComponent(obj) {
+        scope.AbstractMusicInputComponent.call(this, obj);
         this.type = 'accidental';
+        if (obj) {
+            if (obj.value) {
+                this.value = obj.value;
+            }
+        }
     }
 
     /**
@@ -3684,6 +3926,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Arpeggiate input component
@@ -3692,8 +3935,14 @@ MyScript = {
      * @extends AbstractMusicInputComponent
      * @constructor
      */
-    function MusicArpeggiateInputComponent() {
+    function MusicArpeggiateInputComponent(obj) {
+        scope.AbstractMusicInputComponent.call(this, obj);
         this.type = 'arpeggiate';
+        if (obj) {
+            if (obj.value) {
+                this.value = obj.value;
+            }
+        }
     }
 
     /**
@@ -3731,6 +3980,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Bar input component
@@ -3739,9 +3989,16 @@ MyScript = {
      * @extends AbstractMusicInputComponent
      * @constructor
      */
-    function MusicBarInputComponent() {
+    function MusicBarInputComponent(obj) {
+        scope.AbstractMusicInputComponent.call(this, obj);
         this.type = 'bar';
         this.value = new scope.MusicBar();
+        if (obj) {
+            if (obj.value) {
+                this.value = new scope.MusicBar(obj.value);
+            }
+        }
+
     }
 
     /**
@@ -3779,6 +4036,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Beam input component
@@ -3787,9 +4045,15 @@ MyScript = {
      * @extends AbstractMusicInputComponent
      * @constructor
      */
-    function MusicBeamInputComponent() {
+    function MusicBeamInputComponent(obj) {
+        scope.AbstractMusicInputComponent.call(this, obj);
         this.type = 'beam';
         this.value = new scope.MusicBeam();
+        if (obj) {
+            if (obj.value) {
+                this.value = new scope.MusicBeam(obj.value);
+            }
+        }
     }
 
     /**
@@ -3827,6 +4091,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Clef input component
@@ -3836,9 +4101,15 @@ MyScript = {
      * @extends AbstractMusicInputComponent
      * @constructor
      */
-    function MusicClefInputComponent() {
+    function MusicClefInputComponent(obj) {
+        scope.AbstractMusicInputComponent.call(this, obj);
         this.type = 'clef';
         this.value = new scope.MusicClef();
+        if (obj) {
+            if (obj.value) {
+                this.value = new scope.MusicClef(obj.value);
+            }
+        }
     }
 
     /**
@@ -3876,6 +4147,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Decoration input component
@@ -3884,9 +4156,15 @@ MyScript = {
      * @extends AbstractMusicInputComponent
      * @constructor
      */
-    function MusicDecorationInputComponent() {
+    function MusicDecorationInputComponent(obj) {
+        scope.AbstractMusicInputComponent.call(this, obj);
         this.type = 'decoration';
         this.value = new scope.MusicDecoration();
+        if (obj) {
+            if (obj.value) {
+                this.value = new scope.MusicDecoration(obj.value);
+            }
+        }
     }
 
     /**
@@ -3924,6 +4202,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Dots input component
@@ -3932,8 +4211,14 @@ MyScript = {
      * @extends AbstractMusicInputComponent
      * @constructor
      */
-    function MusicDotsInputComponent() {
+    function MusicDotsInputComponent(obj) {
+        scope.AbstractMusicInputComponent.call(this, obj);
         this.type = 'dots';
+        if (obj) {
+            if (obj.value) {
+                this.value = obj.value;
+            }
+        }
     }
 
     /**
@@ -3971,6 +4256,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Head input component
@@ -3979,8 +4265,14 @@ MyScript = {
      * @extends AbstractMusicInputComponent
      * @constructor
      */
-    function MusicHeadInputComponent() {
+    function MusicHeadInputComponent(obj) {
+        scope.AbstractMusicInputComponent.call(this, obj);
         this.type = 'head';
+        if (obj) {
+            if (obj.value) {
+                this.value = obj.value;
+            }
+        }
     }
 
     /**
@@ -4018,6 +4310,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Ledger line input component
@@ -4026,7 +4319,8 @@ MyScript = {
      * @extends AbstractMusicInputComponent
      * @constructor
      */
-    function MusicLedgerLineInputComponent() {
+    function MusicLedgerLineInputComponent(obj) {
+        scope.AbstractMusicInputComponent.call(this, obj);
         this.type = 'ledgerLine';
     }
 
@@ -4045,6 +4339,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Rest input component
@@ -4053,8 +4348,14 @@ MyScript = {
      * @extends AbstractMusicInputComponent
      * @constructor
      */
-    function MusicRestInputComponent() {
+    function MusicRestInputComponent(obj) {
+        scope.AbstractMusicInputComponent.call(this, obj);
         this.type = 'rest';
+        if (obj) {
+            if (obj.value) {
+                this.value = obj.value;
+            }
+        }
     }
 
     /**
@@ -4092,6 +4393,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Stem input component
@@ -4100,8 +4402,14 @@ MyScript = {
      * @extends AbstractMusicInputComponent
      * @constructor
      */
-    function MusicStemInputComponent() {
+    function MusicStemInputComponent(obj) {
+        scope.AbstractMusicInputComponent.call(this, obj);
         this.type = 'stem';
+        if (obj) {
+            if (obj.value) {
+                this.value = obj.value;
+            }
+        }
     }
 
     /**
@@ -4139,6 +4447,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Tie ro slur input component
@@ -4147,8 +4456,14 @@ MyScript = {
      * @extends AbstractMusicInputComponent
      * @constructor
      */
-    function MusicTieOrSlurInputComponent() {
+    function MusicTieOrSlurInputComponent(obj) {
+        scope.AbstractMusicInputComponent.call(this, obj);
         this.type = 'tieOrSlur';
+        if (obj) {
+            if (obj.value) {
+                this.value = obj.value;
+            }
+        }
     }
 
     /**
@@ -4186,6 +4501,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Time signature input component
@@ -4194,8 +4510,14 @@ MyScript = {
      * @extends AbstractMusicInputComponent
      * @constructor
      */
-    function MusicTimeSignatureInputComponent() {
+    function MusicTimeSignatureInputComponent(obj) {
+        scope.AbstractMusicInputComponent.call(this, obj);
         this.type = 'timeSignature';
+        if (obj) {
+            if (obj.value) {
+                this.value = obj.value;
+            }
+        }
     }
 
     /**
@@ -4233,6 +4555,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Represents a staff used for music recognition
@@ -4241,9 +4564,20 @@ MyScript = {
      * @class MusicStaff
      * @constructor
      */
-    function MusicStaff() {
+    function MusicStaff(obj) {
         this.count = 5;
         this.gap = 20;
+        if (obj) {
+            if (obj.count) {
+                this.count = obj.count;
+            }
+            if (obj.gap) {
+                this.gap = obj.gap;
+            }
+            if (obj.top) {
+                this.top = obj.top;
+            }
+        }
     }
 
     /**
@@ -4311,6 +4645,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Parameters used for music recognition
@@ -4323,6 +4658,23 @@ MyScript = {
         scope.AbstractParameter.call(this, obj);
         this.resultTypes = [];
         this.userResources = [];
+        if (obj) {
+            if (obj.divisions) {
+                this.divisions = obj.divisions;
+            }
+            if (obj.staff) {
+                this.staff = new scope.MusicStaff(obj.staff);
+            }
+            if (obj.scratchOutDetectionSensitivity) {
+                this.scratchOutDetectionSensitivity = obj.scratchOutDetectionSensitivity;
+            }
+            if (obj.userResources) {
+                this.userResources = obj.userResources;
+            }
+            if (obj.resultTypes) {
+                this.resultTypes = obj.resultTypes;
+            }
+        }
     }
 
     /**
@@ -4440,6 +4792,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Recognition input object for music recognition
@@ -4460,6 +4813,38 @@ MyScript = {
      * Constructor property
      */
     MusicRecognitionInput.prototype.constructor = MusicRecognitionInput;
+
+    /**
+     * Get parameters
+     *
+     * @method getParameters
+     * @returns {MusicParameter}
+     */
+    MusicRecognitionInput.prototype.getParameters = function () {
+        return new MusicParameter({
+            divisions: this.divisions,
+            staff: this.staff,
+            scratchOutDetectionSensitivity: this.scratchOutDetectionSensitivity,
+            resultTypes: this.resultTypes,
+            userResources: this.userResources
+        });
+    };
+
+    /**
+     * Set parameters
+     *
+     * @method setParameters
+     * @param {MusicParameter} parameters
+     */
+    MusicRecognitionInput.prototype.setParameters = function (parameters) {
+        if (parameters) {
+            this.divisions = parameters.getDivisions();
+            this.staff = parameters.getStaff();
+            this.scratchOutDetectionSensitivity = parameters.getScratchOutDetectionSensitivity();
+            this.resultTypes = parameters.getResultTypes();
+            this.userResources = parameters.getUserResources();
+        }
+    };
 
     /**
      * Get input components
@@ -4484,6 +4869,7 @@ MyScript = {
     /**
      * Get the result types
      *
+     * @deprecated Use getParameters instead of getResultTypes
      * @method getResultTypes
      * @returns {Array}
      */
@@ -4494,6 +4880,7 @@ MyScript = {
     /**
      * Set the result types
      *
+     * @deprecated Use setParameters instead of setResultTypes
      * @method setResultTypes
      * @param {Array} resultTypes
      */
@@ -4504,6 +4891,7 @@ MyScript = {
     /**
      * Get the user resources
      *
+     * @deprecated Use getParameters instead of getUserResources
      * @method getUserResources
      * @returns {Array}
      */
@@ -4514,6 +4902,7 @@ MyScript = {
     /**
      * Set the user resources
      *
+     * @deprecated Use setParameters instead of setUserResources
      * @method setUserResources
      * @param {Array} userResources
      */
@@ -4524,6 +4913,7 @@ MyScript = {
     /**
      * Get the sensitivity of the scratch-out detection
      *
+     * @deprecated Use getParameters instead of getScratchOutDetectionSensitivity
      * @method getScratchOutDetectionSensitivity
      * @returns {Number}
      */
@@ -4534,6 +4924,7 @@ MyScript = {
     /**
      * Set the sensitivity of the scratch-out detection
      *
+     * @deprecated Use setParameters instead of setScratchOutDetectionSensitivity
      * @method setScratchOutDetectionSensitivity
      * @param {Number} scratchOutDetectionSensitivity
      */
@@ -4544,6 +4935,7 @@ MyScript = {
     /**
      * Get the staff
      *
+     * @deprecated Use getParameters instead of getStaff
      * @method getStaff
      * @returns {MusicStaff}
      */
@@ -4554,6 +4946,7 @@ MyScript = {
     /**
      * Set the staff
      *
+     * @deprecated Use setParameters instead of setStaff
      * @method setStaff
      * @param {MusicStaff} staff
      */
@@ -4564,6 +4957,7 @@ MyScript = {
     /**
      * Get the number of divisions
      *
+     * @deprecated Use getParameters instead of getDivisions
      * @method getDivisions
      * @returns {Number}
      */
@@ -4574,6 +4968,7 @@ MyScript = {
     /**
      * Set the number of divisions
      *
+     * @deprecated Use setParameters instead of setDivisions
      * @method setDivisions
      * @param {Number} divisions
      */
@@ -4584,6 +4979,7 @@ MyScript = {
     // Export
     scope.MusicRecognitionInput = MusicRecognitionInput;
 })(MyScript);
+
 
 
 (function (scope) {
@@ -4668,6 +5064,14 @@ MyScript = {
         this.textParameter = new scope.TextParameter();
         this.textParameter.setLanguage('en_US');
         this.textParameter.setInputMode('CURSIVE');
+        if (obj) {
+            if (obj.coordinateResolution) {
+                this.coordinateResolution = obj.coordinateResolution;
+            }
+            if (obj.textParameter) {
+                this.textParameter = new scope.TextParameter(obj.textParameter);
+            }
+        }
     }
 
     /**
@@ -4723,6 +5127,7 @@ MyScript = {
     // Export
     scope.AnalyzerParameter = AnalyzerParameter;
 })(MyScript);
+
 
 
 (function (scope) {
@@ -5099,13 +5504,22 @@ MyScript = {
      */
     function TextInkRange(obj) {
         if (obj) {
-            var cpt = obj.split(/[:-]+/);
-            this.startUnit = Number(cpt[0]);
-            this.startComponent = Number(cpt[1]);
-            this.startPoint = Number(cpt[2]);
-            this.endUnit = Number(cpt[3]);
-            this.endComponent = Number(cpt[4]);
-            this.endPoint = Number(cpt[5]);
+            if (typeof obj === 'string') {
+                var cpt = obj.split(/[:-]+/);
+                this.startUnit = Number(cpt[0]);
+                this.startComponent = Number(cpt[1]);
+                this.startPoint = Number(cpt[2]);
+                this.endUnit = Number(cpt[3]);
+                this.endComponent = Number(cpt[4]);
+                this.endPoint = Number(cpt[5]);
+            } else {
+                this.startUnit = obj.startUnit;
+                this.startComponent = obj.startComponent;
+                this.startPoint = obj.startPoint;
+                this.endUnit = obj.endUnit;
+                this.endComponent = obj.endComponent;
+                this.endPoint = obj.endPoint;
+            }
         }
     }
 
@@ -5172,6 +5586,7 @@ MyScript = {
     // Export
     scope.TextInkRange = TextInkRange;
 })(MyScript);
+
 
 
 (function (scope) {
@@ -5434,7 +5849,10 @@ MyScript = {
         if (obj) {
             this.selectedCandidateIdx = obj.selectedCandidateIdx;
             if (obj.inkRanges) {
-                var ranges = obj.inkRanges.split(/[\s]+/);
+                var ranges = obj.inkRanges;
+                if (!Array.isArray(ranges)) {
+                    ranges = ranges.split(/[\s]+/);
+                }
                 for (var j in ranges) {
                     this.inkRanges.push(new scope.TextInkRange(ranges[j]));
                 }
@@ -5508,7 +5926,10 @@ MyScript = {
         if (obj) {
             this.tagType = obj.tagType;
             if (obj.inkRanges) {
-                var ranges = obj.inkRanges.split(/[\s]+/);
+                var ranges = obj.inkRanges;
+                if (!Array.isArray(ranges)) {
+                    ranges = ranges.split(/[\s]+/);
+                }
                 for (var i in ranges) {
                     this.inkRanges.push(new scope.TextInkRange(ranges[i]));
                 }
@@ -5539,6 +5960,7 @@ MyScript = {
     // Export
     scope.TextTagItem = TextTagItem;
 })(MyScript);
+
 
 
 (function (scope) {
@@ -6680,6 +7102,9 @@ MyScript = {
                     case 'SYMBOLTREE':
                         this.results.push(new scope.MathSymbolTreeResultElement(result));
                         break;
+                    case 'OFFICEOPENXMLMATH':
+                        this.results.push(new scope.MathOfficeOpenXmlMathResultElement(result));
+                        break;
                     default:
                         throw new Error('Unknown math result type: ' + result.type);
                 }
@@ -6726,6 +7151,7 @@ MyScript = {
     // Export
     scope.MathDocument = MathDocument;
 })(MyScript);
+
 
 
 (function (scope) {
@@ -6777,6 +7203,49 @@ MyScript = {
     // Export
     scope.MathInkRange = MathInkRange;
 })(MyScript);
+
+
+(function (scope) {
+    /**
+     * MathOfficeOpenXmlMathResultElement result element
+     *
+     * @class MathOfficeOpenXmlMathResultElement
+     * @extends MathResultElement
+     * @param {Object} [obj]
+     * @constructor
+     */
+    function MathOfficeOpenXmlMathResultElement(obj) {
+        scope.MathResultElement.call(this, obj);
+        if (obj) {
+            this.value = obj.value;
+        }
+    }
+
+
+    /**
+     * Inheritance property
+     */
+    MathOfficeOpenXmlMathResultElement.prototype = new scope.MathResultElement();
+
+    /**
+     * Constructor property
+     */
+    MathOfficeOpenXmlMathResultElement.prototype.constructor = MathOfficeOpenXmlMathResultElement;
+
+    /**
+     * Get value
+     *
+     * @method getValue
+     * @returns {String}
+     */
+    MathOfficeOpenXmlMathResultElement.prototype.getValue = function () {
+        return this.value;
+    };
+
+    // Export
+    scope.MathOfficeOpenXmlMathResultElement = MathOfficeOpenXmlMathResultElement;
+})(MyScript);
+
 
 
 (function (scope) {
@@ -10871,6 +11340,31 @@ MyScript = {
     function NetworkInterface() {
     }
 
+    NetworkInterface.parseURL = function (url) {
+
+        var parser = document.createElement('a'),
+            searchObject = {},
+            queries, split, i;
+        // Let the browser do the work
+        parser.href = url;
+        // Convert query string to object
+        queries = parser.search.replace(/^\?/, '').split('&');
+        for (i = 0; i < queries.length; i++) {
+            split = queries[i].split('=');
+            searchObject[split[0]] = split[1];
+        }
+        return {
+            protocol: parser.protocol,
+            host: parser.host,
+            hostname: parser.hostname,
+            port: parser.port,
+            pathname: parser.pathname,
+            search: parser.search,
+            searchObject: searchObject,
+            hash: parser.hash
+        };
+    };
+
     /**
      * Parse JSON String to Object
      *
@@ -10917,44 +11411,43 @@ MyScript = {
      */
     NetworkInterface.xhr = function (type, url, data) {
 
-        var deferred = Q.defer();
+        return Q.Promise(function (resolve, reject, notify) {
 
-        function onStateChange() {
-            if (request.readyState === 4) {
-                if (request.status >= 200 && request.status < 300) {
-                    deferred.resolve(NetworkInterface.parse(request));
+            function onStateChange() {
+                if (request.readyState === 4) {
+                    if (request.status >= 200 && request.status < 300) {
+                        resolve(NetworkInterface.parse(request));
+                    }
                 }
             }
-        }
 
-        function onLoad() {
-            if (request.status >= 200 && request.status < 300) {
-                deferred.resolve(NetworkInterface.parse(request));
-            } else {
-                deferred.reject(new Error(request.responseText));
+            function onLoad() {
+                if (request.status >= 200 && request.status < 300) {
+                    resolve(NetworkInterface.parse(request));
+                } else {
+                    reject(new Error(request.responseText));
+                }
             }
-        }
 
-        function onError() {
-            deferred.reject(new Error('Can\'t XHR ' + url));
-        }
+            function onError() {
+                reject(new Error('Can\'t XHR ' + url));
+            }
 
-        function onProgress(event) {
-            deferred.notify(event.loaded / event.total);
-        }
+            function onProgress(e) {
+                notify(e.loaded / e.total);
+            }
 
-        var request = new XMLHttpRequest();
-        request.open(type, url, true);
-        request.withCredentials = true;
-        request.setRequestHeader('Accept', 'application/json');
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
-        request.onload = onLoad;
-        request.onerror = onError;
-        request.onprogress = onProgress;
-        request.onreadystatechange = onStateChange;
-        request.send(NetworkInterface.transformRequest(data));
-
-        return deferred.promise;
+            var request = new XMLHttpRequest();
+            request.open(type, url, true);
+            request.withCredentials = true;
+            request.setRequestHeader('Accept', 'application/json');
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+            request.onerror = onError;
+            request.onprogress = onProgress;
+            request.onload = onLoad;
+            request.onreadystatechange = onStateChange;
+            request.send(NetworkInterface.transformRequest(data));
+        });
     };
 
     /**
@@ -11022,71 +11515,138 @@ MyScript = {
      * @class NetworkWSInterface
      * @constructor
      */
-    function NetworkWSInterface(url, callback) {
-        this._url = url;
-        this._callback = callback;
+    function NetworkWSInterface() {
     }
 
-    NetworkWSInterface.prototype.send = function (request) {
-        if (this._socket) {
-            this._socket.send(JSON.stringify(request));
+    NetworkWSInterface.prototype.setUrl = function (url) {
+        if (url !== undefined) {
+            this.close();
+            this._url = url;
         }
+    };
+
+    NetworkWSInterface.prototype.getUrl = function () {
+        return this._url;
+    };
+
+    NetworkWSInterface.prototype.setCallback = function (callback) {
+        if (callback !== undefined) {
+            this.close();
+            this._callback = callback;
+        }
+    };
+
+    NetworkWSInterface.prototype.getCallback = function () {
+        return this._callback;
+    };
+
+    NetworkWSInterface.prototype.getState = function () {
+        return _getWebSocketState(this._socket);
     };
 
     NetworkWSInterface.prototype.isClosed = function () {
-        if (this._socket) {
-            return this._socket.readyState === 3;
-        }
-        return false;
+        return this.getState() === 3;
     };
 
     NetworkWSInterface.prototype.isClosing = function () {
-        if (this._socket) {
-            return this._socket.readyState === 2;
-        }
-        return false;
+        return this.getState() === 2;
     };
 
     NetworkWSInterface.prototype.isOpen = function () {
-        if (this._socket) {
-            return this._socket.readyState === 1;
-        }
-        return false;
+        return this.getState() === 1;
     };
 
     NetworkWSInterface.prototype.isConnecting = function () {
-        if (this._socket) {
-            return this._socket.readyState === 0;
-        }
-        return false;
-    };
-
-    NetworkWSInterface.prototype.close = function (code, reason) {
-        if (this._socket) {
-            this._socket.close(code, reason);
-        }
+        return this.getState() === 0;
     };
 
     NetworkWSInterface.prototype.open = function () {
-        var self = this;
-        this._socket = new WebSocket(this._url);
+        if (this.getUrl() && this.getCallback() && ((this.getState() < 0) || this.isClosed())) {
+            this._socket = _openWebSocket(this.getUrl(), this.getCallback());
+        }
+    };
 
-        this._socket.onopen = function (e) {
-            self._callback(e);
-        };
-        this._socket.onclose = function (e) {
-            self._callback(e);
-        };
-        this._socket.onerror = function (e) {
-            self._callback(e);
-        };
+    NetworkWSInterface.prototype.close = function (code, reason) {
+        if (this.getState() < 2) {
+            _closeWebSocket(this._socket, code, reason);
+        }
+    };
 
-        this._socket.onmessage = function (e) {
-            self._callback({
+    NetworkWSInterface.prototype.send = function (request) {
+        var state = _getWebSocketState(this._socket);
+        if (state  === 1) {
+            _sendMessage(this._socket, request);
+        }
+    };
+
+    /**
+     *
+     * @param url
+     * @param callback
+     * @returns {WebSocket}
+     * @private
+     */
+    var _openWebSocket = function (url, callback) {
+        function onOpen(e) {
+            callback(e);
+        }
+        function onClose(e) {
+            callback(e);
+        }
+        function onError(e) {
+            callback(e);
+        }
+        function onMessage(e) {
+            callback({
                 type: e.type,
                 data: JSON.parse(e.data)
             });
-        };
+        }
+
+        var socket = new WebSocket(url);
+        socket.onopen = onOpen;
+        socket.onclose = onClose;
+        socket.onerror = onError;
+        socket.onmessage = onMessage;
+        return socket;
+    };
+
+    /**
+     *
+     * @param socket
+     * @param code
+     * @param reason
+     * @private
+     */
+    var _closeWebSocket = function (socket, code, reason) {
+        if (socket) {
+            socket.close(code, reason);
+        }
+    };
+
+    /**
+     *
+     * @param socket
+     * @returns {*}
+     * @private
+     */
+    var _getWebSocketState = function (socket) {
+        if (socket) {
+            return socket.readyState;
+        }
+        return -1;
+    };
+
+    /**
+     *
+     * @param socket
+     * @param message
+     * @private
+     */
+    var _sendMessage = function (socket, message) {
+        if (socket) {
+            socket.send(JSON.stringify(message));
+        }
     };
 
     // Export
@@ -11105,11 +11665,27 @@ MyScript = {
      * @constructor
      */
     function AbstractRecognizer(host) {
-        this.host = 'cloud.myscript.com';
+        this.setUrl(this.getProtocol() + 'cloud.myscript.com');
         if (host) {
-            this.setHost(host);
+            this.setUrl(this.getProtocol() + host);
         }
+        this.setSSL(true);
     }
+
+    AbstractRecognizer.prototype.getProtocol = function() {
+        return this._ssl? 'https://': 'http://';
+    };
+
+    AbstractRecognizer.prototype.getSSL = function() {
+        return this._ssl;
+    };
+
+    AbstractRecognizer.prototype.setSSL = function (ssl) {
+        if (ssl !== undefined) {
+            this._ssl = ssl;
+            this.setUrl(this.getProtocol() + this.getHost());
+        }
+    };
 
     /**
      * Get the recognition service host
@@ -11118,7 +11694,7 @@ MyScript = {
      * @returns {string|String|*}
      */
     AbstractRecognizer.prototype.getHost = function() {
-        return this.host;
+        return scope.NetworkInterface.parseURL(this.getUrl()).host;
     };
 
     /**
@@ -11129,7 +11705,29 @@ MyScript = {
      */
     AbstractRecognizer.prototype.setHost = function (host) {
         if (host !== undefined) {
-            this.host = host;
+            this.setUrl(this.getProtocol() + host);
+        }
+    };
+
+    /**
+     * Get the recognition service host
+     *
+     * @method getUrl
+     * @returns {String}
+     */
+    AbstractRecognizer.prototype.getUrl = function() {
+        return this.url;
+    };
+
+    /**
+     * Set the recognition service url
+     *
+     * @method setUrl
+     * @param {String}
+     */
+    AbstractRecognizer.prototype.setUrl = function (url) {
+        if (url !== undefined) {
+            this.url = url;
         }
     };
 
@@ -11154,6 +11752,26 @@ MyScript = {
     };
 
     /**
+     * Get precision
+     *
+     * @method getPrecision
+     * @returns {Number}
+     */
+    AbstractRecognizer.prototype.getPrecision = function () {
+        return this.precision;
+    };
+
+    /**
+     * Set precision
+     *
+     * @method setPrecision
+     * @param {Number} precision
+     */
+    AbstractRecognizer.prototype.setPrecision = function (precision) {
+        this.precision = precision;
+    };
+
+    /**
      * Get the recognition languages available for an application and a specific inputMode
      *
      * @method getAvailableLanguageList
@@ -11166,12 +11784,9 @@ MyScript = {
         data.setApplicationKey(applicationKey);
         data.setInputMode(inputMode);
 
-        return scope.NetworkInterface.get('https://' + this.getHost() + '/api/v3.0/recognition/rest/text/languages.json', data).then(
+        return scope.NetworkInterface.get(this.getUrl() + '/api/v3.0/recognition/rest/text/languages.json', data).then(
             function success(response) {
                 return response.result;
-            },
-            function error(response) {
-                return response;
             }
         );
     };
@@ -11179,30 +11794,33 @@ MyScript = {
     /**
      * Do REST recognition
      *
+     * @private
      * @method doRestRecognition
-     * @param {AbstractRecognitionData} data
+     * @param {AbstractRecognitionInput} input
      * @param {String} applicationKey
      * @param {String} hmacKey
      * @param {String} instanceId
      * @returns {Promise}
      */
-    AbstractRecognizer.prototype.doRestRecognition = function (data, applicationKey, hmacKey, instanceId) {
-        data.setApplicationKey(applicationKey);
-        data.setInstanceId(instanceId);
-        if (hmacKey) {
-            data.setHmac(_computeHmac(data.getRecognitionInput(), applicationKey, hmacKey));
+    AbstractRecognizer.prototype.doRestRecognition = function (input, applicationKey, hmacKey, instanceId) {
+        if (input.getComponents) {
+            _filterStrokes(input.getComponents(), this.getPrecision());
+        } else if (input.getInputUnits) {
+            for (var i in input.getInputUnits()) {
+                _filterStrokes(input.getInputUnits()[i].getComponents(), this.getPrecision());
+            }
         }
 
-        if (data instanceof scope.TextRecognitionData) {
-            return _doTextRecognition(this.getHost(), data);
-        } else if (data instanceof scope.ShapeRecognitionData) {
-            return _doShapeRecognition(this.getHost(), data);
-        } else if (data instanceof scope.MathRecognitionData) {
-            return _doMathRecognition(this.getHost(), data);
-        } else if (data instanceof scope.MusicRecognitionData) {
-            return _doMusicRecognition(this.getHost(), data);
-        } else if (data instanceof scope.AnalyzerRecognitionData) {
-            return _doAnalyzerRecognition(this.getHost(), data);
+        if (input instanceof scope.TextRecognitionInput) {
+            return _doTextRecognition(this.getUrl(), input, applicationKey, hmacKey, instanceId);
+        } else if (input instanceof scope.ShapeRecognitionInput) {
+            return _doShapeRecognition(this.getUrl(), input, applicationKey, hmacKey, instanceId);
+        } else if (input instanceof scope.MathRecognitionInput) {
+            return _doMathRecognition(this.getUrl(), input, applicationKey, hmacKey, instanceId);
+        } else if (input instanceof scope.MusicRecognitionInput) {
+            return _doMusicRecognition(this.getUrl(), input, applicationKey, hmacKey, instanceId);
+        } else if (input instanceof scope.AnalyzerRecognitionInput) {
+            return _doAnalyzerRecognition(this.getUrl(), input, applicationKey, hmacKey, instanceId);
         } else {
             throw new Error('not implemented');
         }
@@ -11219,7 +11837,7 @@ MyScript = {
         var data = {
             instanceSessionId: instanceId
         };
-        return _clearShapeRecognition(this.getHost(), data);
+        return _clearShapeRecognition(this.getUrl(), data);
     };
 
     /**
@@ -11227,17 +11845,20 @@ MyScript = {
      *
      * @private
      * @method _doTextRecognition
-     * @param {String} host
-     * @param {TextRecognitionData} data
+     * @param {String} url
+     * @param {TextRecognitionInput} input
+     * @param {String} applicationKey
+     * @param {String} hmacKey
+     * @param {String} instanceId
      * @returns {Promise}
      */
-    var _doTextRecognition = function (host, data) {
-        return scope.NetworkInterface.post('https://' + host + '/api/v3.0/recognition/rest/text/doSimpleRecognition.json', data).then(
+    var _doTextRecognition = function (url, input, applicationKey, hmacKey, instanceId) {
+        var data = new scope.TextRecognitionData();
+        _fillData(data, input, instanceId, applicationKey, hmacKey);
+
+        return scope.NetworkInterface.post(url + '/api/v3.0/recognition/rest/text/doSimpleRecognition.json', data).then(
             function success(response) {
                 return new scope.TextResult(response);
-            },
-            function error(response) {
-                return response;
             }
         );
     };
@@ -11247,17 +11868,20 @@ MyScript = {
      *
      * @private
      * @method _doShapeRecognition
-     * @param {String} host
-     * @param {ShapeRecognitionData} data
+     * @param {String} url
+     * @param {ShapeRecognitionInput} input
+     * @param {String} applicationKey
+     * @param {String} hmacKey
+     * @param {String} instanceId
      * @returns {Promise}
      */
-    var _doShapeRecognition = function (host, data) {
-        return scope.NetworkInterface.post('https://' + host + '/api/v3.0/recognition/rest/shape/doSimpleRecognition.json', data).then(
+    var _doShapeRecognition = function (url, input, applicationKey, hmacKey, instanceId) {
+        var data = new scope.ShapeRecognitionData();
+        _fillData(data, input, instanceId, applicationKey, hmacKey);
+
+        return scope.NetworkInterface.post(url + '/api/v3.0/recognition/rest/shape/doSimpleRecognition.json', data).then(
             function success(response) {
                 return new scope.ShapeResult(response);
-            },
-            function error(response) {
-                return response;
             }
         );
     };
@@ -11267,17 +11891,18 @@ MyScript = {
      *
      * @private
      * @method _clearShapeRecognition
-     * @param {String} host
-     * @param {Object} data
+     * @param {String} url
+     * @param {String} instanceId
      * @returns {Promise}
      */
-    var _clearShapeRecognition = function (host, data) {
-        return scope.NetworkInterface.post('https://' + host + '/api/v3.0/recognition/rest/shape/clearSessionId.json', data).then(
+    var _clearShapeRecognition = function (url, instanceId) {
+        var data = {
+            instanceSessionId: instanceId
+        };
+
+        return scope.NetworkInterface.post(url + '/api/v3.0/recognition/rest/shape/clearSessionId.json', data).then(
             function success(response) {
                 return new scope.ShapeResult(response);
-            },
-            function error(response) {
-                return response;
             }
         );
     };
@@ -11287,17 +11912,20 @@ MyScript = {
      *
      * @private
      * @method _doMathRecognition
-     * @param {String} host
-     * @param {MathRecognitionData} data
+     * @param {String} url
+     * @param {MathRecognitionInput} input
+     * @param {String} applicationKey
+     * @param {String} hmacKey
+     * @param {String} instanceId
      * @returns {Promise}
      */
-    var _doMathRecognition = function (host, data) {
-        return scope.NetworkInterface.post('https://' + host + '/api/v3.0/recognition/rest/math/doSimpleRecognition.json', data).then(
+    var _doMathRecognition = function (url, input, applicationKey, hmacKey, instanceId) {
+        var data = new scope.MathRecognitionData();
+        _fillData(data, input, instanceId, applicationKey, hmacKey);
+
+        return scope.NetworkInterface.post(url + '/api/v3.0/recognition/rest/math/doSimpleRecognition.json', data).then(
             function success(response) {
                 return new scope.MathResult(response);
-            },
-            function error(response) {
-                return response;
             }
         );
     };
@@ -11307,17 +11935,20 @@ MyScript = {
      *
      * @private
      * @method _doMusicRecognition
-     * @param {String} host
-     * @param {MusicRecognitionData} data
+     * @param {String} url
+     * @param {MusicRecognitionInput} input
+     * @param {String} applicationKey
+     * @param {String} hmacKey
+     * @param {String} instanceId
      * @returns {Promise}
      */
-    var _doMusicRecognition = function (host, data) {
-        return scope.NetworkInterface.post('https://' + host + '/api/v3.0/recognition/rest/music/doSimpleRecognition.json', data).then(
+    var _doMusicRecognition = function (url, input, applicationKey, hmacKey, instanceId) {
+        var data = new scope.MusicRecognitionData();
+        _fillData(data, input, instanceId, applicationKey, hmacKey);
+
+        return scope.NetworkInterface.post(url + '/api/v3.0/recognition/rest/music/doSimpleRecognition.json', data).then(
             function success(response) {
                 return new scope.MusicResult(response);
-            },
-            function error(response) {
-                return response;
             }
         );
     };
@@ -11326,17 +11957,20 @@ MyScript = {
      * Do analyzer recognition
      *
      * @method _doAnalyzerRecognition
-     * @param {String} host
-     * @param {AnalyzerRecognitionData} data
+     * @param {String} url
+     * @param {AnalyzerRecognitionInput} input
+     * @param {String} applicationKey
+     * @param {String} hmacKey
+     * @param {String} instanceId
      * @returns {Promise}
      */
-    var _doAnalyzerRecognition = function (host, data) {
-        return scope.NetworkInterface.post('https://' + host + '/api/v3.0/recognition/rest/analyzer/doSimpleRecognition.json', data).then(
+    var _doAnalyzerRecognition = function (url, input, applicationKey, hmacKey, instanceId) {
+        var data = new scope.AnalyzerRecognitionData();
+        _fillData(data, input, instanceId, applicationKey, hmacKey);
+
+        return scope.NetworkInterface.post(url + '/api/v3.0/recognition/rest/analyzer/doSimpleRecognition.json', data).then(
             function success(response) {
                 return new scope.AnalyzerResult(response);
-            },
-            function error(response) {
-                return response;
             }
         );
     };
@@ -11368,37 +12002,127 @@ MyScript = {
         return CryptoJS.HmacSHA512(jsonInput, applicationKey + hmacKey).toString(CryptoJS.enc.Hex);
     };
 
+    var _filterStrokes = function (components, precision) {
+        components.forEach(function (currentValue) {
+            if (currentValue instanceof scope.Stroke) {
+                currentValue.toFixed(precision);
+            }
+        });
+    };
+
+    var _fillData = function (data, input, instanceId, applicationKey, hmacKey) {
+        data.setRecognitionInput(input);
+        data.setApplicationKey(applicationKey);
+        data.setInstanceId(instanceId);
+        if (hmacKey) {
+            data.setHmac(_computeHmac(data.getRecognitionInput(), applicationKey, hmacKey));
+        }
+    };
+
     // Export
     scope.AbstractRecognizer = AbstractRecognizer;
 })(MyScript, CryptoJS);
 
 
 
-(function (scope) {
+(function (scope, CryptoJS) {
     /**
      * Abstract WebSocket recognizer interface
      *
      * @class AbstractWSRecognizer
-     * @extends AbstractRecognizer
-     * @param {String} [host='cloud.myscript.com'] Recognition service host
      * @constructor
      */
-    function AbstractWSRecognizer(host) {
-        scope.AbstractRecognizer.call(this, host);
+    function AbstractWSRecognizer() {
+        this._wsInterface = new scope.NetworkWSInterface();
     }
 
-    /**
-     * Inheritance property
-     */
-    AbstractWSRecognizer.prototype = new scope.AbstractRecognizer();
+    AbstractWSRecognizer.prototype.getProtocol = function() {
+        return this._ssl? 'wss://': 'ws://';
+    };
+
+    AbstractWSRecognizer.prototype.getSSL = function() {
+        return this._ssl;
+    };
+
+    AbstractWSRecognizer.prototype.setSSL = function (ssl) {
+        if (ssl !== undefined) {
+            this._ssl = ssl;
+            this.setUrl(this.getProtocol() + this.getHost());
+        }
+    };
 
     /**
-     * Constructor property
+     * Get the recognition service host
+     *
+     * @method getHost
+     * @returns {string|String|*}
      */
-    AbstractWSRecognizer.prototype.constructor = AbstractWSRecognizer;
+    AbstractWSRecognizer.prototype.getHost = function() {
+        return scope.NetworkInterface.parseURL(this.getUrl()).host;
+    };
 
-    AbstractWSRecognizer.prototype._init = function (endpoint, callback) {
-        this._wsInterface = new scope.NetworkWSInterface(endpoint, callback);
+    /**
+     * Set the recognition service host
+     *
+     * @method setHost
+     * @param {String}
+     */
+    AbstractWSRecognizer.prototype.setHost = function (host) {
+        if (host !== undefined) {
+            this.setUrl(this.getProtocol() + host);
+        }
+    };
+
+    AbstractWSRecognizer.prototype.setUrl = function (url) { // jshint ignore:line
+        throw new Error('not implemented');
+    };
+
+    AbstractWSRecognizer.prototype.getUrl = function () {
+        return this._wsInterface.getUrl();
+    };
+
+    AbstractWSRecognizer.prototype.setCallback = function (callback) { // jshint ignore:line
+        throw new Error('not implemented');
+    };
+
+    /**
+     * Get parameters
+     *
+     * @method getParameters
+     * @returns {AbstractParameter}
+     */
+    AbstractWSRecognizer.prototype.getParameters = function () {
+        return this.parameters;
+    };
+
+    /**
+     * Set parameters
+     *
+     * @method setParameters
+     * @param {AbstractParameter} parameters
+     */
+    AbstractWSRecognizer.prototype.setParameters = function (parameters) {
+        this.parameters = parameters;
+    };
+
+    /**
+     * Get precision
+     *
+     * @method getPrecision
+     * @returns {Number}
+     */
+    AbstractWSRecognizer.prototype.getPrecision = function () {
+        return this.precision;
+    };
+
+    /**
+     * Set precision
+     *
+     * @method setPrecision
+     * @param {Number} precision
+     */
+    AbstractWSRecognizer.prototype.setPrecision = function (precision) {
+        this.precision = precision;
     };
 
     AbstractWSRecognizer.prototype.isClosed = function () {
@@ -11442,6 +12166,13 @@ MyScript = {
      * @param {AbstractWSMessage} message
      */
     AbstractWSRecognizer.prototype.sendMessage = function (message) {
+        if (message.getComponents) {
+            _filterStrokes(message.getComponents(), this.getPrecision());
+        } else if (message.getInputUnits) {
+            for (var i in message.getInputUnits()) {
+                _filterStrokes(message.getInputUnits()[i].getComponents(), this.getPrecision());
+            }
+        }
         this._wsInterface.send(message);
     };
 
@@ -11470,7 +12201,7 @@ MyScript = {
         message.setApplicationKey(applicationKey);
         message.setChallenge(challenge);
         if (hmacKey) {
-            message.setHmacSignature(this.computeHmac(applicationKey, challenge, hmacKey));
+            message.setHmacSignature(_computeHmac(challenge, applicationKey, hmacKey));
         }
         this.sendMessage(message);
     };
@@ -11485,9 +12216,32 @@ MyScript = {
         this.sendMessage(message);
     };
 
+    /**
+     * Compute HMAC signature for server authentication
+     *
+     * @private
+     * @method _computeHmac
+     * @param {String} input
+     * @param {String} applicationKey
+     * @param {String} hmacKey
+     */
+    var _computeHmac = function (input, applicationKey, hmacKey) {
+        var jsonInput = (typeof input === 'object') ? JSON.stringify(input) : input;
+        return CryptoJS.HmacSHA512(jsonInput, applicationKey + hmacKey).toString(CryptoJS.enc.Hex);
+    };
+
+    var _filterStrokes = function (components, precision) {
+        components.forEach(function (currentValue) {
+            if (currentValue instanceof scope.Stroke) {
+                currentValue.toFixed(precision);
+            }
+        });
+    };
+
     // Export
     scope.AbstractWSRecognizer = AbstractWSRecognizer;
-})(MyScript);
+})(MyScript, CryptoJS);
+
 
 
 (function (scope) {
@@ -11528,17 +12282,14 @@ MyScript = {
      * @returns {Promise}
      */
     TextRecognizer.prototype.doSimpleRecognition = function (applicationKey, instanceId, inputUnits, hmacKey, parameters) {
-        var input = new scope.TextRecognitionInput();
         var params = this.getParameters();
         if (parameters) {
             params = parameters;
         }
+        var input = new scope.TextRecognitionInput();
         input.setParameters(params);
         input.setInputUnits(inputUnits);
-
-        var data = new scope.TextRecognitionData();
-        data.setRecognitionInput(input);
-        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, data, applicationKey, hmacKey, instanceId); // super
+        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, input, applicationKey, hmacKey, instanceId); // super
     };
 
     // Export
@@ -11558,48 +12309,16 @@ MyScript = {
      * @constructor
      */
     function TextWSRecognizer(callback, host) {
-        scope.AbstractWSRecognizer.call(this, host);
-        this._endpoint = 'wss://' + this.getHost() + '/api/v3.0/recognition/ws/text';
+        scope.AbstractWSRecognizer.call(this);
         this.parameters = new scope.TextParameter();
         this.parameters.setLanguage('en_US');
         this.parameters.setInputMode('CURSIVE');
-        this._init(this._endpoint, function (message) {
-            switch (message.type) {
-                case 'open':
-                    callback(message);
-                    break;
-                case 'close':
-                    callback(message);
-                    break;
-                case 'error':
-                    callback(undefined, message);
-                    break;
-                default:
-                    switch (message.data.type) {
-                        case 'init':
-                            message.data = new scope.InitResponseWSMessage(message.data);
-                            callback(message.data);
-                            break;
-                        case 'reset':
-                            message.data = new scope.ResetResponseWSMessage(message.data);
-                            callback(message.data);
-                            break;
-                        case 'error':
-                            message.data = new scope.ErrorResponseWSMessage(message.data);
-                            callback(undefined, message.data);
-                            break;
-                        case 'hmacChallenge':
-                            message.data = new scope.ChallengeResponseWSMessage(message.data);
-                            callback(message.data);
-                            break;
-                        default:
-                            message.data = new scope.TextResponseWSMessage(message.data);
-                            callback(message.data);
-                            break;
-                    }
-                    break;
-            }
-        });
+        this.setUrl(this.getProtocol() + 'cloud.myscript.com');
+        if (host) {
+            this.setUrl(this.getProtocol() + host);
+        }
+        this.setSSL(true);
+        this.setCallback(callback);
     }
 
     /**
@@ -11630,6 +12349,54 @@ MyScript = {
      */
     TextWSRecognizer.prototype.setParameters = function (parameters) {
         this.parameters = parameters;
+    };
+
+    TextWSRecognizer.prototype.setUrl = function (url) {
+        if (url !== undefined) {
+            this._wsInterface.setUrl(url + '/api/v3.0/recognition/ws/text');
+        }
+    };
+
+    TextWSRecognizer.prototype.setCallback = function (callback) {
+        if (callback !== undefined) {
+            this._wsInterface.setCallback(function (message) {
+                switch (message.type) {
+                    case 'open':
+                        callback(message);
+                        break;
+                    case 'close':
+                        callback(message);
+                        break;
+                    case 'error':
+                        callback(undefined, message);
+                        break;
+                    default:
+                        switch (message.data.type) {
+                            case 'init':
+                                message.data = new scope.InitResponseWSMessage(message.data);
+                                callback(message.data);
+                                break;
+                            case 'reset':
+                                message.data = new scope.ResetResponseWSMessage(message.data);
+                                callback(message.data);
+                                break;
+                            case 'error':
+                                message.data = new scope.ErrorResponseWSMessage(message.data);
+                                callback(undefined, new Error(JSON.stringify(message.data.getError())));
+                                break;
+                            case 'hmacChallenge':
+                                message.data = new scope.ChallengeResponseWSMessage(message.data);
+                                callback(message.data);
+                                break;
+                            default:
+                                message.data = new scope.TextResponseWSMessage(message.data);
+                                callback(message.data);
+                                break;
+                        }
+                        break;
+                }
+            });
+        }
     };
 
     /**
@@ -11669,6 +12436,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Shape recognizer interface
@@ -11705,18 +12473,14 @@ MyScript = {
      * @returns {Promise}
      */
     ShapeRecognizer.prototype.doSimpleRecognition = function (applicationKey, instanceId, components, hmacKey, parameters) {
-        var input = new scope.ShapeRecognitionInput();
-        input.setComponents(components);
         var params = this.getParameters();
         if (parameters) {
             params = parameters;
         }
-        input.setDoBeautification(params.hasBeautification());
-        input.setRejectDetectionSensitivity(params.getRejectDetectionSensitivity());
-
-        var data = new scope.ShapeRecognitionData();
-        data.setRecognitionInput(input);
-        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, data, applicationKey, hmacKey, instanceId); // super
+        var input = new scope.ShapeRecognitionInput();
+        input.setParameters(params);
+        input.setComponents(components);
+        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, input, applicationKey, hmacKey, instanceId); // super
     };
 
     /**
@@ -11773,20 +12537,14 @@ MyScript = {
      * @returns {Promise}
      */
     MathRecognizer.prototype.doSimpleRecognition = function (applicationKey, instanceId, components, hmacKey, parameters) {
-        var input = new scope.MathRecognitionInput();
-        input.setComponents(components);
         var params = this.getParameters();
         if (parameters) {
             params = parameters;
         }
-        input.setResultTypes(params.getResultTypes());
-        input.setColumnar(params.isColumnar());
-        input.setScratchOutDetectionSensitivity(params.getScratchOutDetectionSensitivity());
-        input.setUserResources(params.getUserResources());
-
-        var data = new scope.MathRecognitionData();
-        data.setRecognitionInput(input);
-        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, data, applicationKey, hmacKey, instanceId); // super
+        var input = new scope.MathRecognitionInput();
+        input.setParameters(params);
+        input.setComponents(components);
+        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, input, applicationKey, hmacKey, instanceId); // super
     };
 
     // Export
@@ -11806,46 +12564,14 @@ MyScript = {
      * @constructor
      */
     function MathWSRecognizer(callback, host) {
-        scope.AbstractWSRecognizer.call(this, host);
-        this._endpoint = 'wss://' + this.getHost() + '/api/v3.0/recognition/ws/math';
+        scope.AbstractWSRecognizer.call(this);
         this.parameters = new scope.MathParameter();
-        this._init(this._endpoint, function (message) {
-            switch (message.type) {
-                case 'open':
-                    callback(message);
-                    break;
-                case 'close':
-                    callback(message);
-                    break;
-                case 'error':
-                    callback(undefined, message);
-                    break;
-                default:
-                    switch (message.data.type) {
-                        case 'init':
-                            message.data = new scope.InitResponseWSMessage(message.data);
-                            callback(message.data);
-                            break;
-                        case 'reset':
-                            message.data = new scope.ResetResponseWSMessage(message.data);
-                            callback(message.data);
-                            break;
-                        case 'error':
-                            message.data = new scope.ErrorResponseWSMessage(message.data);
-                            callback(undefined, message.data);
-                            break;
-                        case 'hmacChallenge':
-                            message.data = new scope.ChallengeResponseWSMessage(message.data);
-                            callback(message.data);
-                            break;
-                        default:
-                            message.data = new scope.MathResponseWSMessage(message.data);
-                            callback(message.data);
-                            break;
-                    }
-                    break;
-            }
-        });
+        this.setUrl(this.getProtocol() + 'cloud.myscript.com');
+        if (host) {
+            this.setUrl(this.getProtocol() + host);
+        }
+        this.setSSL(true);
+        this.setCallback(callback);
     }
 
     /**
@@ -11876,6 +12602,54 @@ MyScript = {
      */
     MathWSRecognizer.prototype.setParameters = function (parameters) {
         this.parameters = parameters;
+    };
+
+    MathWSRecognizer.prototype.setUrl = function (url) {
+        if (url !== undefined) {
+            this._wsInterface.setUrl(url + '/api/v3.0/recognition/ws/math');
+        }
+    };
+
+    MathWSRecognizer.prototype.setCallback = function (callback) {
+        if (callback !== undefined) {
+            this._wsInterface.setCallback(function (message) {
+                switch (message.type) {
+                    case 'open':
+                        callback(message);
+                        break;
+                    case 'close':
+                        callback(message);
+                        break;
+                    case 'error':
+                        callback(undefined, message);
+                        break;
+                    default:
+                        switch (message.data.type) {
+                            case 'init':
+                                message.data = new scope.InitResponseWSMessage(message.data);
+                                callback(message.data);
+                                break;
+                            case 'reset':
+                                message.data = new scope.ResetResponseWSMessage(message.data);
+                                callback(message.data);
+                                break;
+                            case 'error':
+                                message.data = new scope.ErrorResponseWSMessage(message.data);
+                                callback(undefined, new Error(JSON.stringify(message.data.getError())));
+                                break;
+                            case 'hmacChallenge':
+                                message.data = new scope.ChallengeResponseWSMessage(message.data);
+                                callback(message.data);
+                                break;
+                            default:
+                                message.data = new scope.MathResponseWSMessage(message.data);
+                                callback(message.data);
+                                break;
+                        }
+                        break;
+                }
+            });
+        }
     };
 
     /**
@@ -11915,6 +12689,7 @@ MyScript = {
 })(MyScript);
 
 
+
 (function (scope) {
     /**
      * Music recognizer interface
@@ -11951,21 +12726,14 @@ MyScript = {
      * @returns {Promise}
      */
     MusicRecognizer.prototype.doSimpleRecognition = function (applicationKey, instanceId, components, hmacKey, parameters) {
-        var input = new scope.MusicRecognitionInput();
-        input.setComponents(components);
         var params = this.getParameters();
         if (parameters) {
             params = parameters;
         }
-        input.setStaff(params.getStaff());
-        input.setDivisions(params.getDivisions());
-        input.setResultTypes(params.getResultTypes());
-        input.setScratchOutDetectionSensitivity(params.getScratchOutDetectionSensitivity());
-        input.setUserResources(params.getUserResources());
-
-        var data = new scope.MusicRecognitionData();
-        data.setRecognitionInput(input);
-        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, data, applicationKey, hmacKey, instanceId); // super
+        var input = new scope.MusicRecognitionInput();
+        input.setParameters(params);
+        input.setComponents(components);
+        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, input, applicationKey, hmacKey, instanceId); // super
     };
 
     // Export
@@ -12010,17 +12778,14 @@ MyScript = {
      * @returns {Promise}
      */
     AnalyzerRecognizer.prototype.doSimpleRecognition = function (applicationKey, instanceId, components, hmacKey, parameters) {
-        var input = new scope.AnalyzerRecognitionInput();
-        input.setComponents(components);
         var params = this.getParameters();
         if (parameters) {
             params = parameters;
         }
+        var input = new scope.AnalyzerRecognitionInput();
         input.setParameters(params);
-
-        var data = new scope.AnalyzerRecognitionData();
-        data.setRecognitionInput(input);
-        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, data, applicationKey, hmacKey, instanceId); // super
+        input.setComponents(components);
+        return scope.AbstractRecognizer.prototype.doRestRecognition.call(this, input, applicationKey, hmacKey, instanceId); // super
     };
 
     // Export
@@ -13362,7 +14127,7 @@ MyScript = {
             var lastPointIndex = Math.ceil(inkRange.getLastPoint());
 
             for (var strokeIndex = inkRange.getFirstStroke(); strokeIndex <= inkRange.getLastStroke(); strokeIndex++) {
-                var currentStroke = components[strokeIndex - 1];
+                var currentStroke = components[strokeIndex];
                 var currentStrokePointCount = currentStroke.getX().length;
 
                 var newStroke = new scope.Stroke(), x = [], y = [];
@@ -14309,6 +15074,57 @@ MyScript = {
 
 (function (scope) {
     /**
+     * Represent the Image Renderer. It's used to calculate the Image ink rendering in HTML5 canvas
+     *
+     * @class ImageRenderer
+     * @extends AbstractRenderer
+     * @param {Object} context
+     * @constructor
+     */
+    function ImageRenderer(context) {
+        scope.AbstractRenderer.call(this, context);
+    }
+
+    /**
+     * Inheritance property
+     */
+    ImageRenderer.prototype = new scope.AbstractRenderer();
+
+    /**
+     * Constructor property
+     */
+    ImageRenderer.prototype.constructor = ImageRenderer;
+
+
+    /**
+     * Draw components
+     *
+     * @method drawComponents
+     * @param {AbstractComponent[]} components
+     * @param {Object} [context] DEPRECATED, use renderer constructor instead
+     * @param {PenParameters} [parameters] DEPRECATED, use setParameters instead
+     */
+    ImageRenderer.prototype.drawComponents = function (components, context, parameters) {
+        for (var i in components) {
+            var component = components[i];
+            if (component instanceof scope.AbstractComponent) {
+                scope.AbstractRenderer.prototype.drawComponent.call(this, component, context, parameters); // super
+            } else {
+                console.log(components)
+                console.log(typeof component)
+                throw new Error('not implemented');
+            }
+        }
+    };
+
+    // Export
+    scope.ImageRenderer = ImageRenderer;
+})(MyScript);
+
+
+
+(function (scope) {
+    /**
      * The InkGrabber class that render, capture and build strokes
      *
      * @class InkGrabber
@@ -14393,6 +15209,7 @@ MyScript = {
 
 
 
+
 (function (scope) {
     /**
      * InkPaper
@@ -14415,9 +15232,38 @@ MyScript = {
         this.lastNonRecoComponentIdx = 0;
         this.resultCallback = callback;
         this.changeCallback = undefined;
+        this.canvasRatio = 1;
+
+        // Capture
+        this._captureCanvas = _createCanvas(element, 'ms-capture-canvas');
+        this._inkGrabber = new scope.InkGrabber(this._captureCanvas.getContext('2d'));
+
+        // Rendering
+        this._renderingCanvas = _createCanvas(element, 'ms-rendering-canvas');
+        this.canvasRatio = _getCanvasRatio(this._renderingCanvas);
+
+        this._textRenderer = new scope.TextRenderer(this._renderingCanvas.getContext('2d'));
+        this._mathRenderer = new scope.MathRenderer(this._renderingCanvas.getContext('2d'));
+        this._shapeRenderer = new scope.ShapeRenderer(this._renderingCanvas.getContext('2d'));
+        this._musicRenderer = new scope.MusicRenderer(this._renderingCanvas.getContext('2d'));
+        this._analyzerRenderer = new scope.AnalyzerRenderer(this._renderingCanvas.getContext('2d'));
+
+        // Recognition
+        this._textRecognizer = new scope.TextRecognizer();
+        this._mathRecognizer = new scope.MathRecognizer();
+        this._shapeRecognizer = new scope.ShapeRecognizer();
+        this._musicRecognizer = new scope.MusicRecognizer();
+        this._analyzerRecognizer = new scope.AnalyzerRecognizer();
+
+        this._textWSRecognizer = new scope.TextWSRecognizer(this._handleMessage.bind(this));
+        this._mathWSRecognizer = new scope.MathWSRecognizer(this._handleMessage.bind(this));
+
+        this._attachListeners(element);
+
         this.options = { // Default options
             type: scope.RecognitionType.TEXT,
             protocol: scope.Protocol.REST,
+            ssl: true,
             width: 400,
             height: 300,
             timeout: 2000,
@@ -14430,31 +15276,6 @@ MyScript = {
             analyzerParameters: new scope.AnalyzerParameter()
         };
 
-        // Capture
-        this._captureCanvas = _createCanvas(element, 'ms-capture-canvas');
-        this._inkGrabber = new scope.InkGrabber(this._captureCanvas.getContext('2d'));
-
-        // Rendering
-        this._renderingCanvas = _createCanvas(element, 'ms-rendering-canvas');
-
-        this._textRenderer = new scope.TextRenderer(this._renderingCanvas.getContext('2d'));
-        this._mathRenderer = new scope.MathRenderer(this._renderingCanvas.getContext('2d'));
-        this._shapeRenderer = new scope.ShapeRenderer(this._renderingCanvas.getContext('2d'));
-        this._musicRenderer = new scope.MusicRenderer(this._renderingCanvas.getContext('2d'));
-        this._analyzerRenderer = new scope.AnalyzerRenderer(this._renderingCanvas.getContext('2d'));
-
-        // Recognition
-        this._textRecognizer = new scope.TextRecognizer(options? options.host : undefined);
-        this._mathRecognizer = new scope.MathRecognizer(options? options.host : undefined);
-        this._shapeRecognizer = new scope.ShapeRecognizer(options? options.host : undefined);
-        this._musicRecognizer = new scope.MusicRecognizer(options? options.host : undefined);
-        this._analyzerRecognizer = new scope.AnalyzerRecognizer(options? options.host : undefined);
-
-        this._textWSRecognizer = new scope.TextWSRecognizer(this._handleMessage.bind(this), options? options.host : undefined);
-        this._mathWSRecognizer = new scope.MathWSRecognizer(this._handleMessage.bind(this), options? options.host : undefined);
-
-        this._attachListeners(element);
-
         if (options) {
             for (var idx in options) {
                 if (options[idx] !== undefined) {
@@ -14463,7 +15284,31 @@ MyScript = {
             }
         }
 
-        this._initialize(this._getOptions());
+        // Recognition type
+        this.setType(this.options.type);
+
+        this.setHost(this.options.host);
+        this.setSSL(this.options.ssl);
+
+        this.setTextParameters(this.options.textParameters); // jshint ignore:line
+        this.setMathParameters(this.options.mathParameters); // jshint ignore:line
+        this.setShapeParameters(this.options.shapeParameters); // jshint ignore:line
+        this.setMusicParameters(this.options.musicParameters); // jshint ignore:line
+        this.setAnalyzerParameters(this.options.analyzerParameters); // jshint ignore:line
+
+        this.setProtocol(this.options.protocol);
+        this.setTimeout(this.options.timeout);
+        this.setApplicationKey(this.options.applicationKey);
+        this.setHmacKey(this.options.hmacKey);
+
+        this.setPenParameters(this.options.penParameters);
+
+        this.setPrecision(this.options.precision);
+        this.setTypeset(this.options.typeset);
+        this.setComponents(this.options.components);
+
+        this.setWidth(this.options.width);
+        this.setHeight(this.options.height);
     }
 
     /**
@@ -14473,8 +15318,15 @@ MyScript = {
      * @param {Number} width
      */
     InkPaper.prototype.setWidth = function (width) {
-        this._captureCanvas.width = width;
-        this._renderingCanvas.width = width;
+        if(width > 0){
+            this._captureCanvas.width = width * this.canvasRatio;
+            this._captureCanvas.style.width = width + 'px';
+            this._captureCanvas.getContext('2d').scale(this.canvasRatio, this.canvasRatio);
+
+            this._renderingCanvas.width = width * this.canvasRatio;
+            this._renderingCanvas.style.width = width + 'px';
+            this._renderingCanvas.getContext('2d').scale(this.canvasRatio, this.canvasRatio);
+        }
         this._initRenderingCanvas();
     };
 
@@ -14485,8 +15337,15 @@ MyScript = {
      * @param {Number} height
      */
     InkPaper.prototype.setHeight = function (height) {
-        this._captureCanvas.height = height;
-        this._renderingCanvas.height = height;
+        if(height > 0){
+            this._captureCanvas.height = height * this.canvasRatio;
+            this._captureCanvas.style.height = height + 'px';
+            this._captureCanvas.getContext('2d').scale(this.canvasRatio, this.canvasRatio);
+
+            this._renderingCanvas.height = height * this.canvasRatio;
+            this._renderingCanvas.style.height = height + 'px';
+            this._renderingCanvas.getContext('2d').scale(this.canvasRatio, this.canvasRatio);
+        }
         this._initRenderingCanvas();
     };
 
@@ -14609,6 +15468,45 @@ MyScript = {
     };
 
     /**
+     * Set the recognition precision
+     *
+     * @method setPrecision
+     * @param {Number} precision
+     */
+    InkPaper.prototype.setPrecision = function (precision) {
+        this._textRecognizer.setPrecision(precision);
+        this._textWSRecognizer.setPrecision(precision);
+        this._mathRecognizer.setPrecision(precision);
+        this._mathWSRecognizer.setPrecision(precision);
+        this._shapeRecognizer.setPrecision(precision);
+        this._musicRecognizer.setPrecision(precision);
+        this._analyzerRecognizer.setPrecision(precision);
+    };
+
+    /**
+     * Get the default components
+     *
+     * @method getComponents
+     * @return {Array} components
+     */
+    InkPaper.prototype.getComponents = function () {
+        return this.options.components;
+    };
+
+    /**
+     * Set the default components
+     *
+     * @method setComponents
+     * @param {Array} components
+     */
+    InkPaper.prototype.setComponents = function (components) {
+        this.options.components = components;
+        this._initRenderingCanvas();
+    };
+
+
+
+    /**
      * Get the application key
      *
      * @method getApplicationKey
@@ -14656,7 +15554,7 @@ MyScript = {
      * @param  String language
      */
     InkPaper.prototype.setLanguage = function (language) {
-        if(this.options.type === scope.RecognitionType.TEXT){
+        if (this.options.type === scope.RecognitionType.TEXT) {
             this.isStarted = false;
             this._selectedWSRecognizer.resetWSRecognition();
             this._selectedWSRecognizer.getParameters().setLanguage(language);
@@ -14671,10 +15569,12 @@ MyScript = {
      * @param  Array resultTypes
      */
     InkPaper.prototype.setResultTypes = function (resultTypes) {
-        if(this.options.type === scope.RecognitionType.MATH){
+        if (this.options.type === scope.RecognitionType.MATH) {
             this.isStarted = false;
             this._selectedWSRecognizer.resetWSRecognition();
-            this._selectedWSRecognizer.getParameters().setResultTypes(resultTypes.map(function(x) { return x.toUpperCase(); }));
+            this._selectedWSRecognizer.getParameters().setResultTypes(resultTypes.map(function (x) {
+                return x.toUpperCase();
+            }));
         }
     };
 
@@ -14788,6 +15688,7 @@ MyScript = {
                     this._musicRecognizer.getParameters()[i] = musicParameters[i]; // Override options
                 }
             }
+            this._initRenderingCanvas();
         }
     };
 
@@ -14879,53 +15780,23 @@ MyScript = {
     };
 
     /**
-     * @private
-     * @method _initialize
-     * @param {Object} options
-     */
-    InkPaper.prototype._initialize = function (options) {
-
-        this._setHost(options.host);
-
-        this.setTextParameters(options.textParameters); // jshint ignore:line
-        this.setMathParameters(options.mathParameters); // jshint ignore:line
-        this.setShapeParameters(options.shapeParameters); // jshint ignore:line
-        this.setMusicParameters(options.musicParameters); // jshint ignore:line
-        this.setAnalyzerParameters(options.analyzerParameters); // jshint ignore:line
-
-        // Recognition type
-        this.setType(options.type);
-        this.setProtocol(options.protocol);
-        this.setTimeout(options.timeout);
-        this.setApplicationKey(options.applicationKey);
-        this.setHmacKey(options.hmacKey);
-
-        this.setPenParameters(options.penParameters);
-        this.setTypeset(options.typeset);
-
-        this.setWidth(options.width);
-        this.setHeight(options.height);
-    };
-
-    /**
-     * Get options
-     *
-     * @private
-     * @method _getOptions
-     * @returns {Object}
-     */
-    InkPaper.prototype._getOptions = function () {
-        return this.options;
-    };
-
-    /**
      * Get available languages
      *
      * @method getAvailableLanguages
-     * @returns {Promise}
+     * @param {String} [inputMode] input mode
      */
-    InkPaper.prototype.getAvailableLanguages = function () {
-        return this._selectedRecognizer.getAvailableLanguageList(this.getApplicationKey(), this._textRecognizer.getParameters().getInputMode());
+    InkPaper.prototype.getAvailableLanguages = function (inputMode) {
+        this._selectedRESTRecognizer.getAvailableLanguageList(
+            this.getApplicationKey(),
+            inputMode ? inputMode : this._textRecognizer.getParameters().getInputMode()
+        ).then(
+            function (data) {
+                this._onResult(data);
+            }.bind(this),
+            function (error) {
+                this._onResult(undefined, error);
+            }.bind(this)
+        );
     };
 
     /**
@@ -15031,7 +15902,7 @@ MyScript = {
                 }
             }
             this._initRenderingCanvas();
-            this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
+            this._onChange();
 
             if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
                 this.isStarted = false;
@@ -15077,7 +15948,7 @@ MyScript = {
                 }
             }
             this._initRenderingCanvas();
-            this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
+            this._onChange();
 
             if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
                 this.recognize();
@@ -15113,7 +15984,7 @@ MyScript = {
         this._instanceId = undefined;
 
         this._initRenderingCanvas();
-        this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
+        this._onChange();
 
         if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
             this.isStarted = false;
@@ -15145,21 +16016,32 @@ MyScript = {
      * @param {Date} [t] timeStamp
      */
     InkPaper.prototype._down = function (x, y, t) {
-
-        if(this._captureCanvas.clientHeight != this._captureCanvas.height){
+        var sizeChanged = false;
+        if (this._captureCanvas.clientHeight != this._captureCanvas.height) {
             this._captureCanvas.height = this._captureCanvas.clientHeight;
             this._renderingCanvas.height = this._renderingCanvas.clientHeight;
+            sizeChanged = true;
         }
-        if(this._captureCanvas.clientWidth != this._captureCanvas.width){
+
+        if (this._captureCanvas.clientWidth != this._captureCanvas.width) {
             this._captureCanvas.width = this._captureCanvas.clientWidth;
             this._renderingCanvas.width = this._renderingCanvas.clientWidth;
+            sizeChanged = true;
+        }
+
+        //Safari trash the canvas content when heigth or width are modified.
+        if(sizeChanged){
+            this._initRenderingCanvas();
         }
 
         if (this.canRedo()) {
             this.redoComponents = [];
-            this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
+            this._onChange();
         }
+
         this._inkGrabber.startCapture(x, y, t);
+
+
     };
 
     /**
@@ -15191,7 +16073,7 @@ MyScript = {
         this._selectedRenderer.drawComponent(stroke);
 
         this.components.push(stroke);
-        this._onChange({canUndo: this.canUndo(), canRedo: this.canRedo()});
+        this._onChange();
 
         if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
             if (!this._selectedRecognizer.isOpen() && !this._selectedRecognizer.isConnecting()) {
@@ -15223,7 +16105,7 @@ MyScript = {
                     var inputWS = [];
                     if (this._selectedRecognizer instanceof scope.TextWSRecognizer) {
                         var inputUnitWS = new scope.TextInputUnit();
-                        inputUnitWS.setComponents(this._getOptions().components.concat(components.slice(this.lastNonRecoComponentIdx)));
+                        inputUnitWS.setComponents(this.getComponents().concat(components.slice(this.lastNonRecoComponentIdx)));
                         inputWS = [inputUnitWS];
                     } else {
                         inputWS = components.slice(this.lastNonRecoComponentIdx);
@@ -15242,13 +16124,13 @@ MyScript = {
                 var input = [];
                 if (this._selectedRecognizer instanceof scope.TextRecognizer) {
                     var inputUnit = new scope.TextInputUnit();
-                    inputUnit.setComponents(this._getOptions().components.concat(components));
+                    inputUnit.setComponents(this.getComponents().concat(components));
                     input = [inputUnit];
                 } else if (this._selectedRecognizer instanceof scope.ShapeRecognizer) {
                     input = components.slice(this.lastNonRecoComponentIdx);
                     this.lastNonRecoComponentIdx = components.length;
                 } else {
-                    input = input.concat(this._getOptions().components, components);
+                    input = input.concat(this.getComponents(), components);
                 }
                 this._selectedRecognizer.doSimpleRecognition(
                     this.getApplicationKey(),
@@ -15257,13 +16139,12 @@ MyScript = {
                     this.getHmacKey()
                 ).then(
                     function (data) {
-                        return this._parseResult(data, input);
+                        this._parseResult(data, input);
                     }.bind(this),
                     function (error) {
                         this._onResult(undefined, error);
-                        return error;
                     }.bind(this)
-                ).done();
+                );
             }
         } else {
             this.isStarted = false;
@@ -15278,17 +16159,25 @@ MyScript = {
             this.resultCallback(data, err);
         }
         if (err) {
-            this._element.dispatchEvent(new CustomEvent('failure', {detail: err}));
+            this._element.dispatchEvent(new CustomEvent('failure', {detail: err})); // FIXME: mark as deprecated
+            this._element.dispatchEvent(new CustomEvent('error', {detail: err}));
         } else {
             this._element.dispatchEvent(new CustomEvent('success', {detail: data}));
         }
     };
 
-    InkPaper.prototype._onChange = function (changes) {
+    InkPaper.prototype._onChange = function () {
+        var data = {
+            canUndo: this.canUndo(),
+            undoLength: this.components.length,
+            canRedo: this.canRedo(),
+            redoLength: this.redoComponents.length
+        };
+
         if (this.changeCallback) {
-            this.changeCallback(changes)
+            this.changeCallback(data)
         }
-        this._element.dispatchEvent(new CustomEvent('changed', {detail: changes}));
+        this._element.dispatchEvent(new CustomEvent('changed', {detail: data}));
     };
 
     InkPaper.prototype._parseResult = function (data, input) {
@@ -15310,17 +16199,31 @@ MyScript = {
     };
 
     /**
-     * Set recognition service host
+     * Set recognition service url
      *
-     * @private
      * @param {String} host
      */
-    InkPaper.prototype._setHost = function (host) {
+    InkPaper.prototype.setHost = function (host) {
         this._textRecognizer.setHost(host);
+        this._textWSRecognizer.setHost(host);
         this._mathRecognizer.setHost(host);
+        this._mathWSRecognizer.setHost(host);
         this._shapeRecognizer.setHost(host);
         this._musicRecognizer.setHost(host);
         this._analyzerRecognizer.setHost(host);
+    };
+
+    /**
+     * @private
+     */
+    InkPaper.prototype.setSSL = function (ssl) {
+        this._textRecognizer.setSSL(ssl);
+        this._textWSRecognizer.setSSL(ssl);
+        this._mathRecognizer.setSSL(ssl);
+        this._mathWSRecognizer.setSSL(ssl);
+        this._shapeRecognizer.setSSL(ssl);
+        this._musicRecognizer.setSSL(ssl);
+        this._analyzerRecognizer.setSSL(ssl);
     };
 
     /**
@@ -15332,11 +16235,18 @@ MyScript = {
     InkPaper.prototype._attachListeners = function (element) {
         var self = this;
         var pointerId;
+
+        //Desactivation of contextmenu to prevent safari to fire pointerdown only once
+        element.addEventListener("contextmenu", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            return false; }
+        );
+
         element.addEventListener('pointerdown', function (e) {
             if (!pointerId) {
                 pointerId = e.pointerId;
                 e.preventDefault();
-
                 var coord = _getCoordinates(e, element);
                 self._down(coord.x, coord.y, coord.t);
             }
@@ -15364,18 +16274,8 @@ MyScript = {
         element.addEventListener('pointerleave', function (e) {
             if (pointerId === e.pointerId) {
                 e.preventDefault();
-                console.log('pointerenter');
-                console.log(e);
-            }
-        }, false);
-
-        element.addEventListener('pointerleave', function (e) {
-            if (pointerId === e.pointerId) {
-                e.preventDefault();
-
                 var coord = _getCoordinates(e, element);
                 self._up(coord.x, coord.y, coord.t);
-
                 pointerId = undefined;
             }
         }, false);
@@ -15390,11 +16290,9 @@ MyScript = {
         if (this._selectedRecognizer instanceof scope.MusicRecognizer) {
             if (this._selectedRecognizer.getParameters().getStaff() instanceof scope.MusicStaff) {
                 this._selectedRenderer.drawStaff(this._selectedRecognizer.getParameters().getStaff());
-            } else {
-                throw new Error('Missing music staff');
             }
         }
-        this._selectedRenderer.drawComponents(this._getOptions().components.concat(components));
+        this._selectedRenderer.drawComponents(this.getComponents().concat(components));
     };
 
     /**
@@ -15420,7 +16318,7 @@ MyScript = {
                     this._selectedWSRecognizer.initWSRecognition(this.getApplicationKey());
                     break;
                 case 'hmacChallenge':
-                    this._selectedWSRecognizer.takeUpHmacChallenge (this.getApplicationKey(), message.getChallenge(), this.getHmacKey());
+                    this._selectedWSRecognizer.takeUpHmacChallenge(this.getApplicationKey(), message.getChallenge(), this.getHmacKey());
                     break;
                 case 'init':
                     this.isStarted = false;
@@ -15439,14 +16337,131 @@ MyScript = {
                     this._instanceId = undefined;
                     this.lastNonRecoComponentIdx = 0;
                     break;
-                default: {
+                default:
                     this._parseResult(message, this.components);
                     break;
-                }
             }
         }
         return replayNeeded;
     };
+
+    /**
+     * Return the stats allowing to monitor what ink size is send to the server.
+     * @returns Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+     */
+    InkPaper.prototype.getStats = function () {
+        var stats = {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'};
+        if(this.components){
+            stats.strokesCount = this.components.length;
+            var pointsCount = 0;
+            for(var strokeNb = 0; strokeNb < this.components.length; strokeNb++){
+                pointsCount = pointsCount + this.components[strokeNb].x.length;
+            }
+            stats.strokesCount = this.components.length;
+            stats.pointsCount = pointsCount;
+            //We start with 270 as it is the size in bytes. Make a real computation implies to recode a doRecogntion
+            var byteSize = 270;
+            byteSize = JSON.stringify(this.components).length;
+            stats.byteSize = byteSize;
+            if (byteSize < 270) {
+                stats.humanUnit = 'BYTE';
+                stats.byteSize = 0;
+                stats.humanSize  = 0;
+            } else if (byteSize < 2048) {
+                stats.humanUnit = 'BYTES';
+                stats.humanSize  = byteSize;
+            } else if (byteSize < 1024 * 1024) {
+                stats.humanUnit = 'KiB';
+                stats.humanSize = (byteSize / 1024).toFixed(2);
+            } else {
+                stats.humanUnit = 'MiB';
+                stats.humanSize = (byteSize / 1024 / 1024).toFixed(2);
+            }
+        }
+        return stats;
+    };
+
+    /**
+     *
+     * @param marginX the horizontal margin to apply (by default 10)
+     * @param marginY the vertical margin to apply (by default 10)
+     * @returns {ImageData} Build an ImageData object with content shrink to border of strokes.
+     * @private
+     */
+    InkPaper.prototype.getInkAsImageData = function (marginX, marginY) {
+        if(!marginX){
+            marginX = 10;
+        }
+        if(!marginY){
+            marginY = 10;
+        }
+        console.log({marginX : marginX, marginY : marginY});
+        if(this.components && this.components.length > 0){
+            var updatedStrokes ;
+            var strokesCount = this.components.length;
+            //Initializing min and max
+            var minX = this.components[0].x[0];
+            var maxX = this.components[0].x[0];
+            var minY = this.components[0].y[0];
+            var maxY = this.components[0].y[0];
+            // Computing the min and max for x and y
+            for(var strokeNb = 0; strokeNb < this.components.length; strokeNb++){
+                var pointCount = this.components[strokeNb].x.length;
+                for(var pointNb = 0; pointNb < pointCount; pointNb ++){
+                    var currentX = this.components[strokeNb].x[pointNb];
+                    var currentY = this.components[strokeNb].y[pointNb];
+                    if(currentX < minX){
+                        minX = currentX;
+                    }
+                    if(currentX > maxX){
+                        maxX = currentX;
+                    }
+                    if(currentY < minY){
+                        minY = currentY;
+                    }
+                    if(currentY > maxY){
+                        maxY = currentY;
+                    }
+                }
+            }
+            var nonDisplayCanvas = document.createElement('canvas');
+            nonDisplayCanvas.width = (maxX )+(2*marginX);
+            nonDisplayCanvas.height = (maxY )+(2*marginY)
+
+            var ctx =  nonDisplayCanvas.getContext("2d");
+
+            var imageRendered = new scope.ImageRenderer(ctx);
+            imageRendered.drawComponents(this.components, ctx);
+
+            // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/getImageData
+            var imageData = ctx.getImageData(minX-marginX, minY-marginY, (maxX-minX )+(2*marginX), (maxY-minY )+(2*marginY));
+            return imageData;
+        } else {
+            return;
+        }
+    };
+
+    /**
+     *
+     * @param marginX the horizontal margin to apply (by default 10)
+     * @param marginY the vertical margin to apply (by default 10)
+     * @returns {String} Build an String containg dataUrl with content shrink to border of strokes.
+     * @private
+     */
+    InkPaper.prototype.getInkAsPng = function (marginX, marginY) {
+        var imageRenderingCanvas = document.createElement('canvas');
+        imageRenderingCanvas.style.display = 'none';
+
+        var imageDataToRender = this.getInkAsImageData();
+        imageRenderingCanvas.width = imageDataToRender.width;
+        imageRenderingCanvas.style.width = imageDataToRender.width +'px';
+        imageRenderingCanvas.height = imageDataToRender.height;
+        imageRenderingCanvas.style.height = imageDataToRender.height +'px';
+        var ctx = imageRenderingCanvas.getContext('2d');
+        ctx.putImageData(imageDataToRender, 0, 0);
+        var ret = imageRenderingCanvas.toDataURL("image/png");
+        return ret;
+    }
 
     /**
      * Tool to create canvas
@@ -15462,6 +16477,27 @@ MyScript = {
         canvas.id = id + '-' + count;
         parent.appendChild(canvas);
         return canvas;
+    }
+
+    /**
+     * Tool to get canvas ratio (retina display)
+     *
+     * @private
+     * @param {Element} canvas
+     * @returns {Number}
+     */
+    function _getCanvasRatio(canvas) {
+        if (canvas) {
+            var context = canvas.getContext('2d'),
+                devicePixelRatio = window.devicePixelRatio || 1,
+                backingStoreRatio = context.webkitBackingStorePixelRatio ||
+                    context.mozBackingStorePixelRatio ||
+                    context.msBackingStorePixelRatio ||
+                    context.oBackingStorePixelRatio ||
+                    context.backingStorePixelRatio || 1;
+            return devicePixelRatio / backingStoreRatio;
+        }
+        return 1;
     }
 
 

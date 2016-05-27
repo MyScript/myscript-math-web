@@ -9,11 +9,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../paper-behaviors/paper-button-behavior.html">
-<link rel="import" href="../paper-material/paper-material.html">
-<link rel="import" href="../paper-ripple/paper-ripple.html">
+<link rel="import" href="../paper-material/paper-material-shared-styles.html">
 <link rel="import" href="../paper-styles/color.html">
 <link rel="import" href="../paper-styles/default-theme.html">
 
@@ -53,37 +52,41 @@ Custom property | Description | Default
 
 @group Paper Elements
 @demo demo/index.html
-
 -->
 
 <dom-module id="paper-fab">
   <template strip-whitespace>
-    <style include="paper-material">
+    <style include="paper-material-shared-styles">
       :host {
-        display: inline-block;
-        position: relative;
+        @apply(--layout-vertical);
+        @apply(--layout-center-center);
+
+        background: var(--paper-fab-background, --accent-color);
+        border-radius: 50%;
+        box-sizing: border-box;
+        color: var(--text-primary-color);
+        cursor: pointer;
+        height: 56px;
+        min-width: 0;
         outline: none;
+        padding: 16px;
+        position: relative;
         -moz-user-select: none;
         -ms-user-select: none;
         -webkit-user-select: none;
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
         user-select: none;
-        cursor: pointer;
-
-        box-sizing: border-box;
-        min-width: 0;
         width: 56px;
-        height: 56px;
-        background: var(--paper-fab-background, --accent-color);
-        color: var(--text-primary-color);
-        border-radius: 50%;
-        padding: 16px;
-
         z-index: 0;
 
-        @apply(--layout-vertical);
-        @apply(--layout-center-center);
+        /* NOTE: Both values are needed, since some phones require the value `transparent`. */
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        -webkit-tap-highlight-color: transparent;
+
         @apply(--paper-fab);
+      }
+
+      [hidden] {
+        display: none !important;
       }
 
       :host([mini]) {
@@ -97,6 +100,7 @@ Custom property | Description | Default
       :host([disabled]) {
         color: var(--paper-fab-disabled-text, --paper-grey-500);
         background: var(--paper-fab-disabled-background, --paper-grey-300);
+
         @apply(--paper-fab-disabled);
       }
 
@@ -104,63 +108,77 @@ Custom property | Description | Default
         @apply(--paper-fab-iron-icon);
       }
 
+      span {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+      }
+
       :host(.keyboard-focus) {
         background: var(--paper-fab-keyboard-focus-background, --paper-pink-900);
       }
     </style>
 
-    <iron-icon id="icon" src="[[src]]" icon="[[icon]]"></iron-icon>
+    <iron-icon id="icon" hidden$="{{!_computeIsIconFab(icon, src)}}" src="[[src]]" icon="[[icon]]"></iron-icon>
+    <span hidden$="{{_computeIsIconFab(icon, src)}}">{{label}}</span>
   </template>
-</dom-module>
 
-<script>
-  Polymer({
-    is: 'paper-fab',
+  <script>
+    Polymer({
+      is: 'paper-fab',
 
-    behaviors: [
-      Polymer.PaperButtonBehavior
-    ],
+      behaviors: [
+        Polymer.PaperButtonBehavior
+      ],
 
-    properties: {
-      /**
-       * The URL of an image for the icon. If the src property is specified,
-       * the icon property should not be.
-       *
-       * @attribute src
-       * @type string
-       * @default ''
-       */
-      src: {
-        type: String,
-        value: ''
+      properties: {
+        /**
+         * The URL of an image for the icon. If the src property is specified,
+         * the icon property should not be.
+         */
+        src: {
+          type: String,
+          value: ''
+        },
+
+        /**
+         * Specifies the icon name or index in the set of icons available in
+         * the icon's icon set. If the icon property is specified,
+         * the src property should not be.
+         */
+        icon: {
+          type: String,
+          value: ''
+        },
+
+        /**
+         * Set this to true to style this is a "mini" FAB.
+         */
+        mini: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        },
+
+        /**
+         * The label displayed in the badge. The label is centered, and ideally
+         * should have very few characters.
+         */
+        label: {
+          type: String,
+          observer: '_labelChanged'
+        }
       },
 
-      /**
-       * Specifies the icon name or index in the set of icons available in
-       * the icon's icon set. If the icon property is specified,
-       * the src property should not be.
-       *
-       * @attribute icon
-       * @type string
-       * @default ''
-       */
-      icon: {
-        type: String,
-        value: ''
+      _labelChanged: function() {
+        this.setAttribute('aria-label', this.label);
       },
 
-      /**
-       * Set this to true to style this is a "mini" FAB.
-       *
-       * @attribute mini
-       * @type boolean
-       * @default false
-       */
-      mini: {
-        type: Boolean,
-        value: false,
-        reflectToAttribute: true
+      _computeIsIconFab: function(icon, src) {
+        return (icon.length > 0) || (src.length > 0);
       }
-    }
-  });
-</script>
+    });
+  </script>
+</dom-module>

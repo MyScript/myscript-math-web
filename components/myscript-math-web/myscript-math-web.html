@@ -1,380 +1,292 @@
 <!--
 Copyright © MyScript.
-LICENSE: github.com/MyScriptWebComponents/myscript-math-web/blob/master/LICENSE
+LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="../paper-fab/paper-fab.html">
-<link rel="import" href="../paper-toast/paper-toast.html">
-<!-- Import MyScript common element to add handwriting recognition -->
+<script src="../KaTeX/dist/katex.min.js"></script>
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
-
 <!--
 The `myscript-math-web` is a turnkey solution for those who need to quickly implement MyScript Math recognition.
-See a live demo [here](demo/index.html)
 
-##### Example
+    <myscript-math-web
+        applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
+    </myscript-math-web>
 
-    <myscript-math-web applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"></myscript-math-web>
-
-@group MyScript Elements
-@element myscript-math-web
-@blurb MyScript HTML5 Math Element to help developers integrate math handwriting recognition.
-@status alpha
-@homepage http://myscriptwebcomponents.github.io/myscript-math-web
-
+@demo
 -->
 <dom-module id="myscript-math-web">
-    <link rel="import" type="css" href="./myscript-math-web.css">
-    <link rel="stylesheet" href="../katex/dist/katex.min.css">
-    <script type="text/javascript" src="../katex/dist/katex.min.js"></script>
+    <link rel="stylesheet" href="../KaTeX/dist/katex.min.css">
+    <style>
+        :host {
+            display: block;
+        }
+        myscript-common-element {
+            height: 100%;
+        }
+        myscript-common-element.result {
+            height: calc(100% - 100px);
+        }
+        .resultField {
+            font-size: x-large;
+            overflow: hidden;
+            text-align: center;
+            min-height: 95px;
+            max-height: 95px;
+            padding-top: 5px;
+
+        }
+        .katex {
+            padding-top: 3px ;
+        }
+
+    </style>
     <template>
-        <div id="resultField" hidden="[[hideresult]]"></div>
-        <div class="horizontal layout buttons" hidden="[[hidebuttons]]">
-            <paper-fab class="delete" mini icon="delete" title="delete" on-tap="delete" disabled="{{ !canClear }}"></paper-fab>
-            <paper-fab class="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canUndo }}"></paper-fab>
-            <paper-fab class="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canRedo }}"></paper-fab>
-        </div>
-        <myscript-common-element host="{{ host }}"
-                                 protocol="{{ protocol }}"
+        <div id="resultField" class="resultField" hidden="[[ hideresult ]]"></div>
+        <myscript-common-element host="[[ host ]]"
+                                 protocol="[[ protocol ]]"
                                  type="MATH"
-                                 applicationkey="{{ applicationkey }}"
-                                 hmackey="{{ hmackey }}"
-                                 timeout="{{ timeout }}"
-                                 math-parameters="{{ mathParameters }}"
+                                 applicationkey="[[ applicationkey ]]"
+                                 hmackey="[[ hmackey ]]"
+                                 timeout="[[ timeout ]]"
+                                 ssl="[[ ssl ]]"
+                                 hidebuttons="[[ hidebuttons ]]"
+                                 mathparameters="[[ _mathParameters ]]"
+                                 canundo="{{ canundo }}"
+                                 canredo="{{ canredo }}"
+                                 canclear="{{ canclear }}"
                                  on-changed="_onChanged"
                                  on-success="_onSuccess"
-                                 on-failure="_onFailure">
+                                 on-error="_onError">
         </myscript-common-element>
-        <paper-toast class="error"></paper-toast>
     </template>
 </dom-module>
 
 <script>
-    (function () {
-        Polymer({
-            is: 'myscript-math-web',
+    Polymer({
+        is: 'myscript-math-web',
+        /**
+         * Fired when a math recognition result is successfully received.
+         *
+         * @event myscript-math-web-result
+         */
+        /**
+         * Fired when the delete action is done.
+         *
+         * @event myscript-math-web-delete
+         */
+        /**
+         * Fired when a recognition error occurred.
+         * @event error
+         */
+        /**
+         * Fired when the content of the myscript-math-web changes.
+         * @event changed
+         */
+        properties: {
             /**
-             * Fired when the capture canvas content changes.
-             *
-             * @event changed
+             * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
+             * @default 'WebSocket'
              */
-            /**
-             * Fired when a math recognition result is successfully received.
-             *
-             * @event myscript-math-web-result
-             */
-            /**
-             * Fired when the Delete action is done.
-             *
-             * @event myscript-math-web-delete
-             */
-            properties: {
-                /**
-                 * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
-                 *
-                 * @attribute protocol
-                 * @type String
-                 * @default 'WebSocket'
-                 */
-                protocol: {
-                    type: String,
-                    notify: true,
-                    value: MyScript.Protocol.WS
-                },
-                /**
-                 * The current recognition service host.
-                 *
-                 * @private
-                 * @attribute host
-                 * @type String
-                 * @default 'cloud.myscript.com'
-                 */
-                host: {
-                    type: String,
-                    notify: true
-                },
-                /**
-                 * Recognition timeout, only use for HTTP.
-                 *
-                 * @private
-                 * @attribute timeout
-                 * @type Number
-                 * @default 2000
-                 */
-                timeout: {
-                    type: Number,
-                    notify: true
-                },
-                /**
-                 * Application key to use for recognition on MyScript handwriting recognition server.<br>
-                 * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br>
-                 * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
-                 *
-                 * @attribute applicationkey
-                 * @type String
-                 */
-                applicationkey: {
-                    type: String,
-                    notify: true
-                },
-                /**
-                 * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
-                 * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
-                 *
-                 * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
-                 *
-                 * @attribute hmackey
-                 * @type String
-                 */
-                hmackey: {
-                    type: String,
-                    notify: true
-                },
-                /**
-                 * @private
-                 * @attribute canUndo
-                 * @type Boolean
-                 */
-                canUndo: {
-                    type: Boolean,
-                    notify: true,
-                    value: false
-                },
-                /**
-                 * @private
-                 * @attribute canRedo
-                 * @type Boolean
-                 */
-                canRedo: {
-                    type: Boolean,
-                    notify: true,
-                    value: false
-                },
-                /**
-                 * @private
-                 * @attribute canClear
-                 * @type Boolean
-                 */
-                canClear: {
-                    type: Boolean,
-                    notify: true,
-                    computed: '_computeCanClear(canUndo, canRedo)'
-                },
-                /**
-                 * Hide the buttons (Trash, Undo, Redo).
-                 *
-                 * @attribute hidebuttons
-                 * @type Boolean
-                 */
-                hidebuttons: {
-                    type: Boolean,
-                    value: false
-                },
-                /**
-                 * Hide the result div tag.
-                 *
-                 * @attribute hideresult
-                 * @type Boolean
-                 */
-                hideresult: {
-                    type: Boolean,
-                    value: false
-                },
-                /**
-                 * Math result types (LATEX, MATHML or SYMBOLTREE).
-                 *
-                 * @attribute resulttypes
-                 * @type Array
-                 */
-                resulttypes: {
-                    type: Array,
-                    value: [],
-                    notify: true
-                },
-                /**
-                 * Recognition parameters for the math recognition.<br>
-                 *
-                 * @private
-                 * @attribute math-parameters
-                 * @type Object
-                 */
-                mathParameters: {
-                    type: Object,
-                    notify: true,
-                    computed: '_computeMathParameters(resulttypes)'
-                },
-                /**
-                 * Math recognition result document.<br>
-                 *
-                 * @private
-                 * @attribute math-document
-                 * @type Object
-                 */
-                mathDocument: {
-                    type: Object,
-                    value: new MyScript.MathDocument(),
-                    notify: true
-                },
-                /**
-                 * Recognition result.
-                 * @attribute result
-                 * @type Object
-                 */
-                result: {
-                    type: Object,
-                    notify: true,
-                    computed: '_computeResult(mathDocument)'
-                },
-                /**
-                 * LaTeX result.
-                 * @attribute latex
-                 * @type String
-                 */
-                latex: {
-                    type: String,
-                    notify: true,
-                    computed: '_computeLaTeXResult(result)',
-                    observer: '_observeLaTeXResult'
-                },
-                /**
-                 * MathML result.
-                 * @attribute mathml
-                 * @type String
-                 */
-                mathml: {
-                    type: String,
-                    notify: true,
-                    computed: '_computeMathMLResult(result)'
-                }
-            },
-            behaviors: [
-                Polymer.IronResizableBehavior
-            ],
-            listeners: {
-                'iron-resize': '_onResize'
+            protocol: {
+                type: String,
+                value: MyScript.Protocol.WS
             },
             /**
-             * Delete action.
-             *
-             * @method delete
+             * The current recognition service host.
              */
-            delete: function () {
-                this._myscriptCommonElement.clear();
-                if(!this.hideresult) {
-                    this._resultField.innerHTML = "";
-                }
-                this.result = undefined;
-                this.fire('myscript-math-web-delete');
+            host: {
+                type: String,
+                value: 'cloud.myscript.com'
             },
             /**
-             * Undo action.
-             *
-             * @method undo
+             * The recognition timeout, only use .
              */
-            undo: function () {
-                this._myscriptCommonElement.undo();
+            timeout: {
+                type: Number,
+                value: 2000
             },
             /**
-             * Redo action.
-             *
-             * @method redo
+             * Application key to use for recognition on MyScript handwriting recognition server.<br />
+             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
+             * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
              */
-            redo: function () {
-                this._myscriptCommonElement.redo();
-            },
-            _onChanged: function (e) {
-                if (e.detail) {
-                    this.canUndo = e.detail.canUndo;
-                    this.canRedo = e.detail.canRedo;
-                }
-                this.fire(e.type, e.detail);
+            applicationkey: {
+                type: String
             },
             /**
-             * Recognition success listener.
-             *
+             * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
+             * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
+             * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
+             */
+            hmackey: {
+                type: String
+            },
+            /**
              * @private
-             * @method _onSuccess
              */
-            _onSuccess: function (e) {
-                this._resultField.innerHTML = '';
-                if (e.detail && e.detail.getMathDocument) {
-                    this.mathDocument = e.detail.getMathDocument();
-                } else {
-                    this.mathDocument = new MyScript.MathDocument();
-                }
-                this.fire(e.type, e.detail);
-                this.fire('myscript-math-web-result', this.result);
+            canundo: {
+                type: Boolean,
+                notify: true,
+                value: false
             },
             /**
-             * Failure listener.
-             *
              * @private
-             * @method _onFailure
              */
-            _onFailure: function (e) {
-                this.fire(e.type, e.detail);
-                this._paperToast.text = (typeof e.detail === 'object') ? JSON.stringify(e.detail) : e.detail;
-                this._paperToast.show();
+            canredo: {
+                type: Boolean,
+                notify: true,
+                value: false
             },
             /**
-             * Resize listener
-             *
              * @private
-             * @method _onResize
              */
-            _onResize: function () {
-                if (this._myscriptCommonElement) {
-                    this._myscriptCommonElement._onResize();
-                }
+            canclear: {
+                type: Boolean,
+                notify: true,
+                value: false
             },
-            ready: function () {
-                this._resultField = this.querySelector('#resultField');
-                this._myscriptCommonElement = this.querySelector('myscript-common-element');
-                this._paperToast = this.querySelector('paper-toast');
+            /**
+             * If set to true, hide the buttons (Trash, Undo, Redo).
+             */
+            hidebuttons: {
+                type: Boolean,
+                value: false
             },
-            _computeCanClear: function (canUndo, canRedo) {
-                return canUndo || canRedo;
+            /**
+             * If set to true, hide the result div tag.
+             */
+            hideresult: {
+                type: Boolean,
+                value: false,
+                observer: '_hideresultChanged'
             },
-            _computeMathParameters: function (resulttypes) {
-                var parameters = new MyScript.MathParameter();
-                parameters.setResultTypes(resulttypes);
-                return parameters;
+            /**
+             * Math result types (LATEX, MATHML or SYMBOLTREE).
+             * @type {Array<String>}
+             */
+            resulttypes: {
+                type: Array,
+                value: []
             },
-            _computeResult: function (mathDocument) {
-                var result = {};
-                if (mathDocument && mathDocument.getResultElements) {
-                    for (var i in mathDocument.getResultElements()) {
-                        result[mathDocument.getResultElements()[i].getType()] = mathDocument.getResultElements()[i].getValue();
-                    }
-                }
-                return result;
+            /**
+             * Recognition parameters for the math recognition.
+             * @type {{resultTypes: Array<String>, columnarOperation: Boolean, userResources: Array<String>, scratchOutDetectionSensitivity: Number}}
+             */
+            _mathParameters: {
+                type: Object,
+                computed: '_computeMathParameters(resulttypes)'
             },
-            _computeLaTeXResult: function (result) {
-                if (result && result.hasOwnProperty(MyScript.ResultType.Math.LATEX)) {
-                    return result.LATEX;
-                }
-                return undefined;
+            /**
+             * Recognition result.
+             * @attribute result
+             * @type {Object<String, Object>}
+             */
+            result: {
+                type: Object,
+                notify: true
             },
-            _computeMathMLResult: function (result) {
-                if (result && result.hasOwnProperty(MyScript.ResultType.Math.MATHML)) {
-                    return result.MATHML;
-                }
-                return undefined;
-            },
-            _observeLaTeXResult: function (latex) {
-                if (latex) {
-                    try {
-                        katex.render(latex, this._resultField);
-                    } catch (e) {
-                        this._resultField.innerHTML = '<span>Invalid KaTeX mathemathic expression.</span>';
-                    }
-                } else if (this.canUndo) {
-                    this._resultField.innerHTML = '<span>No LaTeX mathemathic expression return to the result. Check your resulttypes attribut.</span>';
+            /**
+             * @private
+             */
+            ssl: {
+                type: Boolean,
+                value: true
+            }
+        },
+        _clear: function () {
+            this._myscriptCommonElement.clear();
+            this.fire('myscript-math-web-delete');
+        },
+        _undo: function () {
+            this._myscriptCommonElement.undo();
+        },
+        _redo: function () {
+            this._myscriptCommonElement.redo();
+        },
+        /**
+         * Clear the  current document.
+         */
+        delete: function () {
+            this._clear();
+        },
+        /**
+         * Undo the last action.
+         */
+        undo: function () {
+            this._undo();
+        },
+        /**
+         * Redo the last action.
+         */
+        redo: function () {
+            this._redo();
+        },
+        /**
+         * Return the stats allowing to monitor what ink size is send to the server.
+         * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+         */
+        getStats: function () {
+            if (this._myscriptCommonElement) {
+                return this._myscriptCommonElement.getStats();
+            }
+        },
+        _onChanged: function (e) {
+            this.fire(e.type, e.detail);
+        },
+        /**
+         * Recognition success listener.
+         *
+         * @private
+         * @method _onSuccess
+         */
+        _onSuccess: function (e) {
+            this.result = {};
+            if (e.detail.getMathDocument && e.detail.getMathDocument().getResultElements().length > 0) {
+                console.log(e.detail.getMathDocument());
+                var resultElements = e.detail.getMathDocument().getResultElements();
+                for (var res in resultElements) {
+                    this.result[resultElements[res].getType()] = resultElements[res].getValue();
                 }
             }
-        });
 
-    })();
+            var resultField = this.querySelector('#resultField');
+            if (Object.keys(this.result).length !== 0) {
+                if (this.result.hasOwnProperty('LATEX')) {
+                    try {
+                        katex.render(this.result.LATEX, resultField);
+                    } catch (e) {
+                        resultField.innerHTML = "<span>Invalid KaTeX mathemathic expression.</span>";
+                    }
+                } else {
+                    resultField.innerHTML = "<span>No LaTeX mathemathic expression return to the result. Check your resulttypes attribut.</span>";
+                }
+            } else {
+                resultField.innerHTML = "";
+            }
+            this.fire('myscript-math-web-result', this.result);
+        },
+        _onError: function (e) {
+            this.fire(e.type, e.detail);
+        },
+        ready: function () {
+            this._myscriptCommonElement = this.querySelector('myscript-common-element');
+            this._hideresultChanged(this.hideresult);
+        },
+        _computeMathParameters: function (resulttypes) {
+            var parameters = new MyScript.MathParameter();
+            parameters.setResultTypes(resulttypes);
+            return parameters;
+        },
+
+        _hideresultChanged: function (hideresult) {
+            if (this._myscriptCommonElement) {
+                if (hideresult) {
+                    this._myscriptCommonElement.classList.remove('result');
+                } else {
+                    this._myscriptCommonElement.classList.add('result');
+                }
+            }
+        }
+    });
 </script>

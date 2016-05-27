@@ -58,20 +58,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <iron-ajax auto handle-as='text'></iron-ajax>
     </template>
   </test-fixture>
-  <!-- note(rictic):
-       This makes us dependent on a third-party server, but we need to be able
-       to check what headers the browser actually sends on the wire.
-       If necessary we can spin up our own httpbin server, as the code is open
-       source.
-    -->
   <test-fixture id="RealPost">
     <template>
-      <iron-ajax method="POST" url="http://httpbin.org/post"></iron-ajax>
+      <iron-ajax method="POST" url="/httpbin/post"></iron-ajax>
     </template>
   </test-fixture>
   <test-fixture id="Delay">
     <template>
-      <iron-ajax url="http://httpbin.org/delay/1"></iron-ajax>
+      <iron-ajax url="/httpbin/delay/1"></iron-ajax>
+    </template>
+  </test-fixture>
+  <test-fixture id="Bubbles">
+    <template>
+      <iron-ajax url="/httpbin/post" method="POST" bubbles></iron-ajax>
+      <iron-ajax url="/responds_to_get_with_502_error_json" bubbles></iron-ajax>
     </template>
   </test-fixture>
   <script>
@@ -276,6 +276,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }).then(function() {
             expect(ajax.loading).to.be.equal(false);
           });
+        });
+
+        test('the loading-changed event gets fired twice', function() {
+
+          var count = 0;
+          ajax.addEventListener('loading-changed', function() {
+            count++;
+          });
+
+          var request = ajax.generateRequest();
+
+          server.respond();
+
+          return request.completes.then(function() {
+            return timePasses(1);
+          }).then(function() {
+            expect(count).to.be.equal(2);
+          });
+
         });
       });
 
@@ -796,6 +815,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             expect(ajax.lastResponse).to.be.equal(null);
             expect(ajax.lastError).to.not.be.equal(null);
           });
+        });
+      });
+
+      suite('when using the bubbles attribute', function () {
+        setup(function() {
+          server.restore();
+        });
+        test('the request and response events should bubble to window', function (done) {
+          server.restore();
+          var total = 0;
+          function incrementTotal(){
+            total++;
+            if (total === 2){
+              done();
+            }
+          }
+          window.addEventListener('request', incrementTotal);
+          window.addEventListener('response', incrementTotal);
+          var ajax = fixture('Bubbles')[0];
+          ajax.generateRequest();
+          server.respond();
+        });
+
+        test('the request and error events should bubble to window', function (done) {
+          server.restore();
+          var total = 0;
+          function incrementTotal(){
+            total++;
+            if (total === 2){
+              done();
+            }
+          }
+          window.addEventListener('request', incrementTotal);
+          window.addEventListener('error', incrementTotal);
+          var ajax = fixture('Bubbles')[1];
+          ajax.generateRequest();
+          server.respond();
         });
       });
 

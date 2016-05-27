@@ -1,10 +1,26 @@
 include Makefile.inc
 
-ALL:
+ALL: purge clean prepare docker test
 
 .PHONY: ALL \
+	purge clean prepare \
 	watch dev \
 	escrow
+
+purge:
+	@rm -rf bower_components/
+
+clean:
+
+prepare:
+	@git fetch --tags
+	@bower install
+
+build:
+
+test:
+
+docker: build
 
 watch:
 

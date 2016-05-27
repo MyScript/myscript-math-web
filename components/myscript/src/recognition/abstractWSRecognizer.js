@@ -1,30 +1,103 @@
 'use strict';
 
-(function (scope) {
+(function (scope, CryptoJS) {
     /**
      * Abstract WebSocket recognizer interface
      *
      * @class AbstractWSRecognizer
-     * @extends AbstractRecognizer
-     * @param {String} [host='cloud.myscript.com'] Recognition service host
      * @constructor
      */
-    function AbstractWSRecognizer(host) {
-        scope.AbstractRecognizer.call(this, host);
+    function AbstractWSRecognizer() {
+        this._wsInterface = new scope.NetworkWSInterface();
     }
 
-    /**
-     * Inheritance property
-     */
-    AbstractWSRecognizer.prototype = new scope.AbstractRecognizer();
+    AbstractWSRecognizer.prototype.getProtocol = function() {
+        return this._ssl? 'wss://': 'ws://';
+    };
+
+    AbstractWSRecognizer.prototype.getSSL = function() {
+        return this._ssl;
+    };
+
+    AbstractWSRecognizer.prototype.setSSL = function (ssl) {
+        if (ssl !== undefined) {
+            this._ssl = ssl;
+            this.setUrl(this.getProtocol() + this.getHost());
+        }
+    };
 
     /**
-     * Constructor property
+     * Get the recognition service host
+     *
+     * @method getHost
+     * @returns {string|String|*}
      */
-    AbstractWSRecognizer.prototype.constructor = AbstractWSRecognizer;
+    AbstractWSRecognizer.prototype.getHost = function() {
+        return scope.NetworkInterface.parseURL(this.getUrl()).host;
+    };
 
-    AbstractWSRecognizer.prototype._init = function (endpoint, callback) {
-        this._wsInterface = new scope.NetworkWSInterface(endpoint, callback);
+    /**
+     * Set the recognition service host
+     *
+     * @method setHost
+     * @param {String}
+     */
+    AbstractWSRecognizer.prototype.setHost = function (host) {
+        if (host !== undefined) {
+            this.setUrl(this.getProtocol() + host);
+        }
+    };
+
+    AbstractWSRecognizer.prototype.setUrl = function (url) { // jshint ignore:line
+        throw new Error('not implemented');
+    };
+
+    AbstractWSRecognizer.prototype.getUrl = function () {
+        return this._wsInterface.getUrl();
+    };
+
+    AbstractWSRecognizer.prototype.setCallback = function (callback) { // jshint ignore:line
+        throw new Error('not implemented');
+    };
+
+    /**
+     * Get parameters
+     *
+     * @method getParameters
+     * @returns {AbstractParameter}
+     */
+    AbstractWSRecognizer.prototype.getParameters = function () {
+        return this.parameters;
+    };
+
+    /**
+     * Set parameters
+     *
+     * @method setParameters
+     * @param {AbstractParameter} parameters
+     */
+    AbstractWSRecognizer.prototype.setParameters = function (parameters) {
+        this.parameters = parameters;
+    };
+
+    /**
+     * Get precision
+     *
+     * @method getPrecision
+     * @returns {Number}
+     */
+    AbstractWSRecognizer.prototype.getPrecision = function () {
+        return this.precision;
+    };
+
+    /**
+     * Set precision
+     *
+     * @method setPrecision
+     * @param {Number} precision
+     */
+    AbstractWSRecognizer.prototype.setPrecision = function (precision) {
+        this.precision = precision;
     };
 
     AbstractWSRecognizer.prototype.isClosed = function () {
@@ -68,6 +141,13 @@
      * @param {AbstractWSMessage} message
      */
     AbstractWSRecognizer.prototype.sendMessage = function (message) {
+        if (message.getComponents) {
+            _filterStrokes(message.getComponents(), this.getPrecision());
+        } else if (message.getInputUnits) {
+            for (var i in message.getInputUnits()) {
+                _filterStrokes(message.getInputUnits()[i].getComponents(), this.getPrecision());
+            }
+        }
         this._wsInterface.send(message);
     };
 
@@ -96,7 +176,7 @@
         message.setApplicationKey(applicationKey);
         message.setChallenge(challenge);
         if (hmacKey) {
-            message.setHmacSignature(this.computeHmac(applicationKey, challenge, hmacKey));
+            message.setHmacSignature(_computeHmac(challenge, applicationKey, hmacKey));
         }
         this.sendMessage(message);
     };
@@ -111,6 +191,28 @@
         this.sendMessage(message);
     };
 
+    /**
+     * Compute HMAC signature for server authentication
+     *
+     * @private
+     * @method _computeHmac
+     * @param {String} input
+     * @param {String} applicationKey
+     * @param {String} hmacKey
+     */
+    var _computeHmac = function (input, applicationKey, hmacKey) {
+        var jsonInput = (typeof input === 'object') ? JSON.stringify(input) : input;
+        return CryptoJS.HmacSHA512(jsonInput, applicationKey + hmacKey).toString(CryptoJS.enc.Hex);
+    };
+
+    var _filterStrokes = function (components, precision) {
+        components.forEach(function (currentValue) {
+            if (currentValue instanceof scope.Stroke) {
+                currentValue.toFixed(precision);
+            }
+        });
+    };
+
     // Export
     scope.AbstractWSRecognizer = AbstractWSRecognizer;
-})(MyScript);
+})(MyScript, CryptoJS);

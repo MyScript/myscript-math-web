@@ -1,6 +1,6 @@
 {
   "name": "myscript-math-web",
-  "version": "1.2.0-beta1",
+  "version": "1.2.0",
   "description": "HTML5 Element easing integration of MyScript math handwriting recognition in your web-page",
   "keywords": [
     "web-component",
@@ -15,10 +15,10 @@
   ],
   "main": "myscript-math-web.html",
   "license": "Apache-2",
-  "homepage": "https://github.com/MyScriptWebComponents/myscript-math-web/",
+  "homepage": "https://myscript.github.io/myscript-math-web/components/myscript-math-web/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/MyScriptWebComponents/myscript-math-web.git"
+    "url": "git://github.com/MyScript/myscript-math-web.git"
   },
   "ignore": [
     "**/.*",
@@ -28,26 +28,18 @@
     "test"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#1.2.x",
-    "iron-icons": "PolymerElements/iron-icons#1.0.x",
-    "paper-fab": "PolymerElements/paper-fab#1.0.x",
-    "paper-toast": "PolymerElements/paper-toast#1.0.x",
-    "katex": "katex#v0.5.x",
-    "iron-flex-layout": "PolymerElements/iron-flex-layout#1.0.x",
-    "myscript-common-element": "myscript-common-element#1.1.x"
+    "polymer": "Polymer/polymer#1.4.x",
+    "myscript-common-element": "myscript-common-element#master",
+    "KaTeX": "katex#0.6.x"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#1.0.x",
-    "web-component-tester": "*"
+    "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
   },
-  "_release": "1.2.0-beta1",
-  "_resolution": {
-    "type": "version",
-    "tag": "1.2.0-beta1",
-    "commit": "45f5e70eeb64d4f4d8f2a538b6b6c44bd0584165"
+  "resolutions": {
+    "myscript": "master"
   },
-  "_source": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-math-web.git",
-  "_target": "1.2.0-beta1",
-  "_originalSource": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-math-web.git",
+  "_source": "/home/padewitte/projets/webcomponents/myscript-math-web",
+  "_target": "*",
+  "_originalSource": "../../myscript-math-web/",
   "_direct": true
 }

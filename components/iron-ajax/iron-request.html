@@ -18,7 +18,7 @@ iron-request can be used to perform XMLHttpRequests.
     this.$.xhr.send({url: url, params: params});
 -->
 <script>
-  'use strict'
+  'use strict';
 
   Polymer({
     is: 'iron-request',
@@ -169,6 +169,9 @@ iron-request can be used to perform XMLHttpRequests.
 
     /**
      * Sends an HTTP request to the server and returns the XHR object.
+     *
+     * The handling of the `body` parameter will vary based on the Content-Type
+     * header. See the docs for iron-ajax's `body` param for details.
      *
      * @param {{
      *   url: string,
@@ -431,4 +434,3 @@ iron-request can be used to perform XMLHttpRequests.
     }
   });
 </script>
-

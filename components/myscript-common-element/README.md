@@ -3,7 +3,7 @@ myscript-common-element
 
 ## What is it about?
 
-myscript-common-element is the common layer of [myscript-math-web](http://github.com/myscript-math-web) and [myscript-text-web](http://github.com/myscript-math-web).
+myscript-common-element is the common layer of [myscript-math-web](https://github.com/MyScript/myscript-math-web) and [myscript-text-web](https://github.com/MyScript/myscript-text-web).
 
 ## Contribute
 

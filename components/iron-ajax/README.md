@@ -7,25 +7,29 @@ iron-ajax.html  iron-request.html
 Edit those files, and our readme bot will duplicate them over here!
 Edit this file, and the bot will squash your changes :)
 
+The bot does some handling of markdown. Please file a bug if it does the wrong
+thing! https://github.com/PolymerLabs/tedium/issues
+
 -->
 
-[![Build Status](https://travis-ci.org/PolymerElements/iron-ajax.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-ajax)
+[![Build status](https://travis-ci.org/PolymerElements/iron-ajax.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-ajax)
 
-_[Demo and API Docs](https://elements.polymer-project.org/elements/iron-ajax)_
+_[Demo and API docs](https://elements.polymer-project.org/elements/iron-ajax)_
 
 
 ##&lt;iron-ajax&gt;
 
-
 The `iron-ajax` element exposes network request functionality.
 
-    <iron-ajax
-        auto
-        url="http://gdata.youtube.com/feeds/api/videos/"
-        params='{"alt":"json", "q":"chrome"}'
-        handle-as="json"
-        on-response="handleResponse"
-        debounce-duration="300"></iron-ajax>
+```html
+<iron-ajax
+    auto
+    url="http://gdata.youtube.com/feeds/api/videos/"
+    params='{"alt":"json", "q":"chrome"}'
+    handle-as="json"
+    on-response="handleResponse"
+    debounce-duration="300"></iron-ajax>
+```
 
 With `auto` set to `true`, the element performs a request whenever
 its `url`, `params` or `body` properties are changed. Automatically generated
@@ -41,10 +45,12 @@ element.
 
 ##&lt;iron-request&gt;
 
-
 iron-request can be used to perform XMLHttpRequests.
 
-    <iron-request id="xhr"></iron-request>
-    ...
-    this.$.xhr.send({url: url, params: params});
+```html
+<iron-request id="xhr"></iron-request>
+...
+this.$.xhr.send({url: url, params: params});
+```
+
 

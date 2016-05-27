@@ -16,9 +16,15 @@
         this.y = [];
         this.t = [];
         if (obj) {
-            this.x = obj.x;
-            this.y = obj.y;
-            this.t = obj.t;
+            if (obj.x) {
+                this.x = obj.x;
+            }
+            if (obj.y) {
+                this.y = obj.y;
+            }
+            if (obj.t) {
+                this.t = obj.t;
+            }
         }
     }
 
@@ -145,6 +151,15 @@
         boundingBox.setWidth(Math.max.apply(Math, this.getX()) - boundingBox.getX());
         boundingBox.setHeight(Math.max.apply(Math, this.getY()) - boundingBox.getY());
         return boundingBox;
+    };
+
+    Stroke.prototype.toFixed = function (precision) {
+        if (precision !== undefined) {
+            for (var i in this.x) {
+                this.x[i] = this.x[i].toFixed(precision);
+                this.y[i] = this.y[i].toFixed(precision);
+            }
+        }
     };
 
     // Export

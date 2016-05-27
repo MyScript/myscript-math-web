@@ -3,17 +3,19 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="HandheldFriendly" content="true" />
 
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../iron-component-page/iron-component-page.html">
+
     <style>
-        #active {
-            visibility: hidden;
+        paper-header-panel#headerPanel select {
+            display: none;
         }
     </style>
 </head>
-<body>
+<body unresolved>
 
 <iron-component-page></iron-component-page>
 

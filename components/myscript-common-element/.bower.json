@@ -1,6 +1,5 @@
 {
   "name": "myscript-common-element",
-  "version": "1.1.0",
   "description": "HTML5 Element easing integration of MyScript handwriting recognition in your web-page",
   "keywords": [
     "myscript"
@@ -20,21 +19,23 @@
     "test"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#1.2.x",
+    "polymer": "Polymer/polymer#1.4.x",
     "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#1.0.x",
-    "myscript": "myscript#1.1.x"
+    "iron-icons": "PolymerElements/iron-icons#1.1.x",
+    "paper-fab": "PolymerElements/paper-fab#1.2.x",
+    "paper-toast": "PolymerElements/paper-toast#1.2.x",
+    "myscript": "myscript#master"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#1.0.x",
-    "web-component-tester": "*"
+    "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
   },
-  "_release": "1.1.0",
+  "_release": "cae4d5ccca",
   "_resolution": {
-    "type": "version",
-    "tag": "v1.1.0",
-    "commit": "1f9400ce60093b7ef125983b0395c529f90c3cbb"
+    "type": "branch",
+    "branch": "master",
+    "commit": "cae4d5ccca0fd9b701310ce9850a779505f8c1df"
   },
-  "_source": "git://github.com/MyScript/myscript-common-element.git",
-  "_target": "1.1.x",
+  "_source": "https://build:Xou7chat@scm.corp.myscript.com/scm/ws/webcomponents-myscript-common-element.git",
+  "_target": "master",
   "_originalSource": "myscript-common-element"
 }
