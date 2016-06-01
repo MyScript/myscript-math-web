@@ -39,7 +39,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         .katex {
             padding-top: 3px ;
         }
-
     </style>
     <template>
         <div id="resultField" class="resultField" hidden="[[ hideresult ]]"></div>
@@ -254,7 +253,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             if (Object.keys(this.result).length !== 0) {
                 if (this.result.hasOwnProperty('LATEX')) {
                     try {
-                        katex.render(this.result.LATEX, resultField);
+                        katex.render(this._cleanLatexResult(this.result.LATEX), resultField);
                     } catch (e) {
                         resultField.innerHTML = "<span>Invalid KaTeX mathemathic expression.</span>";
                     }
@@ -278,7 +277,13 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             parameters.setResultTypes(resulttypes);
             return parameters;
         },
-
+        _cleanLatexResult: function (latex) {
+            return latex
+                .replace("\\overrightarrow", "\\vec")
+                .replace("\\llbracket", "\\lbracket")
+                .replace("\\rrbracket", "\\rbracket")
+                .replace("\\widehat", "\\hat");
+        },
         _hideresultChanged: function (hideresult) {
             if (this._myscriptCommonElement) {
                 if (hideresult) {

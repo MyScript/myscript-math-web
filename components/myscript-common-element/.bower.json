@@ -29,11 +29,11 @@
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
   },
-  "_release": "cae4d5ccca",
+  "_release": "123a043892",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "cae4d5ccca0fd9b701310ce9850a779505f8c1df"
+    "commit": "123a043892bfed336ec80c2b8fb8606a0eefe286"
   },
   "_source": "https://build:Xou7chat@scm.corp.myscript.com/scm/ws/webcomponents-myscript-common-element.git",
   "_target": "master",
