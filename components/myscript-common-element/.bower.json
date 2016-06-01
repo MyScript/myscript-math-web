@@ -35,7 +35,7 @@
     "branch": "master",
     "commit": "123a043892bfed336ec80c2b8fb8606a0eefe286"
   },
-  "_source": "https://build:Xou7chat@scm.corp.myscript.com/scm/ws/webcomponents-myscript-common-element.git",
+  "_source": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-common-element.git",
   "_target": "master",
   "_originalSource": "myscript-common-element"
 }
