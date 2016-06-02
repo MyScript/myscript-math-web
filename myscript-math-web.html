@@ -241,9 +241,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
          */
         _onSuccess: function (e) {
             this.result = {};
-            if (e.detail.getMathDocument && e.detail.getMathDocument().getResultElements().length > 0) {
-                console.log(e.detail.getMathDocument());
-                var resultElements = e.detail.getMathDocument().getResultElements();
+            if (e.detail.getDocument && e.detail.getDocument().getResultElements().length > 0) {
+                console.log(e.detail.getDocument());
+                var resultElements = e.detail.getDocument().getResultElements();
                 for (var res in resultElements) {
                     this.result[resultElements[res].getType()] = resultElements[res].getValue();
                 }
