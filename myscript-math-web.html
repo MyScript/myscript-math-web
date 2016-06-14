@@ -34,10 +34,15 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             min-height: 95px;
             max-height: 95px;
             padding-top: 5px;
-
         }
         .katex {
             padding-top: 3px ;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -50%)
         }
     </style>
     <template>
