@@ -288,7 +288,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 .replace("\\overrightarrow", "\\vec")
                 .replace("\\llbracket", "\\lbracket")
                 .replace("\\rrbracket", "\\rbracket")
-                .replace("\\widehat", "\\hat");
+                .replace("\\widehat", "\\hat")
+                .replace(new RegExp("(align.{1})", "g"), "aligned");
         },
         _hideresultChanged: function (hideresult) {
             if (this._myscriptCommonElement) {
