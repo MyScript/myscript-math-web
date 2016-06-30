@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <title>MyScriptJS demo</title>
 </head>
-<body>
+<body touch-action="none">
 <h1>MyScriptJS demo - WS text sample</h1>
 <button id="trash" disabled>Trash</button>
 <button id="undo" disabled>Undo</button>
@@ -77,7 +77,7 @@
                             languages.disabled = false;
                         }
                     } else { // Display the selected text candidate
-                        result.innerHTML = data.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
+                        result.innerHTML = data.getDocument().getTextSegment().getSelectedCandidate().getLabel();
                     }
                 }
             });

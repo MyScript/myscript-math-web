@@ -37,6 +37,7 @@
   },
   "resolutions": {
     "myscript": "*",
+    "polymer": "1.4.x",
     "myscript-common-element": "*"
   }
 }

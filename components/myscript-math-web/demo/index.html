@@ -2,10 +2,13 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
     <title>myscript-math-web demo</title>
+
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../myscript-math-web.html">
-
 </head>
 <style>
     body {
@@ -16,7 +19,7 @@
         height: 100%;
     }
 </style>
-<body unresolved>
+<body touch-action="none" unresolved>
 <template id="app" is="dom-bind">
     <myscript-math-web
         host="webdemo.myscript.com"

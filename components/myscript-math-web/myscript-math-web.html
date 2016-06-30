@@ -28,20 +28,27 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             height: calc(100% - 100px);
         }
         .resultField {
-            font-size: x-large;
+            font-size: larger;
             overflow: hidden;
             text-align: center;
             min-height: 95px;
             max-height: 95px;
             padding-top: 5px;
-
+            position: relative
         }
-        .katex {
+        .katexcontainer {
             padding-top: 3px ;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-right: -50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
         }
     </style>
     <template>
-        <div id="resultField" class="resultField" hidden="[[ hideresult ]]"></div>
+        <div id="resultField" class="resultField" hidden="[[ hideresult ]]"><div class="katexcontainer"></div></div>
         <myscript-common-element host="[[ host ]]"
                                  protocol="[[ protocol ]]"
                                  type="MATH"
@@ -241,24 +248,24 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
          */
         _onSuccess: function (e) {
             this.result = {};
-            if (e.detail.getMathDocument && e.detail.getMathDocument().getResultElements().length > 0) {
-                console.log(e.detail.getMathDocument());
-                var resultElements = e.detail.getMathDocument().getResultElements();
+            if (e.detail.getDocument && e.detail.getDocument().getResultElements().length > 0) {
+                //console.log(e.detail.getDocument());
+                var resultElements = e.detail.getDocument().getResultElements();
                 for (var res in resultElements) {
                     this.result[resultElements[res].getType()] = resultElements[res].getValue();
                 }
             }
 
-            var resultField = this.querySelector('#resultField');
+            var resultField = this.querySelector('.katexcontainer');
             if (Object.keys(this.result).length !== 0) {
                 if (this.result.hasOwnProperty('LATEX')) {
                     try {
                         katex.render(this._cleanLatexResult(this.result.LATEX), resultField);
                     } catch (e) {
-                        resultField.innerHTML = "<span>Invalid KaTeX mathemathic expression.</span>";
+                        resultField.innerHTML = "<span>"+this._cleanLatexResult(this.result.LATEX)+"</span>";
                     }
                 } else {
-                    resultField.innerHTML = "<span>No LaTeX mathemathic expression return to the result. Check your resulttypes attribut.</span>";
+                    resultField.innerHTML = "<span>No LaTeX mathematic expression return to the result. Check your resulttypes attribut.</span>";
                 }
             } else {
                 resultField.innerHTML = "";
@@ -282,7 +289,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 .replace("\\overrightarrow", "\\vec")
                 .replace("\\llbracket", "\\lbracket")
                 .replace("\\rrbracket", "\\rbracket")
-                .replace("\\widehat", "\\hat");
+                .replace("\\widehat", "\\hat")
+                .replace(new RegExp("(align.{1})", "g"), "aligned");
         },
         _hideresultChanged: function (hideresult) {
             if (this._myscriptCommonElement) {

@@ -34,9 +34,12 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             --paper-fab-keyboard-focus-background: #00A7CF;
         }
         .buttons {
+            position: inherit;
             float: left;
             display: flex;
             display: -webkit-flex;
+            z-index: 2;
+            background-color: transparent;
         }
         paper-fab {
             z-index: 3;
