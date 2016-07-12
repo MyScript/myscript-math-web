@@ -1,5 +1,6 @@
 <!doctype html>
 <!--
+@license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
 The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
@@ -652,8 +653,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           ajax.handleAs = 'json';
           var eventFired = false;
           ajax.addEventListener('error', function(event) {
-            expect(event.detail.request).to.be.okay;
-            expect(event.detail.error).to.be.okay;
+            expect(event.detail.request).to.be.ok;
+            expect(event.detail.error).to.be.ok;
             eventFired = true;
           });
           var request = ajax.generateRequest();
@@ -666,6 +667,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }).then(function() {
             expect(eventFired).to.be.eq(true);
             expect(ajax.lastError).to.not.be.eq(null);
+            expect(ajax.lastError.status).to.be.eq(502);
+            expect(ajax.lastError.statusText).to.be.eq("Bad Gateway");
+            expect(ajax.lastError.response).to.be.ok;
           });
 
           server.respond();
@@ -678,8 +682,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           server.restore();
           var eventFired = false;
           ajax.addEventListener('error', function(event) {
-            expect(event.detail.request).to.be.okay;
-            expect(event.detail.error).to.be.okay;
+            expect(event.detail.request).to.be.ok;
+            expect(event.detail.error).to.be.ok;
             eventFired = true;
           });
           var request = ajax.generateRequest();

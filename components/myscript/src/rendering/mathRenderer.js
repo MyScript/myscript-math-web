@@ -31,8 +31,13 @@
      * @param {MathDocument} recognitionResult
      */
     MathRenderer.prototype.drawRecognitionResult = function (components, recognitionResult) {
-        var notScratchOutComponents = _removeMathScratchOut(components, recognitionResult.getScratchOutResults());
-        this.drawComponents(notScratchOutComponents);
+        this.clear();
+        if (recognitionResult) {
+            var notScratchOutComponents = _filterScratchOut(components, recognitionResult.getScratchOutResults());
+            this.drawComponents(notScratchOutComponents);
+        } else {
+            this.drawComponents(components);
+        }
     };
 
     /**
@@ -45,12 +50,15 @@
         for (var i in components) {
             var component = components[i];
             if (component instanceof scope.AbstractComponent) {
-                scope.AbstractRenderer.prototype.drawComponent.call(this, component); // super
+                if(!component.scratchedStroke){
+                    scope.AbstractRenderer.prototype.drawComponent.call(this, component); // super
+                }
             } else {
                 throw new Error('not implemented');
             }
         }
     };
+
 
     /**
      * Return non-scratched out components
@@ -60,31 +68,19 @@
      * @param scratchOutResults
      * @returns {*}
      */
-    var _removeMathScratchOut = function (components, scratchOutResults) {
+    var _filterScratchOut = function (components, scratchOutResults) {
         if (!scratchOutResults || scratchOutResults.length === 0) {
             return components;
         }
-
-        var cloneComponents = components.slice(0);
-        var componentsToRemove = [];
-
         for (var k in scratchOutResults) {
             for (var n in scratchOutResults[k].getErasedInkRanges()) {
-                componentsToRemove.push(scratchOutResults[k].getErasedInkRanges()[n].getComponent());
+                components[scratchOutResults[k].getErasedInkRanges()[n].getComponent()].scratchedStroke = true;
             }
             for (var p in scratchOutResults[k].getInkRanges()) {
-                componentsToRemove.push(scratchOutResults[k].getInkRanges()[p].getComponent());
+                components[scratchOutResults[k].getInkRanges()[p].getComponent()].scratchedStroke = true;;
             }
         }
-
-        componentsToRemove.sort(function (a, b) {
-            return b - a;
-        });
-
-        for (var z in componentsToRemove) {
-            cloneComponents.splice(componentsToRemove[z], 1);
-        }
-        return cloneComponents;
+        return components;
     };
 
     // Export

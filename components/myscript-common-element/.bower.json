@@ -29,11 +29,14 @@
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
   },
-  "_release": "d7f7674c16",
+  "resolutions": {
+    "polymer": "1.4.x"
+  },
+  "_release": "bc6b215152",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "d7f7674c1608d14f76acaf2323aab421a9ea6e4b"
+    "commit": "bc6b215152e728bb563de68026466f6877d2f100"
   },
   "_source": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-common-element.git",
   "_target": "master",

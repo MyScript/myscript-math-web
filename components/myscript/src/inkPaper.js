@@ -18,9 +18,10 @@
         this._instanceId = undefined;
         this._timerId = undefined;
         this._initialized = false;
-        this.components = [];
-        this.redoComponents = [];
-        this.lastNonRecoComponentIdx = 0;
+        this._lastSentComponentIndex = 0;
+        this._components = [];
+        this._redoComponents = [];
+        this.isStarted = false;
         this.resultCallback = callback;
         this.changeCallback = undefined;
         this.canvasRatio = 1;
@@ -159,7 +160,7 @@
         }
         this._instanceId = undefined;
         this._initialized = false;
-        this.lastNonRecoComponentIdx = 0;
+        this._lastSentComponentIndex = 0;
     };
 
     /**
@@ -210,7 +211,7 @@
         }
         this._instanceId = undefined;
         this._initialized = false;
-        this.lastNonRecoComponentIdx = 0;
+        this._lastSentComponentIndex = 0;
     };
 
     /**
@@ -616,7 +617,101 @@
      * @returns {Promise}
      */
     InkPaper.prototype.recognize = function () {
-        return this._doRecognition(this.components);
+        var input = this.getComponents().concat(this._components);
+        if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
+            if (this._initialized) {
+                var lastInput = input.slice(this._lastSentComponentIndex);
+
+                if (lastInput.length > 0) {
+                    this._lastSentComponentIndex = input.length;
+                    if (!this.isStarted) {
+                        this.isStarted = true;
+                        this._selectedRecognizer.startWSRecognition(lastInput);
+                    } else {
+                        this._selectedRecognizer.continueWSRecognition(lastInput, this._instanceId);
+                    }
+                } else {
+                    this._renderResult();
+                }
+            }
+        } else {
+            if (this._selectedRecognizer instanceof scope.ShapeRecognizer) {
+                this._instanceId = undefined;
+            }
+
+            if (input.length > 0) {
+                if (!this.isStarted) {
+                    this._startRESTRecognition(input);
+                } else {
+                    this._continueRESTRecognition(input, this._instanceId);
+                }
+            } else {
+                this._renderResult();
+            }
+        }
+    };
+
+    InkPaper.prototype._startRESTRecognition = function (components) {
+
+        this._instanceId = undefined;
+        this._selectedRecognizer.doSimpleRecognition(
+            this.getApplicationKey(),
+            this._instanceId,
+            components,
+            this.getHmacKey()
+        ).then(
+            function (data) {
+                if (!this.isStarted) {
+                    this.isStarted = true;
+                    this._lastSentComponentIndex = components.length;
+                    this._instanceId = data.getInstanceId();
+                    this._renderResult(data);
+                }
+            }.bind(this),
+            function (error) {
+                this._onResult(undefined, error);
+            }.bind(this)
+        );
+    };
+
+    InkPaper.prototype._continueRESTRecognition = function (components, instanceId) {
+
+        this._selectedRecognizer.doSimpleRecognition(
+            this.getApplicationKey(),
+            instanceId,
+            components,
+            this.getHmacKey()
+        ).then(
+            function (data) {
+                this._lastSentComponentIndex = this._lastSentComponentIndex + components.length;
+                this._renderResult(data);
+            }.bind(this),
+            function (error) {
+                this._onResult(undefined, error);
+            }.bind(this)
+        );
+    };
+
+    InkPaper.prototype._clearRESTRecognition = function (instanceId) {
+
+        if (this._selectedRecognizer instanceof scope.ShapeRecognizer) {
+            this.isStarted = false;
+            this._lastSentComponentIndex = 0;
+            this._selectedRecognizer.clearShapeRecognitionSession(
+                this.getApplicationKey(),
+                instanceId
+            ).then(
+                function (data) {
+                    this._instanceId = undefined;
+                    this._onResult(data);
+                }.bind(this),
+                function (error) {
+                    this._onResult(undefined, error);
+                }.bind(this)
+            );
+        } else {
+            this._onResult();
+        }
     };
 
     /**
@@ -626,7 +721,7 @@
      * @returns {Boolean}
      */
     InkPaper.prototype.canUndo = function () {
-        return this.components.length > 0;
+        return this._components.length > 0;
     };
 
     /**
@@ -636,28 +731,27 @@
      */
     InkPaper.prototype.undo = function () {
         if (this.canUndo()) {
-            this.redoComponents.push(this.components.pop());
+            //Remove the scratched state for Math strokes
+            this._components.forEach(function(stroke){
+                stroke.scratchedStroke = false;
+            });
+            //Remove the latsModel used for Shape
+            this.updatedModel = undefined;
 
-            if (this._selectedRecognizer instanceof scope.ShapeRecognizer) {
-                this.lastNonRecoComponentIdx = 0;
-                if (this._instanceId) {
-                    this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
-                    this._inkGrabber.clear();
-                    this._instanceId = undefined;
-                }
-            }
+            this._redoComponents.push(this._components.pop());
+
+            this._clearRESTRecognition(this._instanceId);
+
             this._initRenderingCanvas();
             this._onChange();
 
+            this.isStarted = false;
             if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
-                this.isStarted = false;
                 this._selectedRecognizer.resetWSRecognition();
             } else {
                 clearTimeout(this._timerId);
-                if (this.getTimeout() > 0) {
+                if (this.getTimeout() > -1) {
                     this._timerId = setTimeout(this.recognize.bind(this), this.getTimeout());
-                } else if (this.getTimeout() > -1) {
-                    this.recognize();
                 } else {
                     this._onResult();
                 }
@@ -672,7 +766,7 @@
      * @returns {Boolean}
      */
     InkPaper.prototype.canRedo = function () {
-        return this.redoComponents.length > 0;
+        return this._redoComponents.length > 0;
     };
 
     /**
@@ -682,16 +776,10 @@
      */
     InkPaper.prototype.redo = function () {
         if (this.canRedo()) {
-            this.components.push(this.redoComponents.pop());
+            this._components.push(this._redoComponents.pop());
 
-            if (this._selectedRecognizer instanceof scope.ShapeRecognizer) {
-                this.lastNonRecoComponentIdx = 0;
-                if (this._instanceId) {
-                    this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
-                    this._inkGrabber.clear();
-                    this._instanceId = undefined;
-                }
-            }
+            this._clearRESTRecognition(this._instanceId);
+
             this._initRenderingCanvas();
             this._onChange();
 
@@ -699,10 +787,9 @@
                 this.recognize();
             } else {
                 clearTimeout(this._timerId);
-                if (this.getTimeout() > 0) {
+                this.isStarted = false;
+                if (this.getTimeout() > -1) {
                     this._timerId = setTimeout(this.recognize.bind(this), this.getTimeout());
-                } else if (this.getTimeout() > -1) {
-                    this.recognize();
                 } else {
                     this._onResult();
                 }
@@ -716,17 +803,10 @@
      * @method clear
      */
     InkPaper.prototype.clear = function () {
-        if (this._selectedRecognizer instanceof scope.ShapeRecognizer) {
-            if (this._instanceId) {
-                this._selectedRecognizer.clearShapeRecognitionSession(this.getApplicationKey(), this._instanceId);
-                this._instanceId = undefined;
-            }
-        }
-        this.components = [];
-        this.redoComponents = [];
-        this.lastNonRecoComponentIdx = 0;
-        this._inkGrabber.clear();
-        this._instanceId = undefined;
+        this._components = [];
+        this._redoComponents = [];
+
+        this._clearRESTRecognition(this._instanceId);
 
         this._initRenderingCanvas();
         this._onChange();
@@ -736,10 +816,8 @@
             this._selectedRecognizer.resetWSRecognition();
         } else {
             clearTimeout(this._timerId);
-            if (this.getTimeout() > 0) {
+            if (this.getTimeout() > -1) {
                 this._timerId = setTimeout(this.recognize.bind(this), this.getTimeout());
-            } else if (this.getTimeout() > -1) {
-                this.recognize();
             } else {
                 this._onResult();
             }
@@ -761,6 +839,7 @@
      * @param {Date} [t] timeStamp
      */
     InkPaper.prototype._down = function (x, y, t) {
+        clearTimeout(this._timerId);
         var sizeChanged = false;
         if (this._captureCanvas.clientHeight != this._captureCanvas.height) {
             this._captureCanvas.height = this._captureCanvas.clientHeight;
@@ -780,7 +859,7 @@
         }
 
         if (this.canRedo()) {
-            this.redoComponents = [];
+            this._redoComponents = [];
             this._onChange();
         }
 
@@ -817,7 +896,7 @@
         this._inkGrabber.clear();
         this._selectedRenderer.drawComponent(stroke);
 
-        this.components.push(stroke);
+        this._components.push(stroke);
         this._onChange();
 
         if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
@@ -828,74 +907,9 @@
             }
         } else {
             clearTimeout(this._timerId);
-            if (this.getTimeout() > 0) {
+            if (this.getTimeout() > -1) {
                 this._timerId = setTimeout(this.recognize.bind(this), this.getTimeout());
-            } else if (this.getTimeout() > -1) {
-                this.recognize();
             }
-        }
-    };
-
-    /**
-     * Do recognition
-     *
-     * @private
-     * @method _doRecognition
-     * @param {AbstractComponent[]} components Input components
-     */
-    InkPaper.prototype._doRecognition = function (components) {
-        if (components.length > 0) {
-            if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
-                if (this._initialized) {
-                    var inputWS = [];
-                    if (this._selectedRecognizer instanceof scope.TextWSRecognizer) {
-                        var inputUnitWS = new scope.TextInputUnit();
-                        inputUnitWS.setComponents(this.getComponents().concat(components.slice(this.lastNonRecoComponentIdx)));
-                        inputWS = [inputUnitWS];
-                    } else {
-                        inputWS = components.slice(this.lastNonRecoComponentIdx);
-                    }
-                    this.lastNonRecoComponentIdx = components.length;
-
-
-                    if (this.isStarted) {
-                        this._selectedRecognizer.continueWSRecognition(inputWS, this._instanceId);
-                    } else {
-                        this.isStarted = true;
-                        this._selectedRecognizer.startWSRecognition(inputWS);
-                    }
-                }
-            } else {
-                var input = [];
-                if (this._selectedRecognizer instanceof scope.TextRecognizer) {
-                    var inputUnit = new scope.TextInputUnit();
-                    inputUnit.setComponents(this.getComponents().concat(components));
-                    input = [inputUnit];
-                } else if (this._selectedRecognizer instanceof scope.ShapeRecognizer) {
-                    input = components.slice(this.lastNonRecoComponentIdx);
-                    this.lastNonRecoComponentIdx = components.length;
-                } else {
-                    input = input.concat(this.getComponents(), components);
-                }
-                this._selectedRecognizer.doSimpleRecognition(
-                    this.getApplicationKey(),
-                    this._instanceId,
-                    input,
-                    this.getHmacKey()
-                ).then(
-                    function (data) {
-                        this._parseResult(data, input);
-                    }.bind(this),
-                    function (error) {
-                        this._onResult(undefined, error);
-                    }.bind(this)
-                );
-            }
-        } else {
-            this.isStarted = false;
-            this._selectedRenderer.clear();
-            this._initRenderingCanvas();
-            this._onResult();
         }
     };
 
@@ -913,9 +927,9 @@
     InkPaper.prototype._onChange = function () {
         var data = {
             canUndo: this.canUndo(),
-            undoLength: this.components.length,
+            undoLength: this._components.length,
             canRedo: this.canRedo(),
-            redoLength: this.redoComponents.length
+            redoLength: this._redoComponents.length
         };
 
         if (this.changeCallback) {
@@ -924,20 +938,8 @@
         this._element.dispatchEvent(new CustomEvent('changed', {detail: data}));
     };
 
-    InkPaper.prototype._parseResult = function (data, input) {
-
-        if (!this._instanceId) {
-            this._instanceId = data.getInstanceId();
-        } else if (this._instanceId !== data.getInstanceId()) {
-            this._onResult(data);
-            return data;
-        }
-
-        if (data.getDocument().hasScratchOutResults() || this._selectedRenderer.isTypesetting()) {
-            this._selectedRenderer.clear();
-            this._selectedRenderer.drawRecognitionResult(input, data.getDocument());
-        }
-
+    InkPaper.prototype._renderResult = function (data) {
+        this.updatedModel = this._selectedRenderer.drawRecognitionResult(this.getComponents().concat(this._components), data? data.getDocument(): undefined);
         this._onResult(data);
         return data;
     };
@@ -1040,16 +1042,17 @@
 
     InkPaper.prototype._initRenderingCanvas = function () {
         this._selectedRenderer.clear();
-        this._drawInput(this.components);
-    };
 
-    InkPaper.prototype._drawInput = function (components) {
         if (this._selectedRecognizer instanceof scope.MusicRecognizer) {
             if (this._selectedRecognizer.getParameters().getStaff() instanceof scope.MusicStaff) {
                 this._selectedRenderer.drawStaff(this._selectedRecognizer.getParameters().getStaff());
             }
         }
-        this._selectedRenderer.drawComponents(this.getComponents().concat(components));
+        if(this._selectedRecognizer instanceof scope.ShapeRecognizer && this.updatedModel){
+            this._selectedRenderer.drawRecognitionResult(this.updatedModel.components, this.updatedModel.document);
+        } else {
+            this._selectedRenderer.drawComponents(this.getComponents().concat(this._components));
+        }
     };
 
     /**
@@ -1065,7 +1068,7 @@
             replayNeeded = true;
             this._instanceId = undefined;
             this.isStarted = false;
-            this.lastNonRecoComponentIdx = 0;
+            this._lastSentComponentIndex = 0;
             this._onResult(undefined, error);
         }
 
@@ -1081,21 +1084,26 @@
                     this.isStarted = false;
                     this._initialized = true;
                     this._instanceId = undefined;
-                    this.lastNonRecoComponentIdx = 0;
+                    this._lastSentComponentIndex = 0;
                     this.recognize();
                     break;
                 case 'reset':
+                    this.isStarted = false;
                     this._instanceId = undefined;
-                    this.lastNonRecoComponentIdx = 0;
+                    this._lastSentComponentIndex = 0;
                     this.recognize();
                     break;
                 case 'close':
                     this._initialized = false;
                     this._instanceId = undefined;
-                    this.lastNonRecoComponentIdx = 0;
+                    this._lastSentComponentIndex = 0;
                     break;
                 default:
-                    this._parseResult(message, this.components);
+                    this.isStarted = true;
+                    if (!this._instanceId) {
+                        this._instanceId = message.getInstanceId();
+                    }
+                    this._renderResult(message);
                     break;
             }
         }
@@ -1108,17 +1116,17 @@
      */
     InkPaper.prototype.getStats = function () {
         var stats = {strokesCount: 0, pointsCount: 0, byteSize: 0, humanSize: 0, humanUnit: 'BYTE'};
-        if (this.components) {
-            stats.strokesCount = this.components.length;
+        if (this._components) {
+            stats.strokesCount = this._components.length;
             var pointsCount = 0;
-            for (var strokeNb = 0; strokeNb < this.components.length; strokeNb++) {
-                pointsCount = pointsCount + this.components[strokeNb].x.length;
+            for (var strokeNb = 0; strokeNb < this._components.length; strokeNb++) {
+                pointsCount = pointsCount + this._components[strokeNb].x.length;
             }
-            stats.strokesCount = this.components.length;
+            stats.strokesCount = this._components.length;
             stats.pointsCount = pointsCount;
             //We start with 270 as it is the size in bytes. Make a real computation implies to recode a doRecogntion
             var byteSize = 270;
-            byteSize = JSON.stringify(this.components).length;
+            byteSize = JSON.stringify(this._components).length;
             stats.byteSize = byteSize;
             if (byteSize < 270) {
                 stats.humanUnit = 'BYTE';
@@ -1153,20 +1161,20 @@
             marginY = 10;
         }
         console.log({marginX: marginX, marginY: marginY});
-        if (this.components && this.components.length > 0) {
+        if (this._components && this._components.length > 0) {
             var updatedStrokes;
-            var strokesCount = this.components.length;
+            var strokesCount = this._components.length;
             //Initializing min and max
-            var minX = this.components[0].x[0];
-            var maxX = this.components[0].x[0];
-            var minY = this.components[0].y[0];
-            var maxY = this.components[0].y[0];
+            var minX = this._components[0].x[0];
+            var maxX = this._components[0].x[0];
+            var minY = this._components[0].y[0];
+            var maxY = this._components[0].y[0];
             // Computing the min and max for x and y
-            for (var strokeNb = 0; strokeNb < this.components.length; strokeNb++) {
-                var pointCount = this.components[strokeNb].x.length;
+            for (var strokeNb = 0; strokeNb < this._components.length; strokeNb++) {
+                var pointCount = this._components[strokeNb].x.length;
                 for (var pointNb = 0; pointNb < pointCount; pointNb++) {
-                    var currentX = this.components[strokeNb].x[pointNb];
-                    var currentY = this.components[strokeNb].y[pointNb];
+                    var currentX = this._components[strokeNb].x[pointNb];
+                    var currentY = this._components[strokeNb].y[pointNb];
                     if (currentX < minX) {
                         minX = currentX;
                     }
@@ -1188,7 +1196,7 @@
             var ctx = nonDisplayCanvas.getContext("2d");
 
             var imageRendered = new scope.ImageRenderer(ctx);
-            imageRendered.drawComponents(this.components, ctx);
+            imageRendered.drawComponents(this._components, ctx);
 
             // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/getImageData
             return ctx.getImageData(minX - marginX, minY - marginY, (maxX - minX ) + (2 * marginX), (maxY - minY ) + (2 * marginY));

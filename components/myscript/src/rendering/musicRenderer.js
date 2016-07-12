@@ -31,8 +31,13 @@
      * @param {MusicDocument} recognitionResult
      */
     MusicRenderer.prototype.drawRecognitionResult = function (components, recognitionResult) {
-        var notScratchOutComponents = _removeMusicScratchOut(components, recognitionResult.getScratchOutResults());
-        this.drawComponents(notScratchOutComponents);
+        this.clear();
+        if (recognitionResult) {
+            var notScratchOutComponents = _removeMusicScratchOut(components, recognitionResult.getScratchOutResults());
+            this.drawComponents(notScratchOutComponents);
+        } else {
+            this.drawComponents(components);
+        }
     };
 
     /**
