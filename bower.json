@@ -1,6 +1,5 @@
 {
   "name": "myscript-math-web",
-  "version": "1.2.0",
   "description": "HTML5 Element easing integration of MyScript math handwriting recognition in your web-page",
   "keywords": [
     "web-component",
@@ -29,7 +28,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#1.4.x",
-    "myscript-common-element": "myscript-common-element#1.2.0",
+    "myscript-common-element": "myscript-common-element#master",
     "KaTeX": "katex#0.6.x"
   },
   "devDependencies": {
