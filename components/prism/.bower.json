@@ -34,7 +34,7 @@
     "tag": "1.5.1",
     "commit": "4a44f01606dbc88ac49accce9cd0cd7cb2fe213d"
   },
-  "_source": "https://github.com/LeaVerou/prism.git",
+  "_source": "git://webtest.visionobjects.com:6789/prism",
   "_target": "*",
   "_originalSource": "prism"
 }

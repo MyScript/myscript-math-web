@@ -38,7 +38,7 @@
     "tag": "v0.6.0",
     "commit": "b94fc6534d5c23f944906a52a592bee4e0090665"
   },
-  "_source": "https://github.com/Khan/KaTeX.git",
+  "_source": "git://webtest.visionobjects.com:6789/katex",
   "_target": "0.6.x",
   "_originalSource": "katex"
 }

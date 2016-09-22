@@ -1,6 +1,6 @@
 {
   "name": "myscript",
-  "version": "1.2.0-alpha",
+  "version": "1.2.0",
   "main": [
     "./dist/myscript.min.js",
     "./dist/myscript.min.css"
@@ -39,8 +39,13 @@
     "q": "1.4.x",
     "pepjs": "0.4.x"
   },
-  "_source": "/home/padewitte/projets/webcomponents/myscript-js",
-  "_target": "*",
-  "_originalSource": "../../myscript-js/",
-  "_direct": true
+  "_release": "1.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.2.0",
+    "commit": "009437356fc2c5789bc57e34cc36bec2747f41f9"
+  },
+  "_source": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git",
+  "_target": "1.2.0",
+  "_originalSource": "myscript"
 }

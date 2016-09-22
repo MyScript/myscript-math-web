@@ -100,6 +100,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div class="constrain"></div>
 
+    <test-fixture id="basic">
+      <template>
+        <test-fit>
+          Basic
+        </test-fit>
+      </template>
+    </test-fixture>
+
     <test-fixture id="absolute">
       <template>
         <test-fit auto-fit-on-attach class="absolute">
@@ -201,6 +209,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       function intersects(r1, r2) {
         return !(r2.left >= r1.right || r2.right <= r1.left || r2.top >= r1.bottom || r2.bottom <= r1.top);
       }
+
+      suite('basic', function() {
+
+        var el;
+        setup(function() {
+          el = fixture('basic');
+        });
+
+        test('position() works without autoFitOnAttach', function() {
+          el.verticalAlign = 'top';
+          el.horizontalAlign = 'left';
+          el.position();
+          var rect = el.getBoundingClientRect();
+          assert.equal(rect.top, 0, 'top ok');
+          assert.equal(rect.left, 0, 'left ok');
+        });
+
+        test('constrain() works without autoFitOnAttach', function() {
+          el.constrain();
+          var style = getComputedStyle(el);
+          assert.equal(style.maxWidth, window.innerWidth + 'px', 'maxWidth ok');
+          assert.equal(style.maxHeight, window.innerHeight + 'px', 'maxHeight ok');
+        });
+
+        test('center() works without autoFitOnAttach', function() {
+          el.center();
+          var rect = el.getBoundingClientRect();
+          assert.closeTo(rect.left - (window.innerWidth - rect.right), 0, 5, 'centered horizontally');
+          assert.closeTo(rect.top - (window.innerHeight - rect.bottom), 0, 5, 'centered vertically');
+        });
+
+      });
 
       suite('manual positioning', function() {
 

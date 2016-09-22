@@ -50,7 +50,7 @@ iron-request can be used to perform XMLHttpRequests.
 ```html
 <iron-request id="xhr"></iron-request>
 ...
-this.$.xhr.send({url: url, params: params});
+this.$.xhr.send({url: url, body: params});
 ```
 
 

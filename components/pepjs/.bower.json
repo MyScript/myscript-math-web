@@ -22,7 +22,7 @@
     "tag": "0.4.1",
     "commit": "06f24ce0324c72d7f1a010e2eea3e748d3a4cffd"
   },
-  "_source": "git://github.com/jquery/PEP.git",
+  "_source": "git://webtest.visionobjects.com:6789/pepjs",
   "_target": "0.4.x",
   "_originalSource": "pepjs"
 }

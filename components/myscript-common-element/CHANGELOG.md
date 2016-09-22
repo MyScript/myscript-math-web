@@ -1,6 +1,6 @@
 # Change Log
 
-## [v1.2.0](https://github.com/MyScript/myscript-common-element/tree/v1.2.0) (2016-04-06)
+## [v1.2.0](https://github.com/MyScript/myscript-common-element/tree/v1.2.0)
 
 ### Features
 - Mutable `host` attribute
