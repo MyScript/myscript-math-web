@@ -8,12 +8,13 @@ ALL: clean prepare docker test
 
 purge:
 	@rm -rf bower_components/
+	@bower cache clean
 
 clean:
 
 prepare:
 	@git fetch --tags
-	@bower install
+	@bower install $(BOWER_PARAMETERS)
 
 build:
 
