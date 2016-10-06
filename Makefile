@@ -26,3 +26,7 @@ watch:
 
 dev:
 	@polyserve
+
+doc:
+	@rm -rf docs && mkdir -p docs
+	@sh gp-custom.sh

@@ -4,5 +4,5 @@ node_modules
 *#
 *.idea
 /escrow/
-/.gitignore
 /.bowerrc
+/docs
