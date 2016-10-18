@@ -5,11 +5,24 @@ The easy way to integrate mathematical expressions handwriting recognition in yo
 
 <a href="https://myscript.github.io/myscript-math-web/components/myscript-math-web/demo/"><img src="https://github.com/MyScript/myscript-math-web/raw/master/math.gif" /></a>
 
-<!-- START-HIDDEN-SECTION: Add imports and styling here. -->
-<script src="../webcomponentsjs/webcomponents-lite.js"></script>
-<link rel="import" href="myscript-math-web.html">
-<!-- END-HIDDEN-SECTION: Add the visible part of the demo below. -->
-<myscript-math-web>...</myscript-math-web>
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="myscript-math-web.html">
+     <myscript-math-web
+        host="webdemoapi.myscript.com"
+        applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
+        hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601">
+    </myscript-math-web>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<myscript-math-web></myscript-math-web>
+```
 
 ```html
 <html>
