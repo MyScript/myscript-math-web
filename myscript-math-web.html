@@ -91,6 +91,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
          */
         properties: {
             /**
+             * <b>not mutable</b><br />
              * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
              * @default 'WebSocket'
              */
@@ -99,6 +100,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 value: MyScript.Protocol.WS
             },
             /**
+             * <b>not mutable</b><br />
              * The current recognition service host.
              */
             host: {
@@ -106,6 +108,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 value: 'cloud.myscript.com'
             },
             /**
+             * <b>not mutable</b><br />
              * The recognition timeout, only use .
              */
             timeout: {
@@ -113,6 +116,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 value: 2000
             },
             /**
+             * <b>not mutable</b><br />
              * Application key to use for recognition on MyScript handwriting recognition server.<br />
              * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
              * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
@@ -121,6 +125,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 type: String
             },
             /**
+             * <b>not mutable</b><br />
              * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
              * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
              * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
@@ -153,6 +158,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 value: false
             },
             /**
+             * <b>not mutable</b><br />
              * If set to true, hide the buttons (Trash, Undo, Redo).
              */
             hidebuttons: {
@@ -160,6 +166,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 value: false
             },
             /**
+             * <b>not mutable</b><br />
              * If set to true, hide the result div tag.
              */
             hideresult: {
