@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <title>myscript-math-web demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../myscript-common-element.html">
+</head>
+<style>
+    html, body {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    myscript-common-element {
+        height: 100%;
+    }
+</style>
+<body touch-action="none">
+
+    <myscript-common-element host="webdemoapi.myscript.com"
+                             type="SHAPE"
+                             applicationkey="9faa1259-48ba-44c4-9857-b3c86d986f94"
+                             hmackey="fb166b5d-3ffd-93bd-7b5b-bca0fe2216a0"
+                             timeout="2000"
+                             typeset="true"
+                             shapeparameters="{
+                                 doBeautification: true,
+                                 rejectDetectionSensitivity: 0
+                             }"
+                             on-changed="_onChanged">
+    </myscript-common-element>
+</body>
+<script>
+    (function (document) {
+        'use strict';
+
+    })(document);
+</script>
+</html>

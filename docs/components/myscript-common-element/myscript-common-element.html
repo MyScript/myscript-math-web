@@ -1,0 +1,519 @@
+<!--
+Copyright © MyScript.
+LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
+<link rel="import" href="../myscript/myscript.html">
+<!--
+The `myscript-common-element` is a web component wrapper around MyScriptJS InkPaper.
+
+    <myscript-common-element
+        applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        timeout="2000"
+        typeset="true"
+        shapeparameters="{
+            doBeautification: true
+        }">
+    </myscript-common-element>
+
+@demo demo/index.html
+-->
+<dom-module id="myscript-common-element">
+    <style>
+        :host {
+            display: block;
+            position: relative;
+            min-height: 100px;
+            min-width: 200px;
+            --paper-fab-background: #00A7CF;
+            --paper-fab-keyboard-focus-background: #00A7CF;
+        }
+        .buttons {
+            position: inherit;
+            float: left;
+            display: flex;
+            display: -webkit-flex;
+            z-index: 2;
+            background-color: transparent;
+        }
+        paper-fab {
+            z-index: 3;
+        }
+    </style>
+    <template>
+        <div class="buttons" hidden="[[ hidebuttons ]]">
+            <paper-fab mini icon="delete" title="clear" on-tap="clear" disabled="[[ !canclear ]]" hidden="[[ _disableClear ]]"></paper-fab>
+            <paper-fab mini icon="undo" title="undo" on-tap="undo" disabled="[[ !canundo ]]" hidden="[[ _disableUndoRedo ]]"></paper-fab>
+            <paper-fab mini icon="redo" title="redo" on-tap="redo" disabled="[[ !canredo ]]" hidden="[[ _disableUndoRedo ]]"></paper-fab>
+            <paper-fab mini icon="send" title="recognize" on-tap="recognize" disabled="[[ !canclear ]]" hidden="[[ _disableRecognize ]]"></paper-fab>
+        </div>
+        <div id="myscript-input-area" on-changed="_onChanged" on-success="_onSuccess" on-error="_onError"></div>
+        <paper-toast class="fit-bottom"></paper-toast>
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: 'myscript-common-element',
+        /**
+         * Fired when a recognition result is successfully received.
+         *
+         * @event myscript-common-element-result
+         */
+        /**
+         * Fired when a recognition error occurred.
+         * @event error
+         */
+        /**
+         * Fired when the content of the InkPaper changes.
+         * @event changed
+         */
+        properties: {
+            /**
+             * <b>not mutable</b><br />
+             * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
+             * @type String
+             * @default 'REST'
+             */
+            protocol: {
+                type: String,
+                value: MyScript.Protocol.REST,
+                observer: '_protocolChanged'
+            },
+            /**
+             * <b>not mutable</b><br />
+             * The current recognition service host.
+             * @type String
+             * @default 'cloud.myscript.com'
+             */
+            host: {
+                type: String,
+                value: 'cloud.myscript.com',
+                observer: '_hostChanged'
+            },
+            /**
+             * <b>not mutable</b><br />
+             * The recognition timeout, only use in REST mode.
+             * @type Number
+             * @default 2000
+             */
+            timeout: {
+                type: Number,
+                value: 2000,
+                observer: '_timeoutChanged'
+            },
+            /**
+             * <b>not mutable</b><br />
+             * Application key to use for recognition on MyScript handwriting recognition server.<br />
+             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
+             * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
+             * @type String
+             */
+            applicationkey: {
+                type: String,
+                observer: '_applicationKeyChanged'
+            },
+            /**
+             * <b>not mutable</b><br />
+             * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
+             * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
+             * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
+             * @type String
+             */
+            hmackey: {
+                type: String,
+                observer: '_hmacKeyChanged'
+            },
+            /**
+             * <b>not mutable</b><br />
+             * The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)
+             * @default 'TEXT'
+             */
+            type: {
+                type: String,
+                value: MyScript.RecognitionType.TEXT,
+                observer: '_typeChanged'
+            },
+            /**
+             * <b>Deprecated</b>: Use textparameters.language instead of this property<br />
+             * @private
+             * @deprecated Use textparameters.language instead of this property
+             */
+            language: {
+                type: String,
+                value: 'en_US',
+                observer: '_languageChanged'
+            },
+            /**
+             * <b>Deprecated</b>: Use mathparameters.resultTypes or music-parameters.resultTypes instead of this property<br />
+             * @type {Array<String>}
+             * @private
+             * @deprecated Use mathparameters.resultTypes or music-parameters.resultTypes instead of this property
+             */
+            resulttypes: {
+                type: Array,
+                value: [],
+                observer: '_resultTypesChanged'
+            },
+            /**
+             * Parameter to typeset, or not, the result onto the ink paper.<br /><br />
+             * <b>Warning</b> : For some recognition types, such as TEXT or MATH, this param will never be applied as typesetting is not available for these recognitions.
+             */
+            typeset: {
+                type: Boolean,
+                value: false,
+                observer: '_typesetChanged'
+            },
+            /**
+             * Recognition parameters for the text recognition.
+             * @type {{language: String, textInputMode: String, resultDetail: String, contentTypes: Array<String>, subsetKnowledges: Array<String>, userResources: Array<String>, userLkWords: Array<String>, textProperties: {textCandidateListSize: Number, wordCandidateListSize: Number, wordPredictionListSize: Number, wordCompletionListSize: Number, characterCandidateListSize: Number, enableOutOfLexicon: Boolean, discardCaseVariations: Boolean, discardAccentuationVariations: Boolean, disableSpatialOrdering: Boolean, glyphDistortion: Number, spellingDistortion: Number}}}
+             * @default {{language: 'en_US', textInputMode: 'CURSIVE'}}
+             */
+            textparameters: {
+                type: Object,
+                value: new MyScript.TextParameter(),
+                observer: '_textParametersChanged'
+            },
+            /**
+             * Recognition parameters for the math recognition.
+             * @type {{resultTypes: Array<String>, columnarOperation: Boolean, userResources: Array<String>, scratchOutDetectionSensitivity: Number}}
+             * @default {}
+             */
+            mathparameters: {
+                type: Object,
+                value: new MyScript.MathParameter(),
+                observer: '_mathParametersChanged'
+            },
+            /**
+             * Recognition parameters for the shape recognition.
+             * @type {{doBeautification: Boolean, rejectDetectionSensitivity: Boolean, userResources: Array<String>}}
+             * @default {}
+             */
+            shapeparameters: {
+                type: Object,
+                value: new MyScript.ShapeParameter(),
+                observer: '_shapeParametersChanged'
+            },
+            /**
+             * Recognition parameters for the music recognition.
+             * @type {{resultTypes: Array<String>, userResources: Array<String>, scratchOutDetectionSensitivity: Number, divisions: Number, staff: {count: Number, gap: Number, top: Number}}}
+             * @default {}
+             */
+            musicparameters: {
+                type: Object,
+                value: new MyScript.MusicParameter(),
+                observer: '_musicParametersChanged'
+            },
+            /**
+             * Recognition parameters for the analyzer recognition.
+             * @type {{coordinateResolution: Number}}
+             * @default {}
+             */
+            analyzerparameters: {
+                type: Object,
+                value: new MyScript.AnalyzerParameter(),
+                observer: '_analyzerParametersChanged'
+            },
+            /**
+             * Recognition input components.
+             * @type {Array<{type: String}>}
+             */
+            components: {
+                type: Array,
+                value: [],
+                observer: '_componentsChanged'
+            },
+            /**
+             * True if undo is available
+             * @private
+             * @type Boolean
+             * @default false
+             */
+            canundo: {
+                type: Boolean,
+                notify: true,
+                value: false
+            },
+            /**
+             * True if redo is available
+             * @private
+             * @type Boolean
+             * @default false
+             */
+            canredo: {
+                type: Boolean,
+                notify: true,
+                value: false
+            },
+            /**
+             * True if there is something to clear
+             * @private
+             * @type Boolean
+             * @default false
+             */
+            canclear: {
+                type: Boolean,
+                notify: true,
+                computed: '_computeCanClear(canundo, canredo)'
+            },
+            /**
+             * <b>not mutable</b><br />
+             * If set to true, hide the buttons (Trash, Undo, Redo).
+             * @type Boolean
+             * @default false
+             */
+            hidebuttons: {
+                type: Boolean,
+                value: false
+            },
+            /**
+             * True if SSL is activated, false otherwise
+             * @private
+             * @type Boolean
+             * @default true
+             */
+            ssl: {
+                type: Boolean,
+                value: true,
+                observer: '_sslChanged'
+            },
+            /**
+             * True if the undo/redo feature is disabled, false otherwise
+             */
+            _disableUndoRedo: {
+                type: Boolean,
+                notify: true,
+                computed: '_computeDisableUndoRedo(hidebuttons)'
+            },
+            /**
+             * True if the clear feature is disabled, false otherwise
+             */
+            _disableClear: {
+                type: Boolean,
+                notify: true,
+                computed: '_computeDisableClear(hidebuttons)'
+            },
+            /**
+             * True if the recognize feature is disabled, false otherwise
+             */
+            _disableRecognize: {
+                type: Boolean,
+                notify: true,
+                computed: '_computeDisableRecognize(hidebuttons,timeout,protocol)'
+            }
+        },
+        behaviors: [
+            Polymer.IronResizableBehavior
+        ],
+        listeners: {
+            'iron-resize': '_onResize'
+        },
+        /**
+         * Clear all context
+         */
+        clear: function () {
+            if (this._inkPaper) {
+                this._inkPaper.clear();
+            }
+        },
+        /**
+         * <b>Deprecated</b>: Use clear instead of delete<br />
+         * @deprecated Use clear instead of delete
+         * @private
+         */
+        delete: function () {
+            this.clear();
+        },
+        /**
+         * Undo action, and launch recognition if timeout is set
+         */
+        undo: function () {
+            if (this._inkPaper) {
+                this._inkPaper.undo();
+            }
+        },
+        /**
+         * Redo action, and launch recognition if timeout is set
+         */
+        redo: function () {
+            if (this._inkPaper) {
+                this._inkPaper.redo();
+            }
+        },
+        /**
+         * Launch recognition
+         */
+        recognize: function () {
+            if (this._inkPaper) {
+                this._inkPaper.recognize();
+            }
+        },
+        /**
+         * Get available languages
+         * @param {String} inputMode Optional recognition input mode
+         */
+        getAvailableLanguages: function (inputMode) {
+            if (this._inkPaper) {
+                this._inkPaper.getAvailableLanguages(inputMode);
+            }
+        },
+        /**
+         * Return the stats allowing to monitor what ink size is send to the server.
+         * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+         */
+        getStats: function () {
+            if (this._inkPaper) {
+                return this._inkPaper.getStats();
+            }
+        },
+        ready: function () {
+            this._inputArea = this.querySelector('#myscript-input-area');
+            this._paperToast = this.querySelector('paper-toast');
+            this._inkPaper = new MyScript.InkPaper(this._inputArea, {
+                host: this.host,
+                protocol: this.protocol,
+                ssl: this.ssl,
+                type : this.type,
+                width : this.offsetWidth,
+                height : this.offsetHeight,
+                timeout : this.timeout,
+                applicationKey : this.applicationkey,
+                hmacKey : this.hmackey,
+                typeset: this.typeset,
+                components : this.components,
+                textParameters : this.textparameters,
+                mathParameters : this.mathparameters,
+                shapeParameters : this.shapeparameters,
+                musicParameters : this.musicparameters,
+                analyzerParameters : this.analyzerparameters
+            });
+        },
+        _onResize: function () {
+            if (this._inkPaper) {
+
+                if (this.offsetWidth && (this.offsetWidth > 0)) {
+                    this._inkPaper.setWidth(this.offsetWidth);
+                }
+
+                if (this.offsetHeight && (this.offsetHeight > 0)) {
+                    this._inkPaper.setHeight(this.offsetHeight);
+                }
+            }
+        },
+        _onChanged: function (e) {
+            if (e.detail) {
+                this.canundo = e.detail.canUndo;
+                this.canredo = e.detail.canRedo;
+            }
+            this.fire(e.type, e.detail);
+        },
+        _onSuccess: function (e) {
+            this.fire(e.type, e.detail);
+            this.fire('myscript-common-element-result', e.detail);
+        },
+        _onError: function (e) {
+            this.fire(e.type, e.detail);
+            this._paperToast.text = e.detail.message;
+            this._paperToast.fitIn =
+            this._paperToast.show();
+        },
+        _computeCanClear: function (canUndo, canRedo) {
+            return canUndo || canRedo;
+        },
+        _computeDisableUndoRedo: function (hidebuttons) {
+            return hidebuttons;
+        },
+        _computeDisableClear: function (hidebuttons) {
+            return hidebuttons;
+        },
+        _computeDisableRecognize: function (hidebuttons,timeout,protocol) {
+            return hidebuttons || (protocol === MyScript.Protocol.WS) || (timeout >= 0);
+        },
+        _applicationKeyChanged: function (applicationKey) {
+            if (this._inkPaper) {
+                this._inkPaper.setApplicationKey(applicationKey);
+            }
+        },
+        _hmacKeyChanged: function (hmacKey) {
+            if (this._inkPaper) {
+                this._inkPaper.setHmacKey(hmacKey);
+            }
+        },
+        _timeoutChanged: function (timeout) {
+            if (this._inkPaper) {
+                this._inkPaper.setTimeout(timeout);
+            }
+        },
+        _typeChanged: function (type) {
+            if (this._inkPaper) {
+                this._inkPaper.setType(type);
+            }
+        },
+        _languageChanged: function (language) {
+            if (this._inkPaper) {
+                this._inkPaper.getTextParameters().setLanguage(language);
+                this._inkPaper.setTextParameters(this._inkPaper.getTextParameters());
+            }
+        },
+        _resultTypesChanged: function (resultTypes) {
+            if (this._inkPaper) {
+                this._inkPaper.getMathParameters().setResultTypes(resultTypes);
+                this._inkPaper.setMathParameters(this._inkPaper.getMathParameters());
+            }
+        },
+        _typesetChanged: function (typeset) {
+            if (this._inkPaper) {
+                this._inkPaper.setTypeset(typeset);
+            }
+        },
+        _textParametersChanged: function (textParameters) {
+            if (this._inkPaper) {
+                this._inkPaper.setTextParameters(textParameters);
+            }
+        },
+        _mathParametersChanged: function (mathParameters) {
+            if (this._inkPaper) {
+                this._inkPaper.setMathParameters(mathParameters);
+            }
+        },
+        _shapeParametersChanged: function (shapeParameters) {
+            if (this._inkPaper) {
+                this._inkPaper.setShapeParameters(shapeParameters);
+            }
+        },
+        _musicParametersChanged: function (musicParameters) {
+            if (this._inkPaper) {
+                this._inkPaper.setMusicParameters(musicParameters);
+            }
+        },
+        _analyzerParametersChanged: function (analyzerParameters) {
+            if (this._inkPaper) {
+                this._inkPaper.setAnalyzerParameters(analyzerParameters);
+            }
+        },
+        _protocolChanged: function (protocol) {
+            if (this._inkPaper) {
+                this._inkPaper.setProtocol(protocol);
+            }
+        },
+        _hostChanged: function (host) {
+            if (this._inkPaper) {
+                this._inkPaper.setHost(host);
+            }
+        },
+        _componentsChanged: function (components) {
+            if (this._inkPaper) {
+                this._inkPaper.setComponents(components);
+            }
+        },
+        _sslChanged: function (ssl) {
+            if (this._inkPaper) {
+                this._inkPaper.setSSL(ssl);
+            }
+        }
+    });
+</script>
