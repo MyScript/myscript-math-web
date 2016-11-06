@@ -13,7 +13,7 @@
     "recognition"
   ],
   "main": "myscript-math-web.html",
-  "license": "Apache-2",
+  "license": "Apache-2.0",
   "homepage": "https://myscript.github.io/myscript-math-web/components/myscript-math-web/",
   "repository": {
     "type": "git",
