@@ -13,7 +13,7 @@
     "recognition"
   ],
   "main": "myscript-math-web.html",
-  "license": "Apache-2",
+  "license": "Apache-2.0",
   "homepage": "https://myscript.github.io/myscript-math-web/components/myscript-math-web/",
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#1.4.x",
-    "myscript-common-element": "myscript-common-element#master",
+    "myscript-common-element": "myscript-common-element#1.2.1",
     "KaTeX": "katex#0.6.x"
   },
   "devDependencies": {

@@ -1,5 +1,11 @@
 # Change Log
 
+## [v1.2.1](https://github.com/MyScript/myscript-common-element/tree/v1.2.1)
+
+### Bugs
+- See [MyScriptJS v1.2.1](https://github.com/MyScript/MyScriptJS/tree/v1.2.1) for fixes
+
+
 ## [v1.2.0](https://github.com/MyScript/myscript-common-element/tree/v1.2.0)
 
 ### Features

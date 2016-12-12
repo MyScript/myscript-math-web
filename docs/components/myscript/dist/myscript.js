@@ -14334,7 +14334,6 @@ MyScript = {
         clearTimeout(this._timerId);
         var sizeChanged = false;
         if (this._captureCanvas.clientHeight * this.canvasRatio !== this._captureCanvas.height) {
-            alert(this._captureCanvas.clientHeight + ' / ' + this._captureCanvas.height);
             this._captureCanvas.height = this._captureCanvas.clientHeight * this.canvasRatio;
             this._renderingCanvas.height = this._renderingCanvas.clientHeight * this.canvasRatio;
             sizeChanged = true;
