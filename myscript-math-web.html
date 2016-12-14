@@ -58,6 +58,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                                  ssl="[[ ssl ]]"
                                  hidebuttons="[[ hidebuttons ]]"
                                  mathparameters="[[ _mathParameters ]]"
+                                 strokecolor="[[ strokecolor ]]"
+                                 strokewidth="[[ strokewidth]]"
                                  canundo="{{ canundo }}"
                                  canredo="{{ canredo }}"
                                  canclear="{{ canclear }}"
@@ -201,6 +203,20 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             _mathParameters: {
                 type: Object,
                 computed: '_computeMathParameters(resulttypes)'
+            },
+            /**
+             * Set the stroke color
+             * @type String
+             */
+            strokecolor: {
+                type: String
+            },
+            /**
+             * Set the stroke width
+             * @type String
+             */
+            strokewidth: {
+                type: Number
             },
             /**
              * Recognition result.
