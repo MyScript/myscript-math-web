@@ -38,7 +38,7 @@
   "_resolution": {
     "type": "version",
     "tag": "v1.2.2",
-    "commit": "78936f0302d44580de6f4d318b031b76132a7a14"
+    "commit": "2040a40b779d340c6e79b698df36547cad9d8004"
   },
   "_source": "https://github.com/MyScript/myscript-common-element.git",
   "_target": "1.2.2",

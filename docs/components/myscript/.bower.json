@@ -44,7 +44,7 @@
   "_resolution": {
     "type": "version",
     "tag": "v1.2.2",
-    "commit": "3a9c0db60d9f3b1c2c92712cc62f69da2ef07b50"
+    "commit": "5bf7f3d78d10d241059e07e59c43a8660348b7ad"
   },
   "_source": "https://github.com/MyScript/MyScriptJS.git",
   "_target": "1.2.2",
