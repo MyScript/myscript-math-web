@@ -219,6 +219,20 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 observer: '_analyzerParametersChanged'
             },
             /**
+             * Set the stroke color
+             * @type String
+             */
+            strokecolor: {
+                type: String
+            },
+            /**
+             * Set the stroke width
+             * @type String
+             */
+            strokewidth: {
+                type: Number
+            },
+            /**
              * Recognition input components.
              * @type {Array<{type: String}>}
              */
@@ -373,6 +387,14 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         ready: function () {
             this._inputArea = this.querySelector('#myscript-input-area');
             this._paperToast = this.querySelector('paper-toast');
+            this._penParameters = new MyScript.PenParameters();
+            if(this.strokecolor){
+                this._penParameters.color = this.strokecolor;
+            }
+            if(this.strokewidth){
+                this._penParameters.width = this.strokewidth;
+            }
+
             this._inkPaper = new MyScript.InkPaper(this._inputArea, {
                 host: this.host,
                 protocol: this.protocol,
@@ -389,7 +411,8 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 mathParameters : this.mathparameters,
                 shapeParameters : this.shapeparameters,
                 musicParameters : this.musicparameters,
-                analyzerParameters : this.analyzerparameters
+                analyzerParameters : this.analyzerparameters,
+                penParameters :  this._penParameters
             });
         },
         _onResize: function () {
@@ -417,9 +440,10 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
         },
         _onError: function (e) {
             this.fire(e.type, e.detail);
-            this._paperToast.text = e.detail.message;
-            this._paperToast.fitIn =
-            this._paperToast.show();
+            if (e.detail && e.detail.message) {
+                this._paperToast.text = e.detail.message;
+                this._paperToast.fitIn = this._paperToast.show();
+            }
         },
         _computeCanClear: function (canUndo, canRedo) {
             return canUndo || canRedo;

@@ -132,6 +132,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var transform = computedStyle.transform || computedStyle.webkitTransform;
           expect(transform).to.be.eql('none');
         });
+
+        test('many mirrored icons only call getComputedStyle once', function() {
+          sinon.spy(window, 'getComputedStyle');
+
+          for (var i = 0; i < 3; ++i) {
+            iconset.applyIcon(rtlContainer, 'rect');
+          }
+
+          expect(window.getComputedStyle.callCount).to.be.eql(1);
+          window.getComputedStyle.restore();
+        });
       });
 
       suite('when paired with a size and SVG definition', function () {

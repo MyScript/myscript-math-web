@@ -72,19 +72,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * Set to true to enable mirroring of icons where specified when they are
        * stamped. Icons that should be mirrored should be decorated with a
        * `mirror-in-rtl` attribute.
+       *
+       * NOTE: For performance reasons, direction will be resolved once per
+       * document per iconset, so moving icons in and out of RTL subtrees will
+       * not cause their mirrored state to change.
        */
       rtlMirroring: {
         type: Boolean,
         value: false
       }
-    },
-
-    _targetIsRTL: function(target) {
-      if (target && target.nodeType !== Node.ELEMENT_NODE) {
-        target = target.host;
-      }
-
-      return target && window.getComputedStyle(target)['direction'] === 'rtl';
     },
 
     attached: function() {
@@ -108,6 +104,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      *
      * An svg icon is prepended to the element's shadowRoot if it exists,
      * otherwise to the element itself.
+     *
+     * If RTL mirroring is enabled, and the icon is marked to be mirrored in
+     * RTL, the element will be tested (once and only once ever for each
+     * iconset) to determine the direction of the subtree the element is in.
+     * This direction will apply to all future icon applications, although only
+     * icons marked to be mirrored will be affected.
      *
      * @method applyIcon
      * @param {Element} element Element to which the icon is applied.
@@ -143,6 +145,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         Polymer.dom(element).removeChild(element._svgIcon);
         element._svgIcon = null;
       }
+    },
+
+    /**
+     * Measures and memoizes the direction of the element. Note that this
+     * measurement is only done once and the result is memoized for future
+     * invocations.
+     */
+    _targetIsRTL: function(target) {
+      if (this.__targetIsRTL == null) {
+        if (target && target.nodeType !== Node.ELEMENT_NODE) {
+          target = target.host;
+        }
+
+        this.__targetIsRTL = target &&
+            window.getComputedStyle(target)['direction'] === 'rtl';
+      }
+
+      return this.__targetIsRTL;
     },
 
     /**

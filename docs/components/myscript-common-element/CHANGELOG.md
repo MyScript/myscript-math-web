@@ -1,4 +1,12 @@
 # Change Log
+## [v1.2.2](https://github.com/MyScript/myscript-common-element/tree/v1.2.2)
+
+### Features
+- New `strokecolor` attribute to setup/change stroke color settings
+- New `strokewidth` attribute to setup/change stroke width settings
+
+### Bugs
+- See [MyScriptJS v1.2.2](https://github.com/MyScript/MyScriptJS/tree/v1.2.2) for fixes
 
 ## [v1.2.1](https://github.com/MyScript/myscript-common-element/tree/v1.2.1)
 

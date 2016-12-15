@@ -34,7 +34,7 @@
     "tag": "v1.0.1",
     "commit": "263b98bcc9b746a8852bf57ce1500c71222680b9"
   },
-  "_source": "git://github.com/polymerlabs/promise-polyfill.git",
+  "_source": "https://github.com/polymerlabs/promise-polyfill.git",
   "_target": "^1.0.0",
   "_originalSource": "polymerlabs/promise-polyfill"
 }

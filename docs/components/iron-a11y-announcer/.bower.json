@@ -37,7 +37,7 @@
     "tag": "v1.0.5",
     "commit": "2432d39a1693ccd728cbe7eb55810063737d3403"
   },
-  "_source": "git://github.com/PolymerElements/iron-a11y-announcer.git",
+  "_source": "https://github.com/PolymerElements/iron-a11y-announcer.git",
   "_target": "^1.0.0",
   "_originalSource": "PolymerElements/iron-a11y-announcer"
 }

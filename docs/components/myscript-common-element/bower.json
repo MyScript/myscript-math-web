@@ -25,7 +25,7 @@
     "iron-icons": "PolymerElements/iron-icons#1.1.x",
     "paper-fab": "PolymerElements/paper-fab#1.2.x",
     "paper-toast": "PolymerElements/paper-toast#1.2.x",
-    "myscript": "myscript#1.2.1"
+    "myscript": "myscript#1.2.2"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
