@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <title>myscript-math-web demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../myscript-math-web.html">
+</head>
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+    }
+    myscript-math-web {
+        height: 100%;
+    }
+</style>
+<body touch-action="none" unresolved>
+<template id="app" is="dom-bind">
+    <myscript-math-web
+        host="webdemoapi.myscript.com"
+        applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
+        hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601">
+    </myscript-math-web>
+</template>
+</body>
+</html>
