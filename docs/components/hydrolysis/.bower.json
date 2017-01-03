@@ -27,7 +27,7 @@
     "tag": "v1.24.1",
     "commit": "050dee00a3f3bc8d63d27aa613d7a0eb92ff7eb2"
   },
-  "_source": "https://github.com/Polymer/hydrolysis.git",
+  "_source": "git://github.com/Polymer/hydrolysis.git",
   "_target": "^1.18",
   "_originalSource": "Polymer/hydrolysis"
 }

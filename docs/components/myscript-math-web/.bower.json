@@ -29,17 +29,17 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#1.4.x",
-    "myscript-common-element": "myscript-common-element#1.2.2",
+    "myscript-common-element": "myscript-common-element#1.2.3",
     "KaTeX": "katex#0.6.x"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
   },
   "resolutions": {
-    "myscript": "master",
+    "myscript": "1.2.3",
     "polymer": "1.4.x"
   },
-  "_source": "/Users/ystreibel/Projects/webcomponents/myscript-math-web",
+  "_source": "/home/padewitte/projets/webcomponents/myscript-math-web",
   "_target": "*",
   "_originalSource": "../../myscript-math-web",
   "_direct": true

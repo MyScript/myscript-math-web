@@ -812,15 +812,17 @@
     InkPaper.prototype.clear = function () {
         this._components = [];
         this._redoComponents = [];
-
+        this._initRenderingCanvas();
         this._clearRESTRecognition(this._instanceId);
 
-        this._initRenderingCanvas();
         this._onChange();
 
         if (this._selectedRecognizer instanceof scope.AbstractWSRecognizer) {
             this.isStarted = false;
             this._selectedRecognizer.resetWSRecognition();
+        } else if (this._selectedRecognizer instanceof scope.MusicRecognizer) {
+            clearTimeout(this._timerId);
+            this._onResult();
         } else {
             clearTimeout(this._timerId);
             if (this.getTimeout() > -1) {

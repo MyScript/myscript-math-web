@@ -25,13 +25,16 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
 -->
 <dom-module id="myscript-common-element">
     <style>
+
         :host {
             display: block;
             position: relative;
             min-height: 100px;
             min-width: 200px;
-            --paper-fab-background: #00A7CF;
-            --paper-fab-keyboard-focus-background: #00A7CF;
+            --paper-fab-background: #1A9FFF;
+            --paper-fab-keyboard-focus-background: #1A9FFF;
+            --paper-fab-disabled-background: #F5F6F7;
+            --paper-fab-disabled-text: #dcdee0;
         }
         .buttons {
             position: inherit;
@@ -40,17 +43,20 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
             display: -webkit-flex;
             z-index: 2;
             background-color: transparent;
+            padding: 6px;
         }
         paper-fab {
             z-index: 3;
+            background: #1A9FFF;
+            margin: 6px;
         }
     </style>
     <template>
         <div class="buttons" hidden="[[ hidebuttons ]]">
-            <paper-fab mini icon="delete" title="clear" on-tap="clear" disabled="[[ !canclear ]]" hidden="[[ _disableClear ]]"></paper-fab>
-            <paper-fab mini icon="undo" title="undo" on-tap="undo" disabled="[[ !canundo ]]" hidden="[[ _disableUndoRedo ]]"></paper-fab>
-            <paper-fab mini icon="redo" title="redo" on-tap="redo" disabled="[[ !canredo ]]" hidden="[[ _disableUndoRedo ]]"></paper-fab>
-            <paper-fab mini icon="send" title="recognize" on-tap="recognize" disabled="[[ !canclear ]]" hidden="[[ _disableRecognize ]]"></paper-fab>
+            <paper-fab mini src="undo.svg" title="undo" on-tap="undo" disabled="[[ !canundo ]]" hidden="[[ _disableUndoRedo ]]"></paper-fab>
+            <paper-fab mini src="redo.svg" title="redo" on-tap="redo" disabled="[[ !canredo ]]" hidden="[[ _disableUndoRedo ]]"></paper-fab>
+            <paper-fab mini src="trash.svg" title="clear" on-tap="clear" disabled="[[ !canclear ]]" hidden="[[ _disableClear ]]"></paper-fab>
+            <paper-fab mini src="send.svg" title="recognize" on-tap="recognize" disabled="[[ !canclear ]]" hidden="[[ _disableRecognize ]]"></paper-fab>
         </div>
         <div id="myscript-input-area" on-changed="_onChanged" on-success="_onSuccess" on-error="_onError"></div>
         <paper-toast class="fit-bottom"></paper-toast>
@@ -384,7 +390,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS InkPa
                 return this._inkPaper.getStats();
             }
         },
-        ready: function () {
+        attached: function () {
             this._inputArea = this.querySelector('#myscript-input-area');
             this._paperToast = this.querySelector('paper-toast');
             this._penParameters = new MyScript.PenParameters();
