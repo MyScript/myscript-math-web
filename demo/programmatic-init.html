@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <title>myscript-math-web demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../myscript-math-web.html">
+    <link rel="stylesheet" href="demo.css">
+</head>
+<body touch-action="none" unresolved>
+<div id="waiting">myscript-math-web will be loaded in 3 seconds with customs params.</div>
+<myscript-math-web unloaded host="cloud-internal-stable.visionobjects.com">
+</myscript-math-web>
+<script>
+    window.addEventListener("load", function (event) {
+        window.setTimeout(function () {
+            var waitingDiv = document.querySelector('#waiting');
+            waitingDiv.parentNode.removeChild(waitingDiv);
+            console.log("All resources finished loading! Starting to init myscript-math-web");
+            var mycustomconfiguration = {
+                applicationKey: '64e1afbf-f3a7-4d04-bce1-24b05ee0b2d6',
+                hmacKey: '88d81b71-13cd-41a0-9206-ba367c21900f'
+            };
+            var myscriptMathWebElement = document.querySelector('myscript-math-web');
+            // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
+            myscriptMathWebElement.setAttribute('applicationkey', mycustomconfiguration.applicationKey);
+            myscriptMathWebElement.hmackey = mycustomconfiguration.hmacKey;
+            // Testing if options are taken into account
+            myscriptMathWebElement.options = {
+                recognitionParams: {
+                    xyFloatPrecision: 2
+                }
+            };
+
+            myscriptMathWebElement.unloaded = false;
+            console.log("myscript-math-web should be displayed");
+        }, 3000);
+    });
+</script>
+</body>
+</html>
+
