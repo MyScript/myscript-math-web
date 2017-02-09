@@ -457,7 +457,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                  * Clear all context
                  */
                 clear: function () {
-
+                    if (this.myscriptcommonelement) {
+                        this.myscriptcommonelement.clear();
+                    }
                 },
                 /**
                  * Undo action, and launch recognition if timeout is set
