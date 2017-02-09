@@ -13,7 +13,9 @@
 </head>
 <body touch-action="none" unresolved>
 <div id="waiting">myscript-math-web will be loaded in 3 seconds with customs params.</div>
-<myscript-math-web unloaded host="cloud-internal-stable.visionobjects.com">
+
+<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+<myscript-math-web unloaded host="webdemoapi.myscript.com">
 </myscript-math-web>
 <script>
     window.addEventListener("load", function (event) {
@@ -22,8 +24,9 @@
             waitingDiv.parentNode.removeChild(waitingDiv);
             console.log("All resources finished loading! Starting to init myscript-math-web");
             var mycustomconfiguration = {
-                applicationKey: '64e1afbf-f3a7-4d04-bce1-24b05ee0b2d6',
-                hmacKey: '88d81b71-13cd-41a0-9206-ba367c21900f'
+                // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
+                applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
+                hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad'
             };
             var myscriptMathWebElement = document.querySelector('myscript-math-web');
             // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
