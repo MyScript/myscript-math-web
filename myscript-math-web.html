@@ -20,6 +20,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
     <style>
         :host {
             display: block;
+            --myscript-common-element-button-background : var(--myscript-math-web-button-background);
+            --myscript-common-element-button-focus-background : var(--myscript-math-web-button-focus-background);
+            --myscript-common-element-button-disabled-background : var(--myscript-math-web-button-disabled-background);
         }
 
         myscript-common-element {
@@ -145,7 +148,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             try {
                 katex.render(cleanLatexResult(myscriptMathWebElement.result.LATEX), resultField);
             } catch (e) {
-                resultField.innerHTML = "<span>"+cleanLatexResult(myscriptMathWebElement.result.LATEX)+"</span>";
+                resultField.innerHTML = "<span>" + cleanLatexResult(myscriptMathWebElement.result.LATEX) + "</span>";
             }
         } else {
             console.log("An empty result is mostly the consequence of LATEX missign in the resulttypes requested");
@@ -153,7 +156,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         }
     }
 
-    function manageClearEvent(myscriptMathWebElement, eventDetail){
+    function manageClearEvent(myscriptMathWebElement, eventDetail) {
         if (myscriptMathWebElement.myscriptcommonelement) {
             myscriptMathWebElement.result = {};
             qsWrapper(myscriptMathWebElement).querySelector('.katexcontainer').innerHTML = "";
@@ -162,9 +165,11 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 
     function attachElementToDom(myscriptMathWebElement) {
         if (myscriptMathWebElement.unloaded !== true && myscriptMathWebElement.connected === true) {
-            myscriptMathWebElement.options = { mathParameter: buildOptionsFromMathParam(myscriptMathWebElement) };
+
             myscriptMathWebElement.myscriptcommonelement = qsWrapper(myscriptMathWebElement).querySelector('myscript-common-element');
             //myscriptMathWebElement.myscriptcommonelement.unloaded = false;
+            myscriptMathWebElement.myscriptcommonelement.options = { recognitionParams: { mathParameter: buildOptionsFromMathParam(myscriptMathWebElement) } };
+            myscriptMathWebElement.myscriptcommonelement.removeAttribute('unloaded');
             myscriptMathWebElement.hideresultChanged(myscriptMathWebElement.hideresult);
             myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-change', function (event) {
                 LOG("math change intercepted", event);
@@ -184,8 +189,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-clear', { detail: event.detail }));
                 manageClearEvent(myscriptMathWebElement, event.detail);
             });
-
-
 
 
         }
@@ -517,16 +520,11 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     this.connected = true;
                     attachElementToDom(this);
                 },
-                shouldCommonElementRemainUnload : function(unloadValue) {
-                  LOG('shouldLoadCommonElement', unloadValue, this.unloaded);
-                  // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
-                  return unloadValue && (this.connected !== true);
+                shouldCommonElementRemainUnload: function (unloadValue) {
+                    LOG('shouldLoadCommonElement', unloadValue, this.unloaded);
+                    // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
+                    return unloadValue || (this.connected !== true);
                 }
-                /*******************
-                 * WIP WIP WIP
-                 * *****************/
-
-
             })
     ;
 </script>
