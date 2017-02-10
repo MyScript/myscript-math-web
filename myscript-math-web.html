@@ -74,9 +74,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             timeout="{{ timeout }}"
             unloaded="{{ shouldCommonElementRemainUnload(unloaded) }}"
             type="MATH"
-            disableClear="{{ disableClear }}"
-            disableRecognize="{{ disableRecognize }}"
-            disableUndoRedo="{{ disableUndoRedo }}"
+            disableclear="{{ disableclear }}"
+            disablerecognize="{{ disablerecognize }}"
+            disableundoredo="{{ disableundoRedo }}"
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
@@ -373,7 +373,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     /**
                      * True if the undo/redo feature is disabled, false otherwise
                      */
-                    disableUndoRedo: {
+                    disableundoredo: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false
@@ -381,7 +381,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     /**
                      * True if the clear feature is disabled, false otherwise
                      */
-                    disableClear: {
+                    disableclear: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false
@@ -389,7 +389,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     /**
                      * True if the recognize feature is disabled, false otherwise
                      */
-                    disableRecognize: {
+                    disablerecognize: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: true
