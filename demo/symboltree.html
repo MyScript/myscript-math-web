@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <title>myscript-math-web office open xml output.</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../myscript-math-web.html">
+</head>
+<style>
+    html, body {
+        position: absolute;
+        height: 100vh;
+        width: 100vw;
+        padding: 0;
+        margin: 0;
+    }
+
+    myscript-math-web {
+        height: 35vh;
+        width: 100vw;
+        border-bottom: solid 1vw darkblue;
+    }
+
+    #symbolTreeResult {
+        width: 100vw;
+        height : 64vh;
+    }
+</style>
+<body>
+<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+<myscript-math-web
+    id='myscriptMathInput'
+    host="webdemoapi.myscript.com"
+    applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+    hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+    protocol="REST"
+    resulttypes='["SYMBOLTREE"]'
+>
+</myscript-math-web>
+<div id="symbolTreeResult">
+    <pre></pre>
+</div>
+<script>
+
+    var myscriptMathInput
+        = document.getElementById('myscriptMathInput');
+
+    myscriptMathInput.addEventListener('myscript-math-web-result',
+                                       function () {
+                                           console.log(myscriptMathInput.result);
+                                           //Printing the result as OFFICEOPENXMLMATH
+                                           var resultAsSymbolTree = myscriptMathInput.result['SYMBOLTREE'];
+                                           document.getElementById('symbolTreeResult').innerHTML = ' <pre>'+JSON.stringify(resultAsSymbolTree, 2, ' ')+'</pre>';
+                                       }
+    );
+
+</script>
+</body>
+</html>

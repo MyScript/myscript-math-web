@@ -58,7 +58,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         }
     </style>
     <template>
-        <div id="resultField" class="resultField" hidden="[[ hideresult ]]">
+        <div id="resultField" class="resultField" hidden="[[ displayResultZone(hideresult, unloaded) ]]">
             <div class="katexcontainer"></div>
         </div>
         <myscript-common-element
@@ -72,7 +72,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             strokecolor="{{ strokecolor }}"
             strokewidth="{{ strokewidth }}"
             timeout="{{ timeout }}"
-            unloaded="{{ shouldCommonElementRemainUnload(unloaded) }}"
+            unloaded
             type="MATH"
             disableclear="{{ disableclear }}"
             disablerecognize="{{ disablerecognize }}"
@@ -92,7 +92,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
      * @param domElement
      * @returns {*}
      */
-    function qsWrapper(domElement) {
+    function mathQsWrapper(domElement) {
         if (domElement.shadowRoot) {
             return domElement.shadowRoot;
         } else {
@@ -104,7 +104,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
      * Replace latex strings with similar one compatible with katex.
      * @param latex
      */
-    function cleanLatexResult(latex) {
+    function mathCleanLatexResult(latex) {
         return latex
             .replace("\\overrightarrow", "\\vec")
             .replace("\\llbracket", "\\lbracket")
@@ -117,7 +117,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
      *
      * @param myscriptMathWebElement
      */
-    function buildOptionsFromMathParam(myscriptMathWebElement) {
+    function mathBuildOptionsFromMathParam(myscriptMathWebElement) {
         const mathParameter = {};
         mathParameter.resultTypes = myscriptMathWebElement.resulttypes;
         mathParameter.columnarOperation = myscriptMathWebElement.columnaroperation;
@@ -133,22 +133,26 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
      * @private
      * @method _onSuccess
      */
-    function manageResultEvent(myscriptMathWebElement, eventDetail) {
+    function mathManageResultEvent(myscriptMathWebElement, eventDetail) {
         myscriptMathWebElement.result = {};
         // Transforming an Array into an hashmap to ease bindings.
         if (eventDetail.result && eventDetail.result.results && eventDetail.result.results.length > 0) {
             eventDetail.result.results.forEach(function (resultElem) {
-                myscriptMathWebElement.result[resultElem.type] = resultElem.value;
+                if (resultElem.root) {
+                    myscriptMathWebElement.result[resultElem.type] = resultElem.root;
+                } else {
+                    myscriptMathWebElement.result[resultElem.type] = resultElem.value;
+                }
             });
         }
 
         // Updating the rendering zone displayed with Katex (taking the latex recogntion result as an input)
-        var resultField = qsWrapper(myscriptMathWebElement).querySelector('.katexcontainer');
+        var resultField = mathQsWrapper(myscriptMathWebElement).querySelector('.katexcontainer');
         if (myscriptMathWebElement.result.LATEX) {
             try {
-                katex.render(cleanLatexResult(myscriptMathWebElement.result.LATEX), resultField);
+                katex.render(mathCleanLatexResult(myscriptMathWebElement.result.LATEX), resultField);
             } catch (e) {
-                resultField.innerHTML = "<span>" + cleanLatexResult(myscriptMathWebElement.result.LATEX) + "</span>";
+                resultField.innerHTML = "<span>" + mathCleanLatexResult(myscriptMathWebElement.result.LATEX) + "</span>";
             }
         } else {
             console.log("An empty result is mostly the consequence of LATEX missign in the resulttypes requested");
@@ -156,21 +160,22 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         }
     }
 
-    function manageClearEvent(myscriptMathWebElement, eventDetail) {
+    function mathManageClearEvent(myscriptMathWebElement, eventDetail) {
         if (myscriptMathWebElement.myscriptcommonelement) {
             myscriptMathWebElement.result = {};
-            qsWrapper(myscriptMathWebElement).querySelector('.katexcontainer').innerHTML = "";
+            mathQsWrapper(myscriptMathWebElement).querySelector('.katexcontainer').innerHTML = "";
         }
     }
 
-    function attachElementToDom(myscriptMathWebElement) {
+    function mathAttachElementToDom(myscriptMathWebElement) {
         if (myscriptMathWebElement.unloaded !== true && myscriptMathWebElement.connected === true) {
 
-            myscriptMathWebElement.myscriptcommonelement = qsWrapper(myscriptMathWebElement).querySelector('myscript-common-element');
+            myscriptMathWebElement.myscriptcommonelement = mathQsWrapper(myscriptMathWebElement).querySelector('myscript-common-element');
             //myscriptMathWebElement.myscriptcommonelement.unloaded = false;
-            myscriptMathWebElement.myscriptcommonelement.options = { recognitionParams: { mathParameter: buildOptionsFromMathParam(myscriptMathWebElement) } };
+            myscriptMathWebElement.myscriptcommonelement.options = { recognitionParams: { mathParameter: mathBuildOptionsFromMathParam(myscriptMathWebElement) } };
             myscriptMathWebElement.myscriptcommonelement.removeAttribute('unloaded');
             myscriptMathWebElement.hideresultChanged(myscriptMathWebElement.hideresult);
+
             myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-change', function (event) {
                 LOG("math change intercepted", event);
                 myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-change', { detail: event.detail }));
@@ -181,12 +186,12 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             });
             myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-result', function (event) {
                 LOG("math result intercepted", event);
-                manageResultEvent(myscriptMathWebElement, event.detail);
+                mathManageResultEvent(myscriptMathWebElement, event.detail);
                 myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-result', { detail: { result: myscriptMathWebElement.result, srcDetail: event.detail } }));
             });
             myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-clear', function (event) {
                 LOG("math clear intercepted", event);
-                manageClearEvent(myscriptMathWebElement, event.detail);
+                mathManageClearEvent(myscriptMathWebElement, event.detail);
                 myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-clear', { detail: event.detail }));
             });
         }
@@ -419,7 +424,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                      */
                     resulttypes: {
                         type: Array,
-                        value: ['LATEX']
+                        value: ['LATEX', 'MATHML']
                     },
                     /**
                      * If attribute is set activate the recogntion of columnar operations.
@@ -495,7 +500,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     }
                 },
                 //-----------------------------------------------------------------------
-                //---------  Wrapping of myscript-common-element  methods    ------------
+                //---------  Wrapping END                                    ------------
                 //-----------------------------------------------------------------------
                 /**
                  *
@@ -509,22 +514,27 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         }
                     }
                 },
-                unloadedChanged: function (newValue) {
-                    LOG('math unloaded changed', newValue);
-                    this.unloaded = newValue;
-                    attachElementToDom(this);
+                unloadedChanged: function (newUnloadValue) {
+                    LOG('math unloaded changed', newUnloadValue);
+                    this.unloaded = newUnloadValue;
+                    if (this.myscriptcommonelement && newUnloadValue !== false) {
+                        this.myscriptcommonelement.setAttribute('unloaded', true);
+                        this.result = null;
+                        mathQsWrapper(this).querySelector('.katexcontainer').innerHTML = "";
+                    }
+                    mathAttachElementToDom(this);
                 },
                 //Will be renamed connected with pure custom element support
                 attached: function () {
                     LOG('math attached');
                     this.myscriptcommonelement = this.querySelector('myscript-common-element');
                     this.connected = true;
-                    attachElementToDom(this);
+                    mathAttachElementToDom(this);
                 },
-                shouldCommonElementRemainUnload: function (unloadValue) {
-                    LOG('shouldLoadCommonElement', unloadValue, this.unloaded);
+                displayResultZone: function (hideResultValue, unloadedValue) {
+                    LOG('shouldLoadCommonElement', hideResultValue, unloadedValue);
                     // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
-                    return unloadValue || (this.connected !== true);
+                    return hideResultValue && ( unloadedValue || unloadedValue !== true);
                 }
             })
     ;

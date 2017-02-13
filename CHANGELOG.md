@@ -1,5 +1,7 @@
 # Change Log
 
+## [v2.0.0-beta1](https://github.com/MyScript/myscript-math-web/tree/v1.2.3)
+breaking change of symboltree result
 
 ## [v1.2.3](https://github.com/MyScript/myscript-math-web/tree/v1.2.3)
 
