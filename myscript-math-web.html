@@ -121,9 +121,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         const mathParameter = {};
         mathParameter.resultTypes = myscriptMathWebElement.resulttypes;
         mathParameter.columnarOperation = myscriptMathWebElement.columnaroperation;
-        if (myscriptMathWebElement.userresources) {
-            mathParameter.userResources = myscriptMathWebElement.userresources;
-        }
+        mathParameter.userResources = myscriptMathWebElement.userresources;
         mathParameter.scratchOutDetectionSensitivity = myscriptMathWebElement.scratchoutdetectionsensitivity;
         return mathParameter;
     }
