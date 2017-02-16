@@ -69,6 +69,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             options="[[ options ]]"
             protocol="{{ protocol }}"
             host="{{ host }}"
+            recognitiontriggerdelay="{{recognitiontriggerdelay}}"
+            recognitionprocessdelay="{{recognitionprocessdelay}}"
             strokecolor="{{ strokecolor }}"
             strokewidth="{{ strokewidth }}"
             timeout="{{ timeout }}"
@@ -256,6 +258,26 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         type: String,
                         reflectToAttribute: true,
                         value: 'V3'
+                    },
+                    /**
+                     * Delay without any user input before asking for recognition, only use in REST mode.
+                     * @type Number
+                     * @default 2000
+                     */
+                    recognitiontriggerdelay: {
+                        type: Number,
+                        reflectToAttribute: true,
+                        value: 2000
+                    },
+                    /**
+                     * Delay without any recognition result received before processing the last one received, only use in WEBSOCKET mode.
+                     * @type Number
+                     * @default 2000
+                     */
+                    recognitionprocessdelay: {
+                        type: Number,
+                        reflectToAttribute: true,
+                        value: 1000
                     },
                     /**
                      * The recognition timeout, only use in REST mode.
