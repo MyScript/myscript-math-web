@@ -34,7 +34,7 @@
     "tag": "v1.1.2",
     "commit": "bae96531b63ea6d4ce982f5592248aea849c0f5a"
   },
-  "_source": "git://github.com/polymerelements/iron-meta.git",
+  "_source": "https://github.com/polymerelements/iron-meta.git",
   "_target": "^1.0.0",
   "_originalSource": "polymerelements/iron-meta"
 }

@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <title>myscript-math-web demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../myscript-math-web.html">
+    <link rel="stylesheet" href="demo.css">
+</head>
+<body touch-action="none" unresolved>
+<div id="waiting">myscript-math-web will be loaded in 3 seconds with customs params.</div>
+
+<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+<myscript-math-web unloaded host="webdemoapi.myscript.com">
+</myscript-math-web>
+<script>
+    window.addEventListener("load", function (event) {
+        window.setTimeout(function () {
+            var waitingDiv = document.querySelector('#waiting');
+            waitingDiv.parentNode.removeChild(waitingDiv);
+            console.log("All resources finished loading! Starting to init myscript-math-web");
+            var mycustomconfiguration = {
+                // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
+                applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
+                hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad'
+            };
+            var myscriptMathWebElement = document.querySelector('myscript-math-web');
+            // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
+            myscriptMathWebElement.setAttribute('applicationkey', mycustomconfiguration.applicationKey);
+            myscriptMathWebElement.hmackey = mycustomconfiguration.hmacKey;
+            // Testing if options are taken into account
+            myscriptMathWebElement.options = {
+                recognitionParams: {
+                    timestampFloatPrecision: 2
+                }
+            };
+            myscriptMathWebElement.resulttypes = ['LATEX'];
+            myscriptMathWebElement.unloaded = false;
+            console.log("myscript-math-web should be displayed");
+        }, 3000);
+    });
+</script>
+</body>
+</html>
+

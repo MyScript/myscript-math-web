@@ -5,43 +5,33 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <title>myscript-math-web demo</title>
+    <title>myscript-common-element basic demo</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../myscript-common-element.html">
+    <link rel="stylesheet" href="demo.css">
 </head>
-<style>
-    html, body {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        padding: 0;
-        margin: 0;
-    }
-
-    myscript-common-element {
-        height: 100%;
+<style is="custom-style">
+    #result{
+        --paper-toast-background-color: #1A9FFF;
+        --paper-toast-color: white;
     }
 </style>
 <body touch-action="none">
-
-    <myscript-common-element host="webdemoapi.myscript.com"
-                             type="SHAPE"
-                             applicationkey="9faa1259-48ba-44c4-9857-b3c86d986f94"
-                             hmackey="fb166b5d-3ffd-93bd-7b5b-bca0fe2216a0"
-                             timeout="2000"
-                             typeset="true"
-                             shapeparameters="{
-                                 doBeautification: true,
-                                 rejectDetectionSensitivity: 0
-                             }"
-                             on-changed="_onChanged">
-    </myscript-common-element>
-</body>
+<paper-toast id="result" class="fit-top"></paper-toast>
+<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+<myscript-common-element
+    host="webdemoapi.myscript.com"
+    applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+    hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+    type="SHAPE">
+</myscript-common-element>
 <script>
-    (function (document) {
-        'use strict';
-
-    })(document);
+    document.querySelector('myscript-common-element').addEventListener('myscript-common-element-result', function (event) {
+        const paperToast = document.querySelector('#result');
+        paperToast.text = 'Recogntion object contains : ' + JSON.stringify(event.detail.result);
+        paperToast.fitIn = paperToast.show();
+    });
 </script>
+</body>
 </html>

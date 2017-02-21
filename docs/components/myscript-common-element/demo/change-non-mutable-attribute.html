@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <title>myscript-common-element demo - displaying then changing a non mutable attribute with unloaded
+        property.</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../myscript-common-element.html">
+    <link rel="stylesheet" href="demo.css">
+</head>
+<body touch-action="none">
+<div id="waiting">myscript-common-element will be unloaded in 3 seconds.</div>
+<myscript-common-element
+    host="webdemoapi.myscript.com"
+    applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+    hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+    type="MATH">
+</myscript-common-element>
+<script>
+    window.addEventListener("load", function (event) {
+        window.setTimeout(function () {
+            var waitingDiv = document.querySelector('#waiting');
+            waitingDiv.parentNode.removeChild(waitingDiv);
+            console.log("All resources finished loading! Unloading myscript-common-element");
+            var myscriptCommonElement = document.querySelector('myscript-common-element');
+            myscriptCommonElement.unloaded = true;
+            console.log("myscript-common-element should not be displayed");
+            myscriptCommonElement.options = {
+                recognitionParams: {
+                    timestampFloatPrecision: 2
+                }
+            };
+            myscriptCommonElement.unloaded = false;
+            //myscriptCommonElement.unloaded = false;
+            console.log("myscript-common-element should be displayed with a new precision of stroke capure.");
+
+        }, 3000);
+    });
+</script>
+</body>
+</html>

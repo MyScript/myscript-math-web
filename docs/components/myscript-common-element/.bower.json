@@ -20,27 +20,26 @@
     "docs"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#1.4.x",
+    "polymer": "Polymer/polymer#1.8.x",
     "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#1.0.x",
-    "iron-icons": "PolymerElements/iron-icons#1.1.x",
+    "iron-icons": "PolymerElements/iron-icons#1.2.x",
     "paper-fab": "PolymerElements/paper-fab#1.2.x",
-    "paper-toast": "PolymerElements/paper-toast#1.2.x",
-    "myscript": "myscript#1.2.3"
+    "paper-toast": "PolymerElements/paper-toast#1.3.x",
+    "myscript": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git#2.0.0-alpha1"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
   },
   "resolutions": {
-    "polymer": "1.4.x"
+    "polymer": "1.8.x"
   },
-  "version": "1.2.3",
-  "_release": "1.2.3",
+  "_release": "6b4c17dcff",
   "_resolution": {
-    "type": "version",
-    "tag": "v1.2.3",
-    "commit": "93332ab45b0f13b3931faa02a61a44391795c3e7"
+    "type": "branch",
+    "branch": "2.0.0-alpha1",
+    "commit": "6b4c17dcff94023e0c5f3fff5d18f6725509bf6b"
   },
-  "_source": "https://github.com/MyScript/myscript-common-element.git",
-  "_target": "1.2.3",
-  "_originalSource": "myscript-common-element"
+  "_source": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-common-element.git",
+  "_target": "2.0.0-alpha1",
+  "_originalSource": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-common-element.git"
 }

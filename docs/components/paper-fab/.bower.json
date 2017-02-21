@@ -42,7 +42,7 @@
     "tag": "v1.2.1",
     "commit": "6b2df45414f8ad49ad6ece047818efd331da0f18"
   },
-  "_source": "git://github.com/PolymerElements/paper-fab.git",
+  "_source": "https://github.com/PolymerElements/paper-fab.git",
   "_target": "1.2.x",
   "_originalSource": "PolymerElements/paper-fab"
 }

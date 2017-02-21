@@ -28,16 +28,16 @@
     "docs"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#1.4.x",
-    "myscript-common-element": "myscript-common-element#1.2.3",
-    "KaTeX": "katex#0.6.x"
+    "polymer": "Polymer/polymer#1.8.x",
+    "myscript-common-element": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-common-element.git#2.0.0-alpha1",
+    "KaTeX": "katex#0.7.x"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
   },
   "resolutions": {
-    "myscript": "1.2.3",
-    "polymer": "1.4.x"
+    "myscript": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git#2.0.0-alpha1",
+    "polymer": "1.8.x"
   },
   "_source": "/home/padewitte/projets/webcomponents/myscript-math-web",
   "_target": "*",

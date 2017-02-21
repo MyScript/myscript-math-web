@@ -1,0 +1,171 @@
+<!--
+Copyright © MyScript.
+LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+-->
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="myscript-languages-element">
+    <script src="../myscript/dist/myscript.min.js"></script>
+    <script>
+
+        /**
+         * Uncomment the function body during development. Should not be activated in production.
+         * @param string
+         * @param object
+         * @constructor
+         */
+        function LOG(string, object) {
+            if (object) {
+                console.log(string, object);
+            } else {
+                console.log(string);
+            }
+        }
+
+        /**
+         * Build the options to pass to inkpaper.
+         * @param languagesElement
+         * @returns {{}}
+         */
+        function languagesBuildOptionsFromElementAttributes(languagesElement) {
+            var options = {};
+            if (languagesElement.options) {
+                options = languagesElement.options;
+            }
+            if (!options.recognitionParams) {
+                options.recognitionParams = {};
+            }
+            options.recognitionParams.type = languagesElement.type;
+            options.recognitionParams.server = {};
+            options.recognitionParams.server.scheme = languagesElement.scheme;
+            options.recognitionParams.server.host = languagesElement.host;
+            options.recognitionParams.server.applicationKey = languagesElement.applicationkey;
+            options.recognitionParams.server.scheme = languagesElement.scheme;
+            return options;
+        }
+
+        /**
+         * Attach the element to the dom. This is the most critical part of the component.
+         * @param languagesElementParam
+         */
+        function languagesAttachedElementToDom(languagesElementParam) {
+            const languagesElement = languagesElementParam;
+            languagesElement.options = languagesBuildOptionsFromElementAttributes(languagesElement);
+
+            MyScript.getAvailableLanguageList(languagesElement.options, languagesElement.sortByValue).then(function (res) {
+                var langList = [];
+                for (var i in res.result) {
+                    langList.push({ 'value': i, 'description': res.result[i] });
+                }
+                languagesElement.languages = langList;
+                languagesElement.dispatchEvent(new CustomEvent('myscript-languages-element-result', { detail: languagesElement.languages }));
+            });
+
+        }
+
+        Polymer({
+                    is: 'myscript-languages-element',
+                    /**
+                     * Fired when a languages list is successfully received.
+                     *
+                     * @event myscript-languages-element-result
+                     */
+                    properties: {
+                        /**
+                         * <b>not mutable</b><br />
+                         * The current recognition type (e.g. TEXT or ANALYZER)
+                         * @default 'TEXT'
+                         */
+                        type: {
+                            type: String,
+                            reflectToAttribute: true,
+                            value: 'TEXT'
+                        },
+                        /**
+                         * Scheme to use to connect to MyScript Cloud or Server. (https or http)
+                         * @private
+                         * @type Boolean
+                         * @default true
+                         */
+                        scheme: {
+                            type: String,
+                            reflectToAttribute: true,
+                            value: 'https'
+                        },
+                        /**
+                         * The current recognition service host.
+                         * @type String
+                         * @default 'cloud.myscript.com'
+                         */
+                        host: {
+                            type: String,
+                            reflectToAttribute: true,
+                            value: 'cloud.myscript.com'
+                        },
+                        /**
+                         * Application key to use for recognition on MyScript handwriting recognition server.<br />
+                         * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
+                         * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
+                         * @type String
+                         */
+                        applicationkey: {
+                            type: String,
+                            reflectToAttribute: true
+                        },
+                        /**
+                         * Language list sorts by values parameter. If false, language list sort by canonical name
+                         */
+                        sortByValue: {
+                            type: Boolean,
+                            reflectToAttribute: true,
+                            value: true
+                        },
+                        /**
+                         * Languages List
+                         */
+                        languages: {
+                            type: Array,
+                            notify: true
+                        },
+                        /**
+                         * Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.
+                         * (see demo/languages-selector-init.html for a better understanding)
+                         */
+                        unloaded: {
+                            type: Boolean,
+                            value: false,
+                            notify: true,
+                            reflectToAttribute: true,
+                            observer: 'unloadedChanged'
+                        },
+                        /**
+                         * Set the additional options used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
+                         * Options values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.
+                         * Options values are not reflected to myscript-languages-element attributes plus attributes values are always taken into account before options values (see demo/programmatic-init.html for a better understanding).
+                         */
+                        options: {
+                            type: Object,
+                            notify: true
+                        }
+                    },
+                    unloadedChanged: function (newValue) {
+                        LOG('common unloaded changed', newValue);
+                        this.unloaded = newValue;
+                        if (this.unloaded !== true && this.connected === true) {
+                            languagesAttachedElementToDom(this);
+                        }
+                    },
+                    //Will be renamed connected with pure custom element support
+                    attached: function () {
+                        LOG('common attached');
+                        this.connected = true;
+                        // Uncomment when options objects is filled properly
+                        if (this.unloaded !== true) {
+                            languagesAttachedElementToDom(this);
+                        }
+                    }
+                }
+        )
+        ;
+    </script>
+</dom-module>

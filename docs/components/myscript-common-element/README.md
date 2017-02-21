@@ -1,6 +1,9 @@
 myscript-common-element
 =======================
 
+# :warning: 2.0-beta1 branch - For testing and protoyping purpose only.
+The underlying API may change in the upcoming beta versions.
+
 ## What is it about?
 
 myscript-common-element is the common layer of [myscript-math-web](https://github.com/MyScript/myscript-math-web) and [myscript-text-web](https://github.com/MyScript/myscript-text-web).

@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <title>myscript-languages-element demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../myscript-languages-element.html">
+    <link rel="stylesheet" href="demo.css">
+    <style>
+        select {
+            padding: .375rem 1.75rem .4375rem .75rem;
+            color: #131F26;
+            background:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxOCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik00LjQyMi4yNmMtLjIzMy0uMzM3LS42MS0uMzM3LS44NDQgMEwuMTc1IDUuMTdDLS4xNDIgNS42MjguMDQ4IDYgLjYxIDZoNi43OGMuNTU4IDAgLjc1NC0uMzcuNDM1LS44M0w0LjQyMi4yNnptLjAyIDEzLjQ3Yy0uMjM2LjM0Mi0uNjE4LjM0Ny0uODUuMDFMLjE2NyA4LjgxOEMtLjE0NiA4LjM2Ny4wNDggOCAuNjA4IDhoNi43ODNjLjU1OCAwIC43NTUuMzcuNDM3LjgzbC0zLjM4NSA0Ljl6IiBmaWxsPSIjMTMxRjI2Ii8+PC9nPjwvc3ZnPg==) right center no-repeat #fff;
+            appearance: none;
+            font: 400 1.125rem "Source Sans Pro",sans-serif;
+            border: 1px solid #CED5D9;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body touch-action="none">
+<div id="parameters">
+    <select id="language" disabled></select>
+</div>
+<myscript-languages-element scheme="https"
+                            host="cloud-internal-stable.visionobjects.com"
+                            applicationKey="a8f991e2-994d-4f36-b61d-55f7ddf6f85d"
+                            languages="{{ languages }}"
+                            sortByValue>
+</myscript-languages-element>
+<script>
+    document.querySelector('myscript-languages-element').addEventListener('myscript-languages-element-result', function (evt) {
+      var languageElement=  document.getElementById('language');
+      var currentLanguage = 'en_US';
+      var languages = evt.detail;
+      for (var i in languages) {
+        var language = languages[i];
+        languageElement.options[languageElement.options.length] = new Option(language.value, language.key, true, currentLanguage === language.key);
+        languageElement.disabled = false;
+      }
+    });
+</script>
+</body>
+</html>

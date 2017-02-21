@@ -20,13 +20,19 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
     <style>
         :host {
             display: block;
+            --myscript-common-element-button-background: var(--myscript-math-web-button-background);
+            --myscript-common-element-button-focus-background: var(--myscript-math-web-button-focus-background);
+            --myscript-common-element-button-disabled-background: var(--myscript-math-web-button-disabled-background);
         }
+
         myscript-common-element {
             height: 100%;
         }
+
         myscript-common-element.result {
             height: calc(100% - 100px);
         }
+
         .resultField {
             font-size: larger;
             overflow: hidden;
@@ -37,8 +43,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             position: relative;
             color: #1580CD;
         }
+
         .katexcontainer {
-            padding-top: 3px ;
+            padding-top: 3px;
             margin: 0;
             position: absolute;
             top: 50%;
@@ -49,303 +56,504 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         }
     </style>
     <template>
-        <div id="resultField" class="resultField" hidden="[[ hideresult ]]"><div class="katexcontainer"></div></div>
-        <myscript-common-element host="[[ host ]]"
-                                 protocol="[[ protocol ]]"
-                                 type="MATH"
-                                 applicationkey="[[ applicationkey ]]"
-                                 hmackey="[[ hmackey ]]"
-                                 timeout="[[ timeout ]]"
-                                 ssl="[[ ssl ]]"
-                                 hidebuttons="[[ hidebuttons ]]"
-                                 mathparameters="[[ _mathParameters ]]"
-                                 strokecolor="[[ strokecolor ]]"
-                                 strokewidth="[[ strokewidth]]"
-                                 canundo="{{ canundo }}"
-                                 canredo="{{ canredo }}"
-                                 canclear="{{ canclear }}"
-                                 on-changed="_onChanged"
-                                 on-success="_onSuccess"
-                                 on-error="_onError">
+        <div id="resultField" class="resultField" hidden="[[ displayResultZone(hideresult, unloaded) ]]">
+            <div class="katexcontainer"></div>
+        </div>
+        <myscript-common-element
+            apiversion="{{ apiversion }}"
+            applicationkey="{{ applicationkey }}"
+            hidebuttons="{{ hidebuttons }}"
+            hmackey="{{ hmackey }}"
+            options="[[ options ]]"
+            protocol="{{ protocol }}"
+            host="{{ host }}"
+            recognitiontriggerdelay="{{recognitiontriggerdelay}}"
+            recognitionprocessdelay="{{recognitionprocessdelay}}"
+            strokecolor="{{ strokecolor }}"
+            strokewidth="{{ strokewidth }}"
+            timeout="{{ timeout }}"
+            unloaded
+            type="MATH"
+            disableclear="{{ disableclear }}"
+            disablerecognize="{{ disablerecognize }}"
+            disableundoredo="{{ disableundoRedo }}"
+            canclear="[[ canclear ]]"
+            canredo="[[ canredo ]]"
+            canundo="[[ canundo ]]"
+            scheme="{{ scheme }}">
         </myscript-common-element>
     </template>
 </dom-module>
 
 <script>
-    Polymer({
-        is: 'myscript-math-web',
-        /**
-         * Fired when a math recognition result is successfully received.
-         *
-         * @event myscript-math-web-result
-         */
-        /**
-         * Fired when the delete action is done.
-         *
-         * @event myscript-math-web-delete
-         */
-        /**
-         * Fired when a recognition error occurred.
-         * @event error
-         */
-        /**
-         * Fired when the content of the myscript-math-web changes.
-         * @event changed
-         */
-        properties: {
-            /**
-             * <b>not mutable</b><br />
-             * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
-             * @type String
-             */
-            protocol: {
-                type: String,
-                value: 'WebSocket'
-            },
-            /**
-             * <b>not mutable</b><br />
-             * The current recognition service host.
-             * @type String
-             */
-            host: {
-                type: String,
-                value: 'cloud.myscript.com'
-            },
-            /**
-             * <b>not mutable</b><br />
-             * The recognition timeout, only use in REST mode.
-             * @type Number
-             */
-            timeout: {
-                type: Number,
-                value: 2000
-            },
-            /**
-             * <b>not mutable</b><br />
-             * Application key to use for recognition on MyScript handwriting recognition server.<br />
-             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
-             * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
-             * @type String
-             */
-            applicationkey: {
-                type: String
-            },
-            /**
-             * <b>not mutable</b><br />
-             * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
-             * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
-             * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
-             * @type String
-             */
-            hmackey: {
-                type: String
-            },
-            /**
-             * True if undo is available
-             * @private
-             * @type Boolean
-             */
-            canundo: {
-                type: Boolean,
-                notify: true,
-                value: false
-            },
-            /**
-             * True if redo is available
-             * @private
-             * @type Boolean
-             */
-            canredo: {
-                type: Boolean,
-                notify: true,
-                value: false
-            },
-            /**
-             * True if there is something to clear
-             * @private
-             * @type Boolean
-             */
-            canclear: {
-                type: Boolean,
-                notify: true,
-                value: false
-            },
-            /**
-             * <b>not mutable</b><br />
-             * If set to true, hide the buttons (Trash, Undo, Redo).
-             * @type Boolean
-             */
-            hidebuttons: {
-                type: Boolean,
-                value: false
-            },
-            /**
-             * <b>not mutable</b><br />
-             * If set to true, hide the result div tag.
-             * @type Boolean
-             */
-            hideresult: {
-                type: Boolean,
-                value: false,
-                observer: '_hideresultChanged'
-            },
-            /**
-             * Math result types (LATEX, MATHML or SYMBOLTREE).
-             * @type {Array<String>}
-             */
-            resulttypes: {
-                type: Array,
-                value: []
-            },
-            /**
-             * Recognition parameters for the math recognition.
-             * @type {{resultTypes: Array<String>, columnarOperation: Boolean, userResources: Array<String>, scratchOutDetectionSensitivity: Number}}
-             */
-            _mathParameters: {
-                type: Object,
-                computed: '_computeMathParameters(resulttypes)'
-            },
-            /**
-             * Set the stroke color
-             * @type String
-             */
-            strokecolor: {
-                type: String
-            },
-            /**
-             * Set the stroke width
-             * @type String
-             */
-            strokewidth: {
-                type: Number
-            },
-            /**
-             * Recognition result.
-             * @attribute result
-             * @type {Object<String, Object>}
-             */
-            result: {
-                type: Object,
-                notify: true
-            },
-            /**
-             * True if SSL is activated, false otherwise
-             * @private
-             * @type Boolean
-             */
-            ssl: {
-                type: Boolean,
-                value: true
-            }
-        },
-        _clear: function () {
-            this._myscriptCommonElement.clear();
-            this.fire('myscript-math-web-delete');
-        },
-        _undo: function () {
-            this._myscriptCommonElement.undo();
-        },
-        _redo: function () {
-            this._myscriptCommonElement.redo();
-        },
-        /**
-         * Clear the  current document.
-         * @deprecated Use clear instead of delete
-         * @private
-         */
-        delete: function () {
-            this._clear();
-        },
-        /**
-         * Clear the  current document.
-         */
-        clear: function () {
-            this._clear();
-        },
-        /**
-         * Undo the last action.
-         */
-        undo: function () {
-            this._undo();
-        },
-        /**
-         * Redo the last action.
-         */
-        redo: function () {
-            this._redo();
-        },
-        /**
-         * Return the stats allowing to monitor what ink size is send to the server.
-         * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
-         */
-        getStats: function () {
-            if (this._myscriptCommonElement) {
-                return this._myscriptCommonElement.getStats();
-            }
-        },
-        _onChanged: function (e) {
-            this.fire(e.type, e.detail);
-        },
-        /**
-         * Recognition success listener.
-         *
-         * @private
-         * @method _onSuccess
-         */
-        _onSuccess: function (e) {
-            this.result = {};
-            if (e.detail.getDocument && e.detail.getDocument().getResultElements().length > 0) {
-                //console.log(e.detail.getDocument());
-                var resultElements = e.detail.getDocument().getResultElements();
-                for (var res in resultElements) {
-                    this.result[resultElements[res].getType()] = resultElements[res].getValue();
-                }
-            }
 
-            var resultField = this.querySelector('.katexcontainer');
-            if (Object.keys(this.result).length !== 0) {
-                if (this.result.hasOwnProperty('LATEX')) {
-                    try {
-                        katex.render(this._cleanLatexResult(this.result.LATEX), resultField);
-                    } catch (e) {
-                        resultField.innerHTML = "<span>"+this._cleanLatexResult(this.result.LATEX)+"</span>";
-                    }
-                } else {
-                    resultField.innerHTML = "<span>No LaTeX mathematic expression return to the result. Check your resulttypes attribut.</span>";
-                }
-            } else {
-                resultField.innerHTML = "";
-            }
-            this.fire('myscript-math-web-result', this.result);
-        },
-        _onError: function (e) {
-            this.fire(e.type, e.detail);
-        },
-        ready: function () {
-            this._myscriptCommonElement = this.querySelector('myscript-common-element');
-            this._hideresultChanged(this.hideresult);
-        },
-        _computeMathParameters: function (resulttypes) {
-            var parameters = new MyScript.MathParameter();
-            parameters.setResultTypes(resulttypes);
-            return parameters;
-        },
-        _cleanLatexResult: function (latex) {
-            return latex
-                .replace("\\overrightarrow", "\\vec")
-                .replace("\\llbracket", "\\lbracket")
-                .replace("\\rrbracket", "\\rbracket")
-                .replace("\\widehat", "\\hat")
-                .replace(new RegExp("(align.{1})", "g"), "aligned");
-        },
-        _hideresultChanged: function (hideresult) {
-            if (this._myscriptCommonElement) {
-                if (hideresult) {
-                    this._myscriptCommonElement.classList.remove('result');
-                } else {
-                    this._myscriptCommonElement.classList.add('result');
-                }
-            }
+    /**
+     * Function returning the root dom element whatever shadow or shady dom is used.
+     * @param domElement
+     * @returns {*}
+     */
+    function mathQsWrapper(domElement) {
+        if (domElement.shadowRoot) {
+            return domElement.shadowRoot;
+        } else {
+            return domElement;
         }
-    });
+    }
+
+    /**
+     * Replace latex strings with similar one compatible with katex.
+     * @param latex
+     */
+    function mathCleanLatexResult(latex) {
+        return latex
+            .replace("\\overrightarrow", "\\vec")
+            .replace("\\llbracket", "\\lbracket")
+            .replace("\\rrbracket", "\\rbracket")
+            .replace("\\widehat", "\\hat")
+            .replace(new RegExp("(align.{1})", "g"), "aligned");
+    }
+
+    /**
+     *
+     * @param myscriptMathWebElement
+     */
+    function mathBuildOptionsFromMathParam(myscriptMathWebElement) {
+        const mathParameter = {};
+        mathParameter.resultTypes = myscriptMathWebElement.resulttypes;
+        mathParameter.columnarOperation = myscriptMathWebElement.columnaroperation;
+        mathParameter.userResources = myscriptMathWebElement.userresources;
+        mathParameter.scratchOutDetectionSensitivity = myscriptMathWebElement.scratchoutdetectionsensitivity;
+        return mathParameter;
+    }
+    /**
+     * Recognition success listener.
+     *
+     * @private
+     * @method _onSuccess
+     */
+    function mathManageResultEvent(myscriptMathWebElement, eventDetail) {
+        myscriptMathWebElement.result = {};
+        // Transforming an Array into an hashmap to ease bindings.
+        if (eventDetail.result && eventDetail.result.results && eventDetail.result.results.length > 0) {
+            eventDetail.result.results.forEach(function (resultElem) {
+                if (resultElem.root) {
+                    myscriptMathWebElement.result[resultElem.type] = resultElem.root;
+                } else {
+                    myscriptMathWebElement.result[resultElem.type] = resultElem.value;
+                }
+            });
+        }
+
+        // Updating the rendering zone displayed with Katex (taking the latex recogntion result as an input)
+        var resultField = mathQsWrapper(myscriptMathWebElement).querySelector('.katexcontainer');
+        if (myscriptMathWebElement.result.LATEX) {
+            try {
+                katex.render(mathCleanLatexResult(myscriptMathWebElement.result.LATEX), resultField);
+            } catch (e) {
+                resultField.innerHTML = "<span>" + mathCleanLatexResult(myscriptMathWebElement.result.LATEX) + "</span>";
+            }
+        } else {
+            console.log("An empty result is mostly the consequence of LATEX missign in the resulttypes requested");
+            resultField.innerHTML = "";
+        }
+    }
+
+    function mathManageClearEvent(myscriptMathWebElement, eventDetail) {
+        if (myscriptMathWebElement.myscriptcommonelement) {
+            myscriptMathWebElement.result = {};
+            mathQsWrapper(myscriptMathWebElement).querySelector('.katexcontainer').innerHTML = "";
+        }
+    }
+
+    function mathAttachElementToDom(myscriptMathWebElement) {
+        if (myscriptMathWebElement.unloaded !== true && myscriptMathWebElement.connected === true) {
+
+            myscriptMathWebElement.myscriptcommonelement = mathQsWrapper(myscriptMathWebElement).querySelector('myscript-common-element');
+            //myscriptMathWebElement.myscriptcommonelement.unloaded = false;
+            myscriptMathWebElement.myscriptcommonelement.options = { recognitionParams: { mathParameter: mathBuildOptionsFromMathParam(myscriptMathWebElement) } };
+            myscriptMathWebElement.myscriptcommonelement.removeAttribute('unloaded');
+            myscriptMathWebElement.hideresultChanged(myscriptMathWebElement.hideresult);
+
+            myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-change', function (event) {
+                LOG("math change intercepted", event);
+                myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-change', { detail: event.detail }));
+            });
+            myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-error', function (event) {
+                LOG("math error intercepted", event);
+                myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-error', { detail: event.detail }));
+            });
+            myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-result', function (event) {
+                LOG("math result intercepted", event);
+                mathManageResultEvent(myscriptMathWebElement, event.detail);
+                myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-result', { detail: { result: myscriptMathWebElement.result, srcDetail: event.detail } }));
+            });
+            myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-clear', function (event) {
+                LOG("math clear intercepted", event);
+                mathManageClearEvent(myscriptMathWebElement, event.detail);
+                myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-clear', { detail: event.detail }));
+            });
+        }
+    }
+
+    Polymer({
+                is: 'myscript-math-web',
+                /**
+                 * Fired when state of canundo / canredo / canclear / canrecognize
+                 *
+                 * @event myscript-math-web-change
+                 */
+                /**
+                 * Fired when the delete action is done.
+                 *
+                 * @event myscript-math-web-result
+                 */
+                /**
+                 * Fired when a recognition error occurred.
+                 * @event myscript-math-web-error
+                 */
+                properties: {
+                    // ----------------------------------------------------------------------------------------------
+                    // The following section is a recopy of myscript-common-element attributes
+                    // Polymer documentation generation prevent from reusing attributes from another element.
+                    // ----------------------------------------------------------------------------------------------
+                    /**
+                     * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
+                     * @type String
+                     * @default 'REST'
+                     */
+                    protocol: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'WEBSOCKET'
+                    },
+                    /**
+                     * Scheme to use to connect to MyScript Cloud or Server. (https or http)
+                     * @private
+                     * @type Boolean
+                     * @default true
+                     */
+                    scheme: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'https'
+                    },
+                    /**
+                     * The current recognition service host.
+                     * @type String
+                     * @default 'cloud.myscript.com'
+                     */
+                    host: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'cloud.myscript.com'
+                    },
+                    /**
+                     * Recogntion API version to use (eg V3 or V4)
+                     * @type String
+                     * @default 'V3'
+                     */
+                    apiversion: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'V3'
+                    },
+                    /**
+                     * Delay without any user input before asking for recognition, only use in REST mode.
+                     * @type Number
+                     * @default 2000
+                     */
+                    recognitiontriggerdelay: {
+                        type: Number,
+                        reflectToAttribute: true,
+                        value: 2000
+                    },
+                    /**
+                     * Delay without any recognition result received before processing the last one received, only use in WEBSOCKET mode.
+                     * @type Number
+                     * @default 2000
+                     */
+                    recognitionprocessdelay: {
+                        type: Number,
+                        reflectToAttribute: true,
+                        value: 1000
+                    },
+                    /**
+                     * The recognition timeout, only use in REST mode.
+                     * @type Number
+                     * @default 2000
+                     */
+                    timeout: {
+                        type: Number,
+                        reflectToAttribute: true,
+                        value: 2000
+                    },
+                    /**
+                     * Application key to use for recognition on MyScript handwriting recognition server.<br />
+                     * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
+                     * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
+                     * @type String
+                     */
+                    applicationkey: {
+                        type: String,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
+                     * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
+                     * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
+                     * @type String
+                     */
+                    hmackey: {
+                        type: String,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * Properties to set when you wish to set attributes in javascript. unloaded attributes shoudl be removed once all properties are set.
+                     * (see demo/programmatic-init.html for a better understanding)
+                     */
+                    unloaded: {
+                        type: Boolean,
+                        value: false,
+                        notify: true,
+                        reflectToAttribute: true,
+                        observer: 'unloadedChanged'
+                    },
+                    /**
+                     * Set the additional options used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
+                     * Options values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.
+                     * Options values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before options values (see demo/programmatic-init.html for a better understanding).
+                     */
+                    options: {
+                        type: Object,
+                        notify: true
+                    },
+                    /**
+                     * Set the stroke color
+                     * @type String
+                     */
+                    strokecolor: {
+                        type: String,
+                        value: '#1580CD',
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * Set the stroke width
+                     * @type String
+                     */
+                    strokewidth: {
+                        type: Number,
+                        value: 4,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * True if undo is available
+                     * @private
+                     * @type Boolean
+                     * @default false
+                     */
+                    canundo: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true,
+                        notify: true
+                    },
+                    /**
+                     * True if redo is available
+                     * @private
+                     * @type Boolean
+                     * @default false
+                     */
+                    canredo: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true,
+                        notify: true
+                    },
+                    /**
+                     * True if there is something to clear
+                     * @private
+                     * @type Boolean
+                     * @default false
+                     */
+                    canclear: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true,
+                        notify: true
+                    },
+                    /**
+                     * If set to true, hide the buttons (Trash, Undo, Redo).
+                     * @type Boolean
+                     * @default false
+                     */
+                    hidebuttons: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false,
+                        notify: true
+                    },
+
+                    /**
+                     * True if the undo/redo feature is disabled, false otherwise
+                     */
+                    disableundoredo: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
+                    /**
+                     * True if the clear feature is disabled, false otherwise
+                     */
+                    disableclear: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
+                    /**
+                     * True if the recognize feature is disabled, false otherwise
+                     */
+                    disablerecognize: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: true
+                    },
+
+                    //------------------------------------------------------------------------------
+                    //                 End of recopy
+                    // -----------------------------------------------------------------------------
+                    /**
+                     * The underlying myscriptcommonelement. This could allow to access more advanced properties.
+                     */
+                    myscriptcommonelement: {
+                        type: Object
+                    },
+                    /**
+                     * If set to true, hide the result div tag.
+                     * @type Boolean
+                     */
+                    hideresult: {
+                        type: Boolean,
+                        value: false,
+                        observer: 'hideresultChanged'
+                    },
+                    /**
+                     * Math result types (LATEX, MATHML or SYMBOLTREE).
+                     * @type {Array<String>}
+                     */
+                    resulttypes: {
+                        type: Array,
+                        value: ['LATEX', 'MATHML']
+                    },
+                    /**
+                     * If attribute is set activate the recogntion of columnar operations.
+                     * @type Boolean
+                     */
+                    columnaroperation: {
+                        type: Boolean,
+                        value: false
+                    },
+                    /**
+                     * List of user resources to use for recogntions. Thoses user ressources have to be attached to the user account where application is declare.
+                     * @type {Array}
+                     */
+                    userresources: {
+                        type: Array
+                    },
+                    scratchoutdetectionsensitivity: {
+                        type: Number,
+                        value: 1
+                    },
+                    /**
+                     * Recognition result.
+                     * @attribute result
+                     * @type {Object<String, Object>} Attributes depends on recognition type already configured.
+                     */
+                    result: {
+                        type: Object,
+                        notify: true
+                    }
+                },
+                //-----------------------------------------------------------------------
+                //---------  Wrapping of myscript-common-element  methods    ------------
+                //-----------------------------------------------------------------------
+                /**
+                 * Clear all context
+                 */
+                clear: function () {
+                    if (this.myscriptcommonelement) {
+                        this.myscriptcommonelement.clear();
+                    }
+                },
+                /**
+                 * Undo action, and launch recognition if timeout is set
+                 */
+                undo: function () {
+                    if (this.myscriptcommonelement) {
+                        this.myscriptcommonelement.undo();
+                    }
+                },
+                /**
+                 * Redo action, and launch recognition if timeout is set
+                 */
+                redo: function () {
+                    if (this.myscriptcommonelement) {
+                        this.myscriptcommonelement.redo();
+                    }
+                },
+                /**
+                 * Launch recognition
+                 */
+                recognize: function () {
+                    if (this.myscriptcommonelement) {
+                        this.myscriptcommonelement.recognize();
+                    }
+                },
+                /**
+                 * Return the stats allowing to monitor what ink size is send to the server.
+                 * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+                 */
+                getStats: function () {
+                    if (this.myscriptcommonelement) {
+                        return this.myscriptcommonelement.getStats();
+                    }
+                },
+                //-----------------------------------------------------------------------
+                //---------  Wrapping END                                    ------------
+                //-----------------------------------------------------------------------
+                /**
+                 *
+                 */
+                hideresultChanged: function (hideresult) {
+                    if (this.myscriptcommonelement) {
+                        if (hideresult) {
+                            this.myscriptcommonelement.classList.remove('result');
+                        } else {
+                            this.myscriptcommonelement.classList.add('result');
+                        }
+                    }
+                },
+                unloadedChanged: function (newUnloadValue) {
+                    LOG('math unloaded changed', newUnloadValue);
+                    this.unloaded = newUnloadValue;
+                    if (this.myscriptcommonelement && newUnloadValue !== false) {
+                        this.myscriptcommonelement.setAttribute('unloaded', true);
+                        this.result = null;
+                        mathQsWrapper(this).querySelector('.katexcontainer').innerHTML = "";
+                    }
+                    mathAttachElementToDom(this);
+                },
+                //Will be renamed connected with pure custom element support
+                attached: function () {
+                    LOG('math attached');
+                    this.myscriptcommonelement = this.querySelector('myscript-common-element');
+                    this.connected = true;
+                    mathAttachElementToDom(this);
+                },
+                displayResultZone: function (hideResultValue, unloadedValue) {
+                    LOG('shouldLoadCommonElement', hideResultValue, unloadedValue);
+                    // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
+                    return hideResultValue && ( unloadedValue || unloadedValue !== true);
+                }
+            })
+    ;
 </script>

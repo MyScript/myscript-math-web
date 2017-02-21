@@ -1,10 +1,7 @@
 {
   "name": "myscript",
-  "main": [
-    "./dist/myscript.min.js",
-    "./dist/myscript.min.css"
-  ],
-  "description": "The JavaScript library for the MyScript Cloud recognition service",
+  "main": "myscript.html",
+  "description": "MyScriptJS is the fastest way to integrate handwriting panel and recognition in your webapp",
   "keywords": [
     "myscript",
     "javascript",
@@ -20,33 +17,20 @@
     "url": "git://github.com/MyScript/MyScriptJS.git"
   },
   "ignore": [
-    "**/.*",
-    "package.json",
-    "node_modules",
-    "bower_components",
-    "test",
-    "resources",
-    "docker",
-    "Makefile",
-    "Gruntfile.js",
-    "build.json",
-    "dist/docs",
-    "dist/samples",
-    "docs"
+    "*",
+    "!myscript.html",
+    "!package.json",
+    "!bower.json",
+    "!dist/**/*",
+    "!src/**/*"
   ],
-  "dependencies": {
-    "cryptojslib": "3.1.x",
-    "q": "1.4.x",
-    "pepjs": "0.4.x"
-  },
-  "version": "1.2.3",
-  "_release": "1.2.3",
+  "_release": "9774ac8776",
   "_resolution": {
-    "type": "version",
-    "tag": "v1.2.3",
-    "commit": "9cdca681ac5c8bff9aed85a7095e0e564d1e57d2"
+    "type": "branch",
+    "branch": "2.0.0-alpha1",
+    "commit": "9774ac877612d97507881af9cdd3f11b585d05de"
   },
-  "_source": "https://github.com/MyScript/MyScriptJS.git",
-  "_target": "1.2.3",
-  "_originalSource": "myscript"
+  "_source": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git",
+  "_target": "2.0.0-alpha1",
+  "_originalSource": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git"
 }
