@@ -136,8 +136,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
     function mathManageResultEvent(myscriptMathWebElement, eventDetail) {
         myscriptMathWebElement.result = {};
         // Transforming an Array into an hashmap to ease bindings.
-        if (eventDetail.result && eventDetail.result.results && eventDetail.result.results.length > 0) {
-            eventDetail.result.results.forEach(function (resultElem) {
+        if (eventDetail.rawResult && eventDetail.rawResult.result && eventDetail.rawResult.result.results && eventDetail.rawResult.result.results.length > 0) {
+            eventDetail.rawResult.result.results.forEach(function (resultElem) {
                 if (resultElem.root) {
                     myscriptMathWebElement.result[resultElem.type] = resultElem.root;
                 } else {
