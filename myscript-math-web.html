@@ -136,23 +136,17 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
     function mathManageResultEvent(myscriptMathWebElement, eventDetail) {
         myscriptMathWebElement.result = {};
         // Transforming an Array into an hashmap to ease bindings.
-        if (eventDetail.rawResult && eventDetail.rawResult.result && eventDetail.rawResult.result.results && eventDetail.rawResult.result.results.length > 0) {
-            eventDetail.rawResult.result.results.forEach(function (resultElem) {
-                if (resultElem.root) {
-                    myscriptMathWebElement.result[resultElem.type] = resultElem.root;
-                } else {
-                    myscriptMathWebElement.result[resultElem.type] = resultElem.value;
-                }
-            });
+        if (eventDetail.recognitionResult) {
+            myscriptMathWebElement.result = eventDetail.recognitionResult;
         }
 
         // Updating the rendering zone displayed with Katex (taking the latex recogntion result as an input)
         var resultField = mathQsWrapper(myscriptMathWebElement).querySelector('.katexcontainer');
-        if (myscriptMathWebElement.result.LATEX) {
+        if (myscriptMathWebElement.result['application/x-latex']) {
             try {
-                katex.render(mathCleanLatexResult(myscriptMathWebElement.result.LATEX), resultField);
+                katex.render(mathCleanLatexResult(myscriptMathWebElement.result['application/x-latex']), resultField);
             } catch (e) {
-                resultField.innerHTML = "<span>" + mathCleanLatexResult(myscriptMathWebElement.result.LATEX) + "</span>";
+                resultField.innerHTML = "<span>" + mathCleanLatexResult(myscriptMathWebElement.result['application/x-latex']) + "</span>";
             }
         } else {
             console.log("An empty result is mostly the consequence of LATEX missign in the resulttypes requested");
