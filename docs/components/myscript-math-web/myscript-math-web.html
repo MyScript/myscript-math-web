@@ -26,10 +26,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         }
 
         myscript-common-element {
-            height: 100%;
-        }
-
-        myscript-common-element.result {
             height: calc(100% - 100px);
         }
 
@@ -42,6 +38,10 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             padding-top: 5px;
             position: relative;
             color: #1580CD;
+        }
+
+        .resultField[hidden] + myscript-common-element {
+            height: 100%;
         }
 
         .katexcontainer {
@@ -165,10 +165,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         if (myscriptMathWebElement.unloaded !== true && myscriptMathWebElement.connected === true) {
 
             myscriptMathWebElement.myscriptcommonelement = mathQsWrapper(myscriptMathWebElement).querySelector('myscript-common-element');
-            //myscriptMathWebElement.myscriptcommonelement.unloaded = false;
             myscriptMathWebElement.myscriptcommonelement.options = { recognitionParams: { mathParameter: mathBuildOptionsFromMathParam(myscriptMathWebElement) } };
             myscriptMathWebElement.myscriptcommonelement.removeAttribute('unloaded');
-            myscriptMathWebElement.hideresultChanged(myscriptMathWebElement.hideresult);
 
             myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-change', function (event) {
                 LOG("math change intercepted", event);
@@ -429,8 +427,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                      */
                     hideresult: {
                         type: Boolean,
-                        value: false,
-                        observer: 'hideresultChanged'
+                        value: false
                     },
                     /**
                      * Math result types (LATEX, MATHML or SYMBOLTREE).
@@ -516,18 +513,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 //-----------------------------------------------------------------------
                 //---------  Wrapping END                                    ------------
                 //-----------------------------------------------------------------------
-                /**
-                 *
-                 */
-                hideresultChanged: function (hideresult) {
-                    if (this.myscriptcommonelement) {
-                        if (hideresult) {
-                            this.myscriptcommonelement.classList.remove('result');
-                        } else {
-                            this.myscriptcommonelement.classList.add('result');
-                        }
-                    }
-                },
                 unloadedChanged: function (newUnloadValue) {
                     LOG('math unloaded changed', newUnloadValue);
                     this.unloaded = newUnloadValue;
