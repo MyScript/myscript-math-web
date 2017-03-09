@@ -134,28 +134,24 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
     function mathManageResultEvent(myscriptMathWebElement, eventDetail) {
         myscriptMathWebElement.result = {};
         // Transforming an Array into an hashmap to ease bindings.
-        if (eventDetail.result && eventDetail.result.results && eventDetail.result.results.length > 0) {
-            eventDetail.result.results.forEach(function (resultElem) {
-                if (resultElem.root) {
-                    myscriptMathWebElement.result[resultElem.type] = resultElem.root;
-                } else {
-                    myscriptMathWebElement.result[resultElem.type] = resultElem.value;
-                }
-            });
+        if (eventDetail.recognitionResult) {
+            myscriptMathWebElement.result = eventDetail.recognitionResult;
         }
+        eventDetail.result = myscriptMathWebElement.result;
 
         // Updating the rendering zone displayed with Katex (taking the latex recogntion result as an input)
         var resultField = mathQsWrapper(myscriptMathWebElement).querySelector('.katexcontainer');
-        if (myscriptMathWebElement.result.LATEX) {
+        if (myscriptMathWebElement.result['application/x-latex']) {
             try {
-                katex.render(mathCleanLatexResult(myscriptMathWebElement.result.LATEX), resultField);
+                katex.render(mathCleanLatexResult(myscriptMathWebElement.result['application/x-latex']), resultField);
             } catch (e) {
-                resultField.innerHTML = "<span>" + mathCleanLatexResult(myscriptMathWebElement.result.LATEX) + "</span>";
+                resultField.innerHTML = "<span>" + mathCleanLatexResult(myscriptMathWebElement.result['application/x-latex']) + "</span>";
             }
         } else {
             console.log("An empty result is mostly the consequence of LATEX missign in the resulttypes requested");
             resultField.innerHTML = "";
         }
+        return eventDetail;
     }
 
     function mathManageClearEvent(myscriptMathWebElement, eventDetail) {
@@ -184,8 +180,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             });
             myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-result', function (event) {
                 LOG("math result intercepted", event);
-                mathManageResultEvent(myscriptMathWebElement, event.detail);
-                myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-result', { detail: { result: myscriptMathWebElement.result, srcDetail: event.detail } }));
+                var enrichedEventDetail = mathManageResultEvent(myscriptMathWebElement, event.detail);
+                myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-result', { detail: enrichedEventDetail }));
             });
             myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-clear', function (event) {
                 LOG("math clear intercepted", event);

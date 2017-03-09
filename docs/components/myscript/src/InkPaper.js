@@ -55,7 +55,7 @@ function triggerCallbacks(callbacks, model, element, ...types) {
  * @param {Options} options Current configuration
  * @param {Model} model Current model
  * @param {RecognizerContext} recognizerContext Current recognizer context
- * @param {RecognizerCallback} callback
+ * @param {function(err: Object, res: Object)} callback
  * @return {Model}
  */
 function manageResetState(recognizer, options, model, recognizerContext, callback) {
@@ -161,7 +161,7 @@ function launchRecognition(inkPaper, modelToRecognize) {
  */
 function launchTypeset(inkPaper, modelToTypeset) {
   inkPaper.recognizer.typeset(inkPaper.options, modelToTypeset, inkPaper.recognizerContext, (error, model) => {
-    recognizerCallback(inkPaper, error, model, MyScriptJSConstants.EventType.TYPESET);
+    recognizerCallback(inkPaper, error, model, MyScriptJSConstants.EventType.TYPESET, MyScriptJSConstants.EventType.RECOGNITION_RESULT);
   });
 }
 /**
@@ -169,11 +169,12 @@ function launchTypeset(inkPaper, modelToTypeset) {
  * @param {InkPaper} inkPaper
  */
 function resize(inkPaper) {
-  inkPaper.renderer.resize(inkPaper.rendererContext, inkPaper.model, inkPaper.stroker);
   if (inkPaper.recognizer.resize) {
     inkPaper.recognizer.resize(inkPaper.options, inkPaper.model, inkPaper.recognizerContext, (error, model) => {
       recognizerCallback(inkPaper, error, model, MyScriptJSConstants.EventType.TYPESET);
     });
+  } else {
+    inkPaper.renderer.resize(inkPaper.rendererContext, inkPaper.model, inkPaper.stroker);
   }
 }
 
@@ -351,8 +352,8 @@ export class InkPaper {
       }
       /** @private **/
       this.innerBehavior = behavior;
-      this.recognizer = this.innerBehavior.recognizer;
       this.renderer = this.innerBehavior.renderer;
+      this.recognizer = this.innerBehavior.recognizer;
       /**
        * Current grabber context
        * @type {GrabberContext}

@@ -33,11 +33,11 @@
   "resolutions": {
     "polymer": "1.8.x"
   },
-  "_release": "6b4c17dcff",
+  "_release": "46c0ab5bd9",
   "_resolution": {
     "type": "branch",
     "branch": "2.0.0-alpha1",
-    "commit": "6b4c17dcff94023e0c5f3fff5d18f6725509bf6b"
+    "commit": "46c0ab5bd9162ece39420c22c27a53c4eee6cc55"
   },
   "_source": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-common-element.git",
   "_target": "2.0.0-alpha1",

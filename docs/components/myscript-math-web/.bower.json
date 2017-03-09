@@ -39,7 +39,7 @@
     "myscript": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git#2.0.0-alpha1",
     "polymer": "1.8.x"
   },
-  "_source": "/home/padewitte/projets/webcomponents/myscript-math-web",
+  "_source": "/home/fxg/projects/webcomponents/myscript-math-web",
   "_target": "*",
   "_originalSource": "../../myscript-math-web",
   "_direct": true

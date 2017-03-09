@@ -2,16 +2,17 @@ import { recognizerLogger as logger } from '../../../configuration/LoggerConfig'
 import MyScriptJSConstants from '../../../configuration/MyScriptJSConstants';
 import * as InkModel from '../../../model/InkModel';
 import * as StrokeComponent from '../../../model/StrokeComponent';
-import * as Cdkv3WSRecognizerUtil from './Cdkv3WSRecognizerUtil';
+import * as Cdkv3WSWebsocketBuilder from './Cdkv3WSBuilder';
+import * as Cdkv3WSRecognizerUtil from '../CdkvWSRecognizerUtil';
 
-export { reset, close } from './Cdkv3WSRecognizerUtil';
+export { reset, close } from '../CdkvWSRecognizerUtil';
 
 /**
  * Recognizer configuration
  * @type {RecognizerInfo}
  */
 export const textWebSocketV3Configuration = {
-  type: MyScriptJSConstants.RecognitionType.TEXT,
+  type: [MyScriptJSConstants.RecognitionType.TEXT],
   protocol: MyScriptJSConstants.Protocol.WEBSOCKET,
   apiVersion: 'V3',
   availableFeatures: [MyScriptJSConstants.RecognizerFeature.RECOGNITION],
@@ -25,6 +26,13 @@ export const textWebSocketV3Configuration = {
  */
 export function getInfo() {
   return textWebSocketV3Configuration;
+}
+
+function buildInitMessage(recognizerContext, model, options) {
+  return {
+    type: 'applicationKey',
+    applicationKey: options.recognitionParams.server.applicationKey
+  };
 }
 
 function buildTextInput(recognizerContext, model, options) {
@@ -58,11 +66,12 @@ function resultCallback(model) {
  * @param {Options} options Current configuration
  * @param {Model} model Current model
  * @param {RecognizerContext} recognizerContext Current recognizer context
- * @param {RecognizerCallback} callback
+ * @param {function(err: Object, res: Object)} callback
  */
 export function init(options, model, recognizerContext, callback) {
-  Cdkv3WSRecognizerUtil.init('/api/v3.0/recognition/ws/text', options, InkModel.resetModelPositions(model), recognizerContext)
-      .then(res => callback(undefined, res));
+  Cdkv3WSRecognizerUtil.init('/api/v3.0/recognition/ws/text', options, InkModel.resetModelPositions(model), recognizerContext, Cdkv3WSWebsocketBuilder.buildWebSocketCallback)
+      .then(openedModel => Cdkv3WSRecognizerUtil.sendMessages(recognizerContext, openedModel, options, callback, buildInitMessage))
+      .catch(err => callback(err, undefined));
 }
 
 /**
@@ -70,11 +79,9 @@ export function init(options, model, recognizerContext, callback) {
  * @param {Options} options Current configuration
  * @param {Model} model Current model
  * @param {RecognizerContext} recognizerContext Current recognizer context
- * @param {RecognizerCallback} callback
+ * @param {function(err: Object, res: Object)} callback
  */
 export function recognize(options, model, recognizerContext, callback) {
-  Cdkv3WSRecognizerUtil.sendMessages(options, recognizerContext, InkModel.updateModelSentPosition(model), buildTextInput)
-      .then(resultCallback)
-      .then(res => callback(undefined, res));
+  Cdkv3WSRecognizerUtil.sendMessages(recognizerContext, InkModel.updateModelSentPosition(model), options, (err, res) => callback(err, resultCallback(res)), buildTextInput);
 }
 

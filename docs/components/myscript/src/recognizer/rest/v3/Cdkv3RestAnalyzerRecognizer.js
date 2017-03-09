@@ -4,7 +4,7 @@ import * as InkModel from '../../../model/InkModel';
 import * as StrokeComponent from '../../../model/StrokeComponent';
 import * as CryptoHelper from '../../CryptoHelper';
 import * as Cdkv3RestRecognizerUtil from './Cdkv3RestRecognizerUtil';
-import { extractShapeSymbols, getStyleFromInkRanges } from '../common/Cdkv3CommonShapeRecognizer';
+import { extractShapeSymbols, getStyleFromInkRanges } from '../../common/v3/Cdkv3CommonShapeRecognizer';
 
 export { init, close, reset } from '../../DefaultRecognizer';
 
@@ -90,7 +90,7 @@ function resultCallback(model) {
  * @param {Options} options Current configuration
  * @param {Model} model Current model
  * @param {RecognizerContext} recognizerContext Current recognizer context
- * @param {RecognizerCallback} callback
+ * @param {function(err: Object, res: Object)} callback
  */
 export function recognize(options, model, recognizerContext, callback) {
   return Cdkv3RestRecognizerUtil.postMessage('/api/v3.0/recognition/rest/analyzer/doSimpleRecognition.json', options, InkModel.updateModelSentPosition(model), recognizerContext, buildInput)

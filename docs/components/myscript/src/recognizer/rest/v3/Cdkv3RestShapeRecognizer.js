@@ -5,7 +5,7 @@ import * as StrokeComponent from '../../../model/StrokeComponent';
 import * as CryptoHelper from '../../CryptoHelper';
 import * as RecognizerContext from '../../../model/RecognizerContext';
 import * as Cdkv3RestRecognizerUtil from './Cdkv3RestRecognizerUtil';
-import * as Cdkv3CommonShapeRecognizer from '../common/Cdkv3CommonShapeRecognizer';
+import * as Cdkv3CommonShapeRecognizer from '../../common/v3/Cdkv3CommonShapeRecognizer';
 
 export { init, close } from '../../DefaultRecognizer';
 
@@ -77,7 +77,7 @@ function resetCallback(model) {
  * @param {Options} options Current configuration
  * @param {Model} model Current model
  * @param {RecognizerContext} recognizerContext Current recognizer context
- * @param {RecognizerCallback} callback
+ * @param {function(err: Object, res: Object)} callback
  */
 export function recognize(options, model, recognizerContext, callback) {
   Cdkv3RestRecognizerUtil.postMessage('/api/v3.0/recognition/rest/shape/doSimpleRecognition.json', options, InkModel.updateModelSentPosition(model), recognizerContext, buildInput)
@@ -91,7 +91,7 @@ export function recognize(options, model, recognizerContext, callback) {
  * @param {Options} options Current configuration
  * @param {Model} model Current model
  * @param {RecognizerContext} recognizerContext Current recognizer context
- * @param {RecognizerCallback} callback
+ * @param {function(err: Object, res: Object)} callback
  */
 export function reset(options, model, recognizerContext, callback) {
   new Promise((resolve) => {
