@@ -37,12 +37,12 @@ function infinitPing(websocket) {
 function addWebsocketAttributes(websocket, recognizerContext) {
   const socket = websocket;
   socket.start = new Date();
+  socket.autoReconnect = recognizerContext.configuration.recognitionParams.server.websocket.autoReconnect;
+  socket.maxRetryCount = recognizerContext.configuration.recognitionParams.server.websocket.maxRetryCount;
+  socket.pingPongActivated = recognizerContext.configuration.recognitionParams.server.websocket.pingPongActivated;
+  socket.pingIntervalMillis = recognizerContext.configuration.recognitionParams.server.websocket.pingIntervalMillis;
+  socket.maxPingLost = recognizerContext.configuration.recognitionParams.server.websocket.maxPingLostCount;
   socket.pingCount = 0;
-  socket.pingIntervalMillis = recognizerContext.options.recognitionParams.server.websocket.pingIntervalMillis;
-  socket.maxPingLost = recognizerContext.options.recognitionParams.server.websocket.maxPingLostCount;
-  socket.autoReconnect = recognizerContext.options.recognitionParams.server.websocket.autoReconnect;
-  socket.maxRetryCount = recognizerContext.options.recognitionParams.server.maxRetryCount;
-  socket.pingPongActivate = recognizerContext.options.recognitionParams.server.websocket.pingPongActivate;
   socket.recognizerContext = recognizerContext;
 }
 
@@ -59,7 +59,7 @@ export function openWebSocket(recognizerContext) {
     logger.error('Unable to open websocket, Check the host and your connectivity');
   }
   addWebsocketAttributes(socket, recognizerContext);
-  if (recognizerContext.options.recognitionParams.server.websocket.pingPongActivate) {
+  if (recognizerContext.configuration.recognitionParams.server.websocket.pingPongActivated) {
     infinitPing(socket);
   }
 
@@ -81,7 +81,6 @@ export function openWebSocket(recognizerContext) {
   socket.onmessage = (e) => {
     logger.debug('onMessage');
     socket.pingCount = 0;
-    socket.maxRetryCount = 0;
     const parsedMessage = JSON.parse(e.data);
     if (parsedMessage.type !== 'pong') {
       const callBackParam = {
@@ -104,6 +103,7 @@ export function send(recognizerContext, message) {
   const websocket = recognizerContext.websocket;
   const state = websocket.readyState;
   if (state <= 1) {
+    logger.debug(`Send ${message.type} message`);
     websocket.send(JSON.stringify(message));
   } else {
     throw RecognizerContext.LOST_CONNEXION_MESSAGE;

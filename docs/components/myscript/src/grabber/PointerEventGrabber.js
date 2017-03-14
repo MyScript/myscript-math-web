@@ -1,9 +1,9 @@
 import { grabberLogger as logger } from '../configuration/LoggerConfig';
 
 /**
- * Grab penDown, penMove and penUp events
+ * Grab pointerDown, pointerMove and pointerUp events
  * @typedef {Object} Grabber
- * @property {function(inkPaper: InkPaper, element: Element): GrabberContext} attachEvents Attach events and decide when to call inkPaper penDown/Move/Up methods
+ * @property {function(editor: Editor, element: Element): GrabberContext} attachEvents Attach events and decide when to call editor pointerDown/Move/Up methods
  */
 
 /**
@@ -33,22 +33,22 @@ function roundFloat(oneFloat, requestedFloatPrecision) {
   return oneFloat;
 }
 
-function extractPoint(event, domElement, options) {
+function extractPoint(event, domElement, configuration) {
   let eventRef = event;
   if (eventRef.changedTouches) {
     eventRef = eventRef.changedTouches[0];
   }
   const rect = domElement.getBoundingClientRect();
   return {
-    x: roundFloat(eventRef.clientX - rect.left - domElement.clientLeft, options.recognitionParams.xyFloatPrecision),
-    y: roundFloat(eventRef.clientY - rect.top - domElement.clientTop, options.recognitionParams.xyFloatPrecision),
-    t: roundFloat(Date.now(), options.recognitionParams.timestampFloatPrecision)
+    x: roundFloat(eventRef.clientX - rect.left - domElement.clientLeft, configuration.xyFloatPrecision),
+    y: roundFloat(eventRef.clientY - rect.top - domElement.clientTop, configuration.xyFloatPrecision),
+    t: roundFloat(Date.now(), configuration.timestampFloatPrecision)
   };
 }
 
 /**
  * Listen for the desired events
- * @param {InkPaper} inkPaper InkPaper to received down/move/up events
+ * @param {Editor} editor Editor to received down/move/up events
  * @param {Element} element DOM element to attach events listeners
  * @return {GrabberContext} Grabber context
  * @listens {Event} pointermove: a pointer moves, similar to touchmove or mousemove.
@@ -60,7 +60,7 @@ function extractPoint(event, domElement, options) {
  * @listens {Event} pointerleave: a pointer leaves the bounding box of an element.
  * @listens {Event} pointercancel: a pointer will no longer generate events.
  */
-export function attachEvents(inkPaper, element) {
+export function attachEvents(editor, element) {
   logger.debug('attaching events');
 
   function ignoreHandler(evt) {
@@ -69,42 +69,42 @@ export function attachEvents(inkPaper, element) {
     return false;
   }
 
-  function penDownHandler(evt) { // Trigger a penDown
+  function pointerDownHandler(evt) { // Trigger a pointerDown
     logger.debug(`${evt.type} event`, evt.pointerId);
     if (this.activePointerId) {
       logger.debug('Already in capture mode. No need to activate a new capture');
       if (this.activePointerId === evt.pointerId) {
-        logger.error('PenDown detect with the same id without any pen up');
+        logger.error('PointerDown detect with the same id without any pointer up');
       }
     } else {
       this.activePointerId = evt.pointerId;
       stopPropagation(evt);
-      inkPaper.penDown(extractPoint(evt, element, inkPaper.options), evt.pointerType);
+      editor.pointerDown(extractPoint(evt, element, editor.configuration), evt.pointerType);
     }
     return false;
   }
 
-  function penMoveHandler(evt) { // Trigger a penMove
+  function pointerMoveHandler(evt) { // Trigger a pointerMove
     logger.debug(`${evt.type} event`, evt.pointerId);
     // Only considering the active pointer
     if (this.activePointerId && this.activePointerId === evt.pointerId) {
       stopPropagation(evt);
-      inkPaper.penMove(extractPoint(evt, element, inkPaper.options));
+      editor.pointerMove(extractPoint(evt, element, editor.configuration));
     } else {
-      logger.debug(`PenMove detect from another pointerid (${evt.pointerId}), active id is ${this.activePointerId}`);
+      logger.debug(`PointerMove detect from another pointerid (${evt.pointerId}), active id is ${this.activePointerId}`);
     }
     return false;
   }
 
-  function penUpHandler(evt) { // Trigger a penUp
+  function pointerUpHandler(evt) { // Trigger a pointerUp
     logger.debug(`${evt.type} event`, evt.pointerId);
     // Only considering the active pointer
     if (this.activePointerId && this.activePointerId === evt.pointerId) {
       this.activePointerId = undefined; // Managing the active pointer
       stopPropagation(evt);
-      inkPaper.penUp(extractPoint(evt, element, inkPaper.options));
+      editor.pointerUp(extractPoint(evt, element, editor.configuration));
     } else {
-      logger.debug(`PenUp detect from another pointerid (${evt.pointerId}), active id is ${this.activePointerId}`);
+      logger.debug(`PointerUp detect from another pointerid (${evt.pointerId}), active id is ${this.activePointerId}`);
     }
     return false;
   }
@@ -115,13 +115,13 @@ export function attachEvents(inkPaper, element) {
     events[type] = ignoreHandler;
   });
   ['pointerdown'].forEach((type) => {
-    events[type] = penDownHandler;
+    events[type] = pointerDownHandler;
   });
   ['pointermove'].forEach((type) => {
-    events[type] = penMoveHandler;
+    events[type] = pointerMoveHandler;
   });
   ['pointerup', 'pointerout', 'pointerleave', 'pointercancel'].forEach((type) => {
-    events[type] = penUpHandler;
+    events[type] = pointerUpHandler;
   });
 
   Object.keys(events).forEach(type => element.addEventListener(type, events[type], false));

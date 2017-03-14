@@ -32,14 +32,16 @@
             myscriptCommonElement.setAttribute('type', mycustomconfiguration.type);
             myscriptCommonElement.applicationkey = mycustomconfiguration.applicationKey;
             myscriptCommonElement.hmackey = mycustomconfiguration.hmacKey;
-            // Testing if options are taken into account
-            myscriptCommonElement.options = {
+            // Testing if configuration are taken into account
+            myscriptCommonElement.configuration = {
                 recognitionParams: {
-                    analyzerParameter: {
-                        textParameter: {
-                            textProperties: {},
-                            language: 'en_US',
-                            textInputMode: 'CURSIVE'
+                    v3: {
+                        analyzerParameter: {
+                            textParameter: {
+                                textProperties: {},
+                                language: 'en_US',
+                                textInputMode: 'CURSIVE'
+                            }
                         }
                     }
                 }

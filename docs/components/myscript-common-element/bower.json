@@ -25,7 +25,8 @@
     "iron-icons": "PolymerElements/iron-icons#1.2.x",
     "paper-fab": "PolymerElements/paper-fab#1.2.x",
     "paper-toast": "PolymerElements/paper-toast#1.3.x",
-    "myscript": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git#2.0.0-alpha1"
+    "myscript": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git#2.0.0-alpha1",
+    "pepjs": "^0.4.2"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x"

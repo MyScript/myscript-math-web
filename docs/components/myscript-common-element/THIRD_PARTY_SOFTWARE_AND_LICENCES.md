@@ -1,6 +1,6 @@
 Third Party Software and Licenses.
 
-Myscript-ink-paper web component is using the following third party software:
+myscript-common-element web component is using the following third party software:
 
 - MyScript JS
 

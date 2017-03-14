@@ -7,6 +7,6 @@ html, body {
 }
 
 myscript-common-element {
-    height: calc(100% - 60px);
+    height: 100%;
 }
 

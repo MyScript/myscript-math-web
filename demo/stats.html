@@ -5,7 +5,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <title>myscript-common-element basic demo</title>
+    <title>myscript-math-web basic demo</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../myscript-math-web.html">
@@ -18,19 +18,19 @@
     }
 </style>
 <body touch-action="none">
-<paper-toast id="result" class="fit-top"></paper-toast>
-<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-<myscript-math-web
-    host="webdemoapi.myscript.com"
-    applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-    hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
-</myscript-math-web>
+    <paper-toast id="result" class="fit-top"></paper-toast>
+    <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+    <myscript-math-web
+        host="webdemoapi.myscript.com"
+        applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
+    </myscript-math-web>
+</body>
 <script>
     document.querySelector('myscript-math-web').addEventListener('myscript-math-web-change', function (event) {
         const paperToast = document.querySelector('#result');
-        paperToast.text = 'Stats for this imput are : ' + JSON.stringify(document.querySelector('myscript-math-web').getStats());
+        paperToast.text = 'Stats for this input are : ' + JSON.stringify(document.querySelector('myscript-math-web').getStats());
         paperToast.fitIn = paperToast.show();
     });
 </script>
-</body>
 </html>

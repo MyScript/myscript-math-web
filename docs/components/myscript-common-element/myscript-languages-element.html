@@ -23,41 +23,39 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
         }
 
         /**
-         * Build the options to pass to inkpaper.
+         * Build the configuration to pass to editor.
          * @param languagesElement
          * @returns {{}}
          */
-        function languagesBuildOptionsFromElementAttributes(languagesElement) {
-            var options = {};
-            if (languagesElement.options) {
-                options = languagesElement.options;
+        function languagesBuildConfigurationFromElementAttributes(languagesElement) {
+            var configuration = {};
+            if (languagesElement.configuration) {
+                configuration = languagesElement.configuration;
             }
-            if (!options.recognitionParams) {
-                options.recognitionParams = {};
+            if (!configuration.recognitionParams) {
+                configuration.recognitionParams = {};
             }
-            options.recognitionParams.type = languagesElement.type;
-            options.recognitionParams.server = {};
-            options.recognitionParams.server.scheme = languagesElement.scheme;
-            options.recognitionParams.server.host = languagesElement.host;
-            options.recognitionParams.server.applicationKey = languagesElement.applicationkey;
-            options.recognitionParams.server.scheme = languagesElement.scheme;
-            return options;
+            configuration.recognitionParams.type = languagesElement.type;
+            configuration.recognitionParams.server = {};
+            configuration.recognitionParams.server.scheme = languagesElement.scheme;
+            configuration.recognitionParams.server.host = languagesElement.host;
+            configuration.recognitionParams.server.applicationKey = languagesElement.applicationkey;
+            configuration.recognitionParams.server.scheme = languagesElement.scheme;
+            return configuration;
         }
 
         /**
          * Attach the element to the dom. This is the most critical part of the component.
-         * @param languagesElementParam
+         * @param languagesElement
          */
-        function languagesAttachedElementToDom(languagesElementParam) {
-            const languagesElement = languagesElementParam;
-            languagesElement.options = languagesBuildOptionsFromElementAttributes(languagesElement);
+        function languagesAttachedElementToDom(languagesElement) {
+            languagesElement.configuration = languagesBuildConfigurationFromElementAttributes(languagesElement);
 
-            MyScript.getAvailableLanguageList(languagesElement.options, languagesElement.sortByValue).then(function (res) {
-                var langList = [];
-                for (var i in res.result) {
-                    langList.push({ 'value': i, 'description': res.result[i] });
-                }
-                languagesElement.languages = langList;
+            MyScript.getAvailableLanguageList(languagesElement.configuration, languagesElement.sortByValue).then(function (res) {
+                languagesElement.languages = [];
+                Object.keys(res.result).forEach(function (key) {
+                    languagesElement.languages.push({ 'value': key, 'description': res.result[key] });
+                });
                 languagesElement.dispatchEvent(new CustomEvent('myscript-languages-element-result', { detail: languagesElement.languages }));
             });
 
@@ -124,7 +122,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                          * Languages List
                          */
                         languages: {
-                            type: Array,
+                            type: Object,
                             notify: true
                         },
                         /**
@@ -139,11 +137,11 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                             observer: 'unloadedChanged'
                         },
                         /**
-                         * Set the additional options used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
-                         * Options values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.
-                         * Options values are not reflected to myscript-languages-element attributes plus attributes values are always taken into account before options values (see demo/programmatic-init.html for a better understanding).
+                         * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
+                         * Configuration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.
+                         * Configuration values are not reflected to myscript-languages-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).
                          */
-                        options: {
+                        configuration: {
                             type: Object,
                             notify: true
                         }
@@ -159,7 +157,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                     attached: function () {
                         LOG('common attached');
                         this.connected = true;
-                        // Uncomment when options objects is filled properly
+                        // Uncomment when configuration objects is filled properly
                         if (this.unloaded !== true) {
                             languagesAttachedElementToDom(this);
                         }

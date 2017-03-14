@@ -64,15 +64,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             applicationkey="{{ applicationkey }}"
             hidebuttons="{{ hidebuttons }}"
             hmackey="{{ hmackey }}"
-            options="[[ options ]]"
+            configuration="{{ configuration }}"
             protocol="{{ protocol }}"
             host="{{ host }}"
-            recognitiontriggerdelay="{{recognitiontriggerdelay}}"
-            recognitionprocessdelay="{{recognitionprocessdelay}}"
+            recognitiontriggerdelay="{{ recognitiontriggerdelay }}"
+            recognitionprocessdelay="{{ recognitionprocessdelay }}"
             strokecolor="{{ strokecolor }}"
             strokewidth="{{ strokewidth }}"
             timeout="{{ timeout }}"
-            unloaded
             type="MATH"
             disableclear="{{ disableclear }}"
             disablerecognize="{{ disablerecognize }}"
@@ -117,14 +116,24 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
      *
      * @param myscriptMathWebElement
      */
-    function mathBuildOptionsFromMathParam(myscriptMathWebElement) {
-        const mathParameter = {};
-        mathParameter.resultTypes = myscriptMathWebElement.resulttypes;
-        mathParameter.columnarOperation = myscriptMathWebElement.columnaroperation;
-        mathParameter.userResources = myscriptMathWebElement.userresources;
-        mathParameter.scratchOutDetectionSensitivity = myscriptMathWebElement.scratchoutdetectionsensitivity;
-        return mathParameter;
+    function buildMathConfiguration(myscriptMathWebElement) {
+        if (!myscriptMathWebElement.configuration) {
+            myscriptMathWebElement.configuration = {};
+        }
+        if (!myscriptMathWebElement.configuration.recognitionParams) {
+            myscriptMathWebElement.configuration.recognitionParams = {};
+        }
+        myscriptMathWebElement.configuration.recognitionParams[myscriptMathWebElement.apiversion.toLowerCase()] = {
+            mathParameter: {
+                resultTypes: myscriptMathWebElement.resulttypes,
+                columnarOperation: myscriptMathWebElement.columnaroperation,
+                userResources: myscriptMathWebElement.userresources,
+                scratchOutDetectionSensitivity: myscriptMathWebElement.scratchoutdetectionsensitivity
+            }
+        };
+        return myscriptMathWebElement.configuration;
     }
+
     /**
      * Recognition success listener.
      *
@@ -141,14 +150,15 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 
         // Updating the rendering zone displayed with Katex (taking the latex recogntion result as an input)
         var resultField = mathQsWrapper(myscriptMathWebElement).querySelector('.katexcontainer');
-        if (myscriptMathWebElement.result['application/x-latex']) {
+        var latexResult = myscriptMathWebElement.result['application/x-latex'] ? myscriptMathWebElement.result['application/x-latex'] : myscriptMathWebElement.result.LATEX;
+        if (latexResult) {
             try {
-                katex.render(mathCleanLatexResult(myscriptMathWebElement.result['application/x-latex']), resultField);
+                katex.render(mathCleanLatexResult(latexResult), resultField);
             } catch (e) {
-                resultField.innerHTML = "<span>" + mathCleanLatexResult(myscriptMathWebElement.result['application/x-latex']) + "</span>";
+                resultField.innerHTML = "<span>" + mathCleanLatexResult(latexResult) + "</span>";
             }
         } else {
-            console.log("An empty result is mostly the consequence of LATEX missign in the resulttypes requested");
+            console.log("An empty result is mostly the consequence of LATEX missing in the resulttypes requested");
             resultField.innerHTML = "";
         }
         return eventDetail;
@@ -161,32 +171,65 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         }
     }
 
-    function mathAttachElementToDom(myscriptMathWebElement) {
-        if (myscriptMathWebElement.unloaded !== true && myscriptMathWebElement.connected === true) {
-
-            myscriptMathWebElement.myscriptcommonelement = mathQsWrapper(myscriptMathWebElement).querySelector('myscript-common-element');
-            myscriptMathWebElement.myscriptcommonelement.options = { recognitionParams: { mathParameter: mathBuildOptionsFromMathParam(myscriptMathWebElement) } };
-            myscriptMathWebElement.myscriptcommonelement.removeAttribute('unloaded');
-
-            myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-change', function (event) {
-                LOG("math change intercepted", event);
-                myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-change', { detail: event.detail }));
-            });
-            myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-error', function (event) {
-                LOG("math error intercepted", event);
-                myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-error', { detail: event.detail }));
-            });
-            myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-result', function (event) {
-                LOG("math result intercepted", event);
-                var enrichedEventDetail = mathManageResultEvent(myscriptMathWebElement, event.detail);
-                myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-result', { detail: enrichedEventDetail }));
-            });
-            myscriptMathWebElement.myscriptcommonelement.addEventListener('myscript-common-element-clear', function (event) {
-                LOG("math clear intercepted", event);
-                mathManageClearEvent(myscriptMathWebElement, event.detail);
-                myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-clear', { detail: event.detail }));
-            });
+    /**
+     * @param myscriptMathWebElement
+     */
+    function changeMathConfiguration(myscriptMathWebElement) {
+        if (myscriptMathWebElement.myscriptcommonelement) {
+            myscriptMathWebElement.myscriptcommonelement.configuration = buildMathConfiguration(myscriptMathWebElement);
         }
+    }
+
+    function attachMathElementToDom(myscriptMathWebElement) {
+        myscriptMathWebElement.myscriptcommonelement = mathQsWrapper(myscriptMathWebElement).querySelector('myscript-common-element');
+
+        // Manage clear events
+        function clearListener(event) {
+            LOG('math ' + event.type + ' event intercepted', event);
+            mathManageClearEvent(myscriptMathWebElement, event.detail);
+            myscriptMathWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-math-web-'), { detail: event.detail }));
+        }
+
+        // Manage result events
+        function resultListener(event) {
+            LOG('math ' + event.type + ' event intercepted', event);
+            var enrichedEventDetail = mathManageResultEvent(myscriptMathWebElement, event.detail);
+            myscriptMathWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-math-web-'), { detail: enrichedEventDetail }));
+        }
+
+        // Manage other events
+        function defaultListener(event) {
+            LOG('math ' + event.type + ' event intercepted', event);
+            // Just forwarding event there.
+            myscriptMathWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-math-web-'), { detail: event.detail }));
+        }
+
+        myscriptMathWebElement.currentListeners = {};
+        ['myscript-common-element-result'].forEach(function (type) {
+            myscriptMathWebElement.currentListeners[type] = resultListener;
+        });
+        ['myscript-common-element-clear'].forEach(function (type) {
+            myscriptMathWebElement.currentListeners[type] = clearListener;
+        });
+        ['myscript-common-element-undo', 'myscript-common-element-redo', 'myscript-common-element-typeset', 'myscript-common-element-recognize', 'myscript-common-element-change', 'myscript-common-element-error']
+            .forEach(function (type) {
+                myscriptMathWebElement.currentListeners[type] = defaultListener;
+            });
+        Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
+            myscriptMathWebElement.myscriptcommonelement.addEventListener(type, myscriptMathWebElement.currentListeners[type])
+        });
+        myscriptMathWebElement.configuration = buildMathConfiguration(myscriptMathWebElement);
+        myscriptMathWebElement.unloaded = false;
+        LOG('math-web attached');
+    }
+
+    /** Remove listeners when common element is unloaded. */
+    function detachMathElementFromDom(myscriptMathWebElement) {
+        Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
+            myscriptMathWebElement.myscriptcommonelement.removeEventListener(type, myscriptMathWebElement.currentListeners[type])
+        });
+        myscriptMathWebElement.unloaded = true;
+        LOG('math-web detached');
     }
 
     Polymer({
@@ -313,11 +356,11 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         observer: 'unloadedChanged'
                     },
                     /**
-                     * Set the additional options used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
-                     * Options values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.
-                     * Options values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before options values (see demo/programmatic-init.html for a better understanding).
+                     * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
+                     * Configuration values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.
+                     * Configuration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).
                      */
-                    options: {
+                    configuration: {
                         type: Object,
                         notify: true
                     },
@@ -407,6 +450,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                      * True if the recognize feature is disabled, false otherwise
                      */
                     disablerecognize: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: true
+                    },
+                    /**
+                     * True if the typeset feature is disabled, false otherwise
+                     */
+                    disabletypeset: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: true
@@ -513,22 +564,28 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 //-----------------------------------------------------------------------
                 //---------  Wrapping END                                    ------------
                 //-----------------------------------------------------------------------
-                unloadedChanged: function (newUnloadValue) {
-                    LOG('math unloaded changed', newUnloadValue);
-                    this.unloaded = newUnloadValue;
-                    if (this.myscriptcommonelement && newUnloadValue !== false) {
-                        this.myscriptcommonelement.setAttribute('unloaded', true);
-                        this.result = null;
-                        mathQsWrapper(this).querySelector('.katexcontainer').innerHTML = "";
+                unloadedChanged: function (newValue) {
+                    LOG('math unloaded changed', newValue);
+                    if (this.myscriptcommonelement && !this.initializing && newValue !== true) {
+                        this.result = {};
+                        this.myscriptcommonelement.unloaded = true;
+                        changeMathConfiguration(this);
+                        this.myscriptcommonelement.unloaded = false;
                     }
-                    mathAttachElementToDom(this);
                 },
                 //Will be renamed connected with pure custom element support
                 attached: function () {
-                    LOG('math attached');
-                    this.myscriptcommonelement = this.querySelector('myscript-common-element');
-                    this.connected = true;
-                    mathAttachElementToDom(this);
+                    this.initializing = true;
+                    LOG('math-web attached callback');
+                    attachMathElementToDom(this);
+                    // FIXME: Ugly hack to apply configuration
+                    this.myscriptcommonelement.unloaded = true;
+                    this.myscriptcommonelement.unloaded = false;
+                    this.initializing = false;
+                },
+                detached: function () {
+                    LOG('math-web detached callback');
+                    detachMathElementFromDom(this);
                 },
                 displayResultZone: function (hideResultValue, unloadedValue) {
                     LOG('shouldLoadCommonElement', hideResultValue, unloadedValue);

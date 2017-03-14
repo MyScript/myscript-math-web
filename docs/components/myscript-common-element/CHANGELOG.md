@@ -6,18 +6,18 @@
 - Removal of all deprecated attributes and methods
 - User can no longer write when an unrecoverable error is detected forcing him to relaod the page. See demo/init-error.html to discover this new feature.
 - --myscript-common-element-button-background, --myscript-common-element-button-focus-background, --myscript-common-element-button-disabled-background css variables helps you styling the buttons. See demo/customstyle.html for a working example.
-- options attributes allow you to set programmaticly all options of MyScriptJS (see [MyScriptJS documentation]() for a complete spec ). Options are overide by other attributes when they are set.
-- inkpaper aread only attributes allow you to access to the underlying inkPaper object create when myscipt-common-element custom element is attached to the DOM  (see [MyScriptJS documentation]() for more details )
-- unloaded attribute ease the integration with other front-end frameworks or when you want to programmaticly set options and other attributs. Add the unloaded attribut into your markup and remove it in your JS logic when all attributes are set 
+- configuration attributes allow you to set programmaticly all configuration of MyScriptJS (see [MyScriptJS documentation]() for a complete spec ). Options are overide by other attributes when they are set.
+- editor read only attributes allow you to access to the underlying editor object create when myscipt-common-element custom element is attached to the DOM  (see [MyScriptJS documentation]() for more details )
+- unloaded attribute ease the integration with other front-end frameworks or when you want to programmaticly set configuration and other attributs. Add the unloaded attribut into your markup and remove it in your JS logic when all attributes are set 
 ### Breaking changes :
 - tiemout property has be renammed to recognitiontriggerdelay
 - existing events have been removed. See custom elment docs to discover new behavior.
-- resulttypes, language, typeset, textparameters, mathparameters, shapeparameters, musicparameters, analyzerparameters  is not longuer expose. Use options to 
+- resulttypes, language, typeset, textparameters, mathparameters, shapeparameters, musicparameters, analyzerparameters  is not longuer expose. Use configuration to 
 - ssl attributes have been removed. Use sheme attribute instead.
 - _disableUndoRedo, _disableClear, _disableRecognize have been renamed to disableundoredo, disableclear, disablerecognize
 - delete() have been renamed to clear() to be consistent accross APIs
 - getAvailableLanguages() have been removed. You can use the non graphical element to access the language list accessible for your account.
-- Once myscript-common-element is attached to the DOM or when unloaded attribut is remove, you can only change strokecolor and strokewidth attributes. If you change any athor attribute you will have to set the unloaded attribut then removed it. This will clear the underlying inkpaper and all currents strokes and recognition results will be lost.
+- Once myscript-common-element is attached to the DOM or when unloaded attribut is remove, you can only change strokecolor and strokewidth attributes. If you change any athor attribute you will have to set the unloaded attribut then removed it. This will clear the underlying editor and all currents strokes and recognition results will be lost.
 
 ### Limits
 - myscript-common-element does not support pure shadow DOM. Still some issues to import myscriptjs css.
@@ -64,7 +64,7 @@
 
 
 ### Bugs
-- Unused `options` attribute removed
+- Unused `configuration` attribute removed
 - Fixes issue when setting `host` from javascript (@see mutable `host` feature)
 - Fixes issue when setting `host` in WebSocket recognition (@see mutable `host` feature)
 - Fixes issue when setting `protocol` from javascript (@see mutable `protocol` feature)

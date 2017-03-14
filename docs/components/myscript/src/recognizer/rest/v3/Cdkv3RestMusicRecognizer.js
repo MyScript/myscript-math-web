@@ -3,9 +3,10 @@ import MyScriptJSConstants from '../../../configuration/MyScriptJSConstants';
 import * as InkModel from '../../../model/InkModel';
 import * as StrokeComponent from '../../../model/StrokeComponent';
 import * as CryptoHelper from '../../CryptoHelper';
+import * as CdkCommonUtil from '../../common/CdkCommonUtil';
 import * as Cdkv3RestRecognizerUtil from './Cdkv3RestRecognizerUtil';
 
-export { init, close, reset } from '../../DefaultRecognizer';
+export { init, close, clear } from '../../DefaultRecognizer';
 
 /**
  * Recognizer configuration
@@ -31,7 +32,7 @@ export function getInfo() {
   return musicRestV3Configuration;
 }
 
-function buildInput(options, model, recognizerContext) {
+function buildInput(configuration, model, recognizerContext) {
   const input = {
     // As Rest MUSIC recognition is non incremental wa add the already recognized strokes
     components: []
@@ -44,7 +45,7 @@ function buildInput(options, model, recognizerContext) {
           return symbol;
         })
   };
-  const musicParameter = Object.assign({}, options.recognitionParams.musicParameter);
+  const musicParameter = Object.assign({}, configuration.recognitionParams.v3.musicParameter);
   delete musicParameter.clef; // FIXME find a way to avoid this ugly hack
   Object.assign(input, musicParameter); // Building the input with the suitable parameters
 
@@ -52,31 +53,34 @@ function buildInput(options, model, recognizerContext) {
 
   const data = {
     instanceId: recognizerContext ? recognizerContext.instanceId : undefined,
-    applicationKey: options.recognitionParams.server.applicationKey,
+    applicationKey: configuration.recognitionParams.server.applicationKey,
     musicInput: JSON.stringify(input)
   };
 
-  if (options.recognitionParams.server.hmacKey) {
-    data.hmac = CryptoHelper.computeHmac(data.musicInput, options.recognitionParams.server.applicationKey, options.recognitionParams.server.hmacKey);
+  if (configuration.recognitionParams.server.hmacKey) {
+    data.hmac = CryptoHelper.computeHmac(data.musicInput, configuration.recognitionParams.server.applicationKey, configuration.recognitionParams.server.hmacKey);
   }
   return data;
 }
 
 function resultCallback(model) {
   logger.debug('Cdkv3RestMusicRecognizer result callback', model);
+  const modelReference = model;
+  modelReference.recognitionResult = CdkCommonUtil.extractRecognitionResult(model);
+  logger.debug('Cdkv3RestMusicRecognizer model updated', modelReference);
   return model;
 }
 
 /**
  * Do the recognition
- * @param {Options} options Current configuration
+ * @param {Configuration} configuration Current configuration
  * @param {Model} model Current model
  * @param {RecognizerContext} recognizerContext Current recognizer context
  * @param {function(err: Object, res: Object)} callback
  */
-export function recognize(options, model, recognizerContext, callback) {
-  Cdkv3RestRecognizerUtil.postMessage('/api/v3.0/recognition/rest/music/doSimpleRecognition.json', options, InkModel.updateModelSentPosition(model), recognizerContext, buildInput)
+export function recognize(configuration, model, recognizerContext, callback) {
+  Cdkv3RestRecognizerUtil.postMessage('/api/v3.0/recognition/rest/music/doSimpleRecognition.json', configuration, InkModel.updateModelSentPosition(model), recognizerContext, buildInput)
       .then(resultCallback)
       .then(res => callback(undefined, res))
-      .catch(err => callback(err, undefined));
+      .catch(err => callback(err, model));
 }

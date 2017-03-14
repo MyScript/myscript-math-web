@@ -23,7 +23,7 @@ export function getInfo() {
  */
 export function populateDomElement(element) {
   logger.debug(`Populate dom elements for rendering inside ${element.id}`);
-  return d3.select('.ms-ink-paper');
+  return d3.select('.ms-editor');
 }
 
 /**
@@ -35,6 +35,11 @@ export function populateDomElement(element) {
  */
 export function resize(context, model, stroker) {
   logger.debug('Nothing to resize in svg');
+  const rect = context.node().getBoundingClientRect();
+  const svg = context.select('svg');
+  svg.attr('viewBox', `0 0 ${rect.width}, ${rect.height}`);
+  svg.attr('width', rect.width);
+  svg.attr('height', rect.height);
   return model;
 }
 
@@ -86,16 +91,16 @@ export function drawModel(context, model, stroker) {
       }
         break;
       case 'REMOVE_ELEMENT':
-        context.selectAll(`#${update.id}`).remove();
+        context.select(`#${update.id}`).remove();
         break;
       case 'REPLACE_ELEMENT': {
         const parent = context.select(`#${update.id}`).node().parentNode;
-        context.selectAll(`#${update.id}`).remove();
+        context.select(`#${update.id}`).remove();
         parent.innerHTML += update.svg;
       }
         break;
       case 'REMOVE_CHILD':
-        context.select(`#${update.parentId}:nth-child(${update.index + 1})`).remove();
+        context.select(`#${update.parentId} + *:nth-child(${update.index + 1})`).remove();
         break;
       case 'APPEND_CHILD': {
         const parent = context.select(update.parentId ? `#${update.parentId}` : 'svg');

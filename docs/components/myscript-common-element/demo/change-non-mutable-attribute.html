@@ -29,13 +29,16 @@
             var myscriptCommonElement = document.querySelector('myscript-common-element');
             myscriptCommonElement.unloaded = true;
             console.log("myscript-common-element should not be displayed");
-            myscriptCommonElement.options = {
+            myscriptCommonElement.configuration = {
                 recognitionParams: {
-                    timestampFloatPrecision: 2
+                    v3: {
+                        mathParameter: {
+                            resultTypes: ['OFFICEOPENXMLMATH']
+                        }
+                    }
                 }
             };
             myscriptCommonElement.unloaded = false;
-            //myscriptCommonElement.unloaded = false;
             console.log("myscript-common-element should be displayed with a new precision of stroke capure.");
 
         }, 3000);

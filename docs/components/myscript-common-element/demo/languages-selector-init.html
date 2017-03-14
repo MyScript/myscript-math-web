@@ -12,13 +12,19 @@
     <link rel="stylesheet" href="demo.css">
     <style>
         select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: auto;
             padding: .375rem 1.75rem .4375rem .75rem;
             color: #131F26;
-            background:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxOCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik00LjQyMi4yNmMtLjIzMy0uMzM3LS42MS0uMzM3LS44NDQgMEwuMTc1IDUuMTdDLS4xNDIgNS42MjguMDQ4IDYgLjYxIDZoNi43OGMuNTU4IDAgLjc1NC0uMzcuNDM1LS44M0w0LjQyMi4yNnptLjAyIDEzLjQ3Yy0uMjM2LjM0Mi0uNjE4LjM0Ny0uODUuMDFMLjE2NyA4LjgxOEMtLjE0NiA4LjM2Ny4wNDggOCAuNjA4IDhoNi43ODNjLjU1OCAwIC43NTUuMzcuNDM3LjgzbC0zLjM4NSA0Ljl6IiBmaWxsPSIjMTMxRjI2Ii8+PC9nPjwvc3ZnPg==) right center no-repeat #fff;
+            background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxOCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik00LjQyMi4yNmMtLjIzMy0uMzM3LS42MS0uMzM3LS44NDQgMEwuMTc1IDUuMTdDLS4xNDIgNS42MjguMDQ4IDYgLjYxIDZoNi43OGMuNTU4IDAgLjc1NC0uMzcuNDM1LS44M0w0LjQyMi4yNnptLjAyIDEzLjQ3Yy0uMjM2LjM0Mi0uNjE4LjM0Ny0uODUuMDFMLjE2NyA4LjgxOEMtLjE0NiA4LjM2Ny4wNDggOCAuNjA4IDhoNi43ODNjLjU1OCAwIC43NTUuMzcuNDM3LjgzbC0zLjM4NSA0Ljl6IiBmaWxsPSIjMTMxRjI2Ii8+PC9nPjwvc3ZnPg==) right center no-repeat #fff;
+            -webkit-appearance: none;
             appearance: none;
-            font: 400 1.125rem "Source Sans Pro",sans-serif;
+            height: 2.625rem;
+            font: 400 1.125rem "Source Sans Pro", sans-serif;
             border: 1px solid #CED5D9;
             border-radius: 3px;
+            -webkit-tap-highlight-color: transparent;
         }
     </style>
 </head>
@@ -37,7 +43,7 @@
             console.log("All resources finished loading! Starting to init myscript-languages-element");
             var mycustomconfiguration = {
                 type: 'ANALYZER',
-                applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
+                applicationKey: 'a8f991e2-994d-4f36-b61d-55f7ddf6f85d',
                 sortByValue: true
             };
             var myscriptLanguagesElement = document.querySelector('myscript-languages-element');
@@ -46,14 +52,16 @@
             myscriptLanguagesElement.setAttribute('type', mycustomconfiguration.type);
             myscriptLanguagesElement.applicationkey = mycustomconfiguration.applicationKey;
             myscriptLanguagesElement.sortByValue = mycustomconfiguration.sortByValue;
-            // Testing if options are taken into account
-            myscriptLanguagesElement.options = {
+            // Testing if configuration are taken into account
+            myscriptLanguagesElement.configuration = {
                 recognitionParams: {
-                    analyzerParameter: {
-                        textParameter: {
-                            textProperties: {},
-                            language: 'en_US',
-                            textInputMode: 'CURSIVE'
+                    v3: {
+                        analyzerParameter: {
+                            textParameter: {
+                                textProperties: {},
+                                language: 'en_US',
+                                textInputMode: 'CURSIVE'
+                            }
                         }
                     }
                 }
@@ -62,13 +70,11 @@
             console.log("myscript-languages-element should be loaded");
 
             myscriptLanguagesElement.addEventListener('myscript-languages-element-result', function (evt) {
-                var currentLanguage = myscriptLanguagesElement.options.recognitionParams.analyzerParameter.textParameter.language;
-                var languages = evt.detail;
-                for (var i in languages) {
-                    var language = languages[i];
-                    languageElement.options[languageElement.options.length] = new Option(language.value, language.key, true, currentLanguage === language.key);
+                var currentLanguage = myscriptLanguagesElement.configuration.recognitionParams.v3.analyzerParameter.textParameter.language;
+                evt.detail.forEach(function (language) {
+                    languageElement.options[languageElement.options.length] = new Option(language.description, language.value, true, currentLanguage === language.value);
                     languageElement.disabled = false;
-                }
+                });
             });
         }, 3000);
     });

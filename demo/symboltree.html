@@ -23,37 +23,29 @@
 
     #symbolTreeResult {
         width: 100vw;
-        height : 64vh;
+        height: 64vh;
     }
 </style>
 <body>
-<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-<myscript-math-web
-    id='myscriptMathInput'
-    host="webdemoapi.myscript.com"
-    applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-    hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
-    protocol="REST"
-    resulttypes='["SYMBOLTREE"]'
->
-</myscript-math-web>
-<div id="symbolTreeResult">
-    <pre></pre>
-</div>
+    <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+    <myscript-math-web
+        id='myscriptMathInput'
+        host="webdemoapi.myscript.com"
+        applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+        protocol="REST"
+        resulttypes='["SYMBOLTREE"]'>
+    </myscript-math-web>
+    <div id="symbolTreeResult">
+        <pre></pre>
+    </div>
+</body>
 <script>
-
-    var myscriptMathInput
-        = document.getElementById('myscriptMathInput');
-
-    myscriptMathInput.addEventListener('myscript-math-web-result',
-                                       function () {
-                                           console.log(myscriptMathInput.result);
-                                           //Printing the result as OFFICEOPENXMLMATH
-                                           var resultAsSymbolTree = myscriptMathInput.result['SYMBOLTREE'];
-                                           document.getElementById('symbolTreeResult').innerHTML = ' <pre>'+JSON.stringify(resultAsSymbolTree, 2, ' ')+'</pre>';
-                                       }
-    );
+    document.getElementById('myscriptMathInput').addEventListener('myscript-math-web-result', function (evt) {
+        console.log(evt.detail.result);
+        // Printing the result as SYMBOLTREE
+        document.getElementById('symbolTreeResult').innerHTML = evt.detail.result.SYMBOLTREE ? ' <pre>' + JSON.stringify(evt.detail.result.SYMBOLTREE, 2, ' ') + '</pre>' : '';
+    });
 
 </script>
-</body>
 </html>

@@ -66,15 +66,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             applicationkey="{{ applicationkey }}"
             hidebuttons="{{ hidebuttons }}"
             hmackey="{{ hmackey }}"
-            configuration="[[ configuration ]]"
+            configuration="{{ configuration }}"
             protocol="{{ protocol }}"
             host="{{ host }}"
-            recognitiontriggerdelay="{{recognitiontriggerdelay}}"
-            recognitionprocessdelay="{{recognitionprocessdelay}}"
+            recognitiontriggerdelay="{{ recognitiontriggerdelay }}"
+            recognitionprocessdelay="{{ recognitionprocessdelay }}"
             strokecolor="{{ strokecolor }}"
             strokewidth="{{ strokewidth }}"
             timeout="{{ timeout }}"
-            unloaded
             type="MATH"
             disableclear="{{ disableclear }}"
             disablerecognize="{{ disablerecognize }}"
@@ -119,16 +118,22 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
      *
      * @param myscriptMathWebElement
      */
-    function mathBuildRecognitionParamsFromMathParam(myscriptMathWebElement) {
-        const mathParameter = {};
-        mathParameter.resultTypes = myscriptMathWebElement.resulttypes;
-        mathParameter.columnarOperation = myscriptMathWebElement.columnaroperation;
-        mathParameter.userResources = myscriptMathWebElement.userresources;
-        mathParameter.scratchOutDetectionSensitivity = myscriptMathWebElement.scratchoutdetectionsensitivity;
-
-        const recognitionParams = {};
-        recognitionParams[myscriptMathWebElement.apiversion.toLowerCase()] = mathParameter;
-        return recognitionParams;
+    function buildMathConfiguration(myscriptMathWebElement) {
+        if (!myscriptMathWebElement.configuration) {
+            myscriptMathWebElement.configuration = {};
+        }
+        if (!myscriptMathWebElement.configuration.recognitionParams) {
+            myscriptMathWebElement.configuration.recognitionParams = {};
+        }
+        myscriptMathWebElement.configuration.recognitionParams[myscriptMathWebElement.apiversion.toLowerCase()] = {
+            mathParameter: {
+                resultTypes: myscriptMathWebElement.resulttypes,
+                columnarOperation: myscriptMathWebElement.columnaroperation,
+                userResources: myscriptMathWebElement.userresources,
+                scratchOutDetectionSensitivity: myscriptMathWebElement.scratchoutdetectionsensitivity
+            }
+        };
+        return myscriptMathWebElement.configuration;
     }
 
     /**
@@ -147,7 +152,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 
         // Updating the rendering zone displayed with Katex (taking the latex recogntion result as an input)
         var resultField = mathQsWrapper(myscriptMathWebElement).querySelector('.katexcontainer');
-        var latexResult = myscriptMathWebElement.result['application/x-latex']? myscriptMathWebElement.result['application/x-latex'] : myscriptMathWebElement.result.LATEX;
+        var latexResult = myscriptMathWebElement.result['application/x-latex'] ? myscriptMathWebElement.result['application/x-latex'] : myscriptMathWebElement.result.LATEX;
         if (latexResult) {
             try {
                 katex.render(mathCleanLatexResult(latexResult), resultField);
@@ -168,32 +173,37 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         }
     }
 
-    function mathAttachElementToDom(myscriptMathWebElement) {
+    /**
+     * @param myscriptMathWebElement
+     */
+    function changeMathConfiguration(myscriptMathWebElement) {
+        if (myscriptMathWebElement.myscriptcommonelement) {
+            myscriptMathWebElement.myscriptcommonelement.configuration = buildMathConfiguration(myscriptMathWebElement);
+        }
+    }
+
+    function attachMathElementToDom(myscriptMathWebElement) {
         myscriptMathWebElement.myscriptcommonelement = mathQsWrapper(myscriptMathWebElement).querySelector('myscript-common-element');
-        myscriptMathWebElement.myscriptcommonelement.configuration = {
-          recognitionParams: mathBuildRecognitionParamsFromMathParam(myscriptMathWebElement)
-        };
-        myscriptMathWebElement.myscriptcommonelement.removeAttribute('unloaded');
 
         // Manage clear events
         function clearListener(event) {
             LOG('math ' + event.type + ' event intercepted', event);
             mathManageClearEvent(myscriptMathWebElement, event.detail);
-            myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-' + event.type, { detail: event.detail }));
+            myscriptMathWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-math-web-'), { detail: event.detail }));
         }
 
         // Manage result events
         function resultListener(event) {
             LOG('math ' + event.type + ' event intercepted', event);
             var enrichedEventDetail = mathManageResultEvent(myscriptMathWebElement, event.detail);
-            myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-' + event.type, { detail: enrichedEventDetail }));
+            myscriptMathWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-math-web-'), { detail: enrichedEventDetail }));
         }
 
         // Manage other events
         function defaultListener(event) {
             LOG('math ' + event.type + ' event intercepted', event);
             // Just forwarding event there.
-            myscriptMathWebElement.dispatchEvent(new CustomEvent('myscript-math-web-' + event.type, { detail: event.detail }));
+            myscriptMathWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-math-web-'), { detail: event.detail }));
         }
 
         myscriptMathWebElement.currentListeners = {};
@@ -210,6 +220,18 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
             myscriptMathWebElement.myscriptcommonelement.addEventListener(type, myscriptMathWebElement.currentListeners[type])
         });
+        myscriptMathWebElement.configuration = buildMathConfiguration(myscriptMathWebElement);
+        myscriptMathWebElement.unloaded = false;
+        LOG('math-web attached');
+    }
+
+    /** Remove listeners when common element is unloaded. */
+    function detachMathElementFromDom(myscriptMathWebElement) {
+        Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
+            myscriptMathWebElement.myscriptcommonelement.removeEventListener(type, myscriptMathWebElement.currentListeners[type])
+        });
+        myscriptMathWebElement.unloaded = true;
+        LOG('math-web detached');
     }
 
     Polymer({
@@ -544,26 +566,28 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 //-----------------------------------------------------------------------
                 //---------  Wrapping END                                    ------------
                 //-----------------------------------------------------------------------
-                unloadedChanged: function (newUnloadValue) {
-                    LOG('math unloaded changed', newUnloadValue);
-                    this.unloaded = newUnloadValue;
-                    if (this.myscriptcommonelement && newUnloadValue !== false) {
-                        this.myscriptcommonelement.setAttribute('unloaded', true);
-                        this.result = null;
-                        mathQsWrapper(this).querySelector('.katexcontainer').innerHTML = "";
-                    }
-                    if (this.unloaded !== true && this.connected === true) {
-                        mathAttachElementToDom(this);
+                unloadedChanged: function (newValue) {
+                    LOG('math unloaded changed', newValue);
+                    if (this.myscriptcommonelement && !this.initializing && newValue !== true) {
+                        this.result = {};
+                        this.myscriptcommonelement.unloaded = true;
+                        changeMathConfiguration(this);
+                        this.myscriptcommonelement.unloaded = false;
                     }
                 },
                 //Will be renamed connected with pure custom element support
                 attached: function () {
-                    LOG('math attached');
-                    this.myscriptcommonelement = this.querySelector('myscript-common-element');
-                    this.connected = true;
-                    if (this.unloaded !== true && this.connected === true) {
-                        mathAttachElementToDom(this);
-                    }
+                    this.initializing = true;
+                    LOG('math-web attached callback');
+                    attachMathElementToDom(this);
+                    // FIXME: Ugly hack to apply configuration
+                    this.myscriptcommonelement.unloaded = true;
+                    this.myscriptcommonelement.unloaded = false;
+                    this.initializing = false;
+                },
+                detached: function () {
+                    LOG('math-web detached callback');
+                    detachMathElementFromDom(this);
                 },
                 displayResultZone: function (hideResultValue, unloadedValue) {
                     LOG('shouldLoadCommonElement', hideResultValue, unloadedValue);

@@ -29,7 +29,7 @@
 <script>
     document.querySelector('myscript-common-element').addEventListener('myscript-common-element-result', function (event) {
         const paperToast = document.querySelector('#result');
-        paperToast.text = 'Recogntion object contains : ' + JSON.stringify(event.detail.result);
+        paperToast.text = 'Recognition object contains : ' + JSON.stringify(event.detail);
         paperToast.fitIn = paperToast.show();
     });
 </script>

@@ -19,16 +19,16 @@ import { getSymbolsBounds, getDefaultSymbols } from './Symbol';
  */
 
 /**
- * InkPaper model
+ * Editor model
  * @typedef {Object} Model
  * @property {String} state Current state of the model. Mainly here for debugging purpose.
  * @property {Stroke} currentStroke Stroke in building process.
- * @property {String} currentRecognitionId Current recognition id.
  * @property {Array<Stroke>} rawStrokes List of captured strokes.
  * @property {RecognitionPositions} lastRecognitionPositions Last recognition sent/received stroke indexes.
  * @property {Array<Object>} defaultSymbols Default symbols, relative to the current recognition type.
  * @property {Array<Object>} recognizedSymbols Symbols to render (e.g. stroke, shape primitives, string, characters...).
  * @property {Number} lastRenderedPosition Last rendered recognized symbol position
+ * @property {Object} recognitionResult Result of the recognition (e.g. mathml, latex, text...).
  * @property {RawResults} rawResults The recognition output as return by the recognition service.
  * @property {Number} creationTime Date of creation timestamp.
  * @property {Number} modificationTime Date of lastModification.
@@ -45,23 +45,23 @@ import { getSymbolsBounds, getDefaultSymbols } from './Symbol';
 
 /**
  * Create a new model
- * @param {Options} [options] Parameters to use to populate default recognition symbols
+ * @param {Configuration} [configuration] Parameters to use to populate default recognition symbols
  * @return {Model} New model
  */
-export function createModel(options) {
+export function createModel(configuration) {
   // see @typedef documentation on top
   return {
     state: MyScriptJSConstants.ModelState.INITIALIZING,
     currentStroke: undefined,
-    currentRecognitionId: undefined,
     rawStrokes: [],
     lastRecognitionPositions: {
       lastSentPosition: -1,
       lastReceivedPosition: -1
     },
-    defaultSymbols: options ? getDefaultSymbols(options) : [],
+    defaultSymbols: configuration ? getDefaultSymbols(configuration) : [],
     recognizedSymbols: undefined,
     lastRenderedPosition: -1,
+    recognitionResult: undefined,
     rawResults: {
       typeset: undefined,
       recognition: undefined,
@@ -277,6 +277,7 @@ export function cloneModel(model) {
   clonedModel.currentStroke = model.currentStroke ? Object.assign({}, model.currentStroke) : undefined;
   clonedModel.rawStrokes = [...model.rawStrokes];
   clonedModel.lastRecognitionPositions = Object.assign({}, model.lastRecognitionPositions);
+  clonedModel.recognitionResult = Object.assign({}, model.recognitionResult);
   clonedModel.rawResults = Object.assign({}, model.rawResults);
   clonedModel.recognizedSymbols = model.recognizedSymbols ? [...model.recognizedSymbols] : undefined;
   return clonedModel;
@@ -294,6 +295,7 @@ export function mergeModels(...models) {
     modelRef.recognizedSymbols = b.recognizedSymbols;
     modelRef.lastRecognitionPositions.lastReceivedPosition = b.lastRecognitionPositions.lastReceivedPosition;
     modelRef.rawResults = b.rawResults;
+    modelRef.recognitionResult = b.recognitionResult;
     return modelRef;
   });
 }
