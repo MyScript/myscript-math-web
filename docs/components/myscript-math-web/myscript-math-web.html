@@ -171,17 +171,15 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         }
     }
 
-    /**
-     * @param myscriptMathWebElement
-     */
-    function changeMathConfiguration(myscriptMathWebElement) {
-        if (myscriptMathWebElement.myscriptcommonelement) {
-            myscriptMathWebElement.myscriptcommonelement.configuration = buildMathConfiguration(myscriptMathWebElement);
-        }
-    }
-
     function attachMathElementToDom(myscriptMathWebElement) {
         myscriptMathWebElement.myscriptcommonelement = mathQsWrapper(myscriptMathWebElement).querySelector('myscript-common-element');
+
+        // Manage load events
+        function loadListener(event) {
+            LOG('math ' + event.type + ' event intercepted', event);
+            myscriptMathWebElement.unloaded = false;
+            myscriptMathWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-math-web-'), { detail: event.detail }));
+        }
 
         // Manage clear events
         function clearListener(event) {
@@ -205,6 +203,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         }
 
         myscriptMathWebElement.currentListeners = {};
+        ['myscript-common-element-load'].forEach(function (type) {
+            myscriptMathWebElement.currentListeners[type] = loadListener;
+        });
         ['myscript-common-element-result'].forEach(function (type) {
             myscriptMathWebElement.currentListeners[type] = resultListener;
         });
@@ -218,8 +219,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
             myscriptMathWebElement.myscriptcommonelement.addEventListener(type, myscriptMathWebElement.currentListeners[type])
         });
-        myscriptMathWebElement.configuration = buildMathConfiguration(myscriptMathWebElement);
-        myscriptMathWebElement.unloaded = false;
         LOG('math-web attached');
     }
 
@@ -228,7 +227,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
             myscriptMathWebElement.myscriptcommonelement.removeEventListener(type, myscriptMathWebElement.currentListeners[type])
         });
-        myscriptMathWebElement.unloaded = true;
         LOG('math-web detached');
     }
 
@@ -350,7 +348,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                      */
                     unloaded: {
                         type: Boolean,
-                        value: false,
+                        value: true,
                         notify: true,
                         reflectToAttribute: true,
                         observer: 'unloadedChanged'
@@ -489,7 +487,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         value: ['LATEX', 'MATHML']
                     },
                     /**
-                     * If attribute is set activate the recogntion of columnar operations.
+                     * If attribute is set activate the recognition of columnar operations.
                      * @type Boolean
                      */
                     columnaroperation: {
@@ -497,7 +495,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         value: false
                     },
                     /**
-                     * List of user resources to use for recogntions. Thoses user ressources have to be attached to the user account where application is declare.
+                     * List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare.
                      * @type {Array}
                      */
                     userresources: {
@@ -564,23 +562,21 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 //-----------------------------------------------------------------------
                 //---------  Wrapping END                                    ------------
                 //-----------------------------------------------------------------------
-                unloadedChanged: function (newValue) {
-                    LOG('math unloaded changed', newValue);
-                    if (this.myscriptcommonelement && !this.initializing && newValue !== true) {
-                        this.result = {};
-                        this.myscriptcommonelement.unloaded = true;
-                        changeMathConfiguration(this);
-                        this.myscriptcommonelement.unloaded = false;
+                unloadedChanged: function (unloaded) {
+                    LOG('math unloaded changed', unloaded);
+                    this.result = {};
+                    buildMathConfiguration(this);
+                    if (unloaded === true) {
+                        if (this.myscriptcommonelement && !this.initializing) {
+                            this.myscriptcommonelement.unloaded = true;
+                        }
                     }
                 },
-                //Will be renamed connected with pure custom element support
+                // Will be renamed connected with pure custom element support
                 attached: function () {
                     this.initializing = true;
                     LOG('math-web attached callback');
                     attachMathElementToDom(this);
-                    // FIXME: Ugly hack to apply configuration
-                    this.myscriptcommonelement.unloaded = true;
-                    this.myscriptcommonelement.unloaded = false;
                     this.initializing = false;
                 },
                 detached: function () {
