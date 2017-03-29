@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="demo.css">
 </head>
 <body touch-action="none">
-    <div id="waiting">myscript-math-web recognition types will change in 3 seconds. See network logs for more details.</div>
     <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
     <myscript-math-web
         host="webdemoapi.myscript.com"
@@ -21,17 +20,17 @@
     </myscript-math-web>
 </body>
 <script>
-    window.addEventListener("load", function (event) {
-        window.setTimeout(function () {
-            var waitingDiv = document.querySelector('#waiting');
-            waitingDiv.parentNode.removeChild(waitingDiv);
-            console.log("Changing recognition type to only LATEX.");
-            var myscriptMathWebElement = document.querySelector('myscript-math-web');
-            myscriptMathWebElement.unloaded = true;
-            myscriptMathWebElement.resulttypes = ['LATEX'];
-            myscriptMathWebElement.unloaded = false;
-            console.log("myscript-math-web should be displayed");
-        }, 3000);
+    window.addEventListener("load", function () {
+        var configurationChanged = false;
+        var myscriptMathWebElement = document.querySelector('myscript-math-web');
+        myscriptMathWebElement.addEventListener("myscript-math-web-load", function () {
+            if (!configurationChanged) {
+                console.log("Changing recognition type to only LATEX.");
+                myscriptMathWebElement.resulttypes = ['LATEX'];
+                myscriptMathWebElement.unloaded = true;
+            }
+            configurationChanged = true;
+        });
     });
 </script>
 </html>

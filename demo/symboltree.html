@@ -34,7 +34,8 @@
         applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
         hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
         protocol="REST"
-        resulttypes='["SYMBOLTREE"]'>
+        resulttypes='["SYMBOLTREE"]'
+    columnaroperation="true">
     </myscript-math-web>
     <div id="symbolTreeResult">
         <pre></pre>
@@ -44,7 +45,7 @@
     document.getElementById('myscriptMathInput').addEventListener('myscript-math-web-result', function (evt) {
         console.log(evt.detail.result);
         // Printing the result as SYMBOLTREE
-        document.getElementById('symbolTreeResult').innerHTML = evt.detail.result.SYMBOLTREE ? ' <pre>' + JSON.stringify(evt.detail.result.SYMBOLTREE, 2, ' ') + '</pre>' : '';
+        document.getElementById('symbolTreeResult').innerHTML = evt.detail.recognitionResult.SYMBOLTREE ? ' <pre>' + JSON.stringify(evt.detail.recognitionResult.SYMBOLTREE, 2, ' ') + '</pre>' : '';
     });
 
 </script>
