@@ -126,14 +126,27 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         if (!myscriptMathWebElement.configuration.recognitionParams) {
             myscriptMathWebElement.configuration.recognitionParams = {};
         }
-        myscriptMathWebElement.configuration.recognitionParams[myscriptMathWebElement.apiversion.toLowerCase()] = {
-            mathParameter: {
-                resultTypes: myscriptMathWebElement.resulttypes,
-                columnarOperation: myscriptMathWebElement.columnaroperation,
-                userResources: myscriptMathWebElement.userresources,
-                scratchOutDetectionSensitivity: myscriptMathWebElement.scratchoutdetectionsensitivity
-            }
-        };
+        switch (myscriptMathWebElement.apiversion.toLowerCase()) {
+            case 'v3':
+                myscriptMathWebElement.configuration.recognitionParams[myscriptMathWebElement.apiversion.toLowerCase()] = {
+                    mathParameter: {
+                        resultTypes: myscriptMathWebElement.resulttypes,
+                        columnarOperation: myscriptMathWebElement.columnaroperation,
+                        userResources: myscriptMathWebElement.userresources,
+                        scratchOutDetectionSensitivity: myscriptMathWebElement.scratchoutdetectionsensitivity
+                    }
+                };
+                break;
+            case 'v4':
+                myscriptMathWebElement.configuration.recognitionParams[myscriptMathWebElement.apiversion.toLowerCase()] = {
+                    math: {
+                        resultTypes: myscriptMathWebElement.resulttypes
+                    }
+                };
+                break;
+            default:
+              break;
+        }
         return myscriptMathWebElement.configuration;
     }
 
