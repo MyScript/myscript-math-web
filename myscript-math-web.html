@@ -187,13 +187,13 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         function commonElementListener(event) {
             LOG('math ' + event.type + ' event intercepted', event);
             switch (event.type) {
-                case 'myscript-common-element-load':
+                case 'myscript-common-element-' + MyScript.Constants.EventType.LOADED:
                     myscriptMathWebElement.unloaded = false;
                     break;
-                case 'myscript-common-element-exported':
+                case 'myscript-common-element-' + MyScript.Constants.EventType.EXPORTED:
                     manageExports(myscriptMathWebElement, event.detail);
                     break;
-                case 'myscript-common-element-clear':
+                case 'myscript-common-element-'  + MyScript.Constants.EventType.CLEAR:
                     manageClear(myscriptMathWebElement, event.detail);
                     break;
                 default:
@@ -203,9 +203,12 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             myscriptMathWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-math-web-'), { detail: event.detail }));
         }
 
+        const eventTypes = Object.keys(MyScript.Constants.EventType).map(function (key) {
+            return 'myscript-common-element-' + MyScript.Constants.EventType[key];
+        });
+
         myscriptMathWebElement.currentListeners = {};
-        ['myscript-common-element-load', 'myscript-common-element-exported', 'myscript-common-element-undo', 'myscript-common-element-redo', 'myscript-common-element-clear', 'myscript-common-element-convert', 'myscript-common-element-export', 'myscript-common-element-change', 'myscript-common-element-error']
-            .forEach(function (type) {
+        eventTypes.forEach(function (type) {
                 myscriptMathWebElement.currentListeners[type] = commonElementListener;
             });
         Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
