@@ -40,7 +40,7 @@
     <div id="officeOpenXmlResult"></div>
 </body>
 <script>
-    document.getElementById('myscriptMathInput').addEventListener('myscript-math-web-exported', function (evt) {
+    document.getElementById('myscriptMathInput').addEventListener('exported', function (evt) {
         console.log(evt.detail.exports);
         // Printing the result as OFFICEOPENXMLMATH
         document.getElementById('officeOpenXmlResult').innerHTML = evt.detail.exports.OFFICEOPENXMLMATH ? evt.detail.exports.OFFICEOPENXMLMATH.replace(/</g, '&lt;') : '';
