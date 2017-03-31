@@ -82,7 +82,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
-            exports="[[ exports ]]"
+            exports="{{ exports }}"
             scheme="{{ scheme }}">
         </myscript-common-element>
     </template>
@@ -437,7 +437,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 //-----------------------------------------------------------------------
                 unloadedChanged: function (unloaded) {
                     LOG('math unloaded changed', unloaded);
-                    this.exports = {};
                     this.buildConfiguration();
                     if (unloaded === true) {
                         if (this.myscriptcommonelement && !this.initializing) {
@@ -490,7 +489,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                                 myscriptMathWebElement.manageExports(event, myscriptMathWebElement);
                                 break;
                             case 'myscript-common-element-' + MyScript.Constants.EventType.CLEAR: {
-                                myscriptMathWebElement.exports = {};
                                 myscriptMathWebElement.katexElement.innerHTML = '';
                             }
                                 break;
