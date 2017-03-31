@@ -89,17 +89,17 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 </dom-module>
 
 <script>
-
     /**
-     * Function returning the root dom element whatever shadow or shady dom is used.
-     * @param domElement
-     * @returns {*}
+     * Uncomment the function body during development. Should not be activated in production.
+     * @param string
+     * @param object
+     * @constructor
      */
-    function qsWrapper(domElement) {
-        if (domElement.shadowRoot) {
-            return domElement.shadowRoot;
+    function LOG(string, object) {
+        if (object) {
+            console.log(string, object);
         } else {
-            return domElement;
+            console.log(string);
         }
     }
 
@@ -438,7 +438,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 unloadedChanged: function (unloaded) {
                     LOG('math unloaded changed', unloaded);
                     this.exports = {};
-                    this.buildMathConfiguration(this);
+                    this.buildConfiguration();
                     if (unloaded === true) {
                         if (this.myscriptcommonelement && !this.initializing) {
                             this.myscriptcommonelement.unloaded = true;
@@ -447,22 +447,39 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 },
                 // Will be renamed connected with pure custom element support
                 attached: function () {
+
+                    /**
+                     * Function returning the root dom element whatever shadow or shady dom is used.
+                     * @param domElement
+                     * @returns {*}
+                     */
+                    function qsWrapper(domElement) {
+                        if (domElement.shadowRoot) {
+                            return domElement.shadowRoot;
+                        } else {
+                            return domElement;
+                        }
+                    }
+
                     this.initializing = true;
                     LOG('math-web attached callback');
-                    this.attachMathElementToDom(this);
+                    this.myscriptcommonelement = qsWrapper(this).querySelector('myscript-common-element');
+                    this.katexElement = qsWrapper(this).querySelector('.katexcontainer');
+
+                    this.attachListener(this);
+
+                    LOG('math-web attached');
                     this.initializing = false;
                 },
                 detached: function () {
                     LOG('math-web detached callback');
-                    this.detachMathElementFromDom(this);
+                    this.detachListener(this);
+                    LOG('math-web detached');
                 },
-
                 /**
                  * @private
                  */
-                attachMathElementToDom: function (myscriptMathWebElement) {
-                    myscriptMathWebElement.myscriptcommonelement = qsWrapper(myscriptMathWebElement).querySelector('myscript-common-element');
-
+                attachListener: function (myscriptMathWebElement) {
                     function commonElementListener(event) {
                         LOG('math ' + event.type + ' event intercepted', event);
                         switch (event.type) {
@@ -470,10 +487,12 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                                 myscriptMathWebElement.unloaded = false;
                                 break;
                             case 'myscript-common-element-' + MyScript.Constants.EventType.EXPORTED:
-                                myscriptMathWebElement.manageExports(myscriptMathWebElement, event.detail);
+                                myscriptMathWebElement.manageExports(event, myscriptMathWebElement);
                                 break;
-                            case 'myscript-common-element-' + MyScript.Constants.EventType.CLEAR:
-                                myscriptMathWebElement.manageClear(myscriptMathWebElement, event.detail);
+                            case 'myscript-common-element-' + MyScript.Constants.EventType.CLEAR: {
+                                myscriptMathWebElement.exports = {};
+                                myscriptMathWebElement.katexElement.innerHTML = '';
+                            }
                                 break;
                             default:
                                 break;
@@ -493,107 +512,89 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
                         myscriptMathWebElement.myscriptcommonelement.addEventListener(type, myscriptMathWebElement.currentListeners[type])
                     });
-                    LOG('math-web attached');
                 },
 
                 /**
-                 * Remove listeners when common element is unloaded.
                  * @private
                  */
-                detachMathElementFromDom: function (myscriptMathWebElement) {
+                detachListener: function (myscriptMathWebElement) {
                     Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
                         myscriptMathWebElement.myscriptcommonelement.removeEventListener(type, myscriptMathWebElement.currentListeners[type])
                     });
-                    LOG('math-web detached');
                 },
 
                 /**
                  * @private
-                 * @param myscriptMathWebElement
                  */
-                manageClear: function manageClear(myscriptMathWebElement) {
-                    if (myscriptMathWebElement.myscriptcommonelement) {
-                        myscriptMathWebElement.exports = {};
-                        qsWrapper(myscriptMathWebElement).querySelector('.katexcontainer').innerHTML = '';
-                    }
-                },
+                manageExports: function (event, myscriptMathWebElement) {
+                    if (event.detail && event.detail.exports) {
 
-                /**
-                 * Recognition success listener.
-                 * @private
-                 * @method _onSuccess
-                 */
-                manageExports: function (myscriptMathWebElement, eventDetail) {
-                    // Updating the rendering zone displayed with KaTex (taking the latex export as an input)
-                    var katexContainer = qsWrapper(myscriptMathWebElement).querySelector('.katexcontainer');
-                    var latexResult = eventDetail.exports['application/x-latex'] ? eventDetail.exports['application/x-latex'] : eventDetail.exports.LATEX;
-                    if (latexResult) {
-                        try {
-                            katex.render(myscriptMathWebElement.mathCleanLatexResult(latexResult), katexContainer);
-                        } catch (e) {
-                            katexContainer.innerHTML = '<span>' + myscriptMathWebElement.mathCleanLatexResult(latexResult) + '</span>';
+                        /**
+                         * Replace latex strings with similar one compatible with katex.
+                         * @param latex
+                         */
+                        function clean(latex) {
+                            return latex
+                                .replace("\\overrightarrow", "\\vec")
+                                .replace("\\llbracket", "\\lbracket")
+                                .replace("\\rrbracket", "\\rbracket")
+                                .replace("\\widehat", "\\hat")
+                                .replace(new RegExp("(align.{1})", "g"), "aligned");
+                        }
+
+                        // Updating the rendering zone displayed with KaTex (taking the latex export as an input)
+                        var latexResult = event.detail.exports['application/x-latex'] ? event.detail.exports['application/x-latex'] : event.detail.exports.LATEX;
+                        if (latexResult) {
+                            try {
+                                katex.render(clean(latexResult), myscriptMathWebElement.katexElement);
+                            } catch (e) {
+                                myscriptMathWebElement.katexElement.innerHTML = '<span>' + clean(latexResult) + '</span>';
+                            }
+                        } else {
+                            console.log('An empty exports is mostly the consequence of LATEX missing in the resulttypes requested');
+                            myscriptMathWebElement.katexElement.innerHTML = '';
                         }
                     } else {
-                        console.log('An empty exports is mostly the consequence of LATEX missing in the resulttypes requested');
-                        katexContainer.innerHTML = '';
+                        myscriptMathWebElement.katexElement.innerHTML = '';
                     }
-                    return eventDetail;
                 },
 
                 /**
                  * @private
-                 * @param myscriptMathWebElement
                  */
-                buildMathConfiguration: function (myscriptMathWebElement) {
-                    if (!myscriptMathWebElement.configuration) {
-                        myscriptMathWebElement.configuration = {};
+                buildConfiguration: function () {
+                    if (!this.configuration) {
+                        this.configuration = {};
                     }
-                    if (!myscriptMathWebElement.configuration.recognitionParams) {
-                        myscriptMathWebElement.configuration.recognitionParams = {};
+                    if (!this.configuration.recognitionParams) {
+                        this.configuration.recognitionParams = {};
                     }
-                    switch (myscriptMathWebElement.apiversion.toLowerCase()) {
+                    switch (this.apiversion.toLowerCase()) {
                         case 'v3':
-                            myscriptMathWebElement.configuration.recognitionParams[myscriptMathWebElement.apiversion.toLowerCase()] = {
+                            this.configuration.recognitionParams[this.apiversion.toLowerCase()] = {
                                 mathParameter: {
-                                    resultTypes: myscriptMathWebElement.resulttypes,
-                                    columnarOperation: myscriptMathWebElement.columnaroperation,
-                                    userResources: myscriptMathWebElement.userresources,
-                                    scratchOutDetectionSensitivity: myscriptMathWebElement.scratchoutdetectionsensitivity
+                                    resultTypes: this.resulttypes,
+                                    columnarOperation: this.columnaroperation,
+                                    userResources: this.userresources,
+                                    scratchOutDetectionSensitivity: this.scratchoutdetectionsensitivity
                                 }
                             };
                             break;
                         case 'v4':
-                            myscriptMathWebElement.configuration.recognitionParams[myscriptMathWebElement.apiversion.toLowerCase()] = {
+                            this.configuration.recognitionParams[this.apiversion.toLowerCase()] = {
                                 math: {
-                                    mimeTypes: myscriptMathWebElement.resulttypes
+                                    mimeTypes: this.resulttypes
                                 }
                             };
                             break;
                         default:
                             break;
                     }
-                    return myscriptMathWebElement.configuration;
-                },
-
-                /**
-                 * Replace latex strings with similar one compatible with katex.
-                 * @private
-                 * @param latex
-                 */
-                mathCleanLatexResult: function (latex) {
-                    return latex
-                        .replace("\\overrightarrow", "\\vec")
-                        .replace("\\llbracket", "\\lbracket")
-                        .replace("\\rrbracket", "\\rbracket")
-                        .replace("\\widehat", "\\hat")
-                        .replace(new RegExp("(align.{1})", "g"), "aligned");
+                    return this.configuration;
                 },
 
                 /**
                  * @private
-                 * @param hideExports
-                 * @param unloaded
-                 * @return {*|boolean}
                  */
                 displayExports: function (hideExports, unloaded) {
                     LOG('math-web should display exports', hideExports, unloaded);
