@@ -19,6 +19,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
     <link rel="stylesheet" href="../KaTeX/dist/katex.min.css">
     <style>
         :host {
+            box-sizing: border-box;
             display: block;
             color: var(--myscript-math-web-button-background, #1A9FFF);
             --myscript-common-element-button-background: var(--myscript-math-web-button-background);
@@ -359,6 +360,26 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         type: Array,
                         value: ['LATEX', 'MATHML']
                     },
+                    solverenable: {
+                        type: Boolean,
+                        value: true
+                    },
+                    solverfractionalpartdigit: {
+                        type: Number,
+                        value: 3
+                    },
+                    solverdecimalseparator: {
+                        type: String,
+                        value: '.'
+                    },
+                    solverroundingmode: {
+                        type: String,
+                        value: 'half up'
+                    },
+                    solverangleunit: {
+                        type: String,
+                        value: 'deg'
+                    },
                     /**
                      * If attribute is set activate the recognition of columnar operations.
                      * @type Boolean
@@ -581,7 +602,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         case 'v4':
                             this.configuration.recognitionParams[this.apiversion.toLowerCase()] = {
                                 math: {
-                                    mimeTypes: this.resulttypes
+                                    mimeTypes: this.resulttypes,
+                                    solver: {
+                                        enable: this.solverenable,
+                                        'fractional-part-digits': this.solverenable,
+                                        'decimal-separator': this.solverdecimalseparator,
+                                        'rounding-mode': this.solverroundingmode,
+                                        'angle-unit': this.solverangleunit
+                                    }
                                 }
                             };
                             break;
