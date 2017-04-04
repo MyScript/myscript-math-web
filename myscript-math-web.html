@@ -60,7 +60,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         }
     </style>
     <template>
-        <div class="exports" hidden="[[ displayExports(hideexports, unloaded) ]]">
+        <div class="exports" hidden="[[ !displayExports(hideexports, unloaded) ]]">
             <div class="katexcontainer"></div>
         </div>
         <myscript-common-element
@@ -78,8 +78,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             timeout="{{ timeout }}"
             type="MATH"
             disableclear="{{ disableclear }}"
-            disableexport="{{ disableexport }}"
             disableundoredo="{{ disableundoRedo }}"
+            disableexport="{{ disableexport }}"
+            disableconvert="{{ disableconvert }}"
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
@@ -324,15 +325,15 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     disableexport: {
                         type: Boolean,
                         reflectToAttribute: true,
-                        value: true
+                        value: false
                     },
                     /**
                      * True if the typeset feature is disabled, false otherwise
                      */
-                    disabletypeset: {
+                    disableconvert: {
                         type: Boolean,
                         reflectToAttribute: true,
-                        value: true
+                        value: false
                     },
 
                     //------------------------------------------------------------------------------
@@ -439,9 +440,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 /**
                  * Launch export
                  */
-                askForExport: function () {
+                askForExport: function (exports) {
                     if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.askForExport();
+                        this.myscriptcommonelement.askForExport(exports);
                     }
                 },
                 /**
@@ -623,9 +624,10 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                  * @private
                  */
                 displayExports: function (hideExports, unloaded) {
-                    LOG('math-web should display exports', hideExports, unloaded);
+                    var display = !hideExports && ( !unloaded || unloaded === true);
+                    LOG('math-web should display exports', display);
                     // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
-                    return hideExports && ( unloaded || unloaded !== true);
+                    return display;
                 }
             }
     );
