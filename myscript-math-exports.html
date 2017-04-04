@@ -9,32 +9,23 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
     <style>
         :host {
             box-sizing: border-box;
-            display: block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-size: larger;
-            overflow: hidden;
-            text-align: center;
-            min-height: 95px;
-            max-height: 95px;
-            padding-top: 5px;
-            position: relative;
             color: var(--myscript-math-exports-color, #000000);
+            min-height: 95px;
         }
 
-        .katexcontainer {
-            padding-top: 3px;
-            margin: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-right: -50%;
-            -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
+        [hidden] {
+            display: none;
         }
     </style>
     <template>
-        <div class="exports">
-            <div class="katexcontainer"></div>
-        </div>
+        <div id="katex"></div>
+        <div id="latex" hidden></div>
+        <div id="mathml" hidden></div>
+        <div id="officeopenxml" hidden></div>
     </template>
 </dom-module>
 
@@ -68,12 +59,17 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                             return domElement;
                         }
                     }
-                    this.katexElement = qsWrapper(this).querySelector('.katexcontainer');
+                    this.katexElement = qsWrapper(this).querySelector('#katex');
+                    this.latexElement = qsWrapper(this).querySelector('#latex');
+                    this.mathmlElement = qsWrapper(this).querySelector('#mathml');
+                    this.officeopenxmlElement = qsWrapper(this).querySelector('#officeopenxml');
                 },
                 /**
                  * @private
                  */
                 _exportsChanged: function (exports) {
+                    this.latexElement.innerText = '';
+                    this.katexElement.innerHTML = '';
                     if (exports) {
 
                         /**
@@ -92,16 +88,17 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                         // Updating the rendering zone displayed with KaTex (taking the latex export as an input)
                         var latexResult = exports['application/x-latex'] ? exports['application/x-latex'] : exports.LATEX;
                         if (latexResult) {
+                          this.latexElement.innerText = latexResult;
                             try {
                                 katex.render(clean(latexResult), this.katexElement);
                             } catch (e) {
                                 this.katexElement.innerHTML = '<span>' + clean(latexResult) + '</span>';
                             }
-                        } else {
-                            this.katexElement.innerHTML = '';
                         }
-                    } else {
-                        this.katexElement.innerHTML = '';
+                        var mathmlResult = exports['application/mathml+xml'] ? exports['application/mathml+xml'] : exports.MATHML;
+                        if (mathmlResult) {
+                          this.mathmlElement.innerText = mathmlResult;
+                        }
                     }
                 }
             }
