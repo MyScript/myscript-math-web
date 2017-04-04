@@ -3,8 +3,8 @@ Copyright © MyScript.
 LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
-<script src="../KaTeX/dist/katex.min.js"></script>
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
+<link rel="import" href="./myscript-math-exports.html">
 <!--
 The `myscript-math-web` is a turnkey solution for those who need to quickly implement MyScript Math recognition.
 
@@ -16,7 +16,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 @demo demo/index.html
 -->
 <dom-module id="myscript-math-web">
-    <link rel="stylesheet" href="../KaTeX/dist/katex.min.css">
     <style>
         :host {
             box-sizing: border-box;
@@ -25,6 +24,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             --myscript-common-element-button-background: var(--myscript-math-web-button-background);
             --myscript-common-element-button-focus-background: var(--myscript-math-web-button-focus-background);
             --myscript-common-element-button-disabled-background: var(--myscript-math-web-button-disabled-background);
+            --myscript-math-exports-color: var(--myscript-math-web-button-background, #1A9FFF);
         }
 
         myscript-common-element {
@@ -47,22 +47,11 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         .exports[hidden] + myscript-common-element {
             height: 100%;
         }
-
-        .katexcontainer {
-            padding-top: 3px;
-            margin: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-right: -50%;
-            -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-        }
     </style>
     <template>
-        <div class="exports" hidden="[[ !displayExports(hideexports, unloaded) ]]">
-            <div class="katexcontainer"></div>
-        </div>
+        <myscript-math-exports hidden="[[ !displayExports(hideexports, unloaded) ]]"
+                               exports="{{ exports }}">
+        </myscript-math-exports>
         <myscript-common-element
             apiversion="{{ apiversion }}"
             applicationkey="{{ applicationkey }}"
@@ -507,13 +496,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                             case MyScript.Constants.EventType.LOADED:
                                 myscriptMathWebElement.unloaded = false;
                                 break;
-                            case MyScript.Constants.EventType.EXPORTED:
-                                myscriptMathWebElement.manageExports(event, myscriptMathWebElement);
-                                break;
-                            case MyScript.Constants.EventType.CLEAR: {
-                                myscriptMathWebElement.katexElement.innerHTML = '';
-                            }
-                                break;
                             default:
                                 break;
                         }
@@ -541,42 +523,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
                         myscriptMathWebElement.myscriptcommonelement.removeEventListener(type, myscriptMathWebElement.currentListeners[type])
                     });
-                },
-
-                /**
-                 * @private
-                 */
-                manageExports: function (event, myscriptMathWebElement) {
-                    if (event.detail && event.detail.exports) {
-
-                        /**
-                         * Replace latex strings with similar one compatible with katex.
-                         * @param latex
-                         */
-                        function clean(latex) {
-                            return latex
-                                .replace("\\overrightarrow", "\\vec")
-                                .replace("\\llbracket", "\\lbracket")
-                                .replace("\\rrbracket", "\\rbracket")
-                                .replace("\\widehat", "\\hat")
-                                .replace(new RegExp("(align.{1})", "g"), "aligned");
-                        }
-
-                        // Updating the rendering zone displayed with KaTex (taking the latex export as an input)
-                        var latexResult = event.detail.exports['application/x-latex'] ? event.detail.exports['application/x-latex'] : event.detail.exports.LATEX;
-                        if (latexResult) {
-                            try {
-                                katex.render(clean(latexResult), myscriptMathWebElement.katexElement);
-                            } catch (e) {
-                                myscriptMathWebElement.katexElement.innerHTML = '<span>' + clean(latexResult) + '</span>';
-                            }
-                        } else {
-                            console.log('An empty exports is mostly the consequence of LATEX missing in the resulttypes requested');
-                            myscriptMathWebElement.katexElement.innerHTML = '';
-                        }
-                    } else {
-                        myscriptMathWebElement.katexElement.innerHTML = '';
-                    }
                 },
 
                 /**

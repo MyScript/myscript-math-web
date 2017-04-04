@@ -1,0 +1,109 @@
+<!--
+Copyright © MyScript.
+LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./katex-import.html">
+
+<dom-module id="myscript-math-exports">
+    <style>
+        :host {
+            box-sizing: border-box;
+            display: block;
+            font-size: larger;
+            overflow: hidden;
+            text-align: center;
+            min-height: 95px;
+            max-height: 95px;
+            padding-top: 5px;
+            position: relative;
+            color: var(--myscript-math-exports-color, #000000);
+        }
+
+        .katexcontainer {
+            padding-top: 3px;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-right: -50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+    </style>
+    <template>
+        <div class="exports">
+            <div class="katexcontainer"></div>
+        </div>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+                is: 'myscript-math-exports',
+                properties: {
+                    /**
+                     * Exports result.
+                     * @attribute exports
+                     * @type {Object<String, Object>}.
+                     */
+                    exports: {
+                        type: Object,
+                        notify: true,
+                        observer: '_exportsChanged'
+                    }
+                },
+                // Will be renamed connected with pure custom element support
+                attached: function () {
+
+                    /**
+                     * Function returning the root dom element whatever shadow or shady dom is used.
+                     * @param domElement
+                     * @returns {*}
+                     */
+                    function qsWrapper(domElement) {
+                        if (domElement.shadowRoot) {
+                            return domElement.shadowRoot;
+                        } else {
+                            return domElement;
+                        }
+                    }
+                    this.katexElement = qsWrapper(this).querySelector('.katexcontainer');
+                },
+                /**
+                 * @private
+                 */
+                _exportsChanged: function (exports) {
+                    if (exports) {
+
+                        /**
+                         * Replace latex strings with similar one compatible with katex.
+                         * @param latex
+                         */
+                        function clean(latex) {
+                            return latex
+                                .replace("\\overrightarrow", "\\vec")
+                                .replace("\\llbracket", "\\lbracket")
+                                .replace("\\rrbracket", "\\rbracket")
+                                .replace("\\widehat", "\\hat")
+                                .replace(new RegExp("(align.{1})", "g"), "aligned");
+                        }
+
+                        // Updating the rendering zone displayed with KaTex (taking the latex export as an input)
+                        var latexResult = exports['application/x-latex'] ? exports['application/x-latex'] : exports.LATEX;
+                        if (latexResult) {
+                            try {
+                                katex.render(clean(latexResult), this.katexElement);
+                            } catch (e) {
+                                this.katexElement.innerHTML = '<span>' + clean(latexResult) + '</span>';
+                            }
+                        } else {
+                            this.katexElement.innerHTML = '';
+                        }
+                    } else {
+                        this.katexElement.innerHTML = '';
+                    }
+                }
+            }
+    );
+</script>
