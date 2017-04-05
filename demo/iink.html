@@ -29,9 +29,8 @@
         myscriptMathWebElement.addEventListener("load", function () {
           if (!configurationChanged) {
               console.log("All resources finished loading! Starting to init myscript-math-web");
-              myscriptMathWebElement.unloaded = true;
               // Testing if options are taken into account
-              myscriptMathWebElement.options = {
+              myscriptMathWebElement.configuration = {
                   recognitionParams: {
                       server: {
                           websocket: {
@@ -40,8 +39,7 @@
                       }
                   }
               };
-              myscriptMathWebElement.unloaded = false;
-              console.log("myscript-math-web should be displayed");
+              myscriptMathWebElement.unloaded = true;
           }
           configurationChanged = true;
         });
