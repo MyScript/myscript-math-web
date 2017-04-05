@@ -12,9 +12,8 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: larger;
             color: var(--myscript-math-exports-color, #000000);
-            min-height: 95px;
+            min-height: 60px;
         }
 
         [hidden] {
@@ -22,7 +21,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
         }
     </style>
     <template>
-        <div id="katex"></div>
+        <div id="html" hidden></div>
         <div id="latex" hidden></div>
         <div id="mathml" hidden></div>
         <div id="officeopenxml" hidden></div>
@@ -33,6 +32,13 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
     Polymer({
                 is: 'myscript-math-exports',
                 properties: {
+                    mimetype: {
+                        type: String,
+                        notify: true,
+                        reflectToAttribute: true,
+                        value: 'text/html',
+                        observer: '_mimetypeChanged'
+                    },
                     /**
                      * Exports result.
                      * @attribute exports
@@ -46,6 +52,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                 },
                 // Will be renamed connected with pure custom element support
                 attached: function () {
+                  this.initializing = true;
 
                     /**
                      * Function returning the root dom element whatever shadow or shady dom is used.
@@ -59,17 +66,45 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                             return domElement;
                         }
                     }
-                    this.katexElement = qsWrapper(this).querySelector('#katex');
+
+                    this.htmlElement = qsWrapper(this).querySelector('#html');
                     this.latexElement = qsWrapper(this).querySelector('#latex');
                     this.mathmlElement = qsWrapper(this).querySelector('#mathml');
                     this.officeopenxmlElement = qsWrapper(this).querySelector('#officeopenxml');
+                    this.initializing = false;
+                    this._mimetypeChanged(this.mimetype);
+                },
+                /**
+                 * @private
+                 */
+                _mimetypeChanged: function (mimetype) {
+                  if (this.initializing === false) {
+                      this.htmlElement.setAttribute('hidden', 'true');
+                      this.latexElement.setAttribute('hidden', 'true');
+                      this.mathmlElement.setAttribute('hidden', 'true');
+                      this.officeopenxmlElement.setAttribute('hidden', 'true');
+                      switch (mimetype) {
+                          case 'text/html':
+                              this.htmlElement.removeAttribute('hidden');
+                              break;
+                          case 'application/x-latex':
+                              this.latexElement.removeAttribute('hidden');
+                              break;
+                          case 'application/mathml+xml':
+                              this.mathmlElement.removeAttribute('hidden');
+                              break;
+                          case 'application/mathofficeXML':
+                              this.officeopenxmlElement.removeAttribute('hidden');
+                              break;
+                      }
+                  }
                 },
                 /**
                  * @private
                  */
                 _exportsChanged: function (exports) {
                     this.latexElement.innerText = '';
-                    this.katexElement.innerHTML = '';
+                    this.htmlElement.innerHTML = '';
                     if (exports) {
 
                         /**
@@ -88,16 +123,16 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                         // Updating the rendering zone displayed with KaTex (taking the latex export as an input)
                         var latexResult = exports['application/x-latex'] ? exports['application/x-latex'] : exports.LATEX;
                         if (latexResult) {
-                          this.latexElement.innerText = latexResult;
+                            this.latexElement.innerText = latexResult;
                             try {
-                                katex.render(clean(latexResult), this.katexElement);
+                                katex.render(clean(latexResult), this.htmlElement);
                             } catch (e) {
-                                this.katexElement.innerHTML = '<span>' + clean(latexResult) + '</span>';
+                                this.htmlElement.innerHTML = '<span>' + clean(latexResult) + '</span>';
                             }
                         }
                         var mathmlResult = exports['application/mathml+xml'] ? exports['application/mathml+xml'] : exports.MATHML;
                         if (mathmlResult) {
-                          this.mathmlElement.innerText = mathmlResult;
+                            this.mathmlElement.innerText = mathmlResult;
                         }
                     }
                 }

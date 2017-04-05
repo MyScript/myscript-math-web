@@ -30,6 +30,10 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         [hidden] {
             display: none;
         }
+        myscript-math-exports {
+            height: 100px;
+            font-size: larger;
+        }
 
         myscript-common-element {
             height: calc(100% - 100px);
@@ -54,6 +58,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
     </style>
     <template>
         <myscript-math-exports hidden="[[ !displayExports(hideexports, unloaded) ]]"
+                               mimetype="text/html"
                                exports="{{ exports }}">
         </myscript-math-exports>
         <myscript-common-element
@@ -478,7 +483,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     this.initializing = true;
                     LOG('math-web attached callback');
                     this.myscriptcommonelement = qsWrapper(this).querySelector('myscript-common-element');
-                    this.katexElement = qsWrapper(this).querySelector('.katexcontainer');
+                    this.htmlElement = qsWrapper(this).querySelector('.katexcontainer');
 
                     this.attachListener(this);
 
