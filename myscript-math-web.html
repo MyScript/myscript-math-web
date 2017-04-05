@@ -30,6 +30,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         [hidden] {
             display: none;
         }
+
         myscript-math-exports {
             height: 100px;
             font-size: larger;
@@ -544,34 +545,35 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     if (!this.configuration.recognitionParams) {
                         this.configuration.recognitionParams = {};
                     }
-                    switch (this.apiversion.toLowerCase()) {
-                        case 'v3':
-                            this.configuration.recognitionParams[this.apiversion.toLowerCase()] = {
-                                mathParameter: {
-                                    resultTypes: this.resulttypes,
-                                    columnarOperation: this.columnaroperation,
-                                    userResources: this.userresources,
-                                    scratchOutDetectionSensitivity: this.scratchoutdetectionsensitivity
-                                }
-                            };
-                            break;
-                        case 'v4':
-                            this.configuration.recognitionParams[this.apiversion.toLowerCase()] = {
-                                math: {
-                                    mimeTypes: this.resulttypes,
-                                    solver: {
-                                        enable: this.solverenable,
-                                        'fractional-part-digits': this.solverenable,
-                                        'decimal-separator': this.solverdecimalseparator,
-                                        'rounding-mode': this.solverroundingmode,
-                                        'angle-unit': this.solverangleunit
-                                    }
-                                }
-                            };
-                            break;
-                        default:
-                            break;
+
+                    if (!this.configuration.recognitionParams.v3) {
+                        this.configuration.recognitionParams.v3 = {};
                     }
+                    if (!this.configuration.recognitionParams.v3.mathParameter) {
+                        this.configuration.recognitionParams.v3.mathParameter = {};
+                    }
+
+                    this.configuration.recognitionParams.v3.mathParameter.resultTypes = this.resulttypes;
+                    this.configuration.recognitionParams.v3.mathParameter.columnarOperation = this.columnaroperation;
+                    this.configuration.recognitionParams.v3.mathParameter.userResources = this.userresources;
+                    this.configuration.recognitionParams.v3.mathParameter.scratchOutDetectionSensitivity = this.scratchoutdetectionsensitivity;
+
+                    if (!this.configuration.recognitionParams.v4) {
+                        this.configuration.recognitionParams.v4 = {};
+                    }
+                    if (!this.configuration.recognitionParams.v4.math) {
+                        this.configuration.recognitionParams.v4.math = {};
+                    }
+                    if (!this.configuration.recognitionParams.v4.math.solver) {
+                        this.configuration.recognitionParams.v4.math.solver = {};
+                    }
+
+                    this.configuration.recognitionParams.v4.math.mimeTypes = this.resulttypes;
+                    this.configuration.recognitionParams.v4.math.solver.enable = this.solverenable;
+                    this.configuration.recognitionParams.v4.math.solver['fractional-part-digits'] = this.solverfractionalpartdigit;
+                    this.configuration.recognitionParams.v4.math.solver['decimal-separator'] = this.solverdecimalseparator;
+                    this.configuration.recognitionParams.v4.math.solver['rounding-mode'] = this.solverroundingmode;
+                    this.configuration.recognitionParams.v4.math.solver['angle-unit'] = this.solverangleunit;
                     return this.configuration;
                 },
 
