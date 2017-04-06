@@ -37,7 +37,6 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                         type: String,
                         notify: true,
                         reflectToAttribute: true,
-                        value: 'text/html',
                         observer: '_resultTypeChanged'
                     },
                     /**
@@ -53,7 +52,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                 },
                 // Will be renamed connected with pure custom element support
                 attached: function () {
-                  this.initializing = true;
+                    this.initializing = true;
 
                     /**
                      * Function returning the root dom element whatever shadow or shady dom is used.
@@ -80,33 +79,33 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                  * @private
                  */
                 _resultTypeChanged: function (resulttype) {
-                  if (this.initializing === false) {
-                      this.htmlElement.setAttribute('hidden', 'true');
-                      this.latexElement.setAttribute('hidden', 'true');
-                      this.mathmlElement.setAttribute('hidden', 'true');
-                      this.officeopenxmlElement.setAttribute('hidden', 'true');
-                      this.symboltreeElement.setAttribute('hidden', 'true');
-                      switch (resulttype) {
-                          case 'text/html':
-                              this.htmlElement.removeAttribute('hidden');
-                              break;
-                          case 'LATEX':
-                          case 'application/x-latex':
-                              this.latexElement.removeAttribute('hidden');
-                              break;
-                          case 'MATHML':
-                          case 'application/mathml+xml':
-                              this.mathmlElement.removeAttribute('hidden');
-                              break;
-                          case 'OFFICEOPENXMLMATH':
-                          case 'application/mathofficeXML':
-                              this.officeopenxmlElement.removeAttribute('hidden');
-                              break;
-                          case 'SYMBOLTREE':
-                              this.symboltreeElement.removeAttribute('hidden');
-                              break;
-                      }
-                  }
+                    if (this.initializing === false) {
+                        this.htmlElement.setAttribute('hidden', 'true');
+                        this.latexElement.setAttribute('hidden', 'true');
+                        this.mathmlElement.setAttribute('hidden', 'true');
+                        this.officeopenxmlElement.setAttribute('hidden', 'true');
+                        this.symboltreeElement.setAttribute('hidden', 'true');
+                        switch (resulttype) {
+                            case 'LATEX':
+                            case 'application/x-latex':
+                                this.latexElement.removeAttribute('hidden');
+                                break;
+                            case 'MATHML':
+                            case 'application/mathml+xml':
+                                this.mathmlElement.removeAttribute('hidden');
+                                break;
+                            case 'OFFICEOPENXMLMATH':
+                            case 'application/mathofficeXML':
+                                this.officeopenxmlElement.removeAttribute('hidden');
+                                break;
+                            case 'SYMBOLTREE':
+                                this.symboltreeElement.removeAttribute('hidden');
+                                break;
+                            default:
+                                this.htmlElement.removeAttribute('hidden');
+                                break;
+                        }
+                    }
                 },
                 /**
                  * @private
@@ -154,7 +153,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
                         var symboltreeResult = exports.SYMBOLTREE;
                         if (symboltreeResult) {
-                            this.symboltreeElement.innerText = symboltreeResult;
+                            this.symboltreeElement.innerText = JSON.stringify(symboltreeResult);
                         }
                     }
                 }
