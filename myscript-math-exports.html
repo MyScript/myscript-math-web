@@ -25,6 +25,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
         <div id="latex" hidden></div>
         <div id="mathml" hidden></div>
         <div id="officeopenxml" hidden></div>
+        <div id="symboltree" hidden></div>
     </template>
 </dom-module>
 
@@ -32,12 +33,12 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
     Polymer({
                 is: 'myscript-math-exports',
                 properties: {
-                    mimetype: {
+                    resulttype: {
                         type: String,
                         notify: true,
                         reflectToAttribute: true,
                         value: 'text/html',
-                        observer: '_mimetypeChanged'
+                        observer: '_resultTypeChanged'
                     },
                     /**
                      * Exports result.
@@ -71,30 +72,38 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                     this.latexElement = qsWrapper(this).querySelector('#latex');
                     this.mathmlElement = qsWrapper(this).querySelector('#mathml');
                     this.officeopenxmlElement = qsWrapper(this).querySelector('#officeopenxml');
+                    this.symboltreeElement = qsWrapper(this).querySelector('#symboltree');
                     this.initializing = false;
-                    this._mimetypeChanged(this.mimetype);
+                    this._resultTypeChanged(this.resulttype);
                 },
                 /**
                  * @private
                  */
-                _mimetypeChanged: function (mimetype) {
+                _resultTypeChanged: function (resulttype) {
                   if (this.initializing === false) {
                       this.htmlElement.setAttribute('hidden', 'true');
                       this.latexElement.setAttribute('hidden', 'true');
                       this.mathmlElement.setAttribute('hidden', 'true');
                       this.officeopenxmlElement.setAttribute('hidden', 'true');
-                      switch (mimetype) {
+                      this.symboltreeElement.setAttribute('hidden', 'true');
+                      switch (resulttype) {
                           case 'text/html':
                               this.htmlElement.removeAttribute('hidden');
                               break;
+                          case 'LATEX':
                           case 'application/x-latex':
                               this.latexElement.removeAttribute('hidden');
                               break;
+                          case 'MATHML':
                           case 'application/mathml+xml':
                               this.mathmlElement.removeAttribute('hidden');
                               break;
+                          case 'OFFICEOPENXMLMATH':
                           case 'application/mathofficeXML':
                               this.officeopenxmlElement.removeAttribute('hidden');
+                              break;
+                          case 'SYMBOLTREE':
+                              this.symboltreeElement.removeAttribute('hidden');
                               break;
                       }
                   }
@@ -103,8 +112,11 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                  * @private
                  */
                 _exportsChanged: function (exports) {
-                    this.latexElement.innerText = '';
                     this.htmlElement.innerHTML = '';
+                    this.latexElement.innerText = '';
+                    this.mathmlElement.innerText = '';
+                    this.officeopenxmlElement.innerText = '';
+                    this.symboltreeElement.innerText = '';
                     if (exports) {
 
                         /**
@@ -133,6 +145,16 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                         var mathmlResult = exports['application/mathml+xml'] ? exports['application/mathml+xml'] : exports.MATHML;
                         if (mathmlResult) {
                             this.mathmlElement.innerText = mathmlResult;
+                        }
+
+                        var officexmlmathResult = exports['application/mathofficeXML'] ? exports['application/mathofficeXML'] : exports.OFFICEOPENXMLMATH;
+                        if (officexmlmathResult) {
+                            this.officeopenxmlElement.innerText = officexmlmathResult;
+                        }
+
+                        var symboltreeResult = exports.SYMBOLTREE;
+                        if (symboltreeResult) {
+                            this.symboltreeElement.innerText = symboltreeResult;
                         }
                     }
                 }
