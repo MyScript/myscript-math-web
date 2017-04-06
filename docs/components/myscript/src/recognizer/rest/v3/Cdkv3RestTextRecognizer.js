@@ -6,22 +6,20 @@ import * as CryptoHelper from '../../CryptoHelper';
 import * as Cdkv3RestRecognizerUtil from './Cdkv3RestRecognizerUtil';
 import * as Cdkv3CommonTextRecognizer from '../../common/v3/Cdkv3CommonTextRecognizer';
 
-export { init, close, clear } from '../../DefaultRecognizer';
+export { init, close, clear, reset } from '../../DefaultRecognizer';
 
 /**
  * Recognizer configuration
  * @type {RecognizerInfo}
  */
 export const textRestV3Configuration = {
-  type: [MyScriptJSConstants.RecognitionType.TEXT],
+  types: [MyScriptJSConstants.RecognitionType.TEXT],
   protocol: MyScriptJSConstants.Protocol.REST,
   apiVersion: 'V3',
-  availableFeatures: [MyScriptJSConstants.RecognizerFeature.RECOGNITION],
   availableTriggers: [
-    MyScriptJSConstants.RecognitionTrigger.QUIET_PERIOD,
-    MyScriptJSConstants.RecognitionTrigger.DEMAND
-  ],
-  preferredTrigger: MyScriptJSConstants.RecognitionTrigger.QUIET_PERIOD
+    MyScriptJSConstants.Trigger.QUIET_PERIOD,
+    MyScriptJSConstants.Trigger.DEMAND
+  ]
 };
 
 /**
@@ -42,7 +40,7 @@ export function getInfo() {
 export function buildInput(configuration, model, recognizerContext) {
   const input = {
     inputUnits: [{
-      textInputType: MyScriptJSConstants.InputType.MULTI_LINE_TEXT,
+      textInputType: 'MULTI_LINE_TEXT',
       // As Rest TEXT recognition is non incremental wa add the already recognized strokes
       components: model.rawStrokes.map(stroke => StrokeComponent.toJSON(stroke))
     }]
@@ -66,7 +64,7 @@ export function buildInput(configuration, model, recognizerContext) {
 function resultCallback(model) {
   logger.debug('Cdkv3RestTextRecognizer result callback', model);
   const modelReference = model;
-  modelReference.recognitionResult = Cdkv3CommonTextRecognizer.extractRecognitionResult(model);
+  modelReference.exports = Cdkv3CommonTextRecognizer.extractExports(model);
   logger.debug('Cdkv3RestTextRecognizer model updated', modelReference);
   return modelReference;
 }

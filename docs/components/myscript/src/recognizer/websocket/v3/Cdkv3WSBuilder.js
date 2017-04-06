@@ -31,16 +31,18 @@ function resultCallback(recognizerContext, message) {
   const recognitionContext = recognizerContext.recognitionContexts[recognizerContext.recognitionContexts.length - 1];
 
   const modelReference = InkModel.updateModelReceivedPosition(recognitionContext.model);
-  if (recognizerContext.instanceId && recognizerContext.instanceId !== message.data.instanceId) {
-    logger.debug(`Instance id switch from ${recognizerContext.instanceId} to ${message.data.instanceId} this is suspicious`);
+  if (message.data.instanceId) {
+    if (recognizerContext.instanceId && recognizerContext.instanceId !== message.data.instanceId) {
+      logger.debug(`Instance id switch from ${recognizerContext.instanceId} to ${message.data.instanceId} this is suspicious`);
+    }
+    const recognizerContextReference = recognizerContext;
+    recognizerContextReference.instanceId = message.data.instanceId;
+    logger.debug('Cdkv3WSRecognizer memorizing instance id', message.data.instanceId);
+
+    modelReference.rawResults.exports = message.data;
+
+    logger.debug('Cdkv3WSRecognizer model updated', modelReference);
   }
-  const recognizerContextReference = recognizerContext;
-  recognizerContextReference.instanceId = message.data.instanceId;
-  logger.debug('Cdkv3WSRecognizer memorizing instance id', message.data.instanceId);
-
-  modelReference.rawResults.recognition = message.data;
-
-  logger.debug('Cdkv3WSRecognizer model updated', modelReference);
   // Giving back the hand to the editor by resolving the promise.
   recognitionContext.callback(undefined, modelReference);
 }
@@ -56,14 +58,14 @@ function resultCallback(recognizerContext, message) {
 export function buildWebSocketCallback(configuration, model, recognizerContext, destructuredPromise) {
   return (message) => {
     // Handle websocket messages
-    logger.debug(`${message.type} websocket callback`, message);
+    logger.trace(`${message.type} websocket callback`, message);
 
     switch (message.type) {
       case 'open' :
         destructuredPromise.resolve(model);
         break;
       case 'message' :
-        logger.debug('Receiving message', message.data.type);
+        logger.trace('Receiving message', message.data.type);
         switch (message.data.type) {
           case 'hmacChallenge' :
             NetworkWSInterface.send(recognizerContext, buildHmac(recognizerContext, message, configuration));
@@ -84,6 +86,7 @@ export function buildWebSocketCallback(configuration, model, recognizerContext, 
         break;
       case 'close' :
         logger.debug('Websocket close done');
+        CdkWSRecognizerUtil.closeCallback(message, recognizerContext, destructuredPromise);
         break;
       case 'error' :
         CdkWSRecognizerUtil.errorCallBack({ msg: 'Websocket connection error', recoverable: false }, recognizerContext, destructuredPromise);

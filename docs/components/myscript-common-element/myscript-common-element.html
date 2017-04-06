@@ -3,6 +3,7 @@ Copyright © MyScript.
 LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="./pepjs-import.html">
+<link rel="import" href="./myscriptjs-import.html">
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
@@ -13,27 +14,23 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
 
     <myscript-common-element
         applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        timeout="2000"
-        typeset="true"
-        shapeparameters="{
-            doBeautification: true
-        }">
+        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
     </myscript-common-element>
 
 @demo demo/index.html
 -->
 <dom-module id="myscript-common-element">
-    <link rel="stylesheet" href="../myscript/dist/myscript.min.css">
     <template>
         <style>
             :host {
+                box-sizing: border-box;
                 display: block;
                 position: relative;
                 min-height: 200px;
                 min-width: 200px;
                 height: 100%;
                 width: 100%;
+                color: var(--myscript-common-element-button-background, #1A9FFF);
                 --paper-fab-background: var(--myscript-common-element-button-background, #1A9FFF);
                 --paper-fab-keyboard-focus-background: var(--myscript-common-element-button-focus-background, #1A9FFF);
                 --paper-fab-disabled-background: var(--myscript-common-element-button-disabled-background, #F5F6F7);
@@ -43,22 +40,27 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                 display: none !important;
             }
 
-            .buttons {
+            nav {
                 position: inherit;
                 float: left;
                 display: flex;
                 display: -webkit-flex;
                 z-index: 25;
-                background-color: transparent;
-                padding: 6px;
             }
 
             paper-fab {
-                z-index: 3;
                 margin: 6px;
             }
 
-            #editorDomElement {
+            .ms-editor {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+            }
+
+            .ms-editor canvas,
+            .ms-editor svg {
+                z-index: 15;
                 position: absolute;
                 left: 0;
                 top: 0;
@@ -66,20 +68,15 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                 width: 100%;
             }
 
-            .serverunreachable {
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                top: 0;
-                left: 0;
-                display: inline-block;
-                vertical-align: top;
-                text-align: center;
-                color: #1A9FFF;
+            .ms-editor canvas.ms-rendering-canvas,
+            .ms-editor svg {
+                z-index: 10;
+                pointer-events: none;
             }
 
             .error-msg {
                 position: absolute;
+                z-index: 30;
                 margin: auto;
                 top: 0;
                 right: 0;
@@ -87,35 +84,74 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                 left: 0;
                 width: 200px;
                 height: 200px;
-                border-radius: 3px;
-                z-index: 1;
+                text-align: center;
+            }
+
+            .error-msg::after {
+                content: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTI4cHgiIGhlaWdodD0iMTI4cHgiIHZpZXdCb3g9IjAgMCA2MTIgNjEyIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgoJPGcgaWQ9ImNsb3VkLW9mZiIgZmlsbD0iIzFhOWZmZiI+CgkJPHBhdGggZD0iTTQ5NC43LDIyOS41Yy0xNy44NTEtODYuNy05NC4zNTEtMTUzLTE4OC43LTE1M2MtMzguMjUsMC03My45NSwxMC4yLTEwMiwzMC42bDM4LjI1LDM4LjI1ICAgIGMxNy44NS0xMi43NSw0MC44LTE3Ljg1LDYzLjc1LTE3Ljg1Yzc2LjUsMCwxNDAuMjUsNjMuNzUsMTQwLjI1LDE0MC4yNXYxMi43NWgzOC4yNWM0My4zNSwwLDc2LjUsMzMuMTUsNzYuNSw3Ni41ICAgIGMwLDI4LjA1LTE1LjMsNTMuNTUtNDAuOCw2Ni4zbDM4LjI1LDM4LjI1QzU5MS42LDQzOC42LDYxMiw0MDAuMzUsNjEyLDM1N0M2MTIsMjkwLjcsNTU4LjQ1LDIzNC42LDQ5NC43LDIyOS41eiBNNzYuNSwxMDkuNjUgICAgbDcxLjQsNjguODVDNjYuMywxODMuNiwwLDI0OS45LDAsMzMxLjVjMCw4NC4xNSw2OC44NSwxNTMsMTUzLDE1M2gyOTguMzVsNTEsNTFsMzMuMTUtMzMuMTVMMTA5LjY1LDc2LjVMNzYuNSwxMDkuNjV6ICAgICBNMTk2LjM1LDIyOS41bDIwNCwyMDRIMTUzYy01Ni4xLDAtMTAyLTQ1LjktMTAyLTEwMmMwLTU2LjEsNDUuOS0xMDIsMTAyLTEwMkgxOTYuMzV6IiAvPgoJPC9nPgo8L3N2Zz4K);
+            }
+
+            .loader {
+                position: absolute;
+                z-index: 35;
+                margin: auto;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                border: 16px solid var(--myscript-common-element-button-disabled-background, #F5F6F7);
+                border-radius: 50%;
+                border-top: 16px solid var(--myscript-common-element-button-background, #1A9FFF);
+                width: 120px;
+                height: 120px;
+                -webkit-animation: spin 2s linear infinite;
+                animation: spin 2s linear infinite;
+            }
+
+            @-webkit-keyframes spin {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                }
+                100% {
+                    -webkit-transform: rotate(360deg);
+                }
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
             }
         </style>
-        <template is="dom-if" if="[[ !unloaded ]]">
-            <div class="buttons" hidden="[[ hidebuttons ]]">
-                <paper-fab mini src="undo.svg" title="undo" on-tap="undo" disabled="[[ !canundo ]]"
-                           hidden="[[ disableundoredo ]]"></paper-fab>
-                <paper-fab mini src="redo.svg" title="redo" on-tap="redo" disabled="[[ !canredo ]]"
-                           hidden="[[ disableundoredo ]]"></paper-fab>
-                <paper-fab mini src="trash.svg" title="clear" on-tap="clear" disabled="[[ !canclear ]]"
-                           hidden="[[ disableclear ]]"></paper-fab>
-                <paper-fab mini src="send.svg" title="recognize" on-tap="recognize" disabled="[[ !canrecognize ]]"
-                           hidden="[[ disablerecognize ]]"></paper-fab>
-                <paper-fab mini src="send.svg" title="typeset" on-tap="typeset" disabled="[[ !cantypeset ]]"
-                           hidden="[[ disabletypeset ]]"></paper-fab>
-            </div>
-        </template>
-        <div id="editorDomElement" hidden="[[ detached ]]"></div>
-        <div class="serverunreachable" hidden>
-            <div class="error-msg" hidden><p class="detail-msg">MyScript recognition server is not reachable. Please
-                reload once you are
-                connected</p><img
-                src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjEyOHB4IiBoZWlnaHQ9IjEyOHB4IiB2aWV3Qm94PSIwIDAgNjEyIDYxMiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNjEyIDYxMjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxnIGlkPSJjbG91ZC1vZmYiPgoJCTxwYXRoIGQ9Ik00OTQuNywyMjkuNWMtMTcuODUxLTg2LjctOTQuMzUxLTE1My0xODguNy0xNTNjLTM4LjI1LDAtNzMuOTUsMTAuMi0xMDIsMzAuNmwzOC4yNSwzOC4yNSAgICBjMTcuODUtMTIuNzUsNDAuOC0xNy44NSw2My43NS0xNy44NWM3Ni41LDAsMTQwLjI1LDYzLjc1LDE0MC4yNSwxNDAuMjV2MTIuNzVoMzguMjVjNDMuMzUsMCw3Ni41LDMzLjE1LDc2LjUsNzYuNSAgICBjMCwyOC4wNS0xNS4zLDUzLjU1LTQwLjgsNjYuM2wzOC4yNSwzOC4yNUM1OTEuNiw0MzguNiw2MTIsNDAwLjM1LDYxMiwzNTdDNjEyLDI5MC43LDU1OC40NSwyMzQuNiw0OTQuNywyMjkuNXogTTc2LjUsMTA5LjY1ICAgIGw3MS40LDY4Ljg1QzY2LjMsMTgzLjYsMCwyNDkuOSwwLDMzMS41YzAsODQuMTUsNjguODUsMTUzLDE1MywxNTNoMjk4LjM1bDUxLDUxbDMzLjE1LTMzLjE1TDEwOS42NSw3Ni41TDc2LjUsMTA5LjY1eiAgICAgTTE5Ni4zNSwyMjkuNWwyMDQsMjA0SDE1M2MtNTYuMSwwLTEwMi00NS45LTEwMi0xMDJjMC01Ni4xLDQ1LjktMTAyLDEwMi0xMDJIMTk2LjM1eiIgZmlsbD0iIzFhOWZmZiIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo="/>
-            </div>
+        <div class="loader" hidden="[[ !unloaded ]]"></div>
+        <div class="error-msg" hidden>MyScript recognition server is not reachable. Please reload once you are
+            connected
         </div>
+        <template is="dom-if" if="[[ !hidebuttons ]]">
+            <nav>
+                <paper-fab mini src="clear.svg" title="clear" on-tap="clear"
+                           disabled="[[ !canclear ]]" hidden="[[ disableclear ]]">
+                </paper-fab>
+                <paper-fab mini src="undo.svg" title="undo" on-tap="undo"
+                           disabled="[[ !canundo ]]" hidden="[[ disableundoredo ]]">
+                </paper-fab>
+                <paper-fab mini src="redo.svg" title="redo" on-tap="redo"
+                           disabled="[[ !canredo ]]" hidden="[[ disableundoredo ]]">
+                </paper-fab>
+                <paper-fab mini src="export.svg" title="export" on-tap="askForExport"
+                           disabled="[[ !canexport ]]" hidden="[[ disableexport ]]">
+                </paper-fab>
+                <paper-fab mini src="convert.svg" title="typeset" on-tap="convert"
+                           disabled="[[ !canconvert ]]" hidden="[[ disableconvert ]]">
+                </paper-fab>
+            </nav>
+        </template>
+        <div id="editorDomElement" class="ms-editor"></div>
         <paper-toast class="fit-bottom"></paper-toast>
     </template>
-    <script src="../myscript/dist/myscript.min.js"></script>
     <script>
         /**
          * Uncomment the function body during development. Should not be activated in production.
@@ -130,177 +166,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                 console.log(string);
             }
         }
-
-        /**
-         * Function returning the root dom element whatever shadow or shady dom is used.
-         * @param domElement
-         * @returns {*}
-         */
-        function qsWrapper(domElement) {
-            if (domElement.shadowRoot) {
-                return domElement.shadowRoot;
-            } else {
-                return domElement;
-            }
-        }
-
-        /**
-         * Update the undo redo clear state.
-         * @param commonElement
-         * @param event
-         */
-        function changeEventHandler(commonElement, event) {
-          if (event.detail) {
-              commonElement.canclear = event.detail.canClear;
-              commonElement.canundo = event.detail.canUndo;
-              commonElement.canredo = event.detail.canRedo;
-              commonElement.canrecognize = event.detail.canUndo && event.detail.canClear;
-              commonElement.cantypeset = event.detail.canUndo && event.detail.canClear;
-          }
-        }
-
-        /**
-         * Handle the error and display it to the user.
-         * @param commonElement
-         * @param eventDetail
-         */
-        function manageError(commonElement, eventDetail) {
-            LOG('common Error detected');
-            if (eventDetail && eventDetail.recoverable === false) {
-                if (eventDetail.serverMessage && eventDetail.serverMessage.error && eventDetail.serverMessage.error.result && eventDetail.serverMessage.error.result.error && (eventDetail.serverMessage.error.result.error === 'InvalidApplicationKeyException' || eventDetail.serverMessage.error.result.error === 'InvalidHMACSignatureException')) {
-                    qsWrapper(commonElement).querySelector('.detail-msg').innerText = 'Application credentials are invalid. Please check or regenerate your application key and hmackey.';
-                }
-                qsWrapper(commonElement).querySelector('.serverunreachable').style['z-index'] = 30;
-                qsWrapper(commonElement).querySelector('.serverunreachable').removeAttribute('hidden');
-                qsWrapper(commonElement).querySelector('.error-msg').style['z-index'] = 30;
-                qsWrapper(commonElement).querySelector('.error-msg').removeAttribute('hidden');
-                qsWrapper(commonElement).querySelector('#editorDomElement').style['opacity'] = 0.2;
-                commonElement.hidebuttons = true;
-            } else if (eventDetail && eventDetail.message) {
-                const paperToast = qsWrapper(commonElement).querySelector('paper-toast');
-                paperToast.text = eventDetail.message;
-                paperToast.fitIn = paperToast.show();
-            } else {
-                LOG('common not managed error', eventDetail);
-            }
-        }
-
-        /**
-         * Build the configuration to pass to editor.
-         * @param commonElement
-         * @returns {{}}
-         */
-        function buildConfigurationFromElementAttributes(commonElement) {
-            var configuration = {};
-            if (commonElement.configuration) {
-                configuration = commonElement.configuration;
-            }
-            configuration.recognitionTriggerDelay = commonElement.recognitiontriggerdelay;
-            configuration.recognitionProcessDelay = commonElement.recognitionprocessdelay;
-            if (commonElement.protocol === 'REST') {
-                configuration.recognitionTriggerOn = 'QUIET_PERIOD';
-            } else {
-                configuration.recognitionTriggerOn = 'POINTER_UP';
-            }
-            if (!configuration.recognitionParams) {
-                configuration.recognitionParams = {};
-            }
-            configuration.recognitionParams.type = commonElement.type;
-            configuration.recognitionParams.protocol = commonElement.protocol;
-            configuration.recognitionParams.apiVersion = commonElement.apiversion;
-            configuration.recognitionParams.server = {};
-            configuration.recognitionParams.server.scheme = commonElement.scheme;
-            configuration.recognitionParams.server.host = commonElement.host;
-            configuration.recognitionParams.server.applicationKey = commonElement.applicationkey;
-            configuration.recognitionParams.server.hmacKey = commonElement.hmackey;
-            configuration.recognitionParams.server.scheme = commonElement.scheme;
-            return configuration;
-        }
-
-        /**
-         * Update the style option of ink paper reflecting the common element attributes.
-         * @param commonElement
-         */
-        function updateCustomStyleFromElementAttributes(commonElement) {
-            if (commonElement.editor) {
-                commonElement.editor.customStyle.strokeStyle.color = commonElement.strokecolor;
-                commonElement.editor.customStyle.strokeStyle.width = commonElement.strokewidth;
-            }
-        }
-
-        /**
-         * Change the editor configuration.
-         * @param commonElement
-         */
-        function changeConfiguration(commonElement) {
-            if (commonElement.editor) {
-                commonElement.editor.configuration = buildConfigurationFromElementAttributes(commonElement);
-            }
-        }
-
-        /**
-         * Attach the element to the dom. This is the most critical part of the component.
-         * @param commonElement
-         */
-        function attachElementToDom(commonElement) {
-            const rootNode = qsWrapper(commonElement);
-
-            commonElement.editorDomElement = rootNode.querySelector('#editorDomElement');
-
-            // Manage change events
-            function changeListener(event) {
-                LOG('common ' + event.type + ' event intercepted', event);
-                changeEventHandler(commonElement, event);
-                commonElement.dispatchEvent(new CustomEvent('myscript-common-element-' + event.type, { detail: event.detail }));
-            }
-
-            // Manage result events
-            function resultListener(event) {
-                LOG('common ' + event.type + ' event intercepted', event);
-                // Just forwarding event there.
-                commonElement.dispatchEvent(new CustomEvent('myscript-common-element-' + event.type, { detail: event.detail }));
-            }
-
-            // Manage error events
-            function errorListener(event) {
-                LOG('common ' + event.type + ' event intercepted', event);
-                manageError(commonElement, event.detail);
-                commonElement.dispatchEvent(new CustomEvent('myscript-common-element-' + event.type, { detail: event.detail }));
-            }
-
-            commonElement.currentListeners = {};
-            ['undo', 'redo', 'clear', 'typeset', 'recognize', 'change'].forEach(function (type) {
-                commonElement.currentListeners[type] = changeListener;
-            });
-            ['result'].forEach(function (type) {
-                commonElement.currentListeners[type] = resultListener;
-            });
-            ['error'].forEach(function (type) {
-                commonElement.currentListeners[type] = errorListener;
-            });
-            Object.keys(commonElement.currentListeners).forEach(function (type) {
-                commonElement.editorDomElement.addEventListener(type, commonElement.currentListeners[type])
-            });
-            commonElement.editor = MyScript.register(commonElement.editorDomElement, buildConfigurationFromElementAttributes(commonElement), {
-                strokeStyle: {
-                    color: commonElement.strokecolor,
-                    width: commonElement.strokewidth
-                }
-            });
-            commonElement.unloaded = false;
-            LOG('common-element attached');
-        }
-
-        /** Remove listeners when common element is unloaded. */
-        function detachElementFromDom(commonElement) {
-            commonElement.editor.clear();
-            Object.keys(commonElement.currentListeners).forEach(function (type) {
-                commonElement.editorDomElement.removeEventListener(type, commonElement.currentListeners[type])
-            });
-            commonElement.unloaded = true;
-            LOG('common-element detached');
-        }
-
 
         Polymer({
                     is: 'myscript-common-element',
@@ -320,14 +185,14 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                      * @event myscript-common-element-clear
                      */
                     /**
-                     * Fired when typeset button is press
+                     * Fired when convert button is press
                      *
-                     * @event myscript-common-element-typeset
+                     * @event myscript-common-element-convert
                      */
                     /**
-                     * Fired when recognize button is press
+                     * Fired when export button is press
                      *
-                     * @event myscript-common-element-recognize
+                     * @event myscript-common-element-export
                      */
                     /**
                      * Fired when state of underlying model change
@@ -335,9 +200,9 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                      * @event myscript-common-element-change
                      */
                     /**
-                     * Fired when a recognition result is received.
+                     * Fired when exports are received.
                      *
-                     * @event myscript-common-element-result
+                     * @event myscript-common-element-exported
                      */
                     /**
                      * Fired when a recognition error occurred.
@@ -406,7 +271,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             value: 2000
                         },
                         /**
-                         * Delay without any recognition result received before processing the last one received, only use in WEBSOCKET mode.
+                         * Delay without any recognition exports received before processing the last one received, only use in WEBSOCKET mode.
                          * @type Number
                          * @default 2000
                          */
@@ -518,12 +383,24 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             notify: true
                         },
                         /**
-                         * True if recognition button could be displayed.
+                         * True if export button could be displayed.
                          * @private
                          * @type Boolean
                          * @default false
                          */
-                        canrecognize: {
+                        canexport: {
+                            type: Boolean,
+                            value: false,
+                            reflectToAttribute: true,
+                            notify: true
+                        },
+                        /**
+                         * True if convert button could be displayed.
+                         * @private
+                         * @type Boolean
+                         * @default false
+                         */
+                        canconvert: {
                             type: Boolean,
                             value: false,
                             reflectToAttribute: true,
@@ -558,20 +435,28 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             value: false
                         },
                         /**
-                         * True if the recognize feature is disabled, false otherwise
+                         * True if the export feature is disabled, false otherwise
                          */
-                        disablerecognize: {
+                        disableexport: {
                             type: Boolean,
                             reflectToAttribute: true,
-                            value: true
+                            value: false
                         },
                         /**
-                         * True if the typeset feature is disabled, false otherwise
+                         * True if the convert feature is disabled, false otherwise
                          */
-                        disabletypeset: {
+                        disableconvert: {
                             type: Boolean,
                             reflectToAttribute: true,
-                            value: true
+                            value: false
+                        },
+                        /**
+                         * Exports.
+                         * @type {Object<String, Object>} Attributes depends on configuration.
+                         */
+                        exports: {
+                            type: Object,
+                            notify: true
                         }
                     },
                     behaviors: [
@@ -607,17 +492,17 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     /**
                      * Launch recognition
                      */
-                    recognize: function () {
+                    askForExport: function (exports) {
                         if (this.editor) {
-                            this.editor.recognize();
+                            this.editor.askForExport(exports);
                         }
                     },
                     /**
-                     * Launch typeset
+                     * Launch convert
                      */
-                    typeset: function () {
+                    convert: function () {
                         if (this.editor) {
-                            this.editor.typeset();
+                            this.editor.convert();
                         }
                     },
                     /**
@@ -635,8 +520,12 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                      * @private
                      */
                     strokecolorChanged: function (newStrokecolor) {
-                        LOG('common strokecolorChanged', newStrokecolor);
-                        updateCustomStyleFromElementAttributes(this);
+                        LOG('common-element strokecolorChanged', newStrokecolor);
+                        if (this.editorDomElement && !this.initializing) {
+                            this.buildCustomStyle();
+                            this.editor.customStyle = this.customStyle;
+                        }
+
                     },
                     /**
                      * Update the stroke width.
@@ -644,15 +533,21 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                      * @private
                      */
                     strokewidthChanged: function (newStrokewidth) {
-                        LOG('common strokewidthChanged', newStrokewidth);
+                        LOG('common-element strokewidthChanged', newStrokewidth);
                         if (this.editorDomElement && !this.initializing) {
-                            updateCustomStyleFromElementAttributes(this);
+                            this.buildCustomStyle();
+                            this.editor.customStyle = this.customStyle;
                         }
                     },
-                    unloadedChanged: function (newValue) {
-                        LOG('common unloaded changed', newValue);
-                        if (this.editorDomElement && !this.initializing && newValue !== true) {
-                            changeConfiguration(this);
+                    unloadedChanged: function (unloaded) {
+                        LOG('common-element unloaded changed', unloaded);
+                        this.exports = undefined;
+                        this.buildConfiguration();
+                        if (this.editorDomElement && !this.initializing) {
+                            if (unloaded === true) {
+                                this.errorElement.setAttribute('hidden', 'true');
+                                this.editor.configuration = this.configuration;
+                            }
                         }
                     },
                     /**
@@ -661,21 +556,180 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                      * @private
                      */
                     onResize: function (event) {
-                        console.log('common resizing', event);
+                        console.log('common-element resizing', event);
                         if (this.editor) {
                             this.editor.resize();
                         }
                     },
-                    //Will be renamed connected with pure custom element support
+                    // Will be renamed connected with pure custom element support
                     attached: function () {
+
+                        /**
+                         * Function returning the root dom element whatever shadow or shady dom is used.
+                         * @param domElement
+                         * @returns {Element}
+                         */
+                        function qsWrapper(domElement) {
+                            if (domElement.shadowRoot) {
+                                return domElement.shadowRoot;
+                            } else {
+                                return domElement;
+                            }
+                        }
+
                         this.initializing = true;
-                        LOG('attached callback');
-                        attachElementToDom(this);
+                        LOG('common-element attached callback');
+                        this.editorDomElement = qsWrapper(this).querySelector('#editorDomElement');
+                        this.errorElement = qsWrapper(this).querySelector('.error-msg');
+                        this.paperToast = qsWrapper(this).querySelector('paper-toast');
+
+                        // Attach the event listener before register editor
+                        this.attachListener(this);
+
+                        this.editor = MyScript.register(this.editorDomElement, this.buildConfiguration(), this.buildCustomStyle());
+                        this.configuration = this.editor.configuration;
+
+                        LOG('common-element attached');
                         this.initializing = false;
                     },
                     detached: function () {
-                        LOG('detached callback');
-                        detachElementFromDom(this);
+                        LOG('common-element detached callback');
+                        this.detachListener(this);
+                        LOG('common-element detached');
+                    },
+                    /**
+                     * @private
+                     */
+                    attachListener: function (commonElement) {
+                        function editorListener(event) {
+                            LOG('editor ' + event.type + ' event intercepted', event);
+                            switch (event.type) {
+                                case MyScript.Constants.EventType.LOADED:
+                                    commonElement.unloaded = false;
+                                    break;
+                                case MyScript.Constants.EventType.CHANGED:{
+                                    if (event.detail) {
+                                        commonElement.canclear = event.detail.canClear;
+                                        commonElement.canundo = event.detail.canUndo;
+                                        commonElement.canredo = event.detail.canRedo;
+                                        commonElement.canexport = event.detail.canUndo && event.detail.canClear;
+                                        commonElement.canconvert = commonElement.apiversion === 'V4' && event.detail.canUndo && event.detail.canClear;
+                                    }
+                                }
+                                    break;
+                                case MyScript.Constants.EventType.EXPORTED: {
+                                    commonElement.exports = event.detail ? event.detail.exports : {};
+                                    commonElement.errorElement.setAttribute('hidden', 'true');
+                                }
+                                    break;
+                                case MyScript.Constants.EventType.CLEAR:
+                                    commonElement.exports = {};
+                                    break;
+                                case MyScript.Constants.EventType.ERROR:
+                                    commonElement.manageError(event, commonElement);
+                                    break;
+                                default:
+                                    break;
+                            }
+                            // Just forwarding event there.
+                            commonElement.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
+                        }
+
+                        const eventTypes = Object.keys(MyScript.Constants.EventType).map(function (key) {
+                            return MyScript.Constants.EventType[key];
+                        });
+
+                        commonElement.currentListeners = {};
+                        eventTypes.forEach(function (type) {
+                            commonElement.currentListeners[type] = editorListener;
+                        });
+                        Object.keys(commonElement.currentListeners).forEach(function (type) {
+                            commonElement.editorDomElement.addEventListener(type, commonElement.currentListeners[type])
+                        });
+                    },
+
+                    /**
+                     * @private
+                     */
+                    detachListener: function (commonElement) {
+                        Object.keys(commonElement.currentListeners).forEach(function (type) {
+                            commonElement.editorDomElement.removeEventListener(type, commonElement.currentListeners[type])
+                        });
+                    },
+
+                    /**
+                     * @private
+                     */
+                    buildCustomStyle: function () {
+                        if (!this.customStyle) {
+                            this.customStyle = {};
+                        }
+                        if (!this.customStyle.strokeStyle) {
+                            this.customStyle.strokeStyle = {};
+                        }
+                        this.customStyle.strokeStyle.color = this.strokecolor;
+                        this.customStyle.strokeStyle.width = this.strokewidth;
+                        return this.customStyle;
+                    },
+
+                    /**
+                     * @private
+                     */
+                    buildConfiguration: function () {
+                        if (!this.configuration) {
+                            this.configuration = {};
+                        }
+                        this.configuration.recognitionTriggerDelay = this.recognitiontriggerdelay;
+                        this.configuration.recognitionProcessDelay = this.recognitionprocessdelay;
+                        if (this.protocol === 'REST') {
+                            this.configuration.recognitionTriggerOn = 'QUIET_PERIOD';
+                        } else {
+                            this.configuration.recognitionTriggerOn = 'POINTER_UP';
+                        }
+                        if (!this.configuration.recognitionParams) {
+                            this.configuration.recognitionParams = {};
+                        }
+                        this.configuration.recognitionParams.type = this.type;
+                        this.configuration.recognitionParams.protocol = this.protocol;
+                        this.configuration.recognitionParams.apiVersion = this.apiversion;
+                        if (!this.configuration.recognitionParams.server) {
+                            this.configuration.recognitionParams.server = {};
+                        }
+                        this.configuration.recognitionParams.server.scheme = this.scheme;
+                        this.configuration.recognitionParams.server.host = this.host;
+                        this.configuration.recognitionParams.server.applicationKey = this.applicationkey;
+                        this.configuration.recognitionParams.server.hmacKey = this.hmackey;
+                        this.configuration.recognitionParams.server.scheme = this.scheme;
+                        return this.configuration;
+                    },
+
+                    /**
+                     * @private
+                     */
+                    manageError: function (event, commonElement) {
+                        LOG('common error detected');
+                        if (event.detail) {
+                            if (event.detail.recoverable === false) {
+                                if (event.detail.serverMessage &&
+                                    event.detail.serverMessage.error &&
+                                    event.detail.serverMessage.error.result &&
+                                    event.detail.serverMessage.error.result.error &&
+                                    (event.detail.serverMessage.error.result.error === 'InvalidApplicationKeyException' ||
+                                    event.detail.serverMessage.error.result.error === 'InvalidHMACSignatureException')) {
+                                    commonElement.errorElement.innerText = 'Application credentials are invalid. Please check or regenerate your application key and hmackey.';
+                                } else {
+                                    commonElement.errorElement.innerText = 'MyScript recognition server is not reachable. Please reload once you are connected';
+                                }
+                                commonElement.errorElement.removeAttribute('hidden');
+                            } else if (event.detail.message) {
+                                commonElement.paperToast.text = event.detail.message;
+                                commonElement.paperToast.fitIn = commonElement.paperToast.show();
+                            } else {
+                                LOG('common not managed error', event);
+                            }
+                        } else {
+                            LOG('common not managed error', event);
+                        }
                     }
                 }
         );

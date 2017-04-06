@@ -9,22 +9,20 @@ import {
   getStyleFromInkRanges
 } from '../../common/v3/Cdkv3CommonShapeRecognizer';
 
-export { init, close, clear } from '../../DefaultRecognizer';
+export { init, close, clear, reset } from '../../DefaultRecognizer';
 
 /**
  * Recognizer configuration
  * @type {RecognizerInfo}
  */
 export const analyzerRestV3Configuration = {
-  type: [MyScriptJSConstants.RecognitionType.ANALYZER],
+  types: [MyScriptJSConstants.RecognitionType.ANALYZER],
   protocol: MyScriptJSConstants.Protocol.REST,
   apiVersion: 'V3',
-  availableFeatures: [MyScriptJSConstants.RecognizerFeature.RECOGNITION],
   availableTriggers: [
-    MyScriptJSConstants.RecognitionTrigger.QUIET_PERIOD,
-    MyScriptJSConstants.RecognitionTrigger.DEMAND
-  ],
-  preferredTrigger: MyScriptJSConstants.RecognitionTrigger.QUIET_PERIOD
+    MyScriptJSConstants.Trigger.QUIET_PERIOD,
+    MyScriptJSConstants.Trigger.DEMAND
+  ]
 };
 
 /**
@@ -71,11 +69,10 @@ function extractSymbols(model, element) {
 }
 
 function extractRecognizedSymbolsFromAnalyzerResult(model) {
-  // const result = model.rawResults.recognition.result;
   if (model.rawResults &&
-      model.rawResults.recognition &&
-      model.rawResults.recognition.result) {
-    return [...model.rawResults.recognition.result.shapes, ...model.rawResults.recognition.result.tables, ...model.rawResults.recognition.result.textLines]
+      model.rawResults.exports &&
+      model.rawResults.exports.result) {
+    return [...model.rawResults.exports.result.shapes, ...model.rawResults.exports.result.tables, ...model.rawResults.exports.result.textLines]
         .map(element => extractSymbols(model, element))
         .reduce((a, b) => a.concat(b));
   }

@@ -15,17 +15,17 @@ import { recognizerLogger as logger } from '../configuration/LoggerConfig';
  * @property {Element} element
  * @property {Array<RecognitionContext>} recognitionContexts
  * @property {Promise} initPromise
- * @property {RecognitionPositions} lastRecognitionPositions  Last recognition sent/received stroke indexes.
+ * @property {RecognitionPositions} lastPositions  Last recognition sent/received stroke indexes.
  * @property {Number} dpi
  * @property {String} url
- * @property {String} suffixUrl
  * @property {WebSocket} websocket
- * @property {Configuration} configuration
- * @property {function) buildWebSocketCallback
- * @property {function} callback
+ * @property {function} websocketCallback
  * @property {function} reconnect
  * @property {Number} currentReconnectionCount
  * @property {String} instanceId
+ * @property {Boolean} canUndo
+ * @property {Boolean} canRedo
+ * @property {Boolean} canClear
  */
 
 /**
@@ -40,20 +40,19 @@ export function createEmptyRecognizerContext(element, dpi = 96) {
     // websocket
     recognitionContexts: [],
     initPromise: undefined,
-    lastRecognitionPositions: {
+    lastPositions: {
       lastSentPosition: -1,
       lastReceivedPosition: -1
     },
     dpi,
     url: undefined,
-    suffixUrl: undefined,
     websocket: undefined,
-    configuration: undefined,
-    buildWebSocketCallback: undefined,
-    callback: undefined,
+    websocketCallback: undefined,
     reconnect: undefined,
     currentReconnectionCount: undefined,
-    instanceId: undefined
+    instanceId: undefined,
+    canUndo: false,
+    canRedo: false
   };
 }
 
@@ -64,8 +63,8 @@ export function createEmptyRecognizerContext(element, dpi = 96) {
  * @return {Boolean}
  */
 export function isResetRequired(recognizerContext, model) {
-  if (recognizerContext.lastRecognitionPositions) {
-    return recognizerContext.lastRecognitionPositions.lastSentPosition >= model.rawStrokes.length - 1;
+  if (recognizerContext.lastPositions) {
+    return recognizerContext.lastPositions.lastSentPosition >= model.rawStrokes.length - 1;
   }
   return false;
 }
@@ -78,8 +77,11 @@ export function isResetRequired(recognizerContext, model) {
  */
 export function updateRecognitionPositions(recognizerContext, model) {
   const recognizerContextRef = recognizerContext;
-  recognizerContextRef.lastRecognitionPositions.lastSentPosition = model.lastRecognitionPositions.lastSentPosition;
-  recognizerContextRef.lastRecognitionPositions.lastReceivedPosition = model.lastRecognitionPositions.lastReceivedPosition;
+  recognizerContextRef.lastPositions.lastSentPosition = model.lastPositions.lastSentPosition;
+  recognizerContextRef.lastPositions.lastReceivedPosition = model.lastPositions.lastReceivedPosition;
+  if (recognizerContextRef.lastPositions.lastSentPosition === recognizerContextRef.lastPositions.lastReceivedPosition === -1) {
+    delete recognizerContextRef.instanceId;
+  }
   return recognizerContextRef;
 }
 

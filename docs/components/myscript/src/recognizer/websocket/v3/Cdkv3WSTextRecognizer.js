@@ -5,20 +5,19 @@ import * as StrokeComponent from '../../../model/StrokeComponent';
 import * as Cdkv3WSWebsocketBuilder from './Cdkv3WSBuilder';
 import * as CdkWSRecognizerUtil from '../CdkWSRecognizerUtil';
 import * as Cdkv3CommonTextRecognizer from '../../common/v3/Cdkv3CommonTextRecognizer';
+import * as DefaultRecognizer from '../../DefaultRecognizer';
 
-export { clear, close } from '../CdkWSRecognizerUtil';
+export { close } from '../CdkWSRecognizerUtil';
 
 /**
  * Recognizer configuration
  * @type {RecognizerInfo}
  */
 export const textWebSocketV3Configuration = {
-  type: [MyScriptJSConstants.RecognitionType.TEXT],
+  types: [MyScriptJSConstants.RecognitionType.TEXT],
   protocol: MyScriptJSConstants.Protocol.WEBSOCKET,
   apiVersion: 'V3',
-  availableFeatures: [MyScriptJSConstants.RecognizerFeature.RECOGNITION],
-  availableTriggers: [MyScriptJSConstants.RecognitionTrigger.POINTER_UP],
-  preferredTrigger: MyScriptJSConstants.RecognitionTrigger.POINTER_UP
+  availableTriggers: [MyScriptJSConstants.Trigger.POINTER_UP]
 };
 
 /**
@@ -37,12 +36,12 @@ function buildInitMessage(recognizerContext, model, configuration) {
 }
 
 function buildTextInput(recognizerContext, model, configuration) {
-  if (recognizerContext.lastRecognitionPositions.lastSentPosition < 0) {
+  if (recognizerContext.lastPositions.lastSentPosition < 0) {
     return {
       type: 'start',
       textParameter: configuration.recognitionParams.v3.textParameter,
       inputUnits: [{
-        textInputType: MyScriptJSConstants.InputType.MULTI_LINE_TEXT,
+        textInputType: 'MULTI_LINE_TEXT',
         components: model.rawStrokes.map(stroke => StrokeComponent.toJSON(stroke))
       }]
     };
@@ -51,16 +50,22 @@ function buildTextInput(recognizerContext, model, configuration) {
   return {
     type: 'continue',
     inputUnits: [{
-      textInputType: MyScriptJSConstants.InputType.MULTI_LINE_TEXT,
+      textInputType: 'MULTI_LINE_TEXT',
       components: InkModel.extractPendingStrokes(model, -1).map(stroke => StrokeComponent.toJSON(stroke))
     }]
+  };
+}
+
+function buildResetMessage(recognizerContext, model, configuration) {
+  return {
+    type: 'reset'
   };
 }
 
 function resultCallback(model) {
   logger.debug('Cdkv3WSTextRecognizer result callback', model);
   const modelReference = model;
-  modelReference.recognitionResult = Cdkv3CommonTextRecognizer.extractRecognitionResult(model);
+  modelReference.exports = Cdkv3CommonTextRecognizer.extractExports(model);
   logger.debug('Cdkv3WSTextRecognizer model updated', modelReference);
   return modelReference;
 }
@@ -81,7 +86,7 @@ export function init(configuration, model, recognizerContext, callback) {
     }
   };
 
-  CdkWSRecognizerUtil.init('/api/v3.0/recognition/ws/text', configuration, InkModel.resetModelPositions(model), recognizerContext, Cdkv3WSWebsocketBuilder.buildWebSocketCallback, init)
+  CdkWSRecognizerUtil.init('/api/v3.0/recognition/ws/text', Cdkv3WSWebsocketBuilder.buildWebSocketCallback, init, configuration, InkModel.resetModelPositions(model), recognizerContext)
       .then(openedModel => CdkWSRecognizerUtil.sendMessages(configuration, openedModel, recognizerContext, initCallback, buildInitMessage))
       .catch(err => callback(err, model)); // Error on websocket creation
 }
@@ -97,3 +102,25 @@ export function recognize(configuration, model, recognizerContext, callback) {
   CdkWSRecognizerUtil.sendMessages(configuration, InkModel.updateModelSentPosition(model), recognizerContext, (err, res) => callback(err, resultCallback(res)), buildTextInput);
 }
 
+/**
+ * Reset the recognition context
+ * @param {Configuration} configuration Current configuration
+ * @param {Model} model Current model
+ * @param {RecognizerContext} recognizerContext Current recognizer context
+ * @param {function(err: Object, res: Object)} callback
+ */
+export function reset(configuration, model, recognizerContext, callback) {
+  CdkWSRecognizerUtil.sendMessages(configuration, InkModel.resetModelPositions(model), recognizerContext, (err, res) => callback(err, resultCallback(res)), buildResetMessage);
+}
+
+/**
+ * Clear server context. Currently nothing to do there.
+ * @param {Configuration} configuration Current configuration
+ * @param {Model} model Current model
+ * @param {RecognizerContext} recognizerContext Current recognizer context
+ * @param {function(err: Object, res: Object)} callback
+ */
+export function clear(configuration, model, recognizerContext, callback) {
+  reset(configuration, model, recognizerContext, (err, res) => logger.trace('Session reset'));
+  DefaultRecognizer.clear(configuration, model, recognizerContext, callback);
+}

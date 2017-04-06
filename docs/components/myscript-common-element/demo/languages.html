@@ -29,24 +29,22 @@
     </style>
 </head>
 <body touch-action="none">
-<div id="parameters">
     <select id="language" disabled></select>
-</div>
-<myscript-languages-element scheme="https"
-                            host="cloud-internal-stable.visionobjects.com"
-                            applicationKey="a8f991e2-994d-4f36-b61d-55f7ddf6f85d"
-                            languages="{{ languages }}"
-                            sortByValue>
-</myscript-languages-element>
+    <myscript-languages-element scheme="https"
+                                host="cloud-internal-stable.visionobjects.com"
+                                applicationkey="a8f991e2-994d-4f36-b61d-55f7ddf6f85d"
+                                sortByValue>
+    </myscript-languages-element>
+</body>
 <script>
-    document.querySelector('myscript-languages-element').addEventListener('myscript-languages-element-result', function (evt) {
-      var languageElement=  document.getElementById('language');
-      var currentLanguage = 'en_US';
-      evt.detail.forEach(function (language) {
-        languageElement.options[languageElement.options.length] = new Option(language.description, language.value, true, currentLanguage === language.value);
-        languageElement.disabled = false;
-      });
+    var currentLanguage = 'en_US';
+    var languageSelect = document.getElementById('language');
+    document.querySelector('myscript-languages-element').addEventListener('change', function (evt) {
+        evt.detail.forEach(function (language) {
+            var selected = currentLanguage === language.value;
+            languageSelect.options[languageSelect.options.length] = new Option(language.description, language.value, selected, selected);
+        });
+        languageSelect.disabled = false;
     });
 </script>
-</body>
 </html>

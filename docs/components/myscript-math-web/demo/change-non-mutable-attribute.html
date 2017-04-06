@@ -23,7 +23,7 @@
     window.addEventListener("load", function () {
         var configurationChanged = false;
         var myscriptMathWebElement = document.querySelector('myscript-math-web');
-        myscriptMathWebElement.addEventListener("myscript-math-web-load", function () {
+        myscriptMathWebElement.addEventListener("load", function () {
             if (!configurationChanged) {
                 console.log("Changing recognition type to only LATEX.");
                 myscriptMathWebElement.resulttypes = ['LATEX'];

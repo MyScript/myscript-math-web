@@ -5,7 +5,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <title>myscript-math-web demo</title>
+    <title>myscript-languages-element demo</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../myscript-languages-element.html">
@@ -29,25 +29,22 @@
     </style>
 </head>
 <body touch-action="none">
-<div id="waiting">myscript-languages-element will be loaded in 3 seconds with customs params.</div>
-<div id="parameters">
     <select id="language" disabled></select>
-</div>
-<myscript-languages-element host="cloud-internal-stable.visionobjects.com" unloaded></myscript-languages-element>
+    <myscript-languages-element
+        host="cloud-internal-stable.visionobjects.com">
+    </myscript-languages-element>
+</body>
 <script>
-
     window.addEventListener("load", function (event) {
+        var languageSelect = document.getElementById('language');
+        var myscriptLanguagesElement = document.querySelector('myscript-languages-element');
         window.setTimeout(function () {
-            var waitingDiv = document.querySelector('#waiting');
-            waitingDiv.parentNode.removeChild(waitingDiv);
             console.log("All resources finished loading! Starting to init myscript-languages-element");
             var mycustomconfiguration = {
                 type: 'ANALYZER',
                 applicationKey: 'a8f991e2-994d-4f36-b61d-55f7ddf6f85d',
                 sortByValue: true
             };
-            var myscriptLanguagesElement = document.querySelector('myscript-languages-element');
-            var languageElement = document.getElementById('language');
             // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
             myscriptLanguagesElement.setAttribute('type', mycustomconfiguration.type);
             myscriptLanguagesElement.applicationkey = mycustomconfiguration.applicationKey;
@@ -66,18 +63,18 @@
                     }
                 }
             };
-            myscriptLanguagesElement.unloaded = false;
+            myscriptLanguagesElement.unloaded = true;
             console.log("myscript-languages-element should be loaded");
 
-            myscriptLanguagesElement.addEventListener('myscript-languages-element-result', function (evt) {
-                var currentLanguage = myscriptLanguagesElement.configuration.recognitionParams.v3.analyzerParameter.textParameter.language;
+            var currentLanguage = myscriptLanguagesElement.configuration.recognitionParams.v3.analyzerParameter.textParameter.language;
+            myscriptLanguagesElement.addEventListener('change', function (evt) {
                 evt.detail.forEach(function (language) {
-                    languageElement.options[languageElement.options.length] = new Option(language.description, language.value, true, currentLanguage === language.value);
-                    languageElement.disabled = false;
+                    var selected = currentLanguage === language.value;
+                    languageSelect.options[languageSelect.options.length] = new Option(language.description, language.value, selected, selected);
                 });
+                languageSelect.disabled = false;
             });
         }, 3000);
     });
 </script>
-</body>
 </html>

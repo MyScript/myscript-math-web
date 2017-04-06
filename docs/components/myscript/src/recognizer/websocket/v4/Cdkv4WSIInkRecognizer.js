@@ -11,12 +11,10 @@ export { close } from '../CdkWSRecognizerUtil';
  * @type {RecognizerInfo}
  */
 export const IInkWebSocketV4Configuration = {
-  type: [MyScriptJSConstants.RecognitionType.MATH, MyScriptJSConstants.RecognitionType.NEBO, MyScriptJSConstants.RecognitionType.DIAGRAM],
+  types: [MyScriptJSConstants.RecognitionType.MATH, MyScriptJSConstants.RecognitionType.DIAGRAM, MyScriptJSConstants.RecognitionType.NEBO],
   protocol: MyScriptJSConstants.Protocol.WEBSOCKET,
   apiVersion: 'V4',
-  availableFeatures: [MyScriptJSConstants.RecognizerFeature.UNDO_REDO, MyScriptJSConstants.RecognizerFeature.TYPESET, MyScriptJSConstants.RecognizerFeature.RESIZE],
-  availableTriggers: [MyScriptJSConstants.RecognitionTrigger.POINTER_UP],
-  preferredTrigger: MyScriptJSConstants.RecognitionTrigger.POINTER_UP
+  availableTriggers: [MyScriptJSConstants.Trigger.POINTER_UP, MyScriptJSConstants.Trigger.DEMAND]
 };
 
 /**
@@ -42,8 +40,17 @@ function buildNewContentPart(recognizerContext, model, configuration) {
   return {
     type: 'newContentPart',
     contentType: configuration.recognitionParams.type,
-    resultTypes: configuration.recognitionParams.v4[`${configuration.recognitionParams.type.toLowerCase()}`].resultTypes
+    mimeTypes: configuration.recognitionParams.v4[`${configuration.recognitionParams.type.toLowerCase()}`].mimeTypes
   };
+}
+
+function buildConfiguration(recognizerContext, model, configuration) {
+  const iinkConfiguration = Object.assign({}, { type: 'configuration' }, configuration.recognitionParams.v4);
+  delete iinkConfiguration.lang;
+  delete iinkConfiguration.nebo;
+  delete iinkConfiguration.diagram;
+  delete iinkConfiguration.math.mimeTypes;
+  return iinkConfiguration;
 }
 
 function buildAddStrokes(recognizerContext, model, configuration) {
@@ -67,8 +74,8 @@ function buildClear(recognizerContext, model, configuration) {
   return { type: 'clear' };
 }
 
-function buildTypeset(recognizerContext, model, configuration) {
-  return { type: 'typeset' };
+function buildConvert(recognizerContext, model, configuration) {
+  return { type: 'convert' };
 }
 
 function buildZoom(recognizerContext, model, configuration) {
@@ -86,6 +93,14 @@ function buildResize(recognizerContext, model, configuration) {
   };
 }
 
+function buildExport(recognizerContext, model, configuration) {
+  return {
+    type: 'export',
+    partIdx: 0,
+    mimeTypes: configuration.recognitionParams.v4[`${configuration.recognitionParams.type.toLowerCase()}`].mimeTypes
+  };
+}
+
 /**
  * Initialize recognition
  * @param {Configuration} configuration Current configuration
@@ -96,15 +111,15 @@ function buildResize(recognizerContext, model, configuration) {
 export function init(configuration, model, recognizerContext, callback) {
   const initCallback = (err, res) => {
     if (!err && (InkModel.extractPendingStrokes(res).length > 0)) {
-      CdkWSRecognizerUtil.sendMessages(configuration, InkModel.updateModelSentPosition(res), recognizerContext, callback, buildNewContentPart, buildAddStrokes);
+      CdkWSRecognizerUtil.sendMessages(configuration, InkModel.updateModelSentPosition(res), recognizerContext, callback, buildNewContentPart, buildConfiguration, buildAddStrokes);
     } else if (!err) {
-      CdkWSRecognizerUtil.sendMessages(configuration, res, recognizerContext, callback, buildNewContentPart);
+      CdkWSRecognizerUtil.sendMessages(configuration, res, recognizerContext, callback, buildNewContentPart, buildConfiguration);
     } else {
       callback(err, res);
     }
   };
 
-  CdkWSRecognizerUtil.init('/api/v4.0/iink/document', configuration, InkModel.resetModelPositions(model), recognizerContext, Cdkv4WSWebsocketBuilder.buildWebSocketCallback)
+  CdkWSRecognizerUtil.init('/api/v4.0/iink/document', Cdkv4WSWebsocketBuilder.buildWebSocketCallback, undefined, configuration, InkModel.resetModelPositions(model), recognizerContext)
       .then(openedModel => CdkWSRecognizerUtil.sendMessages(configuration, openedModel, recognizerContext, initCallback, buildNewContentPackageInput))
       .catch(err => callback(err, model)); // Error on websocket creation
 }
@@ -166,14 +181,14 @@ export function clear(configuration, model, recognizerContext, callback) {
 }
 
 /**
- * Typeset action
+ * Convert action
  * @param {Configuration} configuration Current configuration
  * @param {Model} model Current model
  * @param {RecognizerContext} recognizerContext Current recognition context
  * @param {function(err: Object, res: Object)} callback
  */
-export function typeset(configuration, model, recognizerContext, callback) {
-  CdkWSRecognizerUtil.sendMessages(configuration, model, recognizerContext, callback, buildTypeset);
+export function convert(configuration, model, recognizerContext, callback) {
+  CdkWSRecognizerUtil.sendMessages(configuration, model, recognizerContext, callback, buildConvert);
 }
 
 /**
@@ -185,4 +200,15 @@ export function typeset(configuration, model, recognizerContext, callback) {
  */
 export function zoom(configuration, model, recognizerContext, callback) {
   CdkWSRecognizerUtil.sendMessages(configuration, model, recognizerContext, callback, buildZoom);
+}
+
+/**
+ * Export action
+ * @param {Configuration} configuration Current configuration
+ * @param {Model} model Current model
+ * @param {RecognizerContext} recognizerContext Current recognition context
+ * @param {function(err: Object, res: Object)} callback
+ */
+export function recognize(configuration, model, recognizerContext, callback) {
+  CdkWSRecognizerUtil.sendMessages(configuration, model, recognizerContext, callback, buildExport);
 }

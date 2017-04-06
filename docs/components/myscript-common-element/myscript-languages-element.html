@@ -7,7 +7,6 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 <dom-module id="myscript-languages-element">
     <script src="../myscript/dist/myscript.min.js"></script>
     <script>
-
         /**
          * Uncomment the function body during development. Should not be activated in production.
          * @param string
@@ -20,45 +19,6 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
             } else {
                 console.log(string);
             }
-        }
-
-        /**
-         * Build the configuration to pass to editor.
-         * @param languagesElement
-         * @returns {{}}
-         */
-        function languagesBuildConfigurationFromElementAttributes(languagesElement) {
-            var configuration = {};
-            if (languagesElement.configuration) {
-                configuration = languagesElement.configuration;
-            }
-            if (!configuration.recognitionParams) {
-                configuration.recognitionParams = {};
-            }
-            configuration.recognitionParams.type = languagesElement.type;
-            configuration.recognitionParams.server = {};
-            configuration.recognitionParams.server.scheme = languagesElement.scheme;
-            configuration.recognitionParams.server.host = languagesElement.host;
-            configuration.recognitionParams.server.applicationKey = languagesElement.applicationkey;
-            configuration.recognitionParams.server.scheme = languagesElement.scheme;
-            return configuration;
-        }
-
-        /**
-         * Attach the element to the dom. This is the most critical part of the component.
-         * @param languagesElement
-         */
-        function languagesAttachedElementToDom(languagesElement) {
-            languagesElement.configuration = languagesBuildConfigurationFromElementAttributes(languagesElement);
-
-            MyScript.getAvailableLanguageList(languagesElement.configuration, languagesElement.sortByValue).then(function (res) {
-                languagesElement.languages = [];
-                Object.keys(res.result).forEach(function (key) {
-                    languagesElement.languages.push({ 'value': key, 'description': res.result[key] });
-                });
-                languagesElement.dispatchEvent(new CustomEvent('myscript-languages-element-result', { detail: languagesElement.languages }));
-            });
-
         }
 
         Polymer({
@@ -113,7 +73,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                         /**
                          * Language list sorts by values parameter. If false, language list sort by canonical name
                          */
-                        sortByValue: {
+                        sortbyvalue: {
                             type: Boolean,
                             reflectToAttribute: true,
                             value: true
@@ -131,7 +91,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                          */
                         unloaded: {
                             type: Boolean,
-                            value: false,
+                            value: true,
                             notify: true,
                             reflectToAttribute: true,
                             observer: 'unloadedChanged'
@@ -146,24 +106,72 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                             notify: true
                         }
                     },
-                    unloadedChanged: function (newValue) {
-                        LOG('common unloaded changed', newValue);
-                        this.unloaded = newValue;
-                        if (this.unloaded !== true && this.connected === true) {
-                            languagesAttachedElementToDom(this);
+                    unloadedChanged: function (unloaded) {
+                        LOG('languages-element unloaded changed', unloaded);
+                        if (this.connected === true && unloaded === true) {
+                            this.getLanguages(this);
                         }
                     },
-                    //Will be renamed connected with pure custom element support
+                    // Will be renamed connected with pure custom element support
                     attached: function () {
-                        LOG('common attached');
+                        LOG('languages-element attached callback');
                         this.connected = true;
-                        // Uncomment when configuration objects is filled properly
-                        if (this.unloaded !== true) {
-                            languagesAttachedElementToDom(this);
+                        this.unloadedChanged(this.unloaded);
+                    },
+
+                    /**
+                     * Build the configuration to pass to editor.
+                     * @private
+                     */
+                    buildConfiguration: function () {
+                        if (!this.configuration) {
+                            this.configuration = {};
                         }
+                        this.configuration.recognitionTriggerDelay = this.recognitiontriggerdelay;
+                        this.configuration.recognitionProcessDelay = this.recognitionprocessdelay;
+                        if (this.protocol === 'REST') {
+                            this.configuration.recognitionTriggerOn = 'QUIET_PERIOD';
+                        } else {
+                            this.configuration.recognitionTriggerOn = 'POINTER_UP';
+                        }
+                        if (!this.configuration.recognitionParams) {
+                            this.configuration.recognitionParams = {};
+                        }
+                        this.configuration.recognitionParams.type = this.type;
+                        this.configuration.recognitionParams.protocol = this.protocol;
+                        this.configuration.recognitionParams.apiVersion = this.apiversion;
+                        if (!this.configuration.recognitionParams.server) {
+                            this.configuration.recognitionParams.server = {};
+                        }
+                        this.configuration.recognitionParams.server.scheme = this.scheme;
+                        this.configuration.recognitionParams.server.host = this.host;
+                        this.configuration.recognitionParams.server.applicationKey = this.applicationkey;
+                        this.configuration.recognitionParams.server.hmacKey = this.hmackey;
+                        this.configuration.recognitionParams.server.scheme = this.scheme;
+                        return this.configuration;
+                    },
+
+                    /**
+                     * @private
+                     */
+                    getLanguages: function (languageElement) {
+                        MyScript.getAvailableLanguageList(languageElement.buildConfiguration(), languageElement.sortbyvalue)
+                            .then(function (res) {
+                                var languages = [];
+                                Object.keys(res.result).forEach(function (key) {
+                                    languages.push({ 'value': key, 'description': res.result[key] });
+                                });
+                                languageElement.languages = languages;
+                                languageElement.dispatchEvent(new CustomEvent('change', { detail: languageElement.languages }));
+                                languageElement.unloaded = false;
+                            })
+                            .catch(function (err){
+                                languageElement.languages = [];
+                                languageElement.dispatchEvent(new CustomEvent('change', { detail: languageElement.languages }));
+                                languageElement.unloaded = false;
+                            });
                     }
                 }
-        )
-        ;
+        );
     </script>
 </dom-module>

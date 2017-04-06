@@ -1,4 +1,5 @@
 import assign from 'assign-deep';
+import { editorLogger as logger } from './LoggerConfig';
 
 /**
  * @typedef {Object} ServerParameters
@@ -162,15 +163,20 @@ const defaultConfiguration = {
     },
     v4: {
       math: {
-        resultTypes: ['application/x-latex', 'application/mathml+xml']
+        mimeTypes: ['application/x-latex', 'application/mathml+xml'],
+        solver: {
+          enable: true,
+          'fractional-part-digits': 3,
+          'decimal-separator': '.',
+          'rounding-mode': 'half up',
+          'angle-unit': 'deg'
+        }
       },
       nebo: {
-        language: 'en_US',
-        resultTypes: [],
+        mimeTypes: [],
       },
       diagram: {
-        language: 'en_US',
-        resultTypes: [],
+        mimeTypes: [],
       }
     }
   }
@@ -182,7 +188,37 @@ const defaultConfiguration = {
  * @return {Configuration} Overridden configuration
  */
 export function overrideDefaultConfiguration(configuration) {
-  return assign({}, defaultConfiguration, configuration === undefined ? {} : configuration);
+  const currentConfiguration = assign({}, defaultConfiguration, configuration === undefined ? {} : configuration);
+  logger.debug('Override default configuration', currentConfiguration);
+  return currentConfiguration;
+}
+
+/**
+ * Override exports parameters
+ * @param {Configuration} configuration Configuration to be used
+ * @param {...String} exports Exports to be used
+ * @return {Configuration} Overridden configuration
+ */
+export function overrideExports(configuration, ...exports) {
+  const currentConfiguration = assign({}, configuration, {
+    recognitionParams: {
+      v3: {
+        mathParameter: {
+          resultTypes: exports
+        },
+        musicParameter: {
+          resultTypes: exports
+        }
+      },
+      v4: {
+        math: {
+          mimeTypes: exports
+        }
+      }
+    }
+  });
+  logger.debug('Override exports', currentConfiguration);
+  return currentConfiguration;
 }
 
 export default defaultConfiguration;

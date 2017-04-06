@@ -53,11 +53,11 @@ export function resize(context, model, stroker) {
 export function drawCurrentStroke(context, model, stroker) {
   const modelRef = model;
   // Render the current stroke
-  logger.debug('drawing current stroke ', model.currentStroke);
+  logger.trace('drawing current stroke ', model.currentStroke);
   context.select('#currentStroke').attr('visibility', 'visible');
   drawStroke(context.select('#currentStroke'), model.currentStroke, stroker);
   // Add a pending id for pending strokes rendering
-  modelRef.currentStroke.id = `pendingStroke-${model.lastRecognitionPositions.lastReceivedPosition + 1}`;
+  modelRef.currentStroke.id = `pendingStroke-${model.lastPositions.lastReceivedPosition + 1}`;
   return modelRef;
 }
 
@@ -72,7 +72,7 @@ export function drawModel(context, model, stroker) {
   context.select('#currentStroke').attr('visibility', 'hidden');
 
   const drawSymbol = (symbol, symbolContext) => {
-    logger.debug(`Attempting to draw ${symbol.type} symbol`);
+    logger.trace(`Attempting to draw ${symbol.type} symbol`);
 
     if (symbol.type === 'stroke') {
       drawStroke(symbolContext.append('path').attr('id', symbol.id), symbol, stroker);
@@ -100,7 +100,7 @@ export function drawModel(context, model, stroker) {
       }
         break;
       case 'REMOVE_CHILD':
-        context.select(`#${update.parentId} + *:nth-child(${update.index + 1})`).remove();
+        context.select(`#${update.parentId} > *:nth-child(${update.index + 1})`).remove();
         break;
       case 'APPEND_CHILD': {
         const parent = context.select(update.parentId ? `#${update.parentId}` : 'svg');
@@ -124,14 +124,12 @@ export function drawModel(context, model, stroker) {
 
   const pendingRecognizedSymbols = InkModel.extractPendingRecognizedSymbols(model);
   if (pendingRecognizedSymbols) {
-    logger.debug(`pendingRecognizedSymbols.length = ${pendingRecognizedSymbols.length}`);
     pendingRecognizedSymbols.forEach(patch => updateView(patch));
     InkModel.updateModelRenderedPosition(model);
   }
 
   const pendingStrokes = InkModel.extractPendingStrokes(model);
   if (pendingStrokes) {
-    logger.debug(`pendingStrokes.length = ${pendingStrokes.length}`);
     pendingStrokes.forEach(stroke => drawSymbol(stroke, context.select('#pendingStrokes')));
   }
   return model;

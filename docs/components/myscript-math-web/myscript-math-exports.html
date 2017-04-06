@@ -1,0 +1,141 @@
+<!--
+Copyright © MyScript.
+LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./katex-import.html">
+
+<dom-module id="myscript-math-exports">
+    <style>
+        :host {
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--myscript-math-exports-color, #000000);
+            min-height: 60px;
+        }
+
+        [hidden] {
+            display: none;
+        }
+    </style>
+    <template>
+        <div id="html" hidden></div>
+        <div id="latex" hidden></div>
+        <div id="mathml" hidden></div>
+        <div id="officeopenxml" hidden></div>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+                is: 'myscript-math-exports',
+                properties: {
+                    mimetype: {
+                        type: String,
+                        notify: true,
+                        reflectToAttribute: true,
+                        value: 'text/html',
+                        observer: '_mimetypeChanged'
+                    },
+                    /**
+                     * Exports result.
+                     * @attribute exports
+                     * @type {Object<String, Object>}.
+                     */
+                    exports: {
+                        type: Object,
+                        notify: true,
+                        observer: '_exportsChanged'
+                    }
+                },
+                // Will be renamed connected with pure custom element support
+                attached: function () {
+                  this.initializing = true;
+
+                    /**
+                     * Function returning the root dom element whatever shadow or shady dom is used.
+                     * @param domElement
+                     * @returns {*}
+                     */
+                    function qsWrapper(domElement) {
+                        if (domElement.shadowRoot) {
+                            return domElement.shadowRoot;
+                        } else {
+                            return domElement;
+                        }
+                    }
+
+                    this.htmlElement = qsWrapper(this).querySelector('#html');
+                    this.latexElement = qsWrapper(this).querySelector('#latex');
+                    this.mathmlElement = qsWrapper(this).querySelector('#mathml');
+                    this.officeopenxmlElement = qsWrapper(this).querySelector('#officeopenxml');
+                    this.initializing = false;
+                    this._mimetypeChanged(this.mimetype);
+                },
+                /**
+                 * @private
+                 */
+                _mimetypeChanged: function (mimetype) {
+                  if (this.initializing === false) {
+                      this.htmlElement.setAttribute('hidden', 'true');
+                      this.latexElement.setAttribute('hidden', 'true');
+                      this.mathmlElement.setAttribute('hidden', 'true');
+                      this.officeopenxmlElement.setAttribute('hidden', 'true');
+                      switch (mimetype) {
+                          case 'text/html':
+                              this.htmlElement.removeAttribute('hidden');
+                              break;
+                          case 'application/x-latex':
+                              this.latexElement.removeAttribute('hidden');
+                              break;
+                          case 'application/mathml+xml':
+                              this.mathmlElement.removeAttribute('hidden');
+                              break;
+                          case 'application/mathofficeXML':
+                              this.officeopenxmlElement.removeAttribute('hidden');
+                              break;
+                      }
+                  }
+                },
+                /**
+                 * @private
+                 */
+                _exportsChanged: function (exports) {
+                    this.latexElement.innerText = '';
+                    this.htmlElement.innerHTML = '';
+                    if (exports) {
+
+                        /**
+                         * Replace latex strings with similar one compatible with katex.
+                         * @param latex
+                         */
+                        function clean(latex) {
+                            return latex
+                                .replace("\\overrightarrow", "\\vec")
+                                .replace("\\llbracket", "\\lbracket")
+                                .replace("\\rrbracket", "\\rbracket")
+                                .replace("\\widehat", "\\hat")
+                                .replace(new RegExp("(align.{1})", "g"), "aligned");
+                        }
+
+                        // Updating the rendering zone displayed with KaTex (taking the latex export as an input)
+                        var latexResult = exports['application/x-latex'] ? exports['application/x-latex'] : exports.LATEX;
+                        if (latexResult) {
+                            this.latexElement.innerText = latexResult;
+                            try {
+                                katex.render(clean(latexResult), this.htmlElement);
+                            } catch (e) {
+                                this.htmlElement.innerHTML = '<span>' + clean(latexResult) + '</span>';
+                            }
+                        }
+                        var mathmlResult = exports['application/mathml+xml'] ? exports['application/mathml+xml'] : exports.MATHML;
+                        if (mathmlResult) {
+                            this.mathmlElement.innerText = mathmlResult;
+                        }
+                    }
+                }
+            }
+    );
+</script>

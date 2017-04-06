@@ -5,52 +5,47 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <title>myscript-math-web demo</title>
+    <title>myscript-common-element demo</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../myscript-common-element.html">
     <link rel="stylesheet" href="demo.css">
 </head>
 <body touch-action="none">
-<div id="waiting">myscript-common-element will be loaded in 3 seconds with customs params.</div>
-<myscript-common-element host="webdemoapi.myscript.com" unloaded>
-</myscript-common-element>
+    <myscript-common-element
+        host="webdemoapi.myscript.com">
+    </myscript-common-element>
+</body>
 <script>
-    window.addEventListener("load", function (event) {
-        window.setTimeout(function () {
-            var waitingDiv = document.querySelector('#waiting');
-            waitingDiv.parentNode.removeChild(waitingDiv);
-            console.log("All resources finished loading! Starting to init myscript-common-element");
-            // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-            var mycustomconfiguration = {
-                type: 'ANALYZER',
-                applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
-                hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad'
-            };
-            var myscriptCommonElement = document.querySelector('myscript-common-element');
-            // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-            myscriptCommonElement.setAttribute('type', mycustomconfiguration.type);
-            myscriptCommonElement.applicationkey = mycustomconfiguration.applicationKey;
-            myscriptCommonElement.hmackey = mycustomconfiguration.hmacKey;
-            // Testing if configuration are taken into account
-            myscriptCommonElement.configuration = {
-                recognitionParams: {
-                    v3: {
-                        analyzerParameter: {
-                            textParameter: {
-                                textProperties: {},
-                                language: 'en_US',
-                                textInputMode: 'CURSIVE'
-                            }
+    window.addEventListener("load", function () {
+        var myscriptCommonElement = document.querySelector('myscript-common-element');
+        console.log("All resources finished loading! Starting to init myscript-common-element");
+        // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
+        var mycustomconfiguration = {
+            type: 'ANALYZER',
+            applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
+            hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad'
+        };
+        // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
+        myscriptCommonElement.setAttribute('type', mycustomconfiguration.type);
+        myscriptCommonElement.applicationkey = mycustomconfiguration.applicationKey;
+        myscriptCommonElement.hmackey = mycustomconfiguration.hmacKey;
+        // Testing if configuration are taken into account
+        myscriptCommonElement.configuration = {
+            recognitionParams: {
+                v3: {
+                    analyzerParameter: {
+                        textParameter: {
+                            textProperties: {},
+                            language: 'en_US',
+                            textInputMode: 'CURSIVE'
                         }
                     }
                 }
-            };
+            }
+        };
 
-            myscriptCommonElement.unloaded = false;
-            console.log("myscript-common-element should be displayed");
-        }, 3000);
+        myscriptCommonElement.unloaded = true;
     });
 </script>
-</body>
 </html>

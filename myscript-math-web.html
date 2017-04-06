@@ -21,9 +21,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             box-sizing: border-box;
             display: block;
             color: var(--myscript-math-web-button-background, #1A9FFF);
-            --myscript-common-element-button-background: var(--myscript-math-web-button-background);
-            --myscript-common-element-button-focus-background: var(--myscript-math-web-button-focus-background);
-            --myscript-common-element-button-disabled-background: var(--myscript-math-web-button-disabled-background);
+            --myscript-common-element-button-background: var(--myscript-math-web-button-background, #1A9FFF);
+            --myscript-common-element-button-focus-background: var(--myscript-math-web-button-focus-background, #1A9FFF);
+            --myscript-common-element-button-disabled-background: var(--myscript-math-web-button-disabled-background, #F5F6F7);
             --myscript-math-exports-color: var(--myscript-math-web-button-background, #1A9FFF);
         }
 
@@ -63,19 +63,19 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                                exports="{{ exports }}">
         </myscript-math-exports>
         <myscript-common-element
-            apiversion="{{ apiversion }}"
-            applicationkey="{{ applicationkey }}"
-            hidebuttons="{{ hidebuttons }}"
-            hmackey="{{ hmackey }}"
-            configuration="{{ configuration }}"
+            type="MATH"
             protocol="{{ protocol }}"
+            apiversion="{{ apiversion }}"
             host="{{ host }}"
+            scheme="{{ scheme }}"
+            applicationkey="{{ applicationkey }}"
+            hmackey="{{ hmackey }}"
             recognitiontriggerdelay="{{ recognitiontriggerdelay }}"
             recognitionprocessdelay="{{ recognitionprocessdelay }}"
+            configuration="{{ configuration }}"
             strokecolor="{{ strokecolor }}"
             strokewidth="{{ strokewidth }}"
-            timeout="{{ timeout }}"
-            type="MATH"
+            hidebuttons="{{ hidebuttons }}"
             disableclear="{{ disableclear }}"
             disableundoredo="{{ disableundoRedo }}"
             disableexport="{{ disableexport }}"
@@ -83,8 +83,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
-            exports="{{ exports }}"
-            scheme="{{ scheme }}">
+            exports="{{ exports }}">
         </myscript-common-element>
     </template>
 </dom-module>
@@ -106,20 +105,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 
     Polymer({
                 is: 'myscript-math-web',
-                /**
-                 * Fired when state of canundo / canredo / canclear / canexport
-                 *
-                 * @event myscript-math-web-change
-                 */
-                /**
-                 * Fired when the delete action is done.
-                 *
-                 * @event myscript-math-web-exports
-                 */
-                /**
-                 * Fired when a recognition error occurred.
-                 * @event myscript-math-web-error
-                 */
                 properties: {
                     // ----------------------------------------------------------------------------------------------
                     // The following section is a recopy of myscript-common-element attributes
@@ -127,8 +112,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     // ----------------------------------------------------------------------------------------------
                     /**
                      * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
-                     * @type String
-                     * @default 'REST'
                      */
                     protocol: {
                         type: String,
@@ -137,9 +120,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * Scheme to use to connect to MyScript Cloud or Server. (https or http)
-                     * @private
-                     * @type Boolean
-                     * @default true
                      */
                     scheme: {
                         type: String,
@@ -148,8 +128,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * The current recognition service host.
-                     * @type String
-                     * @default 'cloud.myscript.com'
                      */
                     host: {
                         type: String,
@@ -157,9 +135,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         value: 'cloud.myscript.com'
                     },
                     /**
-                     * Recogntion API version to use (eg V3 or V4)
-                     * @type String
-                     * @default 'V3'
+                     * Cloud API version to use (eg V3 or V4)
                      */
                     apiversion: {
                         type: String,
@@ -168,8 +144,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * Delay without any user input before asking for recognition, only use in REST mode.
-                     * @type Number
-                     * @default 2000
                      */
                     recognitiontriggerdelay: {
                         type: Number,
@@ -178,8 +152,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * Delay without any export received before processing the last one received, only use in WEBSOCKET mode.
-                     * @type Number
-                     * @default 2000
                      */
                     recognitionprocessdelay: {
                         type: Number,
@@ -188,8 +160,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * The recognition timeout, only use in REST mode.
-                     * @type Number
-                     * @default 2000
                      */
                     timeout: {
                         type: Number,
@@ -200,7 +170,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                      * Application key to use for recognition on MyScript handwriting recognition server.<br />
                      * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
                      * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
-                     * @type String
                      */
                     applicationkey: {
                         type: String,
@@ -210,7 +179,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                      * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
                      * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
                      * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
-                     * @type String
                      */
                     hmackey: {
                         type: String,
@@ -237,8 +205,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         notify: true
                     },
                     /**
-                     * Set the stroke color
-                     * @type String
+                     * Color of the stroke
                      */
                     strokecolor: {
                         type: String,
@@ -246,8 +213,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         reflectToAttribute: true
                     },
                     /**
-                     * Set the stroke width
-                     * @type String
+                     * Width of the stroke
                      */
                     strokewidth: {
                         type: Number,
@@ -257,8 +223,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     /**
                      * True if undo is available
                      * @private
-                     * @type Boolean
-                     * @default false
                      */
                     canundo: {
                         type: Boolean,
@@ -269,8 +233,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     /**
                      * True if redo is available
                      * @private
-                     * @type Boolean
-                     * @default false
                      */
                     canredo: {
                         type: Boolean,
@@ -281,8 +243,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     /**
                      * True if there is something to clear
                      * @private
-                     * @type Boolean
-                     * @default false
                      */
                     canclear: {
                         type: Boolean,
@@ -292,8 +252,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * If set to true, hide the buttons (Trash, Undo, Redo).
-                     * @type Boolean
-                     * @default false
                      */
                     hidebuttons: {
                         type: Boolean,
@@ -346,7 +304,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * If set to true, hide the export div tag.
-                     * @type Boolean
                      */
                     hideexports: {
                         type: Boolean,
@@ -382,7 +339,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * If attribute is set activate the recognition of columnar operations.
-                     * @type Boolean
                      */
                     columnaroperation: {
                         type: Boolean,
@@ -390,7 +346,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare.
-                     * @type {Array}
                      */
                     userresources: {
                         type: Array

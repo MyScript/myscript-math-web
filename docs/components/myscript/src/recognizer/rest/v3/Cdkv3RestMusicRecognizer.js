@@ -6,22 +6,20 @@ import * as CryptoHelper from '../../CryptoHelper';
 import * as CdkCommonUtil from '../../common/CdkCommonUtil';
 import * as Cdkv3RestRecognizerUtil from './Cdkv3RestRecognizerUtil';
 
-export { init, close, clear } from '../../DefaultRecognizer';
+export { init, close, clear, reset } from '../../DefaultRecognizer';
 
 /**
  * Recognizer configuration
  * @type {RecognizerInfo}
  */
 export const musicRestV3Configuration = {
-  type: [MyScriptJSConstants.RecognitionType.MUSIC],
+  types: [MyScriptJSConstants.RecognitionType.MUSIC],
   protocol: MyScriptJSConstants.Protocol.REST,
   apiVersion: 'V3',
-  availableFeatures: [MyScriptJSConstants.RecognizerFeature.RECOGNITION],
   availableTriggers: [
-    MyScriptJSConstants.RecognitionTrigger.QUIET_PERIOD,
-    MyScriptJSConstants.RecognitionTrigger.DEMAND
-  ],
-  preferredTrigger: MyScriptJSConstants.RecognitionTrigger.QUIET_PERIOD
+    MyScriptJSConstants.Trigger.QUIET_PERIOD,
+    MyScriptJSConstants.Trigger.DEMAND
+  ]
 };
 
 /**
@@ -66,7 +64,7 @@ function buildInput(configuration, model, recognizerContext) {
 function resultCallback(model) {
   logger.debug('Cdkv3RestMusicRecognizer result callback', model);
   const modelReference = model;
-  modelReference.recognitionResult = CdkCommonUtil.extractRecognitionResult(model);
+  modelReference.exports = CdkCommonUtil.extractExports(model);
   logger.debug('Cdkv3RestMusicRecognizer model updated', modelReference);
   return model;
 }

@@ -14,7 +14,7 @@ function buildUrl(configuration, suffixUrl) {
  * @param {Object} payload
  */
 export function simpleCallBack(payload) {
-  logger.info('This is something unexpected in current recognizer. Not the type of message we should have here.', payload);
+  logger.warn('This is something unexpected in current recognizer. Not the type of message we should have here.', payload);
 }
 
 /**
@@ -36,32 +36,48 @@ export function errorCallBack(errorDetail, recognizerContext, destructuredPromis
 }
 
 /**
+ * Handle websocket close message
+ * @param {Object} closeDetail
+ * @param {RecognizerContext} recognizerContext
+ * @param {DestructuredPromise} destructuredPromise
+ */
+export function closeCallback(closeDetail, recognizerContext, destructuredPromise) {
+  logger.debug('Close detected stopping all recognition', closeDetail);
+  if (recognizerContext && recognizerContext.recognitionContexts && recognizerContext.recognitionContexts.length > 0) {
+    const recognitionContext = recognizerContext.recognitionContexts.shift();
+    recognitionContext.callback(undefined, recognitionContext.model);
+  }
+  if (destructuredPromise) {
+    destructuredPromise.reject(closeDetail);
+  }
+  // Giving back the hand to the editor by resolving the promise.
+}
+
+/**
  * Init the websocket recognizer.
  * Open the connexion and proceed to the hmac challenge.
  * A recognizer context is build as such :
  * @param {String} suffixUrl
+ * @param buildWebSocketCallback
+ * @param reconnect
  * @param {Configuration} configuration
  * @param {Model} model
  * @param {RecognizerContext} recognizerContext
- * @param buildWebSocketCallback
- * @param reconnect
  * @return {Promise.<Model>} Fulfilled when the init phase is over.
  */
-export function init(suffixUrl, configuration, model, recognizerContext, buildWebSocketCallback = recognizerContext.buildWebSocketCallback, reconnect) {
+export function init(suffixUrl, buildWebSocketCallback, reconnect, configuration, model, recognizerContext) {
   const recognizerContextReference = RecognizerContext.updateRecognitionPositions(recognizerContext, model);
-  recognizerContextReference.configuration = configuration;
-  recognizerContextReference.suffixUrl = suffixUrl;
   recognizerContextReference.url = buildUrl(configuration, suffixUrl);
-  recognizerContextReference.buildWebSocketCallback = buildWebSocketCallback; // Save build function to be re-used for reconnection
   recognizerContextReference.reconnect = reconnect;
   recognizerContextReference.currentReconnectionCount = 0;
   recognizerContextReference.recognitionContexts = [];
+
   const destructuredInitPromise = PromiseHelper.destructurePromise();
+  recognizerContextReference.initPromise = destructuredInitPromise.promise;
 
   logger.debug('Opening the websocket for context ', recognizerContext);
-  recognizerContextReference.callback = buildWebSocketCallback(configuration, model, recognizerContext, destructuredInitPromise);
-  recognizerContextReference.websocket = NetworkWSInterface.openWebSocket(recognizerContextReference);
-  recognizerContextReference.initPromise = destructuredInitPromise.promise;
+  recognizerContextReference.websocketCallback = buildWebSocketCallback(configuration, model, recognizerContext, destructuredInitPromise);
+  recognizerContextReference.websocket = NetworkWSInterface.openWebSocket(configuration, recognizerContextReference);
 
   return recognizerContextReference.initPromise
       .then((initModel) => {
@@ -78,7 +94,7 @@ export function init(suffixUrl, configuration, model, recognizerContext, buildWe
 function send(recognizerContext, recognitionContext) {
   const recognizerContextReference = recognizerContext;
 
-  logger.debug('Recognizer is alive. Sending message');
+  logger.trace('Recognizer is alive. Sending message');
   recognizerContextReference.recognitionContexts[0] = recognitionContext;
   try {
     recognitionContext.buildMessages.forEach((buildMessage) => {
@@ -97,15 +113,13 @@ function send(recognizerContext, recognitionContext) {
 }
 
 /**
- * @param {Configuration} configuration
+ * @param {Styles|Configuration} configuration
  * @param {Model} model
  * @param {RecognizerContext} recognizerContext
  * @param {function(err: Object, res: Object)} callback
  * @param {...function(recognizerContext: RecognizerContext, model: Model, configuration: Configuration): Object} buildMessages
  */
 export function sendMessages(configuration, model, recognizerContext, callback, ...buildMessages) {
-  const recognizerContextReference = recognizerContext;
-
   // Building an object with all mandatory fields to feed the recognition queue.
   /**
    * Current recognition context
@@ -118,17 +132,17 @@ export function sendMessages(configuration, model, recognizerContext, callback, 
     callback
   };
 
-  recognizerContextReference.initPromise.then(() => {
-    logger.debug('Init was done feeding the recognition queue');
+  recognizerContext.initPromise.then(() => {
+    logger.trace('Init was done feeding the recognition queue');
     try {
-      send(recognizerContextReference, recognitionContext);
+      send(recognizerContext, recognitionContext);
     } catch (recognitionError) {
-      logger.info('Unable to process recognition');
+      logger.error('Unable to process recognition', recognitionError);
       recognitionContext.callback(recognitionError, model);
     }
   }, /* rejection */ () => {
     // TODO Manage this error
-    logger.info('Unable to init');
+    logger.error('Unable to init');
     recognitionContext.callback('Unable to init', model);
   });
 }
@@ -141,7 +155,7 @@ export function sendMessages(configuration, model, recognizerContext, callback, 
  * @param {function(err: Object, res: Object)} callback
  */
 export function clear(configuration, model, recognizerContext, callback) {
-  const modelRef = InkModel.resetModelPositions(model);
+  const modelRef = InkModel.clearModel(model);
   const recognizerContextReference = RecognizerContext.updateRecognitionPositions(recognizerContext, modelRef);
   if (recognizerContextReference && recognizerContextReference.websocket) {
     // We have to send again all strokes after a clear.
@@ -150,7 +164,7 @@ export function clear(configuration, model, recognizerContext, callback) {
       NetworkWSInterface.send(recognizerContextReference, { type: 'reset' });
     } catch (sendFailedException) {
       // To force failure without breaking the flow
-      recognizerContextReference.callback(configuration, model, recognizerContextReference, PromiseHelper.destructurePromise());
+      recognizerContextReference.websocketCallback(configuration, model, recognizerContextReference, PromiseHelper.destructurePromise());
     }
   }
   // We do not keep track of the success of clear.
@@ -165,8 +179,18 @@ export function clear(configuration, model, recognizerContext, callback) {
  * @param {function(err: Object, res: Object)} callback
  */
 export function close(configuration, model, recognizerContext, callback) {
-  if (recognizerContext && recognizerContext.websocket) {
-    NetworkWSInterface.close(recognizerContext.websocket, 1000, 'CLOSE BY USER');
-  }
-  callback(undefined, model);
+  const recognizerContextReference = recognizerContext;
+  // Building an object with all mandatory fields to feed the recognition queue.
+  /**
+   * Current recognition context
+   * @type {RecognitionContext}
+   */
+  const recognitionContext = {
+    undefined,
+    model,
+    configuration,
+    callback
+  };
+  recognizerContextReference.recognitionContexts[0] = recognitionContext;
+  NetworkWSInterface.close(recognizerContextReference, 1000, 'CLOSE BY USER');
 }

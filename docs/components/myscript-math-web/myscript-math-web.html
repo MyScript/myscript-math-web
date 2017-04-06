@@ -3,8 +3,8 @@ Copyright © MyScript.
 LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
-<script src="../KaTeX/dist/katex.min.js"></script>
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
+<link rel="import" href="./myscript-math-exports.html">
 <!--
 The `myscript-math-web` is a turnkey solution for those who need to quickly implement MyScript Math recognition.
 
@@ -16,236 +16,82 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 @demo demo/index.html
 -->
 <dom-module id="myscript-math-web">
-    <link rel="stylesheet" href="../KaTeX/dist/katex.min.css">
     <style>
         :host {
+            box-sizing: border-box;
             display: block;
-            --myscript-common-element-button-background: var(--myscript-math-web-button-background);
-            --myscript-common-element-button-focus-background: var(--myscript-math-web-button-focus-background);
-            --myscript-common-element-button-disabled-background: var(--myscript-math-web-button-disabled-background);
+            color: var(--myscript-math-web-button-background, #1A9FFF);
+            --myscript-common-element-button-background: var(--myscript-math-web-button-background, #1A9FFF);
+            --myscript-common-element-button-focus-background: var(--myscript-math-web-button-focus-background, #1A9FFF);
+            --myscript-common-element-button-disabled-background: var(--myscript-math-web-button-disabled-background, #F5F6F7);
+            --myscript-math-exports-color: var(--myscript-math-web-button-background, #1A9FFF);
+        }
+
+        [hidden] {
+            display: none;
+        }
+
+        myscript-math-exports {
+            height: 100px;
+            font-size: larger;
         }
 
         myscript-common-element {
             height: calc(100% - 100px);
         }
 
-        .resultField {
-            font-size: larger;
-            overflow: hidden;
-            text-align: center;
-            min-height: 95px;
-            max-height: 95px;
-            padding-top: 5px;
-            position: relative;
-            color: #1580CD;
-        }
-
-        .resultField[hidden] + myscript-common-element {
+        myscript-math-exports[hidden] + myscript-common-element {
             height: 100%;
-        }
-
-        .katexcontainer {
-            padding-top: 3px;
-            margin: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-right: -50%;
-            -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
         }
     </style>
     <template>
-        <div id="resultField" class="resultField" hidden="[[ displayResultZone(hideresult, unloaded) ]]">
-            <div class="katexcontainer"></div>
-        </div>
+        <myscript-math-exports hidden="[[ !displayExports(hideexports, unloaded) ]]"
+                               mimetype="text/html"
+                               exports="{{ exports }}">
+        </myscript-math-exports>
         <myscript-common-element
-            apiversion="{{ apiversion }}"
-            applicationkey="{{ applicationkey }}"
-            hidebuttons="{{ hidebuttons }}"
-            hmackey="{{ hmackey }}"
-            configuration="{{ configuration }}"
+            type="MATH"
             protocol="{{ protocol }}"
+            apiversion="{{ apiversion }}"
             host="{{ host }}"
+            scheme="{{ scheme }}"
+            applicationkey="{{ applicationkey }}"
+            hmackey="{{ hmackey }}"
             recognitiontriggerdelay="{{ recognitiontriggerdelay }}"
             recognitionprocessdelay="{{ recognitionprocessdelay }}"
+            configuration="{{ configuration }}"
             strokecolor="{{ strokecolor }}"
             strokewidth="{{ strokewidth }}"
-            timeout="{{ timeout }}"
-            type="MATH"
+            hidebuttons="{{ hidebuttons }}"
             disableclear="{{ disableclear }}"
-            disablerecognize="{{ disablerecognize }}"
             disableundoredo="{{ disableundoRedo }}"
+            disableexport="{{ disableexport }}"
+            disableconvert="{{ disableconvert }}"
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
-            scheme="{{ scheme }}">
+            exports="{{ exports }}">
         </myscript-common-element>
     </template>
 </dom-module>
 
 <script>
-
     /**
-     * Function returning the root dom element whatever shadow or shady dom is used.
-     * @param domElement
-     * @returns {*}
+     * Uncomment the function body during development. Should not be activated in production.
+     * @param string
+     * @param object
+     * @constructor
      */
-    function mathQsWrapper(domElement) {
-        if (domElement.shadowRoot) {
-            return domElement.shadowRoot;
+    function LOG(string, object) {
+        if (object) {
+            console.log(string, object);
         } else {
-            return domElement;
+            console.log(string);
         }
-    }
-
-    /**
-     * Replace latex strings with similar one compatible with katex.
-     * @param latex
-     */
-    function mathCleanLatexResult(latex) {
-        return latex
-            .replace("\\overrightarrow", "\\vec")
-            .replace("\\llbracket", "\\lbracket")
-            .replace("\\rrbracket", "\\rbracket")
-            .replace("\\widehat", "\\hat")
-            .replace(new RegExp("(align.{1})", "g"), "aligned");
-    }
-
-    /**
-     *
-     * @param myscriptMathWebElement
-     */
-    function buildMathConfiguration(myscriptMathWebElement) {
-        if (!myscriptMathWebElement.configuration) {
-            myscriptMathWebElement.configuration = {};
-        }
-        if (!myscriptMathWebElement.configuration.recognitionParams) {
-            myscriptMathWebElement.configuration.recognitionParams = {};
-        }
-        myscriptMathWebElement.configuration.recognitionParams[myscriptMathWebElement.apiversion.toLowerCase()] = {
-            mathParameter: {
-                resultTypes: myscriptMathWebElement.resulttypes,
-                columnarOperation: myscriptMathWebElement.columnaroperation,
-                userResources: myscriptMathWebElement.userresources,
-                scratchOutDetectionSensitivity: myscriptMathWebElement.scratchoutdetectionsensitivity
-            }
-        };
-        return myscriptMathWebElement.configuration;
-    }
-
-    /**
-     * Recognition success listener.
-     *
-     * @private
-     * @method _onSuccess
-     */
-    function mathManageResultEvent(myscriptMathWebElement, eventDetail) {
-        myscriptMathWebElement.result = {};
-        // Transforming an Array into an hashmap to ease bindings.
-        if (eventDetail.recognitionResult) {
-            myscriptMathWebElement.result = eventDetail.recognitionResult;
-        }
-        eventDetail.result = myscriptMathWebElement.result;
-
-        // Updating the rendering zone displayed with Katex (taking the latex recogntion result as an input)
-        var resultField = mathQsWrapper(myscriptMathWebElement).querySelector('.katexcontainer');
-        var latexResult = myscriptMathWebElement.result['application/x-latex'] ? myscriptMathWebElement.result['application/x-latex'] : myscriptMathWebElement.result.LATEX;
-        if (latexResult) {
-            try {
-                katex.render(mathCleanLatexResult(latexResult), resultField);
-            } catch (e) {
-                resultField.innerHTML = "<span>" + mathCleanLatexResult(latexResult) + "</span>";
-            }
-        } else {
-            console.log("An empty result is mostly the consequence of LATEX missing in the resulttypes requested");
-            resultField.innerHTML = "";
-        }
-        return eventDetail;
-    }
-
-    function mathManageClearEvent(myscriptMathWebElement, eventDetail) {
-        if (myscriptMathWebElement.myscriptcommonelement) {
-            myscriptMathWebElement.result = {};
-            mathQsWrapper(myscriptMathWebElement).querySelector('.katexcontainer').innerHTML = "";
-        }
-    }
-
-    function attachMathElementToDom(myscriptMathWebElement) {
-        myscriptMathWebElement.myscriptcommonelement = mathQsWrapper(myscriptMathWebElement).querySelector('myscript-common-element');
-
-        // Manage load events
-        function loadListener(event) {
-            LOG('math ' + event.type + ' event intercepted', event);
-            myscriptMathWebElement.unloaded = false;
-            myscriptMathWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-math-web-'), { detail: event.detail }));
-        }
-
-        // Manage clear events
-        function clearListener(event) {
-            LOG('math ' + event.type + ' event intercepted', event);
-            mathManageClearEvent(myscriptMathWebElement, event.detail);
-            myscriptMathWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-math-web-'), { detail: event.detail }));
-        }
-
-        // Manage result events
-        function resultListener(event) {
-            LOG('math ' + event.type + ' event intercepted', event);
-            var enrichedEventDetail = mathManageResultEvent(myscriptMathWebElement, event.detail);
-            myscriptMathWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-math-web-'), { detail: enrichedEventDetail }));
-        }
-
-        // Manage other events
-        function defaultListener(event) {
-            LOG('math ' + event.type + ' event intercepted', event);
-            // Just forwarding event there.
-            myscriptMathWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-math-web-'), { detail: event.detail }));
-        }
-
-        myscriptMathWebElement.currentListeners = {};
-        ['myscript-common-element-load'].forEach(function (type) {
-            myscriptMathWebElement.currentListeners[type] = loadListener;
-        });
-        ['myscript-common-element-result'].forEach(function (type) {
-            myscriptMathWebElement.currentListeners[type] = resultListener;
-        });
-        ['myscript-common-element-clear'].forEach(function (type) {
-            myscriptMathWebElement.currentListeners[type] = clearListener;
-        });
-        ['myscript-common-element-undo', 'myscript-common-element-redo', 'myscript-common-element-typeset', 'myscript-common-element-recognize', 'myscript-common-element-change', 'myscript-common-element-error']
-            .forEach(function (type) {
-                myscriptMathWebElement.currentListeners[type] = defaultListener;
-            });
-        Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
-            myscriptMathWebElement.myscriptcommonelement.addEventListener(type, myscriptMathWebElement.currentListeners[type])
-        });
-        LOG('math-web attached');
-    }
-
-    /** Remove listeners when common element is unloaded. */
-    function detachMathElementFromDom(myscriptMathWebElement) {
-        Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
-            myscriptMathWebElement.myscriptcommonelement.removeEventListener(type, myscriptMathWebElement.currentListeners[type])
-        });
-        LOG('math-web detached');
     }
 
     Polymer({
                 is: 'myscript-math-web',
-                /**
-                 * Fired when state of canundo / canredo / canclear / canrecognize
-                 *
-                 * @event myscript-math-web-change
-                 */
-                /**
-                 * Fired when the delete action is done.
-                 *
-                 * @event myscript-math-web-result
-                 */
-                /**
-                 * Fired when a recognition error occurred.
-                 * @event myscript-math-web-error
-                 */
                 properties: {
                     // ----------------------------------------------------------------------------------------------
                     // The following section is a recopy of myscript-common-element attributes
@@ -253,8 +99,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     // ----------------------------------------------------------------------------------------------
                     /**
                      * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
-                     * @type String
-                     * @default 'REST'
                      */
                     protocol: {
                         type: String,
@@ -263,9 +107,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * Scheme to use to connect to MyScript Cloud or Server. (https or http)
-                     * @private
-                     * @type Boolean
-                     * @default true
                      */
                     scheme: {
                         type: String,
@@ -274,8 +115,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * The current recognition service host.
-                     * @type String
-                     * @default 'cloud.myscript.com'
                      */
                     host: {
                         type: String,
@@ -283,9 +122,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         value: 'cloud.myscript.com'
                     },
                     /**
-                     * Recogntion API version to use (eg V3 or V4)
-                     * @type String
-                     * @default 'V3'
+                     * Cloud API version to use (eg V3 or V4)
                      */
                     apiversion: {
                         type: String,
@@ -294,8 +131,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * Delay without any user input before asking for recognition, only use in REST mode.
-                     * @type Number
-                     * @default 2000
                      */
                     recognitiontriggerdelay: {
                         type: Number,
@@ -303,9 +138,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         value: 2000
                     },
                     /**
-                     * Delay without any recognition result received before processing the last one received, only use in WEBSOCKET mode.
-                     * @type Number
-                     * @default 2000
+                     * Delay without any export received before processing the last one received, only use in WEBSOCKET mode.
                      */
                     recognitionprocessdelay: {
                         type: Number,
@@ -314,8 +147,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * The recognition timeout, only use in REST mode.
-                     * @type Number
-                     * @default 2000
                      */
                     timeout: {
                         type: Number,
@@ -326,7 +157,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                      * Application key to use for recognition on MyScript handwriting recognition server.<br />
                      * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
                      * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
-                     * @type String
                      */
                     applicationkey: {
                         type: String,
@@ -336,7 +166,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                      * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
                      * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
                      * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
-                     * @type String
                      */
                     hmackey: {
                         type: String,
@@ -363,8 +192,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         notify: true
                     },
                     /**
-                     * Set the stroke color
-                     * @type String
+                     * Color of the stroke
                      */
                     strokecolor: {
                         type: String,
@@ -372,8 +200,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         reflectToAttribute: true
                     },
                     /**
-                     * Set the stroke width
-                     * @type String
+                     * Width of the stroke
                      */
                     strokewidth: {
                         type: Number,
@@ -383,8 +210,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     /**
                      * True if undo is available
                      * @private
-                     * @type Boolean
-                     * @default false
                      */
                     canundo: {
                         type: Boolean,
@@ -395,8 +220,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     /**
                      * True if redo is available
                      * @private
-                     * @type Boolean
-                     * @default false
                      */
                     canredo: {
                         type: Boolean,
@@ -407,8 +230,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     /**
                      * True if there is something to clear
                      * @private
-                     * @type Boolean
-                     * @default false
                      */
                     canclear: {
                         type: Boolean,
@@ -418,8 +239,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * If set to true, hide the buttons (Trash, Undo, Redo).
-                     * @type Boolean
-                     * @default false
                      */
                     hidebuttons: {
                         type: Boolean,
@@ -445,20 +264,20 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         value: false
                     },
                     /**
-                     * True if the recognize feature is disabled, false otherwise
+                     * True if the export feature is disabled, false otherwise
                      */
-                    disablerecognize: {
+                    disableexport: {
                         type: Boolean,
                         reflectToAttribute: true,
-                        value: true
+                        value: false
                     },
                     /**
                      * True if the typeset feature is disabled, false otherwise
                      */
-                    disabletypeset: {
+                    disableconvert: {
                         type: Boolean,
                         reflectToAttribute: true,
-                        value: true
+                        value: false
                     },
 
                     //------------------------------------------------------------------------------
@@ -471,24 +290,42 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         type: Object
                     },
                     /**
-                     * If set to true, hide the result div tag.
-                     * @type Boolean
+                     * If set to true, hide the export div tag.
                      */
-                    hideresult: {
+                    hideexports: {
                         type: Boolean,
                         value: false
                     },
                     /**
-                     * Math result types (LATEX, MATHML or SYMBOLTREE).
+                     * Math export types (LATEX, MATHML or SYMBOLTREE).
                      * @type {Array<String>}
                      */
                     resulttypes: {
                         type: Array,
                         value: ['LATEX', 'MATHML']
                     },
+                    solverenable: {
+                        type: Boolean,
+                        value: true
+                    },
+                    solverfractionalpartdigit: {
+                        type: Number,
+                        value: 3
+                    },
+                    solverdecimalseparator: {
+                        type: String,
+                        value: '.'
+                    },
+                    solverroundingmode: {
+                        type: String,
+                        value: 'half up'
+                    },
+                    solverangleunit: {
+                        type: String,
+                        value: 'deg'
+                    },
                     /**
                      * If attribute is set activate the recognition of columnar operations.
-                     * @type Boolean
                      */
                     columnaroperation: {
                         type: Boolean,
@@ -496,7 +333,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare.
-                     * @type {Array}
                      */
                     userresources: {
                         type: Array
@@ -506,11 +342,11 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         value: 1
                     },
                     /**
-                     * Recognition result.
-                     * @attribute result
+                     * Exports.
+                     * @attribute exports
                      * @type {Object<String, Object>} Attributes depends on recognition type already configured.
                      */
-                    result: {
+                    exports: {
                         type: Object,
                         notify: true
                     }
@@ -543,11 +379,11 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     }
                 },
                 /**
-                 * Launch recognition
+                 * Launch export
                  */
-                recognize: function () {
+                askForExport: function (exports) {
                     if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.recognize();
+                        this.myscriptcommonelement.askForExport(exports);
                     }
                 },
                 /**
@@ -564,8 +400,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 //-----------------------------------------------------------------------
                 unloadedChanged: function (unloaded) {
                     LOG('math unloaded changed', unloaded);
-                    this.result = {};
-                    buildMathConfiguration(this);
+                    this.buildConfiguration();
                     if (unloaded === true) {
                         if (this.myscriptcommonelement && !this.initializing) {
                             this.myscriptcommonelement.unloaded = true;
@@ -574,20 +409,125 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 },
                 // Will be renamed connected with pure custom element support
                 attached: function () {
+
+                    /**
+                     * Function returning the root dom element whatever shadow or shady dom is used.
+                     * @param domElement
+                     * @returns {*}
+                     */
+                    function qsWrapper(domElement) {
+                        if (domElement.shadowRoot) {
+                            return domElement.shadowRoot;
+                        } else {
+                            return domElement;
+                        }
+                    }
+
                     this.initializing = true;
                     LOG('math-web attached callback');
-                    attachMathElementToDom(this);
+                    this.myscriptcommonelement = qsWrapper(this).querySelector('myscript-common-element');
+                    this.htmlElement = qsWrapper(this).querySelector('.katexcontainer');
+
+                    this.attachListener(this);
+
+                    LOG('math-web attached');
                     this.initializing = false;
                 },
                 detached: function () {
                     LOG('math-web detached callback');
-                    detachMathElementFromDom(this);
+                    this.detachListener(this);
+                    LOG('math-web detached');
                 },
-                displayResultZone: function (hideResultValue, unloadedValue) {
-                    LOG('shouldLoadCommonElement', hideResultValue, unloadedValue);
+                /**
+                 * @private
+                 */
+                attachListener: function (myscriptMathWebElement) {
+                    function commonElementListener(event) {
+                        LOG('math ' + event.type + ' event intercepted', event);
+                        switch (event.type) {
+                            case MyScript.Constants.EventType.LOADED:
+                                myscriptMathWebElement.unloaded = false;
+                                break;
+                            default:
+                                break;
+                        }
+                        // Just forwarding event there.
+                        myscriptMathWebElement.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
+                    }
+
+                    const eventTypes = Object.keys(MyScript.Constants.EventType).map(function (key) {
+                        return MyScript.Constants.EventType[key];
+                    });
+
+                    myscriptMathWebElement.currentListeners = {};
+                    eventTypes.forEach(function (type) {
+                        myscriptMathWebElement.currentListeners[type] = commonElementListener;
+                    });
+                    Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
+                        myscriptMathWebElement.myscriptcommonelement.addEventListener(type, myscriptMathWebElement.currentListeners[type])
+                    });
+                },
+
+                /**
+                 * @private
+                 */
+                detachListener: function (myscriptMathWebElement) {
+                    Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
+                        myscriptMathWebElement.myscriptcommonelement.removeEventListener(type, myscriptMathWebElement.currentListeners[type])
+                    });
+                },
+
+                /**
+                 * @private
+                 */
+                buildConfiguration: function () {
+                    if (!this.configuration) {
+                        this.configuration = {};
+                    }
+                    if (!this.configuration.recognitionParams) {
+                        this.configuration.recognitionParams = {};
+                    }
+
+                    if (!this.configuration.recognitionParams.v3) {
+                        this.configuration.recognitionParams.v3 = {};
+                    }
+                    if (!this.configuration.recognitionParams.v3.mathParameter) {
+                        this.configuration.recognitionParams.v3.mathParameter = {};
+                    }
+
+                    this.configuration.recognitionParams.v3.mathParameter.resultTypes = this.resulttypes;
+                    this.configuration.recognitionParams.v3.mathParameter.columnarOperation = this.columnaroperation;
+                    this.configuration.recognitionParams.v3.mathParameter.userResources = this.userresources;
+                    this.configuration.recognitionParams.v3.mathParameter.scratchOutDetectionSensitivity = this.scratchoutdetectionsensitivity;
+
+                    if (!this.configuration.recognitionParams.v4) {
+                        this.configuration.recognitionParams.v4 = {};
+                    }
+                    if (!this.configuration.recognitionParams.v4.math) {
+                        this.configuration.recognitionParams.v4.math = {};
+                    }
+                    if (!this.configuration.recognitionParams.v4.math.solver) {
+                        this.configuration.recognitionParams.v4.math.solver = {};
+                    }
+
+                    this.configuration.recognitionParams.v4.math.mimeTypes = this.resulttypes;
+                    this.configuration.recognitionParams.v4.math.solver.enable = this.solverenable;
+                    this.configuration.recognitionParams.v4.math.solver['fractional-part-digits'] = this.solverfractionalpartdigit;
+                    this.configuration.recognitionParams.v4.math.solver['decimal-separator'] = this.solverdecimalseparator;
+                    this.configuration.recognitionParams.v4.math.solver['rounding-mode'] = this.solverroundingmode;
+                    this.configuration.recognitionParams.v4.math.solver['angle-unit'] = this.solverangleunit;
+                    return this.configuration;
+                },
+
+                /**
+                 * @private
+                 */
+                displayExports: function (hideExports, unloaded) {
+                    var display = !hideExports && ( !unloaded || unloaded === true);
+                    LOG('math-web should display exports', display);
                     // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
-                    return hideResultValue && ( unloadedValue || unloadedValue !== true);
+                    return display;
                 }
-            })
-    ;
+            }
+    );
 </script>

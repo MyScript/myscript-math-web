@@ -7,22 +7,20 @@ import * as CdkCommonUtil from '../../common/CdkCommonUtil';
 import * as Cdkv3RestRecognizerUtil from './Cdkv3RestRecognizerUtil';
 import * as Cdkv3CommonMathRecognizer from '../../common/v3/Cdkv3CommonMathRecognizer';
 
-export { init, close, clear } from '../../DefaultRecognizer';
+export { init, close, clear, reset } from '../../DefaultRecognizer';
 
 /**
  * Recognizer configuration
  * @type {RecognizerInfo}
  */
 export const mathRestV3Configuration = {
-  type: [MyScriptJSConstants.RecognitionType.MATH],
+  types: [MyScriptJSConstants.RecognitionType.MATH],
   protocol: MyScriptJSConstants.Protocol.REST,
   apiVersion: 'V3',
-  availableFeatures: [MyScriptJSConstants.RecognizerFeature.RECOGNITION],
   availableTriggers: [
-    MyScriptJSConstants.RecognitionTrigger.QUIET_PERIOD,
-    MyScriptJSConstants.RecognitionTrigger.DEMAND
-  ],
-  preferredTrigger: MyScriptJSConstants.RecognitionTrigger.QUIET_PERIOD
+    MyScriptJSConstants.Trigger.QUIET_PERIOD,
+    MyScriptJSConstants.Trigger.DEMAND
+  ]
 };
 
 /**
@@ -58,7 +56,7 @@ function resultCallback(model) {
   logger.debug('Cdkv3RestMathRecognizer result callback', model);
   const modelReference = model;
   modelReference.recognizedSymbols = Cdkv3CommonMathRecognizer.extractRecognizedSymbols(model);
-  modelReference.recognitionResult = CdkCommonUtil.extractRecognitionResult(model);
+  modelReference.exports = CdkCommonUtil.extractExports(model);
   logger.debug('Cdkv3RestMathRecognizer model updated', modelReference);
   return modelReference;
 }
