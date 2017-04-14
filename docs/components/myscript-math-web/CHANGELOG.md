@@ -1,31 +1,30 @@
-# Change Log
+# [v2.0.0](https://github.com/MyScript/myscript-math-web/tree/v2.0.0)
 
-## [v2.0.0-beta1](https://github.com/MyScript/myscript-math-web/tree/v1.2.3)
-breaking change of symboltree result
+## Breaking changes
+- breaking change of symboltree result
 
-## [v1.2.3](https://github.com/MyScript/myscript-math-web/tree/v1.2.3)
+# [v1.2.3](https://github.com/MyScript/myscript-math-web/tree/v1.2.3)
 
-### Features
+## Features
 - Change colors to fit the new MyScript Developer theme
 
-## [v1.2.2](https://github.com/MyScript/myscript-math-web/tree/v1.2.2)
+# [v1.2.2](https://github.com/MyScript/myscript-math-web/tree/v1.2.2)
 
-### Features
+## Features
 - New `strokecolor` attribute to setup/change stroke color settings
 - New `strokewidth` attribute to setup/change stroke width settings
 
-### Bugs
+## Bugs
 - See [MyScriptJS v1.2.2](https://github.com/MyScript/MyScriptJS/tree/v1.2.2) for fixes
 
-## [v1.2.1](https://github.com/MyScript/myscript-math-web/tree/v1.2.1)
+# [v1.2.1](https://github.com/MyScript/myscript-math-web/tree/v1.2.1)
 
-### Bugs
+## Bugs
 - See [MyScriptJS v1.2.1](https://github.com/MyScript/MyScriptJS/tree/v1.2.1) for fixes
 
+# [v1.2.0](https://github.com/MyScript/myscript-math-web/tree/v1.2.0)
 
-## [v1.2.0](https://github.com/MyScript/myscript-math-web/tree/v1.2.0)
-
-### Features
+## Features
 - Mutable `host` attribute
 - Mutable `protocol` attribute
 - New `latex` output attribute to get LaTeX result
@@ -37,6 +36,6 @@ breaking change of symboltree result
 - Migration to Katex 0.6.0 (Matrix rendering)
 - Add getStats method to get various stats relative to ink in order to help evaluate the myscript cdk usage
 
-### Bugs
+## Bugs
 - Fixes issue on resize due to CSS
 - Explicit default values on documentation 
