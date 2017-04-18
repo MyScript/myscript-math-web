@@ -1,6 +1,5 @@
 <!--
-Copyright © MyScript.
-LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+Copyright © MyScriLICENSE.mdENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
 
@@ -23,16 +22,10 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
         Polymer({
                     is: 'myscript-languages-element',
-                    /**
-                     * Fired when a languages list is successfully received.
-                     *
-                     * @event myscript-languages-element-result
-                     */
                     properties: {
                         /**
                          * <b>not mutable</b><br />
                          * The current recognition type (e.g. TEXT or ANALYZER)
-                         * @default 'TEXT'
                          */
                         type: {
                             type: String,
@@ -41,9 +34,6 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                         },
                         /**
                          * Scheme to use to connect to MyScript Cloud or Server. (https or http)
-                         * @private
-                         * @type Boolean
-                         * @default true
                          */
                         scheme: {
                             type: String,
@@ -52,8 +42,6 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                         },
                         /**
                          * The current recognition service host.
-                         * @type String
-                         * @default 'cloud.myscript.com'
                          */
                         host: {
                             type: String,
@@ -64,7 +52,6 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                          * Application key to use for recognition on MyScript handwriting recognition server.<br />
                          * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
                          * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
-                         * @type String
                          */
                         applicationkey: {
                             type: String,
@@ -167,8 +154,8 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                             })
                             .catch(function (err){
                                 languageElement.languages = [];
-                                languageElement.dispatchEvent(new CustomEvent('change', { detail: languageElement.languages }));
                                 languageElement.unloaded = false;
+                                languageElement.dispatchEvent(new CustomEvent('error', { detail: err }));
                             });
                     }
                 }

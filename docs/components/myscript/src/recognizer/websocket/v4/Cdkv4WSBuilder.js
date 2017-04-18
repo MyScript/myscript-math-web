@@ -23,6 +23,13 @@ function buildHmac(recognizerContext, message, configuration) {
   };
 }
 
+function resultCallback(recognizerContext, message) {
+  logger.debug(`Cdkv4WSRecognizer ${message.data.type} message`, message);
+  const recognitionContext = recognizerContext.recognitionContexts[recognizerContext.recognitionContexts.length - 1];
+  // Giving back the hand to the editor by resolving the promise.
+  recognitionContext.callback(undefined, recognitionContext.model);
+}
+
 function modelResultCallback(recognizerContext, message) {
   logger.debug(`Cdkv4WSRecognizer ${message.data.type} message`, message);
   const recognitionContext = recognizerContext.recognitionContexts[recognizerContext.recognitionContexts.length - 1];
@@ -64,6 +71,7 @@ function modelResultCallback(recognizerContext, message) {
  */
 export function buildWebSocketCallback(configuration, model, recognizerContext, destructuredPromise) {
   return (message) => {
+    const recognizerContextRef = recognizerContext;
     // Handle websocket messages
     logger.trace(`${message.type} websocket callback`, message);
 
@@ -75,13 +83,22 @@ export function buildWebSocketCallback(configuration, model, recognizerContext, 
         logger.trace('Receiving message', message.data.type);
         switch (message.data.type) {
           case 'ack':
+            if (message.data.iinkSessionId) {
+              recognizerContextRef.sessionId = message.data.iinkSessionId;
+            }
             if (message.data.hmacChallenge) {
               NetworkWSInterface.send(recognizerContext, buildHmac(recognizerContext, message, configuration));
             }
-            modelResultCallback(recognizerContext, Object.assign(message, { data: { canUndo: false, canRedo: false } }));
+            resultCallback(recognizerContext, message);
             break;
           case 'partChanged' :
+            break;
           case 'newPart' :
+            if (message.data.id) {
+              recognizerContextRef.currentPartId = message.data.id;
+            }
+            resultCallback(recognizerContext, message);
+            break;
           case 'styleClasses' :
             break;
           case 'contentChanged' :

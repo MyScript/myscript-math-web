@@ -4,17 +4,20 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+
     <title>myscript-common-element init error demo</title>
+
+    <link rel="stylesheet" href="demo.css">
+
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../myscript-common-element.html">
-    <link rel="stylesheet" href="demo.css">
 </head>
 <body touch-action="none">
     <myscript-common-element
-        host="thisisnotanhost"
-        hmackey="WRONG"
         type="MATH"
-        protocol="REST">
+        protocol="REST"
+        host="thisisnotanhost"
+        hmackey="WRONG">
     </myscript-common-element>
 </body>
 </html>

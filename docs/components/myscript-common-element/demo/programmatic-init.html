@@ -7,9 +7,10 @@
 
     <title>myscript-common-element demo</title>
 
+    <link rel="stylesheet" href="demo.css">
+
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../myscript-common-element.html">
-    <link rel="stylesheet" href="demo.css">
 </head>
 <body touch-action="none">
     <myscript-common-element
@@ -18,20 +19,20 @@
 </body>
 <script>
     window.addEventListener("load", function () {
-        var myscriptCommonElement = document.querySelector('myscript-common-element');
+        var commonElement = document.querySelector('myscript-common-element');
         console.log("All resources finished loading! Starting to init myscript-common-element");
         // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-        var mycustomconfiguration = {
+        var configuration = {
             type: 'ANALYZER',
             applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
             hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad'
         };
         // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-        myscriptCommonElement.setAttribute('type', mycustomconfiguration.type);
-        myscriptCommonElement.applicationkey = mycustomconfiguration.applicationKey;
-        myscriptCommonElement.hmackey = mycustomconfiguration.hmacKey;
+        commonElement.setAttribute('type', configuration.type);
+        commonElement.applicationkey = configuration.applicationKey;
+        commonElement.hmackey = configuration.hmacKey;
         // Testing if configuration are taken into account
-        myscriptCommonElement.configuration = {
+        commonElement.configuration = {
             recognitionParams: {
                 v3: {
                     analyzerParameter: {
@@ -44,8 +45,7 @@
                 }
             }
         };
-
-        myscriptCommonElement.unloaded = true;
+        commonElement.unloaded = true;
     });
 </script>
 </html>

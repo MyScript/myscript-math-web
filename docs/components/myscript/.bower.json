@@ -24,11 +24,11 @@
     "!dist/**/*",
     "!src/**/*"
   ],
-  "_release": "0c8469751f",
+  "_release": "b33f13da3e",
   "_resolution": {
     "type": "branch",
     "branch": "2.0.0-alpha1",
-    "commit": "0c8469751fb547c9aa091a3eddf9f7e21cbeb9a9"
+    "commit": "b33f13da3ed1c11088e29f3ea1d28394b478ade1"
   },
   "_source": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git",
   "_target": "2.0.0-alpha1",

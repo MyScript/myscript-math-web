@@ -7,28 +7,30 @@
 
     <title>myscript-common-element basic demo</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../myscript-common-element.html">
     <link rel="stylesheet" href="demo.css">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../paper-toast/paper-toast.html">
+    <link rel="import" href="../myscript-common-element.html">
 </head>
 <style is="custom-style">
-    #result{
+    paper-toast {
         --paper-toast-background-color: #1A9FFF;
         --paper-toast-color: white;
     }
 </style>
 <body touch-action="none">
-    <paper-toast id="result" class="fit-top"></paper-toast>
+    <paper-toast class="fit-top"></paper-toast>
     <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
     <myscript-common-element
+        type="MATH"
         host="webdemoapi.myscript.com"
         applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
-        type="MATH">
+        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
     </myscript-common-element>
 </body>
 <script>
-    const paperToast = document.querySelector('#result');
+    const paperToast = document.querySelector('paper-toast');
     document.querySelector('myscript-common-element').addEventListener('change', function (event) {
         paperToast.text = 'Stats for this input are : ' + JSON.stringify(document.querySelector('myscript-common-element').getStats());
         paperToast.fitIn = paperToast.show();

@@ -1,6 +1,5 @@
 <!--
-Copyright © MyScript.
-LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+Copyright © MyScriLICENSE.mdENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="./pepjs-import.html">
 <link rel="import" href="./myscriptjs-import.html">
@@ -30,10 +29,10 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                 min-width: 200px;
                 height: 100%;
                 width: 100%;
-                color: var(--myscript-common-element-button-background, #1A9FFF);
-                --paper-fab-background: var(--myscript-common-element-button-background, #1A9FFF);
-                --paper-fab-keyboard-focus-background: var(--myscript-common-element-button-focus-background, #1A9FFF);
-                --paper-fab-disabled-background: var(--myscript-common-element-button-disabled-background, #F5F6F7);
+                color: var(--myscript-common-element-color, #FFFFFF);
+                --paper-fab-background: var(--myscript-common-element-background-color, #1A9FFF);
+                --paper-fab-keyboard-focus-background: var(--myscript-common-element-focus-background-color, #1A9FFF);
+                --paper-fab-disabled-background: var(--myscript-common-element-disabled-background-color, #F5F6F7);
             }
 
             [hidden] {
@@ -92,16 +91,14 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
             }
 
             .loader {
-                position: absolute;
                 z-index: 35;
-                margin: auto;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                border: 16px solid var(--myscript-common-element-button-disabled-background, #F5F6F7);
+                position: absolute;
+                top: calc(50% - 76px);
+                left: calc(50% - 76px);
+                transform: translateY(-50%);
+                border: 16px solid var(--myscript-common-element-color, #F5F6F7);
                 border-radius: 50%;
-                border-top: 16px solid var(--myscript-common-element-button-background, #1A9FFF);
+                border-top: 16px solid var(--myscript-common-element-background-color, #1A9FFF);
                 width: 120px;
                 height: 120px;
                 -webkit-animation: spin 2s linear infinite;
@@ -144,7 +141,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                 <paper-fab mini src="export.svg" title="export" on-tap="askForExport"
                            disabled="[[ !canexport ]]" hidden="[[ disableexport ]]">
                 </paper-fab>
-                <paper-fab mini src="convert.svg" title="typeset" on-tap="convert"
+                <paper-fab mini src="convert.svg" title="convert" on-tap="convert"
                            disabled="[[ !canconvert ]]" hidden="[[ disableconvert ]]">
                 </paper-fab>
             </nav>
@@ -169,50 +166,10 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
 
         Polymer({
                     is: 'myscript-common-element',
-                    /**
-                     * Fired when undo button is press
-                     *
-                     * @event myscript-common-element-undo
-                     */
-                    /**
-                     * Fired when redo button is press
-                     *
-                     * @event myscript-common-element-redo
-                     */
-                    /**
-                     * Fired when clear button is press
-                     *
-                     * @event myscript-common-element-clear
-                     */
-                    /**
-                     * Fired when convert button is press
-                     *
-                     * @event myscript-common-element-convert
-                     */
-                    /**
-                     * Fired when export button is press
-                     *
-                     * @event myscript-common-element-export
-                     */
-                    /**
-                     * Fired when state of underlying model change
-                     *
-                     * @event myscript-common-element-change
-                     */
-                    /**
-                     * Fired when exports are received.
-                     *
-                     * @event myscript-common-element-exported
-                     */
-                    /**
-                     * Fired when a recognition error occurred.
-                     * @event myscript-common-element-error
-                     */
                     properties: {
                         /**
                          * <b>not mutable</b><br />
                          * The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)
-                         * @default 'TEXT'
                          */
                         type: {
                             type: String,
@@ -221,8 +178,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         },
                         /**
                          * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
-                         * @type String
-                         * @default 'REST'
                          */
                         protocol: {
                             type: String,
@@ -231,9 +186,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         },
                         /**
                          * Scheme to use to connect to MyScript Cloud or Server. (https or http)
-                         * @private
-                         * @type Boolean
-                         * @default true
                          */
                         scheme: {
                             type: String,
@@ -242,8 +194,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         },
                         /**
                          * The current recognition service host.
-                         * @type String
-                         * @default 'cloud.myscript.com'
                          */
                         host: {
                             type: String,
@@ -251,9 +201,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             value: 'cloud.myscript.com'
                         },
                         /**
-                         * Recognition API version to use (eg V3 or V4)
-                         * @type String
-                         * @default 'V3'
+                         * Cloud API version to use (eg V3 or V4)
                          */
                         apiversion: {
                             type: String,
@@ -261,9 +209,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             value: 'V3'
                         },
                         /**
-                         * Delay without any user input before asking for recognition, only use in REST mode.
-                         * @type Number
-                         * @default 2000
+                         * Delay without any user input before asking for recognition, only use with REST protocol.
                          */
                         recognitiontriggerdelay: {
                             type: Number,
@@ -271,9 +217,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             value: 2000
                         },
                         /**
-                         * Delay without any recognition exports received before processing the last one received, only use in WEBSOCKET mode.
-                         * @type Number
-                         * @default 2000
+                         * Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol.
                          */
                         recognitionprocessdelay: {
                             type: Number,
@@ -284,7 +228,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                          * Application key to use for recognition on MyScript handwriting recognition server.<br />
                          * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
                          * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
-                         * @type String
                          */
                         applicationkey: {
                             type: String,
@@ -294,7 +237,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                          * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
                          * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
                          * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
-                         * @type String
                          */
                         hmackey: {
                             type: String,
@@ -327,8 +269,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             notify: true
                         },
                         /**
-                         * Set the stroke color
-                         * @type String
+                         * Color of the stroke
                          */
                         strokecolor: {
                             type: String,
@@ -337,8 +278,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             observer: 'strokecolorChanged'
                         },
                         /**
-                         * Set the stroke width
-                         * @type String
+                         * Width of the stroke
                          */
                         strokewidth: {
                             type: Number,
@@ -349,8 +289,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         /**
                          * True if undo is available
                          * @private
-                         * @type Boolean
-                         * @default false
                          */
                         canundo: {
                             type: Boolean,
@@ -361,8 +299,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         /**
                          * True if redo is available
                          * @private
-                         * @type Boolean
-                         * @default false
                          */
                         canredo: {
                             type: Boolean,
@@ -373,8 +309,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         /**
                          * True if there is something to clear
                          * @private
-                         * @type Boolean
-                         * @default false
                          */
                         canclear: {
                             type: Boolean,
@@ -385,8 +319,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         /**
                          * True if export button could be displayed.
                          * @private
-                         * @type Boolean
-                         * @default false
                          */
                         canexport: {
                             type: Boolean,
@@ -397,8 +329,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         /**
                          * True if convert button could be displayed.
                          * @private
-                         * @type Boolean
-                         * @default false
                          */
                         canconvert: {
                             type: Boolean,
@@ -408,8 +338,6 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         },
                         /**
                          * If set to true, hide the buttons (Trash, Undo, Redo).
-                         * @type Boolean
-                         * @default false
                          */
                         hidebuttons: {
                             type: Boolean,
@@ -516,11 +444,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     },
                     /**
                      * Update the stroke color.
-                     * @param newStrokecolor
+                     * @param color
                      * @private
                      */
-                    strokecolorChanged: function (newStrokecolor) {
-                        LOG('common-element strokecolorChanged', newStrokecolor);
+                    strokecolorChanged: function (color) {
+                        LOG('common-element strokecolorChanged', color);
                         if (this.editorDomElement && !this.initializing) {
                             this.buildCustomStyle();
                             this.editor.customStyle = this.customStyle;
@@ -529,11 +457,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                     },
                     /**
                      * Update the stroke width.
-                     * @param newStrokewidth
+                     * @param width
                      * @private
                      */
-                    strokewidthChanged: function (newStrokewidth) {
-                        LOG('common-element strokewidthChanged', newStrokewidth);
+                    strokewidthChanged: function (width) {
+                        LOG('common-element strokewidthChanged', width);
                         if (this.editorDomElement && !this.initializing) {
                             this.buildCustomStyle();
                             this.editor.customStyle = this.customStyle;
@@ -612,7 +540,7 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                                         commonElement.canclear = event.detail.canClear;
                                         commonElement.canundo = event.detail.canUndo;
                                         commonElement.canredo = event.detail.canRedo;
-                                        commonElement.canexport = event.detail.canUndo && event.detail.canClear;
+                                        commonElement.canexport = (commonElement.protocol === 'REST' || commonElement.apiversion === 'V4') && event.detail.canUndo && event.detail.canClear;
                                         commonElement.canconvert = commonElement.apiversion === 'V4' && event.detail.canUndo && event.detail.canClear;
                                     }
                                 }
@@ -664,11 +592,11 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                         if (!this.customStyle) {
                             this.customStyle = {};
                         }
-                        if (!this.customStyle.strokeStyle) {
-                            this.customStyle.strokeStyle = {};
+                        if (!this.customStyle.stroke) {
+                            this.customStyle.stroke = {};
                         }
-                        this.customStyle.strokeStyle.color = this.strokecolor;
-                        this.customStyle.strokeStyle.width = this.strokewidth;
+                        this.customStyle.stroke.color = this.strokecolor;
+                        this.customStyle.stroke.width = this.strokewidth;
                         return this.customStyle;
                     },
 

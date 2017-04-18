@@ -74,7 +74,7 @@ const defaultConfiguration = {
   // Delay in millisecond to wait before applying a resize action. If a other resize order is perform during the quiet period, resizeTimer is clear. Prevent resize storms.
   recognitionTriggerDelay: 2000,
   // When recognition is in POINTER_UP mode, quiet period duration in millisecond while editor wait for another recognition before triggering the display and the call to configured callbacks.
-  recognitionProcessDelay: 1000,
+  recognitionProcessDelay: 0,
   // Rendering parameters
   renderingParams: {
     // Type of stroker. Actually only quadratic is implemented.
@@ -86,15 +86,15 @@ const defaultConfiguration = {
     apiVersion: 'V3',
     server: {
       scheme: 'https',
-      host: 'cloud-internal-stable.visionobjects.com',
-      applicationKey: '64e1afbf-f3a7-4d04-bce1-24b05ee0b2d6',
-      hmacKey: '88d81b71-13cd-41a0-9206-ba367c21900f',
+      host: 'cloud.myscript.com',
+      applicationKey: undefined,
+      hmacKey: undefined,
       websocket: {
-        pingPongActivated: false,
+        pingEnabled: true, // Enable/disable ping feature.
+        pingDelay: 30000, // Delay in millisecond to wait before sending a ping.
         maxPingLostCount: 10,
-        pingIntervalMillis: 5000,
         // Will try to reconnect when websocket is close or when a timeout is detected. Do not handle the case when user change network on his device.
-        autoReconnect: true,
+        autoReconnect: false,
         maxRetryCount: 2
       }
     },

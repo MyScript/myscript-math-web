@@ -36,6 +36,19 @@ function buildNewContentPackageInput(recognizerContext, model, configuration) {
   };
 }
 
+function buildRestoreIInkSessionInput(recognizerContext, model, configuration) {
+  return {
+    type: 'restoreIInkSession',
+    iinkSessionId: recognizerContext.sessionId,
+    applicationKey: configuration.recognitionParams.server.applicationKey,
+    xDpi: recognizerContext.dpi,
+    yDpi: recognizerContext.dpi,
+    viewSizeHeight: recognizerContext.element.clientHeight,
+    viewSizeWidth: recognizerContext.element.clientWidth
+  };
+}
+
+
 function buildNewContentPart(recognizerContext, model, configuration) {
   return {
     type: 'newContentPart',
@@ -44,13 +57,21 @@ function buildNewContentPart(recognizerContext, model, configuration) {
   };
 }
 
+function buildOpenContentPart(recognizerContext, model, configuration) {
+  return {
+    type: 'openContentPart',
+    id: recognizerContext.currentPartId,
+    mimeTypes: configuration.recognitionParams.v4[`${configuration.recognitionParams.type.toLowerCase()}`].mimeTypes
+  };
+}
+
 function buildConfiguration(recognizerContext, model, configuration) {
-  const iinkConfiguration = Object.assign({}, { type: 'configuration' }, configuration.recognitionParams.v4);
-  delete iinkConfiguration.lang;
-  delete iinkConfiguration.nebo;
-  delete iinkConfiguration.diagram;
-  delete iinkConfiguration.math.mimeTypes;
-  return iinkConfiguration;
+  return {
+    type: 'configuration',
+    math: {
+      solver: configuration.recognitionParams.v4.math.solver
+    }
+  };
 }
 
 function buildAddStrokes(recognizerContext, model, configuration) {
@@ -96,9 +117,30 @@ function buildResize(recognizerContext, model, configuration) {
 function buildExport(recognizerContext, model, configuration) {
   return {
     type: 'export',
-    partIdx: 0,
+    partId: recognizerContext.currentPartId,
     mimeTypes: configuration.recognitionParams.v4[`${configuration.recognitionParams.type.toLowerCase()}`].mimeTypes
   };
+}
+
+/**
+ * Initialize reconnect
+ * @param {Configuration} configuration Current configuration
+ * @param {Model} model Current model
+ * @param {RecognizerContext} recognizerContext Current recognizer context
+ * @param {function(err: Object, res: Object)} callback
+ */
+export function reconnect(configuration, model, recognizerContext, callback) {
+  const reconnectCallback = (err, res) => {
+    if (!err) {
+      CdkWSRecognizerUtil.sendMessages(configuration, res, recognizerContext, callback, buildConfiguration, buildOpenContentPart);
+    } else {
+      callback(err, res);
+    }
+  };
+
+  CdkWSRecognizerUtil.reconnect('/api/v4.0/iink/document', Cdkv4WSWebsocketBuilder.buildWebSocketCallback, reconnect, configuration, InkModel.updateModelSentPosition(model, model.lastPositions.lastReceivedPosition), recognizerContext)
+      .then(openedModel => CdkWSRecognizerUtil.sendMessages(configuration, openedModel, recognizerContext, reconnectCallback, buildRestoreIInkSessionInput))
+      .catch(err => callback(err, model)); // Error on websocket creation
 }
 
 /**
@@ -110,16 +152,14 @@ function buildExport(recognizerContext, model, configuration) {
  */
 export function init(configuration, model, recognizerContext, callback) {
   const initCallback = (err, res) => {
-    if (!err && (InkModel.extractPendingStrokes(res).length > 0)) {
-      CdkWSRecognizerUtil.sendMessages(configuration, InkModel.updateModelSentPosition(res), recognizerContext, callback, buildNewContentPart, buildConfiguration, buildAddStrokes);
-    } else if (!err) {
-      CdkWSRecognizerUtil.sendMessages(configuration, res, recognizerContext, callback, buildNewContentPart, buildConfiguration);
+    if (!err) {
+      CdkWSRecognizerUtil.sendMessages(configuration, res, recognizerContext, callback, buildConfiguration, buildNewContentPart);
     } else {
       callback(err, res);
     }
   };
 
-  CdkWSRecognizerUtil.init('/api/v4.0/iink/document', Cdkv4WSWebsocketBuilder.buildWebSocketCallback, undefined, configuration, InkModel.resetModelPositions(model), recognizerContext)
+  CdkWSRecognizerUtil.init('/api/v4.0/iink/document', Cdkv4WSWebsocketBuilder.buildWebSocketCallback, reconnect, configuration, InkModel.resetModelPositions(model), recognizerContext)
       .then(openedModel => CdkWSRecognizerUtil.sendMessages(configuration, openedModel, recognizerContext, initCallback, buildNewContentPackageInput))
       .catch(err => callback(err, model)); // Error on websocket creation
 }

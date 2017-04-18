@@ -390,6 +390,8 @@ export class Editor {
       /** @private **/
       this.innerRecognizer = recognizer;
       if (this.innerRecognizer) {
+        const modelReference = model;
+        modelReference.state = MyScriptJSConstants.ModelState.INITIALIZING;
         /**
          * Current recognition context
          * @type {RecognizerContext}
@@ -404,7 +406,7 @@ export class Editor {
           this.undoRedoManager = UndoRedoManager;
         }
 
-        this.innerRecognizer.init(this.configuration, model, this.recognizerContext, (err, res) => {
+        this.innerRecognizer.init(this.configuration, modelReference, this.recognizerContext, (err, res) => {
           logger.debug('Recognizer initialized', res);
           recognizerCallback(this, err, res, MyScriptJSConstants.EventType.LOADED, MyScriptJSConstants.EventType.CHANGED, MyScriptJSConstants.EventType.EXPORTED);
         });
@@ -518,7 +520,7 @@ export class Editor {
   pointerDown(point, pointerType) {
     logger.trace('Pointer down', point);
     managePointerDown(this);
-    this.model = InkModel.initPendingStroke(this.model, point, Object.assign({ pointerType }, this.customStyle.strokeStyle));
+    this.model = InkModel.initPendingStroke(this.model, point, Object.assign({ pointerType }, this.customStyle.stroke));
     this.renderer.drawCurrentStroke(this.rendererContext, this.model, this.stroker);
     // Currently no recognition on pointer down
   }
