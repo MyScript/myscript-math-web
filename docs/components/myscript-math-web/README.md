@@ -17,7 +17,16 @@ The easy way to integrate mathematical expressions handwriting recognition in yo
     </myscript-math-web>
 </body>
 </html>
-```    
+```
+
+## Examples
+
+* [Simple math demo](./demo/index.html)
+* [Interactive ink preview](./demo/iink_preview.html)
+* [Programmatic init](./demo/programmatic-init.html)
+* [Customize style](./demo/customstyle.html)
+* [Error handling](./demo/init-error.html)
+* [Get statistics](./demo/stats.html)
 
 [Test it live](https://myscript.github.io/myscript-math-web/components/myscript-math-web/demo/)!
 

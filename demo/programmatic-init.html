@@ -19,26 +19,26 @@
 <script>
     window.addEventListener("load", function () {
         var configurationChanged = false;
-        var myscriptMathWebElement = document.querySelector('myscript-math-web');
-        myscriptMathWebElement.addEventListener("load", function () {
+        var mathElement = document.querySelector('myscript-math-web');
+        mathElement.addEventListener("load", function () {
             if (!configurationChanged) {
                 console.log("All resources finished loading! Starting to init myscript-math-web");
-                var mycustomconfiguration = {
+                var configuration = {
                     // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
                     applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
                     hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad'
                 };
                 // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-                myscriptMathWebElement.setAttribute('applicationkey', mycustomconfiguration.applicationKey);
-                myscriptMathWebElement.hmackey = mycustomconfiguration.hmacKey;
+                mathElement.setAttribute('applicationkey', configuration.applicationKey);
+                mathElement.hmackey = configuration.hmacKey;
                 // Testing if options are taken into account
-                myscriptMathWebElement.configuration = {
+                mathElement.configuration = {
                     recognitionParams: {
                         timestampFloatPrecision: 2
                     }
                 };
-                myscriptMathWebElement.resulttypes = ['LATEX'];
-                myscriptMathWebElement.unloaded = true;
+                mathElement.resulttypes = ['LATEX'];
+                mathElement.unloaded = true;
             }
             configurationChanged = true;
         });
