@@ -92,7 +92,7 @@ export function annotateElementHeader(descriptor: ElementDescriptor) {
         case 'demo':
           descriptor.demos.push({
             desc: tag.description || 'demo',
-            path: tag.name || 'demo/index.html'
+            path: tag.name || 'demo/legacy.html'
           });
           break;
       }

@@ -48,8 +48,8 @@ myscript-math-web is a web component that can be used in every web application (
 
 ## Examples
 
-* [Simple math demo](./demo/index.html)
-* [Interactive ink preview](./demo/iink_preview.html)
+* [Interactive ink](demo/index.html)
+* [Simple math demo](demo/legacy.html)
 * [Programmatic init](./demo/programmatic-init.html)
 * [Customize style](./demo/customstyle.html)
 * [Error handling](./demo/init-error.html)
