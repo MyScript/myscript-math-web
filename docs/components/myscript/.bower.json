@@ -23,13 +23,13 @@
     "!package.json",
     "!bower.json",
     "!dist/**/*",
-    "!src/**/*"
+    "!samples/**/*"
   ],
-  "_release": "ead40a8892",
+  "_release": "1b820d462c",
   "_resolution": {
     "type": "branch",
     "branch": "2.0.0-alpha1",
-    "commit": "ead40a8892063718232dbbf8341b40d1414ed609"
+    "commit": "1b820d462c9d017be9afd8267de148ad4a755376"
   },
   "_source": "https://github.com/MyScript/MyScriptJS.git",
   "_target": "2.0.0-alpha1",

@@ -4,21 +4,47 @@ The easy way to integrate mathematical expressions handwriting recognition in yo
 
 ![myscript-math-web preview](./preview.gif)
 
+## What is it about?
+
+myscript-math-web is a web component that can be used in every web application (whatever javascript framework you are using) to bring handwriting recognition. It integrates all you need:  
+* Signal capture,
+* Nice digital ink rendering,
+* Plug with MyScript CDK to bring handwriting recognition.
+
+## Prerequisites
+
+1. Have a MyScript developer account. You can create one [here](https://dev.myscript.com/).
+2. Get an application key and HMAC key for your application.
+3. Import webcomponents polyfill on your webapp.
+
 ```html
-<html>
-<head>
     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="bower_components/myscript-math-web/myscript-math-web.html">
-</head>
-<body>
-    <myscript-math-web
-        host="webdemoapi.myscript.com"
-        applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
-    </myscript-math-web>
-</body>
-</html>
 ```
+ 
+## Installation
+
+1. Download it.
+
+       bower install myscript-math-web
+
+2. Import it on your webapp.
+
+```html
+    <link rel="import" href="bower_components/myscript-math-web/myscript-math-web.html">
+```
+
+3. Configure it.
+
+```html
+    <myscript-math-web
+        applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
+        hmackey="YOUR MYSCRIPT CDK HMAC KEY">
+    </myscript-math-web>
+```
+   
+4. Use it!
+
+[Test it live](https://myscript.github.io/myscript-math-web/components/myscript-math-web/demo/)!
 
 ## Examples
 
@@ -29,41 +55,13 @@ The easy way to integrate mathematical expressions handwriting recognition in yo
 * [Error handling](./demo/init-error.html)
 * [Get statistics](./demo/stats.html)
 
-[Test it live](https://myscript.github.io/myscript-math-web/components/myscript-math-web/demo/)!
-
-## What is it about?
-
-myscript-math-web is a web component that can be used in every web application (whatever the JavaScript library you are using) to bring handwriting recognition. It integrates all you need:  
-* Signal capture,
-* Nice digital ink rendering,
-* Plug with MyScript CDK to bring handwriting recognition.
-
-## Installation
-
-**Bower**: `bower install myscript-math-web`
-
-## Start using myscript-math-web
-
-1. Create an account on the [Developer portal](https://developer.myscript.com/), which will allow you to generate an application key and HMAC key.  
-
-2. Import Web Components' polyfill
-
-    `<script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>`
-
-3. Import Custom Element
-
-    `<link rel="import" href="bower_components/myscript-math-web/myscript-math-web.html">`
-
-3. Use it
-
-    `<myscript-math-web applicationkey="#PUT YOUR MYSCRIPT CDK APPLICATION KEY HERE#" hmackey="#PUT YOUR MYSCRIPT CDK HMAC KEY HERE#"></myscript-math-web>`
-
 ## Documentation 
 
 The API Reference is available here: [https://myscript.github.io/myscript-math-web/](https://myscript.github.io/myscript-math-web/) 
 
 ## Contribute
 
+We welcome your contributions:
 If you wish to contribute to myscript-math-web, feel free to fork it!
 Please sign our [Contributor License Agreement](CONTRIBUTING.md) before submitting your pull request.
 
@@ -71,3 +69,7 @@ Please sign our [Contributor License Agreement](CONTRIBUTING.md) before submitti
 
 Made a cool app with myscript-math-web? We would love to hear about you!
 We’re planning to showcase apps using it so let us know by sending a quick mail to [myapp@myscript.com](mailto://myapp@myscript.com)
+
+## License
+
+[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)

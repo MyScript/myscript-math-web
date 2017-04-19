@@ -9,10 +9,9 @@
 `myscript-common-element` is a web component wrapper around MyScriptJS editor.
 
     <myscript-common-element
-        type="MATH"
-        host="webdemoapi.myscript.com"
-        applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
+        type="SHAPE"
+        applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
+        hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-common-element>
 
 @demo
@@ -588,12 +587,12 @@
                                 case MyScript.Constants.EventType.LOADED:
                                     commonElement.unloaded = false;
                                     break;
-                                case MyScript.Constants.EventType.CHANGED:{
+                                case MyScript.Constants.EventType.CHANGED: {
                                     if (event.detail) {
                                         commonElement.canclear = event.detail.canClear;
                                         commonElement.canundo = event.detail.canUndo;
                                         commonElement.canredo = event.detail.canRedo;
-                                        commonElement.canexport = (commonElement.protocol === 'REST' || commonElement.apiversion === 'V4') && event.detail.canUndo && event.detail.canClear;
+                                        commonElement.canexport = (commonElement.protocol === 'REST' || commonElement.apiversion === 'V4') && event.detail.canUndo && event.detail.canClear;
                                         commonElement.canconvert = commonElement.apiversion === 'V4' && event.detail.canUndo && event.detail.canClear;
                                     }
                                 }
