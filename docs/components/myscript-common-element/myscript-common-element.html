@@ -1,6 +1,3 @@
-<!--
-Copyright © MyScriLICENSE.mdENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
--->
 <link rel="import" href="./pepjs-import.html">
 <link rel="import" href="./myscriptjs-import.html">
 <link rel="import" href="../polymer/polymer.html">
@@ -9,14 +6,16 @@ Copyright © MyScriLICENSE.mdENSE: [Apache License 2.0](http://www.apache.org/li
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
 <!--
-The `myscript-common-element` is a web component wrapper around MyScriptJS editor.
+`myscript-common-element` is a web component wrapper around MyScriptJS editor.
 
     <myscript-common-element
-        applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
+        type="MATH"
+        host="webdemoapi.myscript.com"
+        applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
     </myscript-common-element>
 
-@demo demo/index.html
+@demo
 -->
 <dom-module id="myscript-common-element">
     <template>
@@ -163,9 +162,59 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                 console.log(string);
             }
         }
-
         Polymer({
                     is: 'myscript-common-element',
+
+                    /**
+                     * Fired when element is fully loaded.
+                     * @event load
+                     */
+
+                    /**
+                     * Fired when undo is triggered.
+                     * @event undo
+                     */
+
+                    /**
+                     * Fired when redo is triggered.
+                     * @event redo
+                     */
+
+                    /**
+                     * Fired when clear is triggered.
+                     * @event clear
+                     */
+
+                    /**
+                     * Fired when export is triggered.
+                     * @event export
+                     */
+
+                    /**
+                     * Fired when conversion is triggered.
+                     * @event convert
+                     */
+
+                    /**
+                     * Fired when editor state changed.
+                     * @event change
+                     */
+
+                    /**
+                     * Fired when export is done.
+                     * @event exported
+                     */
+
+                    /**
+                     * Fired when conversion is done.
+                     * @event converted
+                     */
+
+                    /**
+                     * Fired on error.
+                     * @event error
+                     */
+
                     properties: {
                         /**
                          * <b>not mutable</b><br />
@@ -467,6 +516,10 @@ The `myscript-common-element` is a web component wrapper around MyScriptJS edito
                             this.editor.customStyle = this.customStyle;
                         }
                     },
+                    /**
+                     * @param unloaded
+                     * @private
+                     */
                     unloadedChanged: function (unloaded) {
                         LOG('common-element unloaded changed', unloaded);
                         this.exports = undefined;

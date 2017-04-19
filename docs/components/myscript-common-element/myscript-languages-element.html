@@ -1,6 +1,3 @@
-<!--
-Copyright © MyScriLICENSE.mdENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
--->
 <link rel="import" href="../polymer/polymer.html">
 
 <dom-module id="myscript-languages-element">
@@ -22,6 +19,17 @@ Copyright © MyScriLICENSE.mdENSE: [Apache License 2.0](http://www.apache.org/li
 
         Polymer({
                     is: 'myscript-languages-element',
+
+                    /**
+                     * Fired when languages changed.
+                     * @event change
+                     */
+
+                    /**
+                     * Fired on error.
+                     * @event error
+                     */
+
                     properties: {
                         /**
                          * <b>not mutable</b><br />

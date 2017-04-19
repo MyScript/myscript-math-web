@@ -100,6 +100,14 @@ as you would a regular DOM element:
         value: null
       },
       /**
+       * Enable GFM line breaks (regular newlines instead of two spaces for breaks)
+       */
+      breaks: {
+        observer: 'render',
+        type: Boolean,
+        value: false
+      },
+      /**
        * Conform to obscure parts of markdown.pl as much as possible. Don't fix any of the original markdown bugs or poor behavior.
        */
       pedantic: {
@@ -224,6 +232,7 @@ as you would a regular DOM element:
       var opts = {
         renderer: renderer,
         highlight: this._highlight.bind(this),
+        breaks: this.breaks,
         sanitize: this.sanitize,
         pedantic: this.pedantic,
         smartypants: this.smartypants

@@ -18,19 +18,20 @@
   },
   "ignore": [
     "*",
+    "!LICENSE",
     "!myscript.html",
     "!package.json",
     "!bower.json",
     "!dist/**/*",
     "!src/**/*"
   ],
-  "_release": "b33f13da3e",
+  "_release": "ead40a8892",
   "_resolution": {
     "type": "branch",
     "branch": "2.0.0-alpha1",
-    "commit": "b33f13da3ed1c11088e29f3ea1d28394b478ade1"
+    "commit": "ead40a8892063718232dbbf8341b40d1414ed609"
   },
-  "_source": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git",
+  "_source": "https://github.com/MyScript/MyScriptJS.git",
   "_target": "2.0.0-alpha1",
-  "_originalSource": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git"
+  "_originalSource": "myscript"
 }

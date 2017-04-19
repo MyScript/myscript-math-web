@@ -11,9 +11,10 @@ The easy way to integrate mathematical expressions handwriting recognition in yo
     <link rel="import" href="bower_components/myscript-math-web/myscript-math-web.html">
 </head>
 <body>
-    <myscript-math-web 
-        applicationkey="#PUT YOUR MYSCRIPT CDK APPLICATION KEY HERE#" 
-        hmackey="#PUT YOUR MYSCRIPT CDK HMAC KEY HERE#">
+    <myscript-math-web
+        host="webdemoapi.myscript.com"
+        applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
     </myscript-math-web>
 </body>
 </html>

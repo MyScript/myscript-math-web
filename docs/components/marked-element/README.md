@@ -15,7 +15,7 @@ thing! https://github.com/PolymerLabs/tedium/issues
 [![Build status](https://travis-ci.org/PolymerElements/marked-element.svg?branch=master)](https://travis-ci.org/PolymerElements/marked-element)
 
 
-##&lt;marked-element&gt;
+## &lt;marked-element&gt;
 
 Element wrapper for the [marked](https://github.com/chjj/marked) library.
 

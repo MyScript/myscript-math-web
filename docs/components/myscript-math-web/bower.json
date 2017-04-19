@@ -1,6 +1,7 @@
 {
   "name": "myscript-math-web",
-  "description": "HTML5 Element easing integration of MyScript math handwriting recognition in your web-page",
+  "main": "myscript-math-web.html",
+  "description": "The easy way to integrate mathematical expressions handwriting recognition in your web app.",
   "keywords": [
     "web-component",
     "web-components",
@@ -12,7 +13,6 @@
     "handwriting",
     "recognition"
   ],
-  "main": "myscript-math-web.html",
   "license": "Apache-2.0",
   "homepage": "https://myscript.github.io/myscript-math-web/components/myscript-math-web/",
   "repository": {
@@ -20,23 +20,21 @@
     "url": "git://github.com/MyScript/myscript-math-web.git"
   },
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "tests",
-    "test",
-    "docs"
+    "*",
+    "!*.svg",
+    "!LICENSE",
+    "!myscript-math-exports.html",
+    "!myscript-math-web.html",
+    "!katex-import.html",
+    "!bower.json",
+    "!demo/**/*"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#1.8.x",
-    "myscript-common-element": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-common-element.git#2.0.0-alpha1",
+    "myscript-common-element": "2.0.0-alpha1",
     "KaTeX": "katex#0.7.x"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
-  },
-  "resolutions": {
-    "myscript": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git#2.0.0-alpha1",
-    "polymer": "1.8.x"
   }
 }
