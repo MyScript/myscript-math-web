@@ -415,7 +415,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         }
                     }
 
-                    this.logger = MyScript.DebugConfig.loggerConfig.default.getLogger('math-web');
+                    this.logger = MyScript.LoggerConfig.getLogger('math-web');
                     this.logger.setLevel(this.debug ? 'TRACE' : 'ERROR', false);
 
                     this.initializing = true;

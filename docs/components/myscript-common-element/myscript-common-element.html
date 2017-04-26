@@ -552,7 +552,7 @@
                             }
                         }
 
-                        this.logger = MyScript.DebugConfig.loggerConfig.default.getLogger('common-element');
+                        this.logger = MyScript.LoggerConfig.getLogger('common-element');
                         this.logger.setLevel(this.debug ? 'TRACE' : 'ERROR', false);
 
                         this.initializing = true;
