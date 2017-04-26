@@ -25,11 +25,11 @@
     "!dist/**/*",
     "!samples/**/*"
   ],
-  "_release": "1b820d462c",
+  "_release": "d88e6c3f5a",
   "_resolution": {
     "type": "branch",
     "branch": "2.0.0-alpha1",
-    "commit": "1b820d462c9d017be9afd8267de148ad4a755376"
+    "commit": "d88e6c3f5a9eaef6e628f1754e5b27e43e2a100c"
   },
   "_source": "https://github.com/MyScript/MyScriptJS.git",
   "_target": "2.0.0-alpha1",

@@ -108,6 +108,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="RemoteContent">
+    <template>
+      <marked-element>
+        <div id="output" class="markdown-html"></div>
+        <script type="text/markdown" src="test.md">
+          # Loading
+
+          Please wait...
+        </script>
+      </marked-element>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="BadRemoteContent">
+    <template>
+      <marked-element>
+        <div id="output" class="markdown-html"></div>
+        <script type="text/markdown" src="test2.md"></script>
+      </marked-element>
+    </template>
+  </test-fixture>
+
   <script>
     'use strict';
 
@@ -303,6 +325,57 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
         proofElement.innerHTML = '<a href="http://url.com" target="_blank">Link</a>';
         expect(outputElement.innerHTML).to.include(proofElement.innerHTML);
+      });
+    });
+
+    suite('<marked-element> with remote content', function() {
+      var markedElement;
+      var outputElement;
+      var proofElement;
+
+      suite('succesful fetch', function() {
+        setup(function() {
+          markedElement = fixture('RemoteContent');
+          outputElement = document.getElementById('output');
+          proofElement = document.createElement('div');
+        });
+
+        test('renders remote content', function(done) {
+          proofElement.innerHTML = '<h1 id="test">Test</h1>\n<p><a href="http://url.com/">Link</a></p>\n';
+          markedElement.xhr.addEventListener('loadend', function() {
+            expect(outputElement.innerHTML).to.equal(proofElement.innerHTML);
+            done();
+          });
+        });
+        test('renders content while remote content is loading', function() {
+          proofElement.innerHTML = '<h1 id="loading">Loading</h1>\n<p>Please wait...</p>\n';
+          expect(outputElement.innerHTML).to.equal(proofElement.innerHTML);
+        });
+      });
+      suite('fails to load', function() {
+        setup(function() {
+          markedElement = fixture('BadRemoteContent');
+          outputElement = document.getElementById('output');
+          proofElement = document.createElement('div');
+        });
+
+        test('renders error message', function(done) {
+          proofElement.innerHTML = '<p>Failed loading markdown source</p>\n';
+          markedElement.xhr.addEventListener('loadend', function() {
+            expect(outputElement.innerHTML).to.equal(proofElement.innerHTML);
+            done();
+          });
+        });
+        test('doesn\'t render error message when default is prevented', function(done) {
+          proofElement.innerHTML = '';
+          markedElement.addEventListener('marked-request-error', function(e) {
+            e.preventDefault();
+            flush(function() {
+              expect(outputElement.innerHTML).to.equal(proofElement.innerHTML);
+              done();
+            });
+          });
+        });
       });
     });
 

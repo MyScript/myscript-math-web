@@ -12,20 +12,6 @@
 <dom-module id="myscript-languages-element">
     <script src="../myscript/dist/myscript.min.js"></script>
     <script>
-        /**
-         * Uncomment the function body during development. Should not be activated in production.
-         * @param string
-         * @param object
-         * @constructor
-         */
-        function LOG(string, object) {
-            if (object) {
-                console.log(string, object);
-            } else {
-                console.log(string);
-            }
-        }
-
         Polymer({
                     is: 'myscript-languages-element',
 
@@ -108,17 +94,28 @@
                         configuration: {
                             type: Object,
                             notify: true
+                        },
+                        /**
+                         * True to display console output, false otherwise.
+                         */
+                        debug: {
+                            type: Boolean,
+                            value: false,
+                            reflectToAttribute: true
                         }
                     },
                     unloadedChanged: function (unloaded) {
-                        LOG('languages-element unloaded changed', unloaded);
                         if (this.connected === true && unloaded === true) {
+                            this.logger.trace('unloaded changed', unloaded);
                             this.getLanguages(this);
                         }
                     },
                     // Will be renamed connected with pure custom element support
                     attached: function () {
-                        LOG('languages-element attached callback');
+                        this.logger = MyScript.DebugConfig.loggerConfig.default.getLogger('languages-element');
+                        this.logger.setLevel(this.debug ? 'TRACE' : 'ERROR', false);
+
+                        this.logger.info('attached callback');
                         this.connected = true;
                         this.unloadedChanged(this.unloaded);
                     },

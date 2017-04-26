@@ -28,7 +28,7 @@
     "!demo/**/*"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#1.8.x",
+    "polymer": "Polymer/polymer#1.9.x",
     "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#1.0.x",
     "iron-icons": "PolymerElements/iron-icons#1.2.x",
     "paper-fab": "PolymerElements/paper-fab#1.2.x",
@@ -39,11 +39,11 @@
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
   },
-  "_release": "fcd43c57fe",
+  "_release": "a0d2789612",
   "_resolution": {
     "type": "branch",
     "branch": "2.0.0-alpha1",
-    "commit": "fcd43c57fe4cf7ce3716c0ee90068545820c1822"
+    "commit": "a0d27896128132422a94f0f8255949954d0034d4"
   },
   "_source": "https://github.com/MyScript/myscript-common-element.git",
   "_target": "2.0.0-alpha1",

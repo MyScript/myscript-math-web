@@ -44,7 +44,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
     </style>
     <template>
         <myscript-math-exports hidden="[[ !displayExports(hideexports, unloaded) ]]"
-                               exports="{{ exports }}">
+                               exports="{{ exports }}"
+                               debug="{{ debug }}">
         </myscript-math-exports>
         <myscript-common-element
             type="MATH"
@@ -67,26 +68,13 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
-            exports="{{ exports }}">
+            exports="{{ exports }}"
+            debug="{{ debug }}">
         </myscript-common-element>
     </template>
 </dom-module>
 
 <script>
-    /**
-     * Uncomment the function body during development. Should not be activated in production.
-     * @param string
-     * @param object
-     * @constructor
-     */
-    function LOG(string, object) {
-        if (object) {
-            console.log(string, object);
-        } else {
-            console.log(string);
-        }
-    }
-
     Polymer({
                 is: 'myscript-math-web',
                 properties: {
@@ -346,6 +334,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     exports: {
                         type: Object,
                         notify: true
+                    },
+                    /**
+                     * True to display console output, false otherwise.
+                     */
+                    debug: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true
                     }
                 },
                 //-----------------------------------------------------------------------
@@ -396,7 +392,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 //---------  Wrapping END                                    ------------
                 //-----------------------------------------------------------------------
                 unloadedChanged: function (unloaded) {
-                    LOG('math unloaded changed', unloaded);
                     this.buildConfiguration();
                     if (unloaded === true) {
                         if (this.myscriptcommonelement && !this.initializing) {
@@ -420,26 +415,29 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         }
                     }
 
+                    this.logger = MyScript.DebugConfig.loggerConfig.default.getLogger('math-web');
+                    this.logger.setLevel(this.debug ? 'TRACE' : 'ERROR', false);
+
                     this.initializing = true;
-                    LOG('math-web attached callback');
+                    this.logger.info('attached callback');
                     this.myscriptcommonelement = qsWrapper(this).querySelector('myscript-common-element');
 
                     this.attachListener(this);
 
-                    LOG('math-web attached');
+                    this.logger.info('attached');
                     this.initializing = false;
                 },
                 detached: function () {
-                    LOG('math-web detached callback');
+                    this.logger.info('detached callback');
                     this.detachListener(this);
-                    LOG('math-web detached');
+                    this.logger.info('detached');
                 },
                 /**
                  * @private
                  */
                 attachListener: function (myscriptMathWebElement) {
                     function commonElementListener(event) {
-                        LOG('math ' + event.type + ' event intercepted', event);
+                        myscriptMathWebElement.logger.trace(event.type + ' event intercepted', event);
                         switch (event.type) {
                             case MyScript.Constants.EventType.LOADED:
                                 myscriptMathWebElement.unloaded = false;
@@ -520,7 +518,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                  */
                 displayExports: function (hideExports, unloaded) {
                     var display = !hideExports && ( !unloaded || unloaded === true);
-                    LOG('math-web should display exports', display);
                     // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
                     return display;
                 }

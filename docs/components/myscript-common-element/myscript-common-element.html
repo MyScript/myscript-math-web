@@ -148,19 +148,6 @@
         <paper-toast class="fit-bottom"></paper-toast>
     </template>
     <script>
-        /**
-         * Uncomment the function body during development. Should not be activated in production.
-         * @param string
-         * @param object
-         * @constructor
-         */
-        function LOG(string, object) {
-            if (object) {
-                console.log(string, object);
-            } else {
-                console.log(string);
-            }
-        }
         Polymer({
                     is: 'myscript-common-element',
 
@@ -433,6 +420,14 @@
                         exports: {
                             type: Object,
                             notify: true
+                        },
+                        /**
+                         * True to display console output, false otherwise.
+                         */
+                        debug: {
+                            type: Boolean,
+                            value: false,
+                            reflectToAttribute: true
                         }
                     },
                     behaviors: [
@@ -496,8 +491,8 @@
                      * @private
                      */
                     strokecolorChanged: function (color) {
-                        LOG('common-element strokecolorChanged', color);
                         if (this.editorDomElement && !this.initializing) {
+                            this.logger.trace('strokecolor changed', color);
                             this.buildCustomStyle();
                             this.editor.customStyle = this.customStyle;
                         }
@@ -509,8 +504,8 @@
                      * @private
                      */
                     strokewidthChanged: function (width) {
-                        LOG('common-element strokewidthChanged', width);
                         if (this.editorDomElement && !this.initializing) {
+                            this.logger.trace('strokewidth changed', width);
                             this.buildCustomStyle();
                             this.editor.customStyle = this.customStyle;
                         }
@@ -520,10 +515,10 @@
                      * @private
                      */
                     unloadedChanged: function (unloaded) {
-                        LOG('common-element unloaded changed', unloaded);
                         this.exports = undefined;
                         this.buildConfiguration();
                         if (this.editorDomElement && !this.initializing) {
+                            this.logger.trace('unloaded changed', unloaded);
                             if (unloaded === true) {
                                 this.errorElement.setAttribute('hidden', 'true');
                                 this.editor.configuration = this.configuration;
@@ -536,8 +531,8 @@
                      * @private
                      */
                     onResize: function (event) {
-                        console.log('common-element resizing', event);
                         if (this.editor) {
+                            this.logger.trace('resizing', event);
                             this.editor.resize();
                         }
                     },
@@ -557,8 +552,11 @@
                             }
                         }
 
+                        this.logger = MyScript.DebugConfig.loggerConfig.default.getLogger('common-element');
+                        this.logger.setLevel(this.debug ? 'TRACE' : 'ERROR', false);
+
                         this.initializing = true;
-                        LOG('common-element attached callback');
+                        this.logger.info('common-element attached callback');
                         this.editorDomElement = qsWrapper(this).querySelector('#editorDomElement');
                         this.errorElement = qsWrapper(this).querySelector('.error-msg');
                         this.paperToast = qsWrapper(this).querySelector('paper-toast');
@@ -569,20 +567,20 @@
                         this.editor = MyScript.register(this.editorDomElement, this.buildConfiguration(), this.buildCustomStyle());
                         this.configuration = this.editor.configuration;
 
-                        LOG('common-element attached');
+                        this.logger.info('common-element attached');
                         this.initializing = false;
                     },
                     detached: function () {
-                        LOG('common-element detached callback');
+                        this.logger.info('common-element detached callback');
                         this.detachListener(this);
-                        LOG('common-element detached');
+                        this.logger.info('common-element detached');
                     },
                     /**
                      * @private
                      */
                     attachListener: function (commonElement) {
                         function editorListener(event) {
-                            LOG('editor ' + event.type + ' event intercepted', event);
+                            commonElement.logger.trace(event.type + ' event intercepted', event);
                             switch (event.type) {
                                 case MyScript.Constants.EventType.LOADED:
                                     commonElement.unloaded = false;
@@ -687,7 +685,7 @@
                      * @private
                      */
                     manageError: function (event, commonElement) {
-                        LOG('common error detected');
+                        commonElement.logger.trace('error detected');
                         if (event.detail) {
                             if (event.detail.recoverable === false) {
                                 if (event.detail.serverMessage &&
@@ -705,10 +703,10 @@
                                 commonElement.paperToast.text = event.detail.message;
                                 commonElement.paperToast.fitIn = commonElement.paperToast.show();
                             } else {
-                                LOG('common not managed error', event);
+                                commonElement.logger.error('not managed error', event);
                             }
                         } else {
-                            LOG('common not managed error', event);
+                            commonElement.logger.error('not managed error', event);
                         }
                     }
                 }

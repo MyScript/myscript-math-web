@@ -13,19 +13,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!--
 Element wrapper for the [marked](https://github.com/chjj/marked) library.
 
-`<marked-element>` accepts Markdown source, and renders it to a child
+`<marked-element>` accepts Markdown source and renders it to a child
 element with the class `markdown-html`. This child element can be styled
 as you would a normal DOM element. If you do not provide a child element
 with the `markdown-html` class, the Markdown source will still be rendered,
 but to a shadow DOM child that cannot be styled.
 
-The Markdown source can be specified either via the `markdown` attribute:
+
+### Markdown Content
+
+The Markdown source can be specified several ways:
+
+#### Use the `markdown` attribute to bind markdown
 
     <marked-element markdown="`Markdown` is _awesome_!">
       <div class="markdown-html"></div>
     </marked-element>
 
-Or, you can provide it via a `<script type="text/markdown">` element child:
+#### Use `<script type="text/markdown">` element child to inline markdown
 
     <marked-element>
       <div class="markdown-html"></div>
@@ -41,6 +46,13 @@ Or, you can provide it via a `<script type="text/markdown">` element child:
         </awesome-sauce>
         ```
       </script>
+    </marked-element>
+
+#### Use `<script type="text/markdown" src="URL">` element child to specify remote markdown
+
+    <marked-element>
+      <div class="markdown-html"></div>
+      <script type="text/markdown" src="../guidelines.md"></script>
     </marked-element>
 
 Note that the `<script type="text/markdown">` approach is _static_. Changes to
@@ -59,7 +71,8 @@ as you would a regular DOM element:
     }
 
 @element marked-element
-@group Moleculegacy.htmlhero.svg
+@group Molecules
+@hero hero.svg
 @demo demo/index.html
 -->
 <dom-module id="marked-element">
@@ -148,17 +161,36 @@ as you would a regular DOM element:
         observer: 'render',
         type: Function,
         value: null
+      },
+      /**
+       * A reference to the XMLHttpRequest instance used to generate the
+       * network request.
+       *
+       * @type {XMLHttpRequest}
+       */
+      xhr: {
+        type: Object,
+        notify: true,
+        readOnly: true
       }
     },
 
     ready: function() {
-      if (!this.markdown) {
-        // Use the Markdown from the first `<script>` descendant whose MIME type starts with
-        // "text/markdown". Script elements beyond the first are ignored.
-        var markdownElement = Polymer.dom(this).querySelector('[type^="text/markdown"]');
-        if (markdownElement != null) {
-          this.markdown = this._unindent(markdownElement.textContent);
-        }
+      if (this.markdown) {
+        return;
+      }
+
+      // Use the Markdown from the first `<script>` descendant whose MIME type starts with
+      // "text/markdown". Script elements beyond the first are ignored.
+      var markdownElement = Polymer.dom(this).querySelector('[type="text/markdown"]');
+      if (!markdownElement) {
+        return;
+      }
+
+      this.markdown = this._unindent(markdownElement.textContent);
+
+      if (markdownElement.src) {
+        this._request(markdownElement.src);
       }
     },
 
@@ -257,8 +289,44 @@ as you would a regular DOM element:
       }, null);
 
       return lines.map(function(l) { return l.substr(indent); }).join('\n');
-    }
+    },
 
+    _request: function(url) {
+      this._setXhr(new XMLHttpRequest());
+      var xhr = this.xhr;
+
+      if (xhr.readyState > 0) {
+        return null;
+      }
+
+      xhr.addEventListener('error', this._handleError.bind(this));
+      xhr.addEventListener('loadend', function(e) {
+        var status = this.xhr.status || 0;
+        // Note: if we are using the file:// protocol, the status code will be 0
+        // for all outcomes (successful or otherwise).
+        if (status === 0 || (status >= 200 && status < 300)) {
+          this.markdown = e.target.response;
+        } else {
+          this._handleError(e);
+        }
+      }.bind(this));
+
+      xhr.open('GET', url);
+      xhr.setRequestHeader('Accept', 'text/markdown');
+      xhr.send();
+    },
+
+    /**
+     * Fired when an error is received while fetching remote markdown content.
+     *
+     * @event marked-request-error
+     */
+    _handleError: function(e) {
+      var evt = this.fire('marked-request-error', e, {cancelable: true});
+      if (!evt.defaultPrevented) {
+        this.markdown = 'Failed loading markdown source';
+      }
+    }
   });
 
 </script>

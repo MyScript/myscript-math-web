@@ -54,7 +54,7 @@ within `fitInto` boundaries, while preserving the element's CSS margin values.
       </div>
 
 
-@demo demo/legacy.html
+@demo demo/index.html
 @polymerBehavior
 */
 
@@ -253,7 +253,7 @@ within `fitInto` boundaries, while preserving the element's CSS margin values.
       if (typeof this._isRTL === 'undefined') {
         this._isRTL = window.getComputedStyle(this).direction == 'rtl';
       }
-
+          
       this.positionTarget = this.positionTarget || this._defaultPositionTarget;
       if (this.autoFitOnAttach) {
         if (window.getComputedStyle(this).display === 'none') {
