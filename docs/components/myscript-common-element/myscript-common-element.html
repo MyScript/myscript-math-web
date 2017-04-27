@@ -553,7 +553,13 @@
                         }
 
                         this.logger = MyScript.LoggerConfig.getLogger('common-element');
-                        this.logger.setLevel(this.debug ? 'TRACE' : 'ERROR', false);
+                        this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+                        var self = this;
+                        Object.keys(MyScript.Constants.Logger).forEach(function (key) {
+                            MyScript.LoggerConfig
+                                .getLogger(MyScript.Constants.Logger[key])
+                                .setLevel(self.debug ? 'DEBUG' : 'ERROR', false);
+                        });
 
                         this.initializing = true;
                         this.logger.info('common-element attached callback');

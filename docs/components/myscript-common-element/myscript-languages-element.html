@@ -112,9 +112,8 @@
                     },
                     // Will be renamed connected with pure custom element support
                     attached: function () {
-                        this.logger = MyScript.DebugConfig.loggerConfig.default.getLogger('languages-element');
-                        this.logger.setLevel(this.debug ? 'TRACE' : 'ERROR', false);
-
+                        this.logger = MyScript.LoggerConfig.getLogger('languages-element');
+                        this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                         this.logger.info('attached callback');
                         this.connected = true;
                         this.unloadedChanged(this.unloaded);
@@ -166,7 +165,7 @@
                                 languageElement.dispatchEvent(new CustomEvent('change', { detail: languageElement.languages }));
                                 languageElement.unloaded = false;
                             })
-                            .catch(function (err){
+                            .catch(function (err) {
                                 languageElement.languages = [];
                                 languageElement.unloaded = false;
                                 languageElement.dispatchEvent(new CustomEvent('error', { detail: err }));

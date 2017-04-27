@@ -5,23 +5,22 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <title>myscript-common-element iink preview</title>
-
-    <link rel="stylesheet" href="demo.css">
+    <title>myscript-math-web demo</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../myscript-common-element.html">
+    <link rel="import" href="../myscript-math-web.html">
+    <link rel="stylesheet" href="demo.css">
 </head>
-<body>
-    <myscript-common-element
-        type="MATH"
-        protocol="WEBSOCKET"
+<body touch-action="none">
+    <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+    <myscript-math-web
+        debug
         apiversion="V4"
         host="iinkpreview.myscript.com"
         applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
         hmackey="f35a21d1-aae3-4b98-8c5e-11e146e82130"
         strokecolor="#000000"
         strokewidth="2">
-    </myscript-common-element>
+    </myscript-math-web>
 </body>
 </html>
