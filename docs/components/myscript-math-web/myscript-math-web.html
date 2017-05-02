@@ -283,11 +283,20 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * Math export types (LATEX, MATHML or SYMBOLTREE).
+                     * <b>Warning</b>: v3 only, for v4, use mimetypes instead
                      * @type {Array<String>}
                      */
                     resulttypes: {
                         type: Array,
                         value: ['LATEX', 'MATHML']
+                    },
+                    /**
+                     * Math export types (application/x-latex, application/mathml+xml).
+                     * @type {Array<String>}
+                     */
+                    mimetypes: {
+                        type: Array,
+                        value: ['application/x-latex', 'application/mathml+xml']
                     },
                     solverenable: {
                         type: Boolean,
@@ -421,6 +430,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     this.initializing = true;
                     this.logger.info('attached callback');
                     this.myscriptcommonelement = qsWrapper(this).querySelector('myscript-common-element');
+                    this.myscriptcommonelement.configuration = this.buildConfiguration();
 
                     this.attachListener(this);
 
@@ -504,7 +514,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         this.configuration.recognitionParams.v4.math.solver = {};
                     }
 
-                    this.configuration.recognitionParams.v4.math.mimeTypes = this.resulttypes;
+                    this.configuration.recognitionParams.v4.math.mimeTypes = this.mimetypes;
                     this.configuration.recognitionParams.v4.math.solver.enable = this.solverenable;
                     this.configuration.recognitionParams.v4.math.solver['fractional-part-digits'] = this.solverfractionalpartdigit;
                     this.configuration.recognitionParams.v4.math.solver['decimal-separator'] = this.solverdecimalseparator;
