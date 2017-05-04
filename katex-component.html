@@ -1,0 +1,58 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./katex-import.html">
+
+<dom-module id="katex-component">
+    <style>
+        :host {
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    <template></template>
+</dom-module>
+<script>
+    Polymer({
+                is: 'katex-component',
+                properties: {
+                    latex: {
+                        type: String,
+                        notify: true,
+                        reflectToAttribute: true,
+                        observer: '_latexChanged'
+                    }
+                },
+                /**
+                 * @private
+                 */
+                _latexChanged: function (latex) {
+                    this.innerHTML = '';
+                    if (latex) {
+
+                        // Updating the rendering zone displayed with KaTex (taking the latex export as an input)
+                        try {
+                            katex.render(this._clean(latex), this);
+                        } catch (e) {
+                            this.innerHTML = '<span>' + this._clean(latex) + '</span>';
+                        }
+                    }
+                },
+
+
+                /**
+                 * Replace latex strings with similar one compatible with katex.
+                 * @param latex
+                 * @private
+                 */
+                _clean: function (latex) {
+                    return latex
+                        .replace("\\overrightarrow", "\\vec")
+                        .replace("\\llbracket", "\\lbracket")
+                        .replace("\\rrbracket", "\\rbracket")
+                        .replace("\\widehat", "\\hat")
+                        .replace(new RegExp("(align.{1})", "g"), "aligned");
+                }
+            }
+    );
+</script>

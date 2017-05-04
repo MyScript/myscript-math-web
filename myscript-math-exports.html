@@ -1,37 +1,36 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="./katex-import.html">
+<link rel="import" href="katex-component.html">
 
 <dom-module id="myscript-math-exports">
     <style>
         :host {
             box-sizing: border-box;
-            touch-action: none;
             display: flex;
-            /*justify-content: center;*/
-            align-items: center;
+            flex-direction: row;
             color: var(--myscript-math-exports-color, #000000);
             min-height: 60px;
+            overflow: auto;
         }
-
-        :root > div {
-            flex: 0 0 auto;
-        }
-
-        #html, #latex {
+        .export {
             flex-grow: 1;
-            text-align: center;
-        }
-
-        [hidden] {
-            display: none;
         }
     </style>
     <template>
-        <div id="html" hidden></div>
-        <div id="latex" hidden></div>
-        <div id="mathml" hidden></div>
-        <div id="officeopenxml" hidden></div>
-        <div id="symboltree" hidden></div>
+        <template is="dom-if" if="[[ _displaymath(resulttypes, mimetypes) ]]">
+            <katex-component latex="[[ _getLatex(exports) ]]" class="export"></katex-component>
+        </template>
+        <template is="dom-if" if="[[ _displaylatex(resulttypes, mimetypes) ]]">
+            <div class="export latex">[[ _getLatex(exports) ]]</div>
+        </template>
+        <template is="dom-if" if="[[ _displaymathml(resulttypes, mimetypes) ]]">
+            <div class="export">[[ _getMathml(exports) ]]</div>
+        </template>
+        <template is="dom-if" if="[[ _displayofficeopenxml(resulttypes, mimetypes) ]]">
+            <div class="export">[[ _getOfficeopenxml(exports) ]]</div>
+        </template>
+        <template is="dom-if" if="[[ _displaysymboltree(resulttypes, mimetypes) ]]">
+            <div class="export">[[ _getSymboltree(exports) ]]</div>
+        </template>
     </template>
 </dom-module>
 
@@ -39,11 +38,22 @@
     Polymer({
                 is: 'myscript-math-exports',
                 properties: {
-                    resulttype: {
-                        type: String,
-                        notify: true,
-                        reflectToAttribute: true,
-                        observer: '_resultTypeChanged'
+                    /**
+                     * Math export types (LATEX, MATHML or SYMBOLTREE).
+                     * <b>Warning</b>: v3 only, for v4, use mimetypes instead
+                     * @type {Array<String>}
+                     */
+                    resulttypes: {
+                        type: Array,
+                        value: []
+                    },
+                    /**
+                     * Math export types (application/x-latex, application/mathml+xml).
+                     * @type {Array<String>}
+                     */
+                    mimetypes: {
+                        type: Array,
+                        value: []
                     },
                     /**
                      * Exports result.
@@ -52,116 +62,71 @@
                      */
                     exports: {
                         type: Object,
-                        notify: true,
-                        observer: '_exportsChanged'
-                    }
-                },
-                // Will be renamed connected with pure custom element support
-                attached: function () {
-                    this.initializing = true;
-
-                    /**
-                     * Function returning the root dom element whatever shadow or shady dom is used.
-                     * @param domElement
-                     * @returns {*}
-                     */
-                    function qsWrapper(domElement) {
-                        if (domElement.shadowRoot) {
-                            return domElement.shadowRoot;
-                        } else {
-                            return domElement;
-                        }
-                    }
-
-                    this.htmlElement = qsWrapper(this).querySelector('#html');
-                    this.latexElement = qsWrapper(this).querySelector('#latex');
-                    this.mathmlElement = qsWrapper(this).querySelector('#mathml');
-                    this.officeopenxmlElement = qsWrapper(this).querySelector('#officeopenxml');
-                    this.symboltreeElement = qsWrapper(this).querySelector('#symboltree');
-                    this.initializing = false;
-                    this._resultTypeChanged(this.resulttype);
-                },
-                /**
-                 * @private
-                 */
-                _resultTypeChanged: function (resulttype) {
-                    if (this.initializing === false) {
-                        this.htmlElement.setAttribute('hidden', 'true');
-                        this.latexElement.setAttribute('hidden', 'true');
-                        this.mathmlElement.setAttribute('hidden', 'true');
-                        this.officeopenxmlElement.setAttribute('hidden', 'true');
-                        this.symboltreeElement.setAttribute('hidden', 'true');
-                        switch (resulttype) {
-                            case 'LATEX':
-                            case 'application/x-latex':
-                                this.latexElement.removeAttribute('hidden');
-                                break;
-                            case 'MATHML':
-                            case 'application/mathml+xml':
-                                this.mathmlElement.removeAttribute('hidden');
-                                break;
-                            case 'OFFICEOPENXMLMATH':
-                            case 'application/mathofficeXML':
-                                this.officeopenxmlElement.removeAttribute('hidden');
-                                break;
-                            case 'SYMBOLTREE':
-                                this.symboltreeElement.removeAttribute('hidden');
-                                break;
-                            default:
-                                this.htmlElement.removeAttribute('hidden');
-                                break;
-                        }
+                        notify: true
                     }
                 },
                 /**
                  * @private
                  */
-                _exportsChanged: function (exports) {
-                    this.htmlElement.innerHTML = '';
-                    this.latexElement.innerText = '';
-                    this.mathmlElement.innerText = '';
-                    this.officeopenxmlElement.innerText = '';
-                    this.symboltreeElement.innerText = '';
-                    if (exports) {
-
-                        /**
-                         * Replace latex strings with similar one compatible with katex.
-                         * @param latex
-                         */
-                        function clean(latex) {
-                            return latex
-                                .replace("\\overrightarrow", "\\vec")
-                                .replace("\\llbracket", "\\lbracket")
-                                .replace("\\rrbracket", "\\rbracket")
-                                .replace("\\widehat", "\\hat")
-                                .replace(new RegExp("(align.{1})", "g"), "aligned");
-                        }
-
-                        // Updating the rendering zone displayed with KaTex (taking the latex export as an input)
-                        var latexResult = exports['application/x-latex'] ? exports['application/x-latex'] : exports.LATEX;
-                        if (latexResult) {
-                            this.latexElement.innerText = latexResult;
-                            try {
-                                katex.render(clean(latexResult), this.htmlElement);
-                            } catch (e) {
-                                this.htmlElement.innerHTML = '<span>' + clean(latexResult) + '</span>';
-                            }
-                        }
-                        var mathmlResult = exports['application/mathml+xml'] ? exports['application/mathml+xml'] : exports.MATHML;
-                        if (mathmlResult) {
-                            this.mathmlElement.innerText = mathmlResult;
-                        }
-
-                        var officexmlmathResult = exports['application/mathofficeXML'] ? exports['application/mathofficeXML'] : exports.OFFICEOPENXMLMATH;
-                        if (officexmlmathResult) {
-                            this.officeopenxmlElement.innerText = officexmlmathResult;
-                        }
-
-                        var symboltreeResult = exports.SYMBOLTREE;
-                        if (symboltreeResult) {
-                            this.symboltreeElement.innerText = JSON.stringify(symboltreeResult);
-                        }
+                _getLatex: function (exports) {
+                    if (exports['application/x-latex']) {
+                        return exports['application/x-latex']
                     }
+                    return exports.LATEX;
+                },
+                /**
+                 * @private
+                 */
+                _getMathml: function (exports) {
+                    if (exports['application/mathml+xml']) {
+                        return exports['application/mathml+xml']
+                    }
+                    return exports.MATHML;
+                },
+                /**
+                 * @private
+                 */
+                _getOfficeopenxml: function (exports) {
+                    if (exports['application/mathofficeXML']) {
+                        return exports['application/mathofficeXML']
+                    }
+                    return exports.OFFICEOPENXMLMATH;
+                },
+                /**
+                 * @private
+                 */
+                _getSymboltree: function (exports) {
+                    return JSON.stringify(exports.SYMBOLTREE);
+                },
+                /**
+                 * @private
+                 */
+                _displaymath: function (resulttypes, mimetypes) {
+                    return !((resulttypes.length > 0) || (mimetypes.length > 0));
+                },
+                /**
+                 * @private
+                 */
+                _displaylatex: function (resulttypes, mimetypes) {
+                    return (resulttypes.indexOf('LATEX') > -1) || (mimetypes.indexOf('application/x-latex') > -1);
+                },
+                /**
+                 * @private
+                 */
+                _displaymathml: function (resulttypes, mimetypes) {
+                    return (resulttypes.indexOf('MATHML') > -1) || (mimetypes.indexOf('application/mathml+xml') > -1);
+                },
+                /**
+                 * @private
+                 */
+                _displayofficeopenxml: function (resulttypes, mimetypes) {
+                    return (resulttypes.indexOf('OFFICEOPENXMLMATH') > -1) || (mimetypes.indexOf('application/mathofficeXML') > -1);
+                },
+                /**
+                 * @private
+                 */
+                _displaysymboltree: function (resulttypes, mimetypes) {
+                    return resulttypes.indexOf('SYMBOLTREE') > -1;
                 }
             }
     );
