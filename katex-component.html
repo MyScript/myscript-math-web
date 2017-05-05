@@ -16,42 +16,26 @@
     Polymer({
                 is: 'katex-component',
                 properties: {
-                    latex: {
+                    value: {
                         type: String,
                         notify: true,
                         reflectToAttribute: true,
-                        observer: '_latexChanged'
+                        observer: '_valueChanged'
                     }
                 },
                 /**
                  * @private
                  */
-                _latexChanged: function (latex) {
-                    this.innerHTML = '';
-                    if (latex) {
-
+                _valueChanged: function (value) {
+                    this.innerText = '';
+                    if (value) {
                         // Updating the rendering zone displayed with KaTex (taking the latex export as an input)
                         try {
-                            katex.render(this._clean(latex), this);
+                            katex.render(value, this);
                         } catch (e) {
-                            this.innerHTML = '<span>' + this._clean(latex) + '</span>';
+                            this.innerText = value;
                         }
                     }
-                },
-
-
-                /**
-                 * Replace latex strings with similar one compatible with katex.
-                 * @param latex
-                 * @private
-                 */
-                _clean: function (latex) {
-                    return latex
-                        .replace("\\overrightarrow", "\\vec")
-                        .replace("\\llbracket", "\\lbracket")
-                        .replace("\\rrbracket", "\\rbracket")
-                        .replace("\\widehat", "\\hat")
-                        .replace(new RegExp("(align.{1})", "g"), "aligned");
                 }
             }
     );
