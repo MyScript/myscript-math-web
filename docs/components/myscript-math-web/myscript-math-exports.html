@@ -11,25 +11,26 @@
             min-height: 60px;
             overflow: auto;
         }
+
         .export {
             flex-grow: 1;
         }
     </style>
     <template>
         <template is="dom-if" if="[[ _displaymath(resulttypes, mimetypes) ]]">
-            <katex-component latex="[[ _getLatex(exports) ]]" class="export"></katex-component>
+            <katex-component value="[[ _getLatexCleaned(exports) ]]" class="export math">[[ _getLatexCleaned(exports) ]]</katex-component>
         </template>
         <template is="dom-if" if="[[ _displaylatex(resulttypes, mimetypes) ]]">
             <div class="export latex">[[ _getLatex(exports) ]]</div>
         </template>
         <template is="dom-if" if="[[ _displaymathml(resulttypes, mimetypes) ]]">
-            <div class="export">[[ _getMathml(exports) ]]</div>
+            <div class="export mathml">[[ _getMathml(exports) ]]</div>
         </template>
         <template is="dom-if" if="[[ _displayofficeopenxml(resulttypes, mimetypes) ]]">
-            <div class="export">[[ _getOfficeopenxml(exports) ]]</div>
+            <div class="export mathofficexml">[[ _getOfficeopenxml(exports) ]]</div>
         </template>
         <template is="dom-if" if="[[ _displaysymboltree(resulttypes, mimetypes) ]]">
-            <div class="export">[[ _getSymboltree(exports) ]]</div>
+            <div class="export symboltree">[[ _getSymboltree(exports) ]]</div>
         </template>
     </template>
 </dom-module>
@@ -73,6 +74,14 @@
                         return exports['application/x-latex']
                     }
                     return exports.LATEX;
+                },
+                _getLatexCleaned: function (exports) {
+                    return this._getLatex(exports)
+                        .replace("\\overrightarrow", "\\vec")
+                        .replace("\\llbracket", "\\lbracket")
+                        .replace("\\rrbracket", "\\rbracket")
+                        .replace("\\widehat", "\\hat")
+                        .replace(new RegExp("(align.{1})", "g"), "aligned");
                 },
                 /**
                  * @private
