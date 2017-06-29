@@ -7,7 +7,7 @@ PEP polyfills pointer events in all browsers that haven't yet implemented them, 
 ## Getting Started
 
 1. Place the PEP script in the document head
-  - `<script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>`
+  - `<script src="https://code.jquery.com/pep/0.4.2/pep.js"></script>`
 
 1. By default, no pointer events are sent from an element. This maximizes the possibility that a browser can deliver smooth scrolling and jank-free gestures. If you want to receive events, you must set the `touch-action` property of that element. Set up some elements to create events with the [`touch-action` attribute](http://www.w3.org/TR/pointerevents/#the-touch-action-css-property).
 
@@ -30,7 +30,7 @@ PEP polyfills pointer events in all browsers that haven't yet implemented them, 
   <title>PEP (Pointer Events Polyfill)</title>
   <meta name="viewport" content="width=device-width">
   <!-- include PEP -->
-  <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+  <script src="https://code.jquery.com/pep/0.4.2/pep.js"></script>
 </head>
 <body>
 <button id="b" touch-action="none">Test button!</button>
@@ -63,10 +63,6 @@ $("#canvas").on("pointermove", function(event) {
 Check out [this jsbin demo](http://jsbin.com/bojumofowa/1/edit?html,css,js,output) for a full demo.
 
 jQuery doesn't copy all properties from the original event object to the event object provided in the event handler. You can find [a list of copied and normalized properties on the jQuery API docs](http://api.jquery.com/category/events/event-object/). To access any other original properties, use `event.originalEvent`.
-
-### Using PEP with React
-
-React doesn't support Pointer Events or `touch-action` natively, but check out the [&lt;Pointable/&gt; component](https://www.npmjs.com/package/react-pointable) on npm for a declarative way of integrating PEP / Pointer Events into a React project.
 
 
 ## Why Pointer Events?
@@ -103,10 +99,6 @@ According to the spec, the
 Due to the difficult nature of polyfilling new CSS properties, this library will use a touch-action *attribute* instead. In addition, run time changes involving the `touch-action` attribute will be monitored for maximum flexibility.
 
 Touches will not generate events unless inside of an area that has a valid `touch-action` attribute defined. This is to maintain composition scrolling optimizations where possible.
-
-## navigator.maxTouchPoints
-
-As the information necessary to populate [`navigator.maxTouchPoints`](https://www.w3.org/TR/pointerevents/#extensions-to-the-navigator-interface) is not available in browsers that do not natively implement pointer events, PEP sets the value to `0`, which is "the minimum number guaranteed to be recognized" as required by the specification.
 
 ### Browser Compatibility
 

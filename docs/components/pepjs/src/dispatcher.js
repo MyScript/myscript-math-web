@@ -313,16 +313,9 @@ var dispatcher = {
   propagate: function(event, fn, propagateDown) {
     var target = event.target;
     var targets = [];
-
-    // Order of conditions due to document.contains() missing in IE.
-    while (target !== document && !target.contains(event.relatedTarget)) {
+    while (!target.contains(event.relatedTarget) && target !== document) {
       targets.push(target);
       target = target.parentNode;
-
-      // Touch: Do not propagate if node is detached.
-      if (!target) {
-        return;
-      }
     }
     if (propagateDown) {
       targets.reverse();
@@ -332,39 +325,28 @@ var dispatcher = {
       fn.call(this, event);
     }, this);
   },
-  setCapture: function(inPointerId, inTarget, skipDispatch) {
+  setCapture: function(inPointerId, inTarget) {
     if (this.captureInfo[inPointerId]) {
-      this.releaseCapture(inPointerId, skipDispatch);
+      this.releaseCapture(inPointerId);
     }
-
     this.captureInfo[inPointerId] = inTarget;
-    this.implicitRelease = this.releaseCapture.bind(this, inPointerId, skipDispatch);
-    document.addEventListener('pointerup', this.implicitRelease);
-    document.addEventListener('pointercancel', this.implicitRelease);
-
     var e = new PointerEvent('gotpointercapture');
     e.pointerId = inPointerId;
+    this.implicitRelease = this.releaseCapture.bind(this, inPointerId);
+    document.addEventListener('pointerup', this.implicitRelease);
+    document.addEventListener('pointercancel', this.implicitRelease);
     e._target = inTarget;
-
-    if (!skipDispatch) {
-      this.asyncDispatchEvent(e);
-    }
+    this.asyncDispatchEvent(e);
   },
-  releaseCapture: function(inPointerId, skipDispatch) {
+  releaseCapture: function(inPointerId) {
     var t = this.captureInfo[inPointerId];
-    if (!t) {
-      return;
-    }
-
-    this.captureInfo[inPointerId] = undefined;
-    document.removeEventListener('pointerup', this.implicitRelease);
-    document.removeEventListener('pointercancel', this.implicitRelease);
-
-    var e = new PointerEvent('lostpointercapture');
-    e.pointerId = inPointerId;
-    e._target = t;
-
-    if (!skipDispatch) {
+    if (t) {
+      var e = new PointerEvent('lostpointercapture');
+      e.pointerId = inPointerId;
+      this.captureInfo[inPointerId] = undefined;
+      document.removeEventListener('pointerup', this.implicitRelease);
+      document.removeEventListener('pointercancel', this.implicitRelease);
+      e._target = t;
       this.asyncDispatchEvent(e);
     }
   },

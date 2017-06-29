@@ -85,8 +85,6 @@ function PointerEvent(inType, inDict) {
   e.pressure = pressure;
   e.tiltX = inDict.tiltX || 0;
   e.tiltY = inDict.tiltY || 0;
-  e.twist = inDict.twist || 0;
-  e.tangentialPressure = inDict.tangentialPressure || 0;
   e.pointerType = inDict.pointerType || '';
   e.hwTimestamp = inDict.hwTimestamp || 0;
   e.isPrimary = inDict.isPrimary || false;
