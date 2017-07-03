@@ -1,27 +1,39 @@
-# This will be used as default EditorConfig for repos that don't have their own.
-# It's saved automatically as you type.
-# You can find docs at http://editorconfig.org
-
-root = true
-
 [*]
+charset=utf-8
+end_of_line=lf
+insert_final_newline=false
+indent_style=space
+indent_size=4
 
-# Change these settings to your own preference
-indent_style = space
-indent_size = 4
+[{.babelrc,.stylelintrc,.eslintrc,jest.config,*.json,*.jsb3,*.jsb2,*.bowerrc}]
+indent_style=space
+indent_size=2
 
-# We recommend you to keep these unchanged
-end_of_line = lf
-charset = utf-8
-trim_trailing_whitespace = true
-insert_final_newline = true
+[{*.applejs,*.js}]
+indent_style=space
+indent_size=2
 
-[*.md]
-trim_trailing_whitespace = false
+[*.js.flow]
+indent_style=space
+indent_size=2
 
-[{package,bower}.json]
-indent_style = space
-indent_size = 2
+[{jshint.json,*.jshintrc}]
+indent_style=space
+indent_size=2
 
-[Makefile]
-indent_style = tab
+[{*.jscs.json,*.jscsrc}]
+indent_style=space
+indent_size=2
+
+[*.scss]
+indent_style=space
+indent_size=2
+
+[*.coffee]
+indent_style=space
+indent_size=2
+
+[{.analysis_options,*.yml,*.yaml}]
+indent_style=space
+indent_size=2
+
