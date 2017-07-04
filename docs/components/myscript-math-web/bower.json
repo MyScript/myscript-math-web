@@ -26,15 +26,17 @@
     "!myscript-math-exports.html",
     "!myscript-math-web.html",
     "!katex-import.html",
+    "!index.html",
+    "!analysis.json",
     "!bower.json",
     "!demo/**/*"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#1.9.x",
+    "polymer": "Polymer/polymer#^2.0.1",
     "myscript-common-element": "2.0.0-alpha1",
-    "KaTeX": "katex#0.7.x"
+    "KaTeX": "katex#^0.7.1"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
+    "iron-component-page": "PolymerElements/iron-component-page#^3.0.0"
   }
 }

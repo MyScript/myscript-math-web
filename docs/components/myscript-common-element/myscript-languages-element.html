@@ -1,3 +1,4 @@
+<link rel="import" href="./myscriptjs-import.html">
 <link rel="import" href="../polymer/polymer.html">
 <!--
 `myscript-languages-element` is a web component to retrieve CDK available languages.
@@ -10,168 +11,159 @@
 @demo
 -->
 <dom-module id="myscript-languages-element">
-    <script src="../myscript/dist/myscript.min.js"></script>
     <script>
-        Polymer({
-                    is: 'myscript-languages-element',
+        class MyScriptLanguagesElement extends Polymer.Element {
 
+            static get is() {
+                return 'myscript-languages-element'
+            }
+
+            static get properties() {
+                return {
                     /**
-                     * Fired when languages changed.
-                     * @event change
+                     * <b>not mutable</b><br />
+                     * The current recognition type (e.g. TEXT or ANALYZER)
                      */
-
+                    type: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'TEXT'
+                    },
                     /**
-                     * Fired on error.
-                     * @event error
+                     * Scheme to use to connect to MyScript Cloud or Server. (https or http)
                      */
-
-                    properties: {
-                        /**
-                         * <b>not mutable</b><br />
-                         * The current recognition type (e.g. TEXT or ANALYZER)
-                         */
-                        type: {
-                            type: String,
-                            reflectToAttribute: true,
-                            value: 'TEXT'
-                        },
-                        /**
-                         * Scheme to use to connect to MyScript Cloud or Server. (https or http)
-                         */
-                        scheme: {
-                            type: String,
-                            reflectToAttribute: true,
-                            value: 'https'
-                        },
-                        /**
-                         * The current recognition service host.
-                         */
-                        host: {
-                            type: String,
-                            reflectToAttribute: true,
-                            value: 'cloud.myscript.com'
-                        },
-                        /**
-                         * Application key to use for recognition on MyScript handwriting recognition server.<br />
-                         * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
-                         * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
-                         */
-                        applicationkey: {
-                            type: String,
-                            reflectToAttribute: true
-                        },
-                        /**
-                         * Language list sorts by values parameter. If false, language list sort by canonical name
-                         */
-                        sortbyvalue: {
-                            type: Boolean,
-                            reflectToAttribute: true,
-                            value: true
-                        },
-                        /**
-                         * Languages List
-                         */
-                        languages: {
-                            type: Object,
-                            notify: true
-                        },
-                        /**
-                         * Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.
-                         * (see demo/languages-selector-init.html for a better understanding)
-                         */
-                        unloaded: {
-                            type: Boolean,
-                            value: true,
-                            notify: true,
-                            reflectToAttribute: true,
-                            observer: 'unloadedChanged'
-                        },
-                        /**
-                         * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
-                         * Configuration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.
-                         * Configuration values are not reflected to myscript-languages-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).
-                         */
-                        configuration: {
-                            type: Object,
-                            notify: true
-                        },
-                        /**
-                         * True to display console output, false otherwise.
-                         */
-                        debug: {
-                            type: Boolean,
-                            value: false,
-                            reflectToAttribute: true
-                        }
+                    scheme: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'https'
                     },
-                    unloadedChanged: function (unloaded) {
-                        if (this.connected === true && unloaded === true) {
-                            this.logger.trace('unloaded changed', unloaded);
-                            this.getLanguages(this);
-                        }
-                    },
-                    // Will be renamed connected with pure custom element support
-                    attached: function () {
-                        this.logger = MyScript.LoggerConfig.getLogger('languages-element');
-                        this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
-                        this.logger.info('attached callback');
-                        this.connected = true;
-                        this.unloadedChanged(this.unloaded);
-                    },
-
                     /**
-                     * Build the configuration to pass to editor.
-                     * @private
+                     * The current recognition service host.
                      */
-                    buildConfiguration: function () {
-                        if (!this.configuration) {
-                            this.configuration = {};
-                        }
-                        this.configuration.recognitionTriggerDelay = this.recognitiontriggerdelay;
-                        this.configuration.recognitionProcessDelay = this.recognitionprocessdelay;
-                        if (this.protocol === 'REST') {
-                            this.configuration.recognitionTriggerOn = 'QUIET_PERIOD';
-                        } else {
-                            this.configuration.recognitionTriggerOn = 'POINTER_UP';
-                        }
-                        if (!this.configuration.recognitionParams) {
-                            this.configuration.recognitionParams = {};
-                        }
-                        this.configuration.recognitionParams.type = this.type;
-                        this.configuration.recognitionParams.protocol = this.protocol;
-                        this.configuration.recognitionParams.apiVersion = this.apiversion;
-                        if (!this.configuration.recognitionParams.server) {
-                            this.configuration.recognitionParams.server = {};
-                        }
-                        this.configuration.recognitionParams.server.scheme = this.scheme;
-                        this.configuration.recognitionParams.server.host = this.host;
-                        this.configuration.recognitionParams.server.applicationKey = this.applicationkey;
-                        this.configuration.recognitionParams.server.hmacKey = this.hmackey;
-                        this.configuration.recognitionParams.server.scheme = this.scheme;
-                        return this.configuration;
+                    host: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'cloud.myscript.com'
                     },
-
                     /**
-                     * @private
+                     * Application key to use for recognition on MyScript handwriting recognition server.<br />
+                     * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
+                     * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
                      */
-                    getLanguages: function (languageElement) {
-                        MyScript.getAvailableLanguageList(languageElement.buildConfiguration(), languageElement.sortbyvalue)
-                            .then(function (res) {
-                                var languages = [];
-                                Object.keys(res.result).forEach(function (key) {
-                                    languages.push({ 'value': key, 'description': res.result[key] });
-                                });
-                                languageElement.languages = languages;
-                                languageElement.dispatchEvent(new CustomEvent('change', { detail: languageElement.languages }));
-                                languageElement.unloaded = false;
-                            })
-                            .catch(function (err) {
-                                languageElement.languages = [];
-                                languageElement.unloaded = false;
-                                languageElement.dispatchEvent(new CustomEvent('error', { detail: err }));
-                            });
+                    applicationkey: {
+                        type: String,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * Language list sorts by values parameter. If false, language list sort by canonical name
+                     */
+                    sortbyvalue: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: true
+                    },
+                    /**
+                     * Languages List
+                     */
+                    languages: {
+                        type: Object,
+                        notify: true
+                    },
+                    /**
+                     * Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.
+                     * (see demo/languages-selector-init.html for a better understanding)
+                     */
+                    unloaded: {
+                        type: Boolean,
+                        value: true,
+                        notify: true,
+                        reflectToAttribute: true,
+                        observer: '_unloadedChanged'
+                    },
+                    /**
+                     * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
+                     * Configuration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.
+                     * Configuration values are not reflected to myscript-languages-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).
+                     */
+                    configuration: {
+                        type: Object,
+                        notify: true
+                    },
+                    /**
+                     * True to display console output, false otherwise.
+                     */
+                    debug: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true
                     }
                 }
-        );
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
+
+                this.logger = MyScript.LoggerConfig.getLogger('languages-element');
+                this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+                this.logger.info('attached callback');
+                this.connected = true;
+                this._unloadedChanged(this.unloaded);
+            }
+
+            _unloadedChanged(unloaded) {
+                if (this.connected === true && unloaded === true) {
+                    this.logger.trace('unloaded changed', unloaded);
+                    this._getLanguages(this);
+                }
+            }
+
+            _buildConfiguration() {
+                if (!this.configuration) {
+                    this.configuration = {};
+                }
+                this.configuration.recognitionTriggerDelay = this.recognitiontriggerdelay;
+                this.configuration.recognitionProcessDelay = this.recognitionprocessdelay;
+                if (this.protocol === 'REST') {
+                    this.configuration.recognitionTriggerOn = 'QUIET_PERIOD';
+                } else {
+                    this.configuration.recognitionTriggerOn = 'POINTER_UP';
+                }
+                if (!this.configuration.recognitionParams) {
+                    this.configuration.recognitionParams = {};
+                }
+                this.configuration.recognitionParams.type = this.type;
+                this.configuration.recognitionParams.protocol = this.protocol;
+                this.configuration.recognitionParams.apiVersion = this.apiversion;
+                if (!this.configuration.recognitionParams.server) {
+                    this.configuration.recognitionParams.server = {};
+                }
+                this.configuration.recognitionParams.server.scheme = this.scheme;
+                this.configuration.recognitionParams.server.host = this.host;
+                this.configuration.recognitionParams.server.applicationKey = this.applicationkey;
+                this.configuration.recognitionParams.server.hmacKey = this.hmackey;
+                this.configuration.recognitionParams.server.scheme = this.scheme;
+                return this.configuration;
+            }
+
+            _getLanguages(languageElement) {
+                MyScript.getAvailableLanguageList(languageElement._buildConfiguration(), languageElement.sortbyvalue)
+                    .then((res) => {
+                        languageElement.languages = Object
+                            .keys(res.result)
+                            .map((key) => {
+                                return { 'value': key, 'description': res.result[key] };
+                            });
+                        languageElement.dispatchEvent(new CustomEvent('change', { detail: languageElement.languages }));
+                        languageElement.unloaded = false;
+                    })
+                    .catch((err) => {
+                        languageElement.languages = [];
+                        languageElement.unloaded = false;
+                        languageElement.dispatchEvent(new CustomEvent('error', { detail: err }));
+                    });
+            }
+
+        }
+        customElements.define(MyScriptLanguagesElement.is, MyScriptLanguagesElement);
     </script>
 </dom-module>

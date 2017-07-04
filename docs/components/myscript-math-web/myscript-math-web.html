@@ -1,4 +1,4 @@
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
 <link rel="import" href="./myscript-math-exports.html">
 <!--
@@ -9,42 +9,50 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-math-web>
 
-@demo
+@demo demo/customstyle.html
+@demo demo/debug.html
+@demo demo/index.html
+@demo demo/init-error.html
+@demo demo/legacy.html
+@demo demo/officeopenxml.html
+@demo demo/programmatic-init.html
+@demo demo/stats.html
+@demo demo/symboltree.html
 -->
 <dom-module id="myscript-math-web">
-    <style>
-        :host {
-            box-sizing: border-box;
-            touch-action: none;
-            display: block;
-            --myscript-common-element-color: var(--myscript-math-web-color, #FFFFFF);
-            --myscript-common-element-background-color: var(--myscript-math-web-background-color, #1A9FFF);
-            --myscript-common-element-focus-background-color: var(--myscript-math-web-focus-background-color, #1A9FFF);
-            --myscript-common-element-disabled-background-color: var(--myscript-math-web-disabled-background-color, #F5F6F7);
-
-            --myscript-math-exports-color: #1A9FFF;
-        }
-
-        [hidden] {
-            display: none;
-        }
-
-        myscript-math-exports {
-            height: 100px;
-            font-size: larger;
-            overflow: auto;
-        }
-
-        myscript-common-element {
-            height: calc(100% - 100px);
-        }
-
-        myscript-math-exports[hidden] + myscript-common-element {
-            height: 100%;
-        }
-    </style>
     <template>
-        <myscript-math-exports hidden="[[ !displayExports(hideexports, unloaded) ]]"
+        <style>
+            :host {
+                box-sizing: border-box;
+                touch-action: none;
+                display: block;
+                --myscript-common-element-color: var(--myscript-math-web-color, #FFFFFF);
+                --myscript-common-element-background-color: var(--myscript-math-web-background-color, #1A9FFF);
+                --myscript-common-element-focus-background-color: var(--myscript-math-web-focus-background-color, #1A9FFF);
+                --myscript-common-element-disabled-background-color: var(--myscript-math-web-disabled-background-color, #F5F6F7);
+
+                --myscript-math-exports-color: #1A9FFF;
+            }
+
+            [hidden] {
+                display: none;
+            }
+
+            myscript-math-exports {
+                height: 100px;
+                font-size: larger;
+                overflow: auto;
+            }
+
+            myscript-common-element {
+                height: calc(100% - 100px);
+            }
+
+            myscript-math-exports[hidden] + myscript-common-element {
+                height: 100%;
+            }
+        </style>
+        <myscript-math-exports hidden="[[ !_displayExports(hideexports, unloaded) ]]"
                                exports="{{ exports }}"
                                debug="{{ debug }}">
         </myscript-math-exports>
@@ -73,12 +81,15 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             debug="{{ debug }}">
         </myscript-common-element>
     </template>
-</dom-module>
+    <script>
+        class MyScriptMathWeb extends Polymer.Element {
 
-<script>
-    Polymer({
-                is: 'myscript-math-web',
-                properties: {
+            static get is() {
+                return 'myscript-math-web'
+            }
+
+            static get properties() {
+                return {
                     // ----------------------------------------------------------------------------------------------
                     // The following section is a recopy of myscript-common-element attributes
                     // Polymer documentation generation prevent from reusing attributes from another element.
@@ -166,7 +177,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         value: true,
                         notify: true,
                         reflectToAttribute: true,
-                        observer: 'unloadedChanged'
+                        observer: '_unloadedChanged'
                     },
                     /**
                      * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
@@ -353,185 +364,161 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         value: false,
                         reflectToAttribute: true
                     }
-                },
-                //-----------------------------------------------------------------------
-                //---------  Wrapping of myscript-common-element  methods    ------------
-                //-----------------------------------------------------------------------
-                /**
-                 * Clear all context
-                 */
-                clear: function () {
-                    if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.clear();
-                    }
-                },
-                /**
-                 * Undo action, and launch recognition if timeout is set
-                 */
-                undo: function () {
-                    if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.undo();
-                    }
-                },
-                /**
-                 * Redo action, and launch recognition if timeout is set
-                 */
-                redo: function () {
-                    if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.redo();
-                    }
-                },
-                /**
-                 * Launch export
-                 */
-                askForExport: function (exports) {
-                    if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.askForExport(exports);
-                    }
-                },
-                /**
-                 * Return the stats allowing to monitor what ink size is send to the server.
-                 * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
-                 */
-                getStats: function () {
-                    if (this.myscriptcommonelement) {
-                        return this.myscriptcommonelement.getStats();
-                    }
-                },
-                //-----------------------------------------------------------------------
-                //---------  Wrapping END                                    ------------
-                //-----------------------------------------------------------------------
-                unloadedChanged: function (unloaded) {
-                    this.buildConfiguration();
-                    if (unloaded === true) {
-                        if (this.myscriptcommonelement && !this.initializing) {
-                            this.myscriptcommonelement.unloaded = true;
-                        }
-                    }
-                },
-                // Will be renamed connected with pure custom element support
-                attached: function () {
+                }
+            }
 
-                    /**
-                     * Function returning the root dom element whatever shadow or shady dom is used.
-                     * @param domElement
-                     * @returns {*}
-                     */
-                    function qsWrapper(domElement) {
-                        if (domElement.shadowRoot) {
-                            return domElement.shadowRoot;
-                        } else {
-                            return domElement;
-                        }
+            //-----------------------------------------------------------------------
+            //---------  Wrapping of myscript-common-element  methods    ------------
+            //-----------------------------------------------------------------------
+            /**
+             * Clear all context
+             */
+            clear() {
+                if (this.myscriptcommonelement) {
+                    this.myscriptcommonelement.clear();
+                }
+            }
+
+            /**
+             * Undo action, and launch recognition if timeout is set
+             */
+            undo() {
+                if (this.myscriptcommonelement) {
+                    this.myscriptcommonelement.undo();
+                }
+            }
+
+            /**
+             * Redo action, and launch recognition if timeout is set
+             */
+            redo() {
+                if (this.myscriptcommonelement) {
+                    this.myscriptcommonelement.redo();
+                }
+            }
+
+            /**
+             * Launch export
+             */
+            askForExport(exports) {
+                if (this.myscriptcommonelement) {
+                    this.myscriptcommonelement.askForExport(exports);
+                }
+            }
+
+            /**
+             * Return the stats allowing to monitor what ink size is send to the server.
+             * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+             */
+            getStats() {
+                if (this.myscriptcommonelement) {
+                    return this.myscriptcommonelement.getStats();
+                }
+            }
+
+            //-----------------------------------------------------------------------
+            //---------  Wrapping END                                    ------------
+            //-----------------------------------------------------------------------
+            _unloadedChanged(unloaded) {
+                this._buildConfiguration();
+                if (unloaded === true) {
+                    if (this.myscriptcommonelement && !this.initializing) {
+                        this.myscriptcommonelement.unloaded = true;
                     }
+                }
+            }
 
-                    this.logger = MyScript.LoggerConfig.getLogger('math-web');
-                    this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+            connectedCallback() {
+                super.connectedCallback();
 
-                    this.initializing = true;
-                    this.logger.info('attached callback');
-                    this.myscriptcommonelement = qsWrapper(this).querySelector('myscript-common-element');
-                    this.myscriptcommonelement.configuration = this.buildConfiguration();
+                this.logger = MyScript.LoggerConfig.getLogger('math-web');
+                this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
 
-                    this.attachListener(this);
+                this.initializing = true;
+                this.logger.info('attached callback');
+                this.myscriptcommonelement = this.shadowRoot.querySelector('myscript-common-element');
+                this.myscriptcommonelement.configuration = this._buildConfiguration();
 
-                    this.logger.info('attached');
-                    this.initializing = false;
-                },
-                detached: function () {
-                    this.logger.info('detached callback');
-                    this.detachListener(this);
-                    this.logger.info('detached');
-                },
-                /**
-                 * @private
-                 */
-                attachListener: function (myscriptMathWebElement) {
-                    function commonElementListener(event) {
-                        myscriptMathWebElement.logger.trace(event.type + ' event intercepted', event);
+                this.currentListeners = {};
+                Object
+                    .keys(MyScript.Constants.EventType)
+                    .map(key => MyScript.Constants.EventType[key])
+                    .forEach(type => this.currentListeners[type] = (event) => {
+                        this.logger.trace(event.type + ' event intercepted', event);
                         switch (event.type) {
                             case MyScript.Constants.EventType.LOADED:
-                                myscriptMathWebElement.unloaded = false;
+                                this.unloaded = false;
                                 break;
                             default:
                                 break;
                         }
                         // Just forwarding event there.
-                        myscriptMathWebElement.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
-                    }
-
-                    const eventTypes = Object.keys(MyScript.Constants.EventType).map(function (key) {
-                        return MyScript.Constants.EventType[key];
+                        this.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
                     });
 
-                    myscriptMathWebElement.currentListeners = {};
-                    eventTypes.forEach(function (type) {
-                        myscriptMathWebElement.currentListeners[type] = commonElementListener;
-                    });
-                    Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
-                        myscriptMathWebElement.myscriptcommonelement.addEventListener(type, myscriptMathWebElement.currentListeners[type])
-                    });
-                },
+                Object
+                    .keys(this.currentListeners)
+                    .forEach(type => this.myscriptcommonelement.addEventListener(type, this.currentListeners[type]));
 
-                /**
-                 * @private
-                 */
-                detachListener: function (myscriptMathWebElement) {
-                    Object.keys(myscriptMathWebElement.currentListeners).forEach(function (type) {
-                        myscriptMathWebElement.myscriptcommonelement.removeEventListener(type, myscriptMathWebElement.currentListeners[type])
-                    });
-                },
-
-                /**
-                 * @private
-                 */
-                buildConfiguration: function () {
-                    if (!this.configuration) {
-                        this.configuration = {};
-                    }
-                    if (!this.configuration.recognitionParams) {
-                        this.configuration.recognitionParams = {};
-                    }
-
-                    if (!this.configuration.recognitionParams.v3) {
-                        this.configuration.recognitionParams.v3 = {};
-                    }
-                    if (!this.configuration.recognitionParams.v3.mathParameter) {
-                        this.configuration.recognitionParams.v3.mathParameter = {};
-                    }
-
-                    this.configuration.recognitionParams.v3.mathParameter.resultTypes = this.resulttypes;
-                    this.configuration.recognitionParams.v3.mathParameter.columnarOperation = this.columnaroperation;
-                    this.configuration.recognitionParams.v3.mathParameter.userResources = this.userresources;
-                    this.configuration.recognitionParams.v3.mathParameter.scratchOutDetectionSensitivity = this.scratchoutdetectionsensitivity;
-
-                    if (!this.configuration.recognitionParams.v4) {
-                        this.configuration.recognitionParams.v4 = {};
-                    }
-                    if (!this.configuration.recognitionParams.v4.math) {
-                        this.configuration.recognitionParams.v4.math = {};
-                    }
-                    if (!this.configuration.recognitionParams.v4.math.solver) {
-                        this.configuration.recognitionParams.v4.math.solver = {};
-                    }
-
-                    this.configuration.recognitionParams.v4.math.mimeTypes = this.mimetypes;
-                    this.configuration.recognitionParams.v4.math.solver.enable = this.solverenable;
-                    this.configuration.recognitionParams.v4.math.solver['fractional-part-digits'] = this.solverfractionalpartdigit;
-                    this.configuration.recognitionParams.v4.math.solver['decimal-separator'] = this.solverdecimalseparator;
-                    this.configuration.recognitionParams.v4.math.solver['rounding-mode'] = this.solverroundingmode;
-                    this.configuration.recognitionParams.v4.math.solver['angle-unit'] = this.solverangleunit;
-                    return this.configuration;
-                },
-
-                /**
-                 * @private
-                 */
-                displayExports: function (hideExports, unloaded) {
-                    var display = !hideExports && ( !unloaded || unloaded === true);
-                    // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
-                    return display;
-                }
+                this.logger.info('attached');
+                this.initializing = false;
             }
-    );
-</script>
+
+            disconnectedCallback() {
+                super.disconnectedCallback();
+
+                this.logger.info('detached callback');
+                Object
+                    .keys(this.currentListeners)
+                    .forEach(type => this.myscriptcommonelement.removeEventListener(type, this.currentListeners[type]));
+                this.logger.info('detached');
+            }
+
+            _buildConfiguration() {
+                if (!this.configuration) {
+                    this.configuration = {};
+                }
+                if (!this.configuration.recognitionParams) {
+                    this.configuration.recognitionParams = {};
+                }
+
+                if (!this.configuration.recognitionParams.v3) {
+                    this.configuration.recognitionParams.v3 = {};
+                }
+                if (!this.configuration.recognitionParams.v3.mathParameter) {
+                    this.configuration.recognitionParams.v3.mathParameter = {};
+                }
+
+                this.configuration.recognitionParams.v3.mathParameter.resultTypes = this.resulttypes;
+                this.configuration.recognitionParams.v3.mathParameter.columnarOperation = this.columnaroperation;
+                this.configuration.recognitionParams.v3.mathParameter.userResources = this.userresources;
+                this.configuration.recognitionParams.v3.mathParameter.scratchOutDetectionSensitivity = this.scratchoutdetectionsensitivity;
+
+                if (!this.configuration.recognitionParams.v4) {
+                    this.configuration.recognitionParams.v4 = {};
+                }
+                if (!this.configuration.recognitionParams.v4.math) {
+                    this.configuration.recognitionParams.v4.math = {};
+                }
+                if (!this.configuration.recognitionParams.v4.math.solver) {
+                    this.configuration.recognitionParams.v4.math.solver = {};
+                }
+
+                this.configuration.recognitionParams.v4.math.mimeTypes = this.mimetypes;
+                this.configuration.recognitionParams.v4.math.solver.enable = this.solverenable;
+                this.configuration.recognitionParams.v4.math.solver['fractional-part-digits'] = this.solverfractionalpartdigit;
+                this.configuration.recognitionParams.v4.math.solver['decimal-separator'] = this.solverdecimalseparator;
+                this.configuration.recognitionParams.v4.math.solver['rounding-mode'] = this.solverroundingmode;
+                this.configuration.recognitionParams.v4.math.solver['angle-unit'] = this.solverangleunit;
+                return this.configuration;
+            }
+
+            _displayExports(hideExports, unloaded) {
+                // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
+                return !hideExports && ( !unloaded || unloaded === true);
+            }
+
+        }
+        customElements.define(MyScriptMathWeb.is, MyScriptMathWeb);
+    </script>
+</dom-module>

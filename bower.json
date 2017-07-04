@@ -26,6 +26,8 @@
     "!myscript-math-exports.html",
     "!myscript-math-web.html",
     "!katex-import.html",
+    "!index.html",
+    "!analysis.json",
     "!bower.json",
     "!demo/**/*"
   ],

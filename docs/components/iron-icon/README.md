@@ -1,6 +1,6 @@
 [![Build status](https://travis-ci.org/PolymerElements/iron-icon.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-icon)
 
-##&lt;iron-icon&gt;
+## &lt;iron-icon&gt;
 
 The `iron-icon` element displays an icon. By default an icon renders as a 24px square.
 

@@ -24,7 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
 
-  <style is="custom-style" include="demo-pages-shared-styles"></style>
+  <custom-style><style is="custom-style" include="demo-pages-shared-styles"></style></custom-style>
 
 </head>
 
@@ -58,12 +58,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <h3>Toast can be styled</h3>
   <demo-snippet class="centered-demo">
     <template>
-      <style is="custom-style">
+      <custom-style><style is="custom-style">
         #toast2 {
           --paper-toast-background-color: red;
           --paper-toast-color: white;
         }
-      </style>
+      </style></custom-style>
 
       <paper-button raised onclick="toast2.open()">Styled toast</paper-button>
 

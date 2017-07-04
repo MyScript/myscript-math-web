@@ -83,6 +83,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     },
 
+    created: function() {
+      this._meta = new Polymer.IronMeta({type: 'iconset', key: null, value: null});
+    },
+
     attached: function() {
       this.style.display = 'none';
     },
@@ -117,15 +121,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * @return {?Element} The svg element which renders the icon.
      */
     applyIcon: function(element, iconName) {
-      // insert svg element into shadow root, if it exists
-      element = element.root || element;
       // Remove old svg element
       this.removeIcon(element);
       // install new svg element
       var svg = this._cloneIcon(iconName,
           this.rtlMirroring && this._targetIsRTL(element));
       if (svg) {
-        var pde = Polymer.dom(element);
+        // insert svg element into shadow root, if it exists
+        var pde = Polymer.dom(element.root || element);
         pde.insertBefore(svg, pde.childNodes[0]);
         return element._svgIcon = svg;
       }
@@ -140,9 +143,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      */
     removeIcon: function(element) {
       // Remove old svg element
-      element = element.root || element;
       if (element._svgIcon) {
-        Polymer.dom(element).removeChild(element._svgIcon);
+        Polymer.dom(element.root || element).removeChild(element._svgIcon);
         element._svgIcon = null;
       }
     },
@@ -171,7 +173,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      *
      */
     _nameChanged: function() {
-      new Polymer.IronMeta({type: 'iconset', key: this.name, value: this});
+      this._meta.value = null;
+      this._meta.key = this.name;
+      this._meta.value = this;
+
       this.async(function() {
         this.fire('iron-iconset-added', this, {node: window});
       });

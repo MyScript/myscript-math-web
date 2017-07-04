@@ -40,6 +40,6 @@
     "commit": "f2c438af4ef2e9037e5922a1c56414614bb5ce44"
   },
   "_source": "https://github.com/Khan/KaTeX.git",
-  "_target": "0.7.x",
+  "_target": "^0.7.1",
   "_originalSource": "katex"
 }

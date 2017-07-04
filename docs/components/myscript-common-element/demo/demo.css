@@ -23,5 +23,5 @@ select {
 }
 
 myscript-common-element {
-    height: 100%;
+    height: 100vh;
 }

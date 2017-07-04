@@ -73,11 +73,11 @@ This flow is supported by [`<marked-element>`](https://github.com/PolymerElement
     },
 
     attached: function() {
-      (this.parentElement || this.parentNode.host).addEventListener(HIGHLIGHT_EVENT, this._handler);
+      (this.parentNode.host || this.parentElement).addEventListener(HIGHLIGHT_EVENT, this._handler);
     },
 
     detached: function() {
-      (this.parentElement || this.parentNode.host).removeEventListener(HIGHLIGHT_EVENT, this._handler);
+      (this.parentNode.host || this.parentElement).removeEventListener(HIGHLIGHT_EVENT, this._handler);
     },
 
     /**
@@ -102,7 +102,7 @@ This flow is supported by [`<marked-element>`](https://github.com/PolymerElement
      *
      * @param {string} code The source being highlighted.
      * @param {string=} lang A language hint (e.g. ````LANG`).
-     * @return {!prism.Lang}
+     * @return {!Prism.Lang}
      */
     _detectLang: function(code, lang) {
       if (!lang) {

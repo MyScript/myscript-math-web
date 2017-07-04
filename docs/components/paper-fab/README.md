@@ -1,6 +1,6 @@
 [![Build status](https://travis-ci.org/PolymerElements/paper-fab.svg?branch=master)](https://travis-ci.org/PolymerElements/paper-fab)
 
-##&lt;paper-fab&gt;
+## &lt;paper-fab&gt;
 
 Material design: [Floating Action Button](https://www.google.com/design/spec/components/buttons-floating-action-button.html)
 
@@ -18,26 +18,28 @@ See `iron-iconset` for more information about how to use a custom icon set.
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="paper-fab.html">
     <link rel="import" href="../iron-icons/iron-icons.html">
+    <custom-style>
     <style is="custom-style">
       paper-fab {
         display: inline-block;
         margin: 8px;
       }
-      
+
       paper-fab[mini] {
         --paper-fab-background: #FF5722;
       }
-      
+
       paper-fab[label] {
         font-size: 20px;
         --paper-fab-background: #2196F3;
       }
-      
+
       .container {
         display: flex;
         align-items: center;
       }
     </style>
+    </custom-style>
     <div class="container">
       <next-code-block></next-code-block>
     </div>
@@ -51,3 +53,5 @@ See `iron-iconset` for more information about how to use a custom icon set.
 <paper-fab label="😻"></paper-fab>
 ```
 
+### Changes in 2.0
+- Implementation detail: `paper-material` has been replaced with the shared style in `paper-styles/element-styles/paper-material-styles.html`. 

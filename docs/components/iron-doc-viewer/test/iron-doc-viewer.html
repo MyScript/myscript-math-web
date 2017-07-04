@@ -1,3 +1,4 @@
+<!doctype html>
 <!--
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
@@ -7,12 +8,11 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
-<!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>Tests</title>
+    <title>iron-doc-viewer tests</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
@@ -25,98 +25,148 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </head>
   <body>
 
-    <iron-doc-viewer>
-      {
-        "is": "awesome-sauce",
-        "properties": [
-          {"name": "isAwesome", "type": "boolean", "desc": "Is it awesome?"}
-        ]
-      }
-    </iron-doc-viewer>
+    <dom-module id="bound-fixture">
+      <template>
+        <iron-doc-viewer
+            id="doc"
+            descriptor="[[descriptor]]"
+            demo-src-prefix="/demo-dir/"
+            path="[[path]]">
+        </iron-doc-viewer>
+      </template>
+      <script>
+        window.addEventListener('WebComponentsReady', function() {
+          Polymer({
+            is: 'bound-fixture'
+          });
+        });
+      </script>
+    </dom-module>
 
     <test-fixture id="bound">
-      <template is="dom-template">
-        <iron-doc-viewer descriptor="{{descriptor}}" bound></iron-doc-viewer>
-      </template>
-    </test-fixture>
-
-    <test-fixture id="json">
-      <template is="dom-template">
-        <iron-doc-viewer json>
-          {
-            "is": "awesome-sauce",
-            "properties": [
-              {"name": "isAwesome", "type": "boolean", "desc": "Is it awesome?"}
-            ]
-          }
-        </iron-doc-viewer>
-      </template>
-    </test-fixture>
-
-    <test-fixture id="json-and-bound">
-      <template is="dom-template">
-        <iron-doc-viewer descriptor="{{descriptor}}" jsonbound>
-          {
-            "is": "awesome-sauce",
-            "properties": [
-              {"name": "isAwesome", "type": "boolean", "desc": "Is it awesome?"}
-            ]
-          }
-        </iron-doc-viewer>
+      <template>
+        <bound-fixture></bound-fixture>
       </template>
     </test-fixture>
 
     <script>
-
-      var ELEMENT = {
-        "is": "awesome-sauce",
-        "properties": [
-          {"name": "isAwesome", "type": "boolean", "desc": "Is it awesome?"},
-        ]
+      var descriptor = {
+        "elements": [
+          {
+            "name": "my-element",
+            "description": "I am an element",
+            "demos": [
+              {
+                "url": "demo/fancy-demo.html",
+                "description": "My Fancy Demo"
+              }
+            ]
+          }
+        ],
+        "mixins": [
+          {
+            "name": "my-mixin",
+            "description": "I am a mixin"
+          }
+        ],
+        "classes": [
+          {
+            "name": "my-class",
+            "description": "I am a class"
+          }
+        ],
+        "metadata": {
+          "polymer": {
+            "behaviors": [
+              {
+                "name": "my-behavior",
+                "description": "I am a behavior"
+              }
+            ]
+          }
+        }
       };
 
       describe('<iron-doc-viewer>', function() {
-
         var page;
-        afterEach(function() {
-          page = null; // Make sure that we don't reuse another test's element.
+        beforeEach(function() {
+          page = fixture('bound');
+          page.descriptor = descriptor;
         });
 
-        describe('with a bound descriptor', function() {
-
-          beforeEach(function() { page = fixture('bound', {descriptor: ELEMENT}); });
-
-          it('loads the descriptor', function() {
-            expect(page.descriptor.is).to.eq('awesome-sauce');
-            expect(page.descriptor.properties.length).to.eq(1);
-          });
-
+        it('renders top-level namespace', function() {
+          page.path = '/';
+          Polymer.dom.flush();
+          var view = page
+              .$$('iron-doc-viewer')
+              .$$('iron-doc-namespace')
+              .$$('iron-doc-summary');
+          var text = Polymer.dom(view.root).textContent;
+          expect(text).contains('my-element');
         });
 
-        describe('with a JSON descriptor', function() {
-
-          beforeEach(function() { page = fixture('json'); });
-
-          it('loads the descriptor', function() {
-            expect(page.descriptor.is).to.eq('awesome-sauce');
-            expect(page.descriptor.properties.length).to.eq(1);
-          });
-
+        it('renders element', function() {
+          page.path = '/elements/my-element';
+          Polymer.dom.flush();
+          var view = page
+              .$$('iron-doc-viewer')
+              .$$('iron-doc-element');
+          var text = Polymer.dom(view.root).textContent;
+          expect(text).contains('my-element');
         });
 
-        describe('edge cases', function() {
-
-        //   // TODO(nevir): Cannot enable until https://github.com/Polymer/polymer/issues/1200
-        //   it.skip('throws when a bound and JSON descriptor are provided', function() {
-        //     expect(function() {
-        //       fixture('json-and-bound', {descriptor: ELEMENT});
-        //     }).to.throw(Error, /descriptor/i);
-        //   });
-
+        it('renders mixin', function() {
+          page.path = '/mixins/my-mixin';
+          Polymer.dom.flush();
+          var view = page
+              .$$('iron-doc-viewer')
+              .$$('iron-doc-mixin');
+          var text = Polymer.dom(view.root).textContent;
+          expect(text).contains('my-mixin');
         });
 
+        it('renders class', function() {
+          page.path = '/classes/my-class';
+          Polymer.dom.flush();
+          var view = page
+              .$$('iron-doc-viewer')
+              .$$('iron-doc-class');
+          var text = Polymer.dom(view.root).textContent;
+          expect(text).contains('my-class');
+        });
+
+        it('renders behavior', function() {
+          page.path = '/behaviors/my-behavior';
+          Polymer.dom.flush();
+          var view = page
+              .$$('iron-doc-viewer')
+              .$$('iron-doc-behavior');
+          var text = Polymer.dom(view.root).textContent;
+          expect(text).contains('my-behavior');
+        });
+
+        it('renders demo by short name', function() {
+          page.path = '/elements/my-element/demos/my-fancy-demo';
+          Polymer.dom.flush();
+          var iframe = page
+              .$$('iron-doc-viewer')
+              .$$('iron-doc-demo')
+              .$$('iframe');
+          expect(iframe.getAttribute('src'))
+              .equals('/demo-dir/demo/fancy-demo.html');
+        });
+
+        it('renders demo by path', function() {
+          page.path = '/elements/my-element/demos/demo/fancy-demo.html';
+          Polymer.dom.flush();
+          var iframe = page
+              .$$('iron-doc-viewer')
+              .$$('iron-doc-demo')
+              .$$('iframe');
+          expect(iframe.getAttribute('src'))
+              .equals('/demo-dir/demo/fancy-demo.html');
+        });
       });
-
     </script>
 
   </body>

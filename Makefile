@@ -13,9 +13,10 @@ clean:
 prepare:
 	@git fetch --tags
 	@bower install $(BOWER_PARAMETERS)
+	@polymer analyze myscript-math-exports.html myscript-math-web.html > analysis.json
 
 dev:
-	@polyserve
+	@polymer serve
 
 
 docs:

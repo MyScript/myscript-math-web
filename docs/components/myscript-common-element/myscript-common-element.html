@@ -1,6 +1,6 @@
 <link rel="import" href="./pepjs-import.html">
 <link rel="import" href="./myscriptjs-import.html">
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
@@ -19,19 +19,32 @@
 <dom-module id="myscript-common-element">
     <template>
         <style>
+            @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
             :host {
+                --myscript-common-element-background: none;
+                --myscript-common-element-color: #FFFFFF;
+                --myscript-common-element-line-pattern: url(data:image/svg+xml;charset=utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij4KICA8cGF0aCBzdHJva2U9IiNGNUY2RjciIGQ9Ik0wLjUsMCBMMC41LDE4IE0wLDAuNSBMMTgsMC41Ii8+Cjwvc3ZnPgo=);
+                --myscript-common-element-loader-background: #1A9FFF;
+                --myscript-common-element-loader-color: #F5F6F7;
+                --myscript-common-element-button-background: #1A9FFF;
+                --myscript-common-element-button-focus-background: #1A9FFF;
+                --myscript-common-element-button-disabled-background: #F5F6F7;
+
+                --paper-fab-background: var(--myscript-common-element-button-background);
+                --paper-fab-keyboard-focus-background: var(--myscript-common-element-button-focus-background);
+                --paper-fab-disabled-background: var(--myscript-common-element-button-disabled-background);
+
                 box-sizing: border-box;
                 touch-action: none;
                 display: block;
                 position: relative;
                 min-height: 200px;
                 min-width: 200px;
-                height: 100%;
-                width: 100%;
-                color: var(--myscript-common-element-color, #FFFFFF);
-                --paper-fab-background: var(--myscript-common-element-background-color, #1A9FFF);
-                --paper-fab-keyboard-focus-background: var(--myscript-common-element-focus-background-color, #1A9FFF);
-                --paper-fab-disabled-background: var(--myscript-common-element-disabled-background-color, #F5F6F7);
+                background: var(--myscript-common-element-background);
+                background-size: cover;
+                color: var(--myscript-common-element-color);
+                z-index: 0;
             }
 
             [hidden] {
@@ -54,11 +67,13 @@
                 position: absolute;
                 height: 100%;
                 width: 100%;
+                z-index: 20;
             }
 
             .ms-editor canvas,
             .ms-editor svg {
                 z-index: 15;
+                pointer-events: none;
                 position: absolute;
                 left: 0;
                 top: 0;
@@ -69,7 +84,7 @@
             .ms-editor canvas.ms-rendering-canvas,
             .ms-editor svg {
                 z-index: 10;
-                pointer-events: none;
+                background: var(--myscript-common-element-line-pattern);
             }
 
             .error-msg {
@@ -95,13 +110,22 @@
                 top: calc(50% - 76px);
                 left: calc(50% - 76px);
                 transform: translateY(-50%);
-                border: 16px solid var(--myscript-common-element-color, #F5F6F7);
+                border: 16px solid var(--myscript-common-element-loader-color);
                 border-radius: 50%;
-                border-top: 16px solid var(--myscript-common-element-background-color, #1A9FFF);
+                border-top: 16px solid var(--myscript-common-element-loader-background);
                 width: 120px;
                 height: 120px;
                 -webkit-animation: spin 2s linear infinite;
                 animation: spin 2s linear infinite;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
             }
 
             @-webkit-keyframes spin {
@@ -113,13 +137,46 @@
                 }
             }
 
-            @keyframes spin {
-                0% {
-                    transform: rotate(0deg);
-                }
-                100% {
-                    transform: rotate(360deg);
-                }
+            @font-face {
+                font-family: stixgeneral;
+                src: url(../myscript/dist/fonts/stix/STIXGeneral-Regular.otf);
+            }
+
+            @font-face {
+                font-family: stixgeneral;
+                src: url(../myscript/dist/fonts/stix/STIXGeneral-BoldItalic.otf);
+                font-style: italic;
+                font-weight: bold;
+            }
+
+            @font-face {
+                font-family: stixgeneral;
+                src: url(../myscript/dist/fonts/stix/STIXGeneral-Italic.otf);
+                font-style: italic;
+            }
+
+            @font-face {
+                font-family: stixgeneral;
+                src: url(../myscript/dist/fonts/stix/STIXGeneral-Bold.otf);
+                font-weight: bold;
+            }
+
+            @font-face {
+                font-family: stix-bolditalic;
+                src: url(../myscript/dist/fonts/stix/STIXGeneral-BoldItalic.otf);
+                font-style: italic;
+                font-weight: bold;
+            }
+
+            @font-face {
+                font-family: stixsizethreesym;
+                src: url(../myscript/dist/fonts/stix/STIXSizeThreeSym-Regular.otf);
+            }
+
+            @font-face {
+                font-family: stixsizethreesym;
+                src: url(../myscript/dist/fonts/stix/STIXSizeThreeSym-Bold.otf);
+                font-weight: bold;
             }
         </style>
         <div class="loader" hidden="[[ !unloaded ]]"></div>
@@ -128,19 +185,19 @@
         </div>
         <template is="dom-if" if="[[ !hidebuttons ]]">
             <nav>
-                <paper-fab mini src="clear.svg" title="clear" on-tap="clear"
+                <paper-fab mini src$="[[importPath]]clear.svg" title="clear" on-tap="clear"
                            disabled="[[ !canclear ]]" hidden="[[ disableclear ]]">
                 </paper-fab>
-                <paper-fab mini src="undo.svg" title="undo" on-tap="undo"
+                <paper-fab mini src$="[[importPath]]undo.svg" title="undo" on-tap="undo"
                            disabled="[[ !canundo ]]" hidden="[[ disableundoredo ]]">
                 </paper-fab>
-                <paper-fab mini src="redo.svg" title="redo" on-tap="redo"
+                <paper-fab mini src$="[[importPath]]redo.svg" title="redo" on-tap="redo"
                            disabled="[[ !canredo ]]" hidden="[[ disableundoredo ]]">
                 </paper-fab>
-                <paper-fab mini src="export.svg" title="export" on-tap="askForExport"
+                <paper-fab mini src$="[[importPath]]export.svg" title="export" on-tap="askForExport"
                            disabled="[[ !canexport ]]" hidden="[[ disableexport ]]">
                 </paper-fab>
-                <paper-fab mini src="convert.svg" title="convert" on-tap="convert"
+                <paper-fab mini src$="[[importPath]]convert.svg" title="convert" on-tap="convert"
                            disabled="[[ !canconvert ]]" hidden="[[ disableconvert ]]">
                 </paper-fab>
             </nav>
@@ -149,574 +206,459 @@
         <paper-toast class="fit-bottom"></paper-toast>
     </template>
     <script>
-        Polymer({
-                    is: 'myscript-common-element',
+        class MyScriptCommonElement extends Polymer.mixinBehaviors([Polymer.IronResizableBehavior], Polymer.Element) {
 
+            static get is() {
+                return 'myscript-common-element'
+            }
+
+            static get properties() {
+                return {
                     /**
-                     * Fired when element is fully loaded.
-                     * @event load
+                     * <b>not mutable</b><br />
+                     * The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)
                      */
-
-                    /**
-                     * Fired when undo is triggered.
-                     * @event undo
-                     */
-
-                    /**
-                     * Fired when redo is triggered.
-                     * @event redo
-                     */
-
-                    /**
-                     * Fired when clear is triggered.
-                     * @event clear
-                     */
-
-                    /**
-                     * Fired when export is triggered.
-                     * @event export
-                     */
-
-                    /**
-                     * Fired when conversion is triggered.
-                     * @event convert
-                     */
-
-                    /**
-                     * Fired when editor state changed.
-                     * @event change
-                     */
-
-                    /**
-                     * Fired when export is done.
-                     * @event exported
-                     */
-
-                    /**
-                     * Fired when conversion is done.
-                     * @event converted
-                     */
-
-                    /**
-                     * Fired on error.
-                     * @event error
-                     */
-
-                    properties: {
-                        /**
-                         * <b>not mutable</b><br />
-                         * The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)
-                         */
-                        type: {
-                            type: String,
-                            reflectToAttribute: true,
-                            value: 'TEXT'
-                        },
-                        /**
-                         * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
-                         */
-                        protocol: {
-                            type: String,
-                            reflectToAttribute: true,
-                            value: 'REST'
-                        },
-                        /**
-                         * Scheme to use to connect to MyScript Cloud or Server. (https or http)
-                         */
-                        scheme: {
-                            type: String,
-                            reflectToAttribute: true,
-                            value: 'https'
-                        },
-                        /**
-                         * The current recognition service host.
-                         */
-                        host: {
-                            type: String,
-                            reflectToAttribute: true,
-                            value: 'cloud.myscript.com'
-                        },
-                        /**
-                         * Cloud API version to use (eg V3 or V4)
-                         */
-                        apiversion: {
-                            type: String,
-                            reflectToAttribute: true,
-                            value: 'V3'
-                        },
-                        /**
-                         * Delay without any user input before asking for recognition, only use with REST protocol.
-                         */
-                        recognitiontriggerdelay: {
-                            type: Number,
-                            reflectToAttribute: true,
-                            value: 2000
-                        },
-                        /**
-                         * Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol.
-                         */
-                        recognitionprocessdelay: {
-                            type: Number,
-                            reflectToAttribute: true,
-                            value: 1000
-                        },
-                        /**
-                         * Application key to use for recognition on MyScript handwriting recognition server.<br />
-                         * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
-                         * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
-                         */
-                        applicationkey: {
-                            type: String,
-                            reflectToAttribute: true
-                        },
-                        /**
-                         * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
-                         * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
-                         * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
-                         */
-                        hmackey: {
-                            type: String,
-                            reflectToAttribute: true
-                        },
-                        /**
-                         * Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.
-                         * (see demo/programmatic-init.html for a better understanding)
-                         */
-                        unloaded: {
-                            type: Boolean,
-                            value: true,
-                            notify: true,
-                            reflectToAttribute: true,
-                            observer: 'unloadedChanged'
-                        },
-                        /**
-                         * The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.
-                         */
-                        editor: {
-                            type: Object
-                        },
-                        /**
-                         * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs DefaultConfiguration.js file)
-                         * Configuration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.
-                         * Configuration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).
-                         */
-                        configuration: {
-                            type: Object,
-                            notify: true
-                        },
-                        /**
-                         * Color of the stroke
-                         */
-                        strokecolor: {
-                            type: String,
-                            value: '#1580CD',
-                            reflectToAttribute: true,
-                            observer: 'strokecolorChanged'
-                        },
-                        /**
-                         * Width of the stroke
-                         */
-                        strokewidth: {
-                            type: Number,
-                            value: 4,
-                            reflectToAttribute: true,
-                            observer: 'strokewidthChanged'
-                        },
-                        /**
-                         * True if undo is available
-                         * @private
-                         */
-                        canundo: {
-                            type: Boolean,
-                            value: false,
-                            reflectToAttribute: true,
-                            notify: true
-                        },
-                        /**
-                         * True if redo is available
-                         * @private
-                         */
-                        canredo: {
-                            type: Boolean,
-                            value: false,
-                            reflectToAttribute: true,
-                            notify: true
-                        },
-                        /**
-                         * True if there is something to clear
-                         * @private
-                         */
-                        canclear: {
-                            type: Boolean,
-                            value: false,
-                            reflectToAttribute: true,
-                            notify: true
-                        },
-                        /**
-                         * True if export button could be displayed.
-                         * @private
-                         */
-                        canexport: {
-                            type: Boolean,
-                            value: false,
-                            reflectToAttribute: true,
-                            notify: true
-                        },
-                        /**
-                         * True if convert button could be displayed.
-                         * @private
-                         */
-                        canconvert: {
-                            type: Boolean,
-                            value: false,
-                            reflectToAttribute: true,
-                            notify: true
-                        },
-                        /**
-                         * If set to true, hide the buttons (Trash, Undo, Redo).
-                         */
-                        hidebuttons: {
-                            type: Boolean,
-                            reflectToAttribute: true,
-                            value: false,
-                            notify: true
-                        },
-
-                        /**
-                         * True if the undo/redo feature is disabled, false otherwise
-                         */
-                        disableundoredo: {
-                            type: Boolean,
-                            reflectToAttribute: true,
-                            value: false
-                        },
-                        /**
-                         * True if the clear feature is disabled, false otherwise
-                         */
-                        disableclear: {
-                            type: Boolean,
-                            reflectToAttribute: true,
-                            value: false
-                        },
-                        /**
-                         * True if the export feature is disabled, false otherwise
-                         */
-                        disableexport: {
-                            type: Boolean,
-                            reflectToAttribute: true,
-                            value: false
-                        },
-                        /**
-                         * True if the convert feature is disabled, false otherwise
-                         */
-                        disableconvert: {
-                            type: Boolean,
-                            reflectToAttribute: true,
-                            value: false
-                        },
-                        /**
-                         * Exports.
-                         * @type {Object<String, Object>} Attributes depends on configuration.
-                         */
-                        exports: {
-                            type: Object,
-                            notify: true
-                        },
-                        /**
-                         * True to display console output, false otherwise.
-                         */
-                        debug: {
-                            type: Boolean,
-                            value: false,
-                            reflectToAttribute: true
-                        }
-                    },
-                    behaviors: [
-                        Polymer.IronResizableBehavior
-                    ],
-                    listeners: {
-                        'iron-resize': 'onResize'
+                    type: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'TEXT'
                     },
                     /**
-                     * Clear all context
+                     * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
                      */
-                    clear: function () {
-                        if (this.editor) {
-                            this.editor.clear();
-                        }
+                    protocol: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'REST'
                     },
                     /**
-                     * Undo action, and launch recognition if timeout is set
+                     * Scheme to use to connect to MyScript Cloud or Server. (https or http)
                      */
-                    undo: function () {
-                        if (this.editor) {
-                            this.editor.undo();
-                        }
+                    scheme: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'https'
                     },
                     /**
-                     * Redo action, and launch recognition if timeout is set
+                     * The current recognition service host.
                      */
-                    redo: function () {
-                        if (this.editor) {
-                            this.editor.redo();
-                        }
+                    host: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'cloud.myscript.com'
                     },
                     /**
-                     * Launch recognition
+                     * Cloud API version to use (eg V3 or V4)
                      */
-                    askForExport: function (exports) {
-                        if (this.editor) {
-                            this.editor.askForExport(exports);
-                        }
+                    apiversion: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'V3'
                     },
                     /**
-                     * Launch convert
+                     * Delay without any user input before asking for recognition, only use with REST protocol.
                      */
-                    convert: function () {
-                        if (this.editor) {
-                            this.editor.convert();
-                        }
+                    recognitiontriggerdelay: {
+                        type: Number,
+                        reflectToAttribute: true,
+                        value: 2000
                     },
                     /**
-                     * Return the stats allowing to monitor what ink size is send to the server.
-                     * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+                     * Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol.
                      */
-                    getStats: function () {
-                        if (this.editor) {
-                            return this.editor.stats;
-                        }
+                    recognitionprocessdelay: {
+                        type: Number,
+                        reflectToAttribute: true,
+                        value: 1000
                     },
                     /**
-                     * Update the stroke color.
-                     * @param color
+                     * Application key to use for recognition on MyScript handwriting recognition server.<br />
+                     * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
+                     * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
+                     */
+                    applicationkey: {
+                        type: String,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
+                     * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
+                     * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
+                     */
+                    hmackey: {
+                        type: String,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.
+                     * (see demo/programmatic-init.html for a better understanding)
+                     */
+                    unloaded: {
+                        type: Boolean,
+                        value: true,
+                        notify: true,
+                        reflectToAttribute: true,
+                        observer: '_unloadedChanged'
+                    },
+                    /**
+                     * The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.
+                     */
+                    editor: {
+                        type: Object
+                    },
+                    /**
+                     * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs DefaultConfiguration.js file)
+                     * Configuration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.
+                     * Configuration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).
+                     */
+                    configuration: {
+                        type: Object,
+                        notify: true
+                    },
+                    /**
+                     * Color of the stroke
+                     */
+                    strokecolor: {
+                        type: String,
+                        value: '#1580CD',
+                        reflectToAttribute: true,
+                        observer: '_strokecolorChanged'
+                    },
+                    /**
+                     * Width of the stroke
+                     */
+                    strokewidth: {
+                        type: Number,
+                        value: 4,
+                        reflectToAttribute: true,
+                        observer: '_strokewidthChanged'
+                    },
+                    /**
+                     * True if undo is available
                      * @private
                      */
-                    strokecolorChanged: function (color) {
-                        if (this.editorDomElement && !this.initializing) {
-                            this.logger.trace('strokecolor changed', color);
-                            this.buildCustomStyle();
-                            this.editor.customStyle = this.customStyle;
-                        }
-
+                    canundo: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true,
+                        notify: true
                     },
                     /**
-                     * Update the stroke width.
-                     * @param width
+                     * True if redo is available
                      * @private
                      */
-                    strokewidthChanged: function (width) {
-                        if (this.editorDomElement && !this.initializing) {
-                            this.logger.trace('strokewidth changed', width);
-                            this.buildCustomStyle();
-                            this.editor.customStyle = this.customStyle;
-                        }
+                    canredo: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true,
+                        notify: true
                     },
                     /**
-                     * @param unloaded
+                     * True if there is something to clear
                      * @private
                      */
-                    unloadedChanged: function (unloaded) {
-                        this.exports = undefined;
-                        this.buildConfiguration();
-                        if (this.editorDomElement && !this.initializing) {
-                            this.logger.trace('unloaded changed', unloaded);
-                            if (unloaded === true) {
-                                this.errorElement.setAttribute('hidden', 'true');
-                                this.editor.configuration = this.configuration;
-                            }
-                        }
+                    canclear: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true,
+                        notify: true
                     },
                     /**
-                     * Manage the resizing of the component.
-                     * @param event
+                     * True if export button could be displayed.
                      * @private
                      */
-                    onResize: function (event) {
-                        if (this.editor) {
-                            this.logger.trace('resizing', event);
-                            this.editor.resize();
-                        }
-                    },
-                    // Will be renamed connected with pure custom element support
-                    attached: function () {
-
-                        /**
-                         * Function returning the root dom element whatever shadow or shady dom is used.
-                         * @param domElement
-                         * @returns {Element}
-                         */
-                        function qsWrapper(domElement) {
-                            if (domElement.shadowRoot) {
-                                return domElement.shadowRoot;
-                            } else {
-                                return domElement;
-                            }
-                        }
-
-                        this.logger = MyScript.LoggerConfig.getLogger('common-element');
-                        this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
-                        var self = this;
-                        Object.keys(MyScript.Constants.Logger).forEach(function (key) {
-                            MyScript.LoggerConfig
-                                .getLogger(MyScript.Constants.Logger[key])
-                                .setLevel(self.debug ? 'DEBUG' : 'ERROR', false);
-                        });
-
-                        this.initializing = true;
-                        this.logger.info('common-element attached callback');
-                        this.editorDomElement = qsWrapper(this).querySelector('#editorDomElement');
-                        this.errorElement = qsWrapper(this).querySelector('.error-msg');
-                        this.paperToast = qsWrapper(this).querySelector('paper-toast');
-
-                        // Attach the event listener before register editor
-                        this.attachListener(this);
-
-                        this.editor = MyScript.register(this.editorDomElement, this.buildConfiguration(), this.buildCustomStyle());
-                        this.configuration = this.editor.configuration;
-
-                        this.logger.info('common-element attached');
-                        this.initializing = false;
-                    },
-                    detached: function () {
-                        this.logger.info('common-element detached callback');
-                        this.detachListener(this);
-                        this.logger.info('common-element detached');
+                    canexport: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true,
+                        notify: true
                     },
                     /**
+                     * True if convert button could be displayed.
                      * @private
                      */
-                    attachListener: function (commonElement) {
-                        function editorListener(event) {
-                            commonElement.logger.trace(event.type + ' event intercepted', event);
-                            switch (event.type) {
-                                case MyScript.Constants.EventType.LOADED:
-                                    commonElement.unloaded = false;
-                                    break;
-                                case MyScript.Constants.EventType.CHANGED: {
-                                    if (event.detail) {
-                                        commonElement.canclear = event.detail.canClear;
-                                        commonElement.canundo = event.detail.canUndo;
-                                        commonElement.canredo = event.detail.canRedo;
-                                        commonElement.canexport = (commonElement.protocol === 'REST' || commonElement.apiversion === 'V4') && event.detail.canUndo && event.detail.canClear;
-                                        commonElement.canconvert = commonElement.apiversion === 'V4' && event.detail.canUndo && event.detail.canClear;
-                                    }
-                                }
-                                    break;
-                                case MyScript.Constants.EventType.EXPORTED: {
-                                    commonElement.exports = event.detail ? event.detail.exports : {};
-                                    commonElement.errorElement.setAttribute('hidden', 'true');
-                                }
-                                    break;
-                                case MyScript.Constants.EventType.CLEAR:
-                                    commonElement.exports = {};
-                                    break;
-                                case MyScript.Constants.EventType.ERROR:
-                                    commonElement.manageError(event, commonElement);
-                                    break;
-                                default:
-                                    break;
-                            }
-                            // Just forwarding event there.
-                            commonElement.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
-                        }
-
-                        const eventTypes = Object.keys(MyScript.Constants.EventType).map(function (key) {
-                            return MyScript.Constants.EventType[key];
-                        });
-
-                        commonElement.currentListeners = {};
-                        eventTypes.forEach(function (type) {
-                            commonElement.currentListeners[type] = editorListener;
-                        });
-                        Object.keys(commonElement.currentListeners).forEach(function (type) {
-                            commonElement.editorDomElement.addEventListener(type, commonElement.currentListeners[type])
-                        });
+                    canconvert: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true,
+                        notify: true
                     },
-
                     /**
-                     * @private
+                     * If set to true, hide the buttons (Trash, Undo, Redo).
                      */
-                    detachListener: function (commonElement) {
-                        Object.keys(commonElement.currentListeners).forEach(function (type) {
-                            commonElement.editorDomElement.removeEventListener(type, commonElement.currentListeners[type])
-                        });
+                    hidebuttons: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false,
+                        notify: true
                     },
-
                     /**
-                     * @private
+                     * True if the undo/redo feature is disabled, false otherwise
                      */
-                    buildCustomStyle: function () {
-                        if (!this.customStyle) {
-                            this.customStyle = {};
-                        }
-                        if (!this.customStyle.stroke) {
-                            this.customStyle.stroke = {};
-                        }
-                        this.customStyle.stroke.color = this.strokecolor;
-                        this.customStyle.stroke.width = this.strokewidth;
-                        return this.customStyle;
+                    disableundoredo: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
                     },
-
                     /**
-                     * @private
+                     * True if the clear feature is disabled, false otherwise
                      */
-                    buildConfiguration: function () {
-                        if (!this.configuration) {
-                            this.configuration = {};
-                        }
-                        this.configuration.recognitionTriggerDelay = this.recognitiontriggerdelay;
-                        this.configuration.recognitionProcessDelay = this.recognitionprocessdelay;
-                        if (this.protocol === 'REST') {
-                            this.configuration.recognitionTriggerOn = 'QUIET_PERIOD';
-                        } else {
-                            this.configuration.recognitionTriggerOn = 'POINTER_UP';
-                        }
-                        if (!this.configuration.recognitionParams) {
-                            this.configuration.recognitionParams = {};
-                        }
-                        this.configuration.recognitionParams.type = this.type;
-                        this.configuration.recognitionParams.protocol = this.protocol;
-                        this.configuration.recognitionParams.apiVersion = this.apiversion;
-                        if (!this.configuration.recognitionParams.server) {
-                            this.configuration.recognitionParams.server = {};
-                        }
-                        this.configuration.recognitionParams.server.scheme = this.scheme;
-                        this.configuration.recognitionParams.server.host = this.host;
-                        this.configuration.recognitionParams.server.applicationKey = this.applicationkey;
-                        this.configuration.recognitionParams.server.hmacKey = this.hmackey;
-                        this.configuration.recognitionParams.server.scheme = this.scheme;
-                        return this.configuration;
+                    disableclear: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
                     },
-
                     /**
-                     * @private
+                     * True if the export feature is disabled, false otherwise
                      */
-                    manageError: function (event, commonElement) {
-                        commonElement.logger.trace('error detected');
-                        if (event.detail) {
-                            if (event.detail.recoverable === false) {
-                                if (event.detail.serverMessage &&
-                                    event.detail.serverMessage.error &&
-                                    event.detail.serverMessage.error.result &&
-                                    event.detail.serverMessage.error.result.error &&
-                                    (event.detail.serverMessage.error.result.error === 'InvalidApplicationKeyException' ||
-                                    event.detail.serverMessage.error.result.error === 'InvalidHMACSignatureException')) {
-                                    commonElement.errorElement.innerText = 'Application credentials are invalid. Please check or regenerate your application key and hmackey.';
-                                } else {
-                                    commonElement.errorElement.innerText = 'MyScript recognition server is not reachable. Please reload once you are connected';
-                                }
-                                commonElement.errorElement.removeAttribute('hidden');
-                            } else if (event.detail.message) {
-                                commonElement.paperToast.text = event.detail.message;
-                                commonElement.paperToast.fitIn = commonElement.paperToast.show();
-                            } else {
-                                commonElement.logger.error('not managed error', event);
-                            }
-                        } else {
-                            commonElement.logger.error('not managed error', event);
-                        }
+                    disableexport: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
+                    /**
+                     * True if the convert feature is disabled, false otherwise
+                     */
+                    disableconvert: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
+                    /**
+                     * Exports.
+                     * @type {Object<String, Object>} Attributes depends on configuration.
+                     */
+                    exports: {
+                        type: Object,
+                        notify: true
+                    },
+                    /**
+                     * True to display console output, false otherwise.
+                     */
+                    debug: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true
                     }
                 }
-        );
+            }
+
+            _resizeHandler(event) {
+                if (this.editor) {
+                    this.logger.trace('resizing', event);
+                    this.editor.resize();
+                }
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
+                this.addEventListener('iron-resize', this._resizeHandler);
+
+                this.logger = MyScript.LoggerConfig.getLogger('common-element');
+                this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+                Object
+                    .keys(MyScript.Constants.Logger)
+                    .forEach((key) => {
+                        MyScript.LoggerConfig
+                            .getLogger(MyScript.Constants.Logger[key])
+                            .setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+                    });
+
+                this.initializing = true;
+                this.logger.info('common-element attached callback');
+
+                this.editorDomElement = this.shadowRoot.querySelector('#editorDomElement');
+                this.errorElement = this.shadowRoot.querySelector('.error-msg');
+                this.paperToast = this.shadowRoot.querySelector('paper-toast');
+
+                this.currentListeners = {};
+                Object
+                    .keys(MyScript.Constants.EventType)
+                    .map(key => MyScript.Constants.EventType[key])
+                    .forEach(type => this.currentListeners[type] = (event) => {
+                        this.logger.trace(event.type + ' event intercepted', event);
+                        switch (event.type) {
+                            case MyScript.Constants.EventType.LOADED:
+                                this.unloaded = false;
+                                break;
+                            case MyScript.Constants.EventType.CHANGED: {
+                                if (event.detail) {
+                                    this.canclear = event.detail.canClear;
+                                    this.canundo = event.detail.canUndo;
+                                    this.canredo = event.detail.canRedo;
+                                    this.canexport = event.detail.canExport;
+                                    this.canconvert = event.detail.canConvert;
+                                }
+                            }
+                                break;
+                            case MyScript.Constants.EventType.EXPORTED: {
+                                this.exports = event.detail ? event.detail.exports : {};
+                                this.errorElement.setAttribute('hidden', 'true');
+                            }
+                                break;
+                            case MyScript.Constants.EventType.CLEAR:
+                                this.exports = {};
+                                break;
+                            case MyScript.Constants.EventType.ERROR:
+                                this.logger.trace('error detected');
+                                if (event.detail) {
+                                    if (event.detail.recoverable === false) {
+                                        if (event.detail.serverMessage &&
+                                            event.detail.serverMessage.error &&
+                                            event.detail.serverMessage.error.result &&
+                                            event.detail.serverMessage.error.result.error &&
+                                            (event.detail.serverMessage.error.result.error === 'InvalidApplicationKeyException' ||
+                                            event.detail.serverMessage.error.result.error === 'InvalidHMACSignatureException')) {
+                                            this.errorElement.innerText = 'Application credentials are invalid. Please check or regenerate your application key and hmackey.';
+                                        } else {
+                                            this.errorElement.innerText = 'MyScript recognition server is not reachable. Please reload once you are connected';
+                                        }
+                                        this.errorElement.removeAttribute('hidden');
+                                    } else if (event.detail.message) {
+                                        this.paperToast.text = event.detail.message;
+                                        this.paperToast.fitIn = this.paperToast.show();
+                                    } else {
+                                        this.logger.error('not managed error', event);
+                                    }
+                                } else {
+                                    this.logger.error('not managed error', event);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        // Just forwarding event there.
+                        this.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
+                    });
+
+                Object
+                    .keys(this.currentListeners)
+                    .forEach(type => this.editorDomElement.addEventListener(type, this.currentListeners[type]));
+
+                    this.editor = MyScript.register(this.editorDomElement, this._buildConfiguration(), this._buildCustomStyle());
+                    this.configuration = this.editor.configuration;
+
+                this.logger.info('common-element attached');
+                this.initializing = false;
+            }
+
+            disconnectedCallback() {
+                super.disconnectedCallback();
+                this.removeEventListener('iron-resize', this._resizeHandler);
+
+                this.logger.info('common-element detached callback');
+                Object
+                    .keys(this.currentListeners)
+                    .forEach(type => this.editorDomElement.removeEventListener(type, this.currentListeners[type]));
+                this.logger.info('common-element detached');
+            }
+
+            clear() {
+                if (this.editor) {
+                    this.editor.clear();
+                }
+            }
+
+            undo() {
+                if (this.editor) {
+                    this.editor.undo();
+                }
+            }
+
+            redo() {
+                if (this.editor) {
+                    this.editor.redo();
+                }
+            }
+
+            askForExport(exports) {
+                if (this.editor) {
+                    this.editor.askForExport(exports);
+                }
+            }
+
+            convert() {
+                if (this.editor) {
+                    this.editor.convert();
+                }
+            }
+
+            getStats() {
+                if (this.editor) {
+                    return this.editor.stats;
+                }
+            }
+
+            _strokecolorChanged(color) {
+                if (this.editor && !this.initializing) {
+                    this.logger.trace('strokecolor changed', color);
+                    this._buildCustomStyle();
+                    this.editor.customStyle = this.customStyle;
+                }
+
+            }
+
+            _strokewidthChanged(width) {
+                if (this.editor && !this.initializing) {
+                    this.logger.trace('strokewidth changed', width);
+                    this._buildCustomStyle();
+                    this.editor.customStyle = this.customStyle;
+                }
+            }
+
+            _unloadedChanged(unloaded) {
+                this.exports = undefined;
+                this._buildConfiguration();
+                if (this.editor && !this.initializing) {
+                    this.logger.trace('unloaded changed', unloaded);
+                    if (unloaded === true) {
+                        this.errorElement.setAttribute('hidden', 'true');
+                        this.editor.configuration = this.configuration;
+                    }
+                }
+            }
+
+            _buildCustomStyle() {
+                if (!this.customStyle) {
+                    this.customStyle = {};
+                }
+                if (!this.customStyle.stroke) {
+                    this.customStyle.stroke = {};
+                }
+                this.customStyle.stroke.color = this.strokecolor;
+                this.customStyle.stroke.width = this.strokewidth;
+                return this.customStyle;
+            }
+
+            _buildConfiguration() {
+                if (!this.configuration) {
+                    this.configuration = {};
+                }
+                this.configuration.recognitionTriggerDelay = this.recognitiontriggerdelay;
+                this.configuration.recognitionProcessDelay = this.recognitionprocessdelay;
+                if (this.protocol === 'REST') {
+                    this.configuration.recognitionTriggerOn = 'QUIET_PERIOD';
+                } else {
+                    this.configuration.recognitionTriggerOn = 'POINTER_UP';
+                }
+                if (!this.configuration.recognitionParams) {
+                    this.configuration.recognitionParams = {};
+                }
+                this.configuration.recognitionParams.type = this.type;
+                this.configuration.recognitionParams.protocol = this.protocol;
+                this.configuration.recognitionParams.apiVersion = this.apiversion;
+                if (!this.configuration.recognitionParams.server) {
+                    this.configuration.recognitionParams.server = {};
+                }
+                this.configuration.recognitionParams.server.scheme = this.scheme;
+                this.configuration.recognitionParams.server.host = this.host;
+                this.configuration.recognitionParams.server.applicationKey = this.applicationkey;
+                this.configuration.recognitionParams.server.hmacKey = this.hmackey;
+                this.configuration.recognitionParams.server.scheme = this.scheme;
+                return this.configuration;
+            }
+
+        }
+        customElements.define(MyScriptCommonElement.is, MyScriptCommonElement);
     </script>
 </dom-module>

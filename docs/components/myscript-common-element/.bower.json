@@ -28,22 +28,22 @@
     "!demo/**/*"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#1.9.x",
-    "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#1.0.x",
-    "iron-icons": "PolymerElements/iron-icons#1.2.x",
-    "paper-fab": "PolymerElements/paper-fab#1.2.x",
-    "paper-toast": "PolymerElements/paper-toast#1.3.x",
+    "polymer": "Polymer/polymer#^2.0.1",
+    "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#^2.0.1",
+    "iron-icons": "PolymerElements/iron-icons#^2.0.1",
+    "paper-fab": "PolymerElements/paper-fab#^2.0.0",
+    "paper-toast": "PolymerElements/paper-toast#^2.0.0",
     "myscript": "2.0.0-alpha1",
-    "pepjs": "^0.4.2"
+    "pepjs": "^0.4.3"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
+    "iron-component-page": "PolymerElements/iron-component-page#^3.0.0"
   },
-  "_release": "21579960c3",
+  "_release": "4a18a7c286",
   "_resolution": {
     "type": "branch",
     "branch": "2.0.0-alpha1",
-    "commit": "21579960c3842708d0ebe9a6045a8f9fdb54b7a2"
+    "commit": "4a18a7c28647abb6bce01ea7085a91a9733642da"
   },
   "_source": "https://github.com/MyScript/myscript-common-element.git",
   "_target": "2.0.0-alpha1",

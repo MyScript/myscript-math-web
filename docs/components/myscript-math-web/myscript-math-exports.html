@@ -1,24 +1,33 @@
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="katex-component.html">
+<!--
+`myscript-math-exports` is a component to display `myscript-math-web` exports.
 
+    <myscript-math-exports
+        exports="myscript-math-web.exports">
+    </myscript-math-exports>
+
+-->
 <dom-module id="myscript-math-exports">
-    <style>
-        :host {
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: row;
-            color: var(--myscript-math-exports-color, #000000);
-            min-height: 60px;
-            overflow: auto;
-        }
-
-        .export {
-            flex-grow: 1;
-        }
-    </style>
     <template>
+        <style>
+            :host {
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: row;
+                color: var(--myscript-math-exports-color, #000000);
+                min-height: 60px;
+                overflow: auto;
+            }
+
+            .export {
+                flex-grow: 1;
+            }
+        </style>
         <template is="dom-if" if="[[ _displaymath(resulttypes, mimetypes) ]]">
-            <katex-component value="[[ _getLatexCleaned(exports) ]]" class="export math">[[ _getLatexCleaned(exports) ]]</katex-component>
+            <katex-component value="[[ _getLatexCleaned(exports) ]]" class="export math">
+                [[ _getLatexCleaned(exports) ]]
+            </katex-component>
         </template>
         <template is="dom-if" if="[[ _displaylatex(resulttypes, mimetypes) ]]">
             <div class="export latex">[[ _getLatex(exports) ]]</div>
@@ -33,12 +42,15 @@
             <div class="export symboltree">[[ _getSymboltree(exports) ]]</div>
         </template>
     </template>
-</dom-module>
+    <script>
+        class MyScriptMathExports extends Polymer.Element {
 
-<script>
-    Polymer({
-                is: 'myscript-math-exports',
-                properties: {
+            static get is() {
+                return 'myscript-math-exports'
+            }
+
+            static get properties() {
+                return {
                     /**
                      * Math export types (LATEX, MATHML or SYMBOLTREE).
                      * <b>Warning</b>: v3 only, for v4, use mimetypes instead
@@ -65,78 +77,65 @@
                         type: Object,
                         notify: true
                     }
-                },
-                /**
-                 * @private
-                 */
-                _getLatex: function (exports) {
-                    if (exports['application/x-latex']) {
-                        return exports['application/x-latex']
-                    }
-                    return exports.LATEX;
-                },
-                _getLatexCleaned: function (exports) {
-                    return this._getLatex(exports)
-                        .replace("\\overrightarrow", "\\vec")
-                        .replace("\\llbracket", "\\lbracket")
-                        .replace("\\rrbracket", "\\rbracket")
-                        .replace("\\widehat", "\\hat")
-                        .replace(new RegExp("(align.{1})", "g"), "aligned");
-                },
-                /**
-                 * @private
-                 */
-                _getMathml: function (exports) {
-                    if (exports['application/mathml+xml']) {
-                        return exports['application/mathml+xml']
-                    }
-                    return exports.MATHML;
-                },
-                /**
-                 * @private
-                 */
-                _getOfficeopenxml: function (exports) {
-                    if (exports['application/mathofficeXML']) {
-                        return exports['application/mathofficeXML']
-                    }
-                    return exports.OFFICEOPENXMLMATH;
-                },
-                /**
-                 * @private
-                 */
-                _getSymboltree: function (exports) {
-                    return JSON.stringify(exports.SYMBOLTREE);
-                },
-                /**
-                 * @private
-                 */
-                _displaymath: function (resulttypes, mimetypes) {
-                    return !((resulttypes.length > 0) || (mimetypes.length > 0));
-                },
-                /**
-                 * @private
-                 */
-                _displaylatex: function (resulttypes, mimetypes) {
-                    return (resulttypes.indexOf('LATEX') > -1) || (mimetypes.indexOf('application/x-latex') > -1);
-                },
-                /**
-                 * @private
-                 */
-                _displaymathml: function (resulttypes, mimetypes) {
-                    return (resulttypes.indexOf('MATHML') > -1) || (mimetypes.indexOf('application/mathml+xml') > -1);
-                },
-                /**
-                 * @private
-                 */
-                _displayofficeopenxml: function (resulttypes, mimetypes) {
-                    return (resulttypes.indexOf('OFFICEOPENXMLMATH') > -1) || (mimetypes.indexOf('application/mathofficeXML') > -1);
-                },
-                /**
-                 * @private
-                 */
-                _displaysymboltree: function (resulttypes, mimetypes) {
-                    return resulttypes.indexOf('SYMBOLTREE') > -1;
                 }
             }
-    );
-</script>
+
+            _getLatex(exports) {
+                if (exports['application/x-latex']) {
+                    return exports['application/x-latex'] || '';
+                }
+                return exports.LATEX || '';
+            }
+
+            _getLatexCleaned(exports) {
+                return this._getLatex(exports)
+                    .replace("\\overrightarrow", "\\vec")
+                    .replace("\\llbracket", "\\lbracket")
+                    .replace("\\rrbracket", "\\rbracket")
+                    .replace("\\widehat", "\\hat")
+                    .replace(new RegExp("(align.{1})", "g"), "aligned");
+            }
+
+            _getMathml(exports) {
+                if (exports['application/mathml+xml']) {
+                    return exports['application/mathml+xml'];
+                }
+                return exports.MATHML;
+            }
+
+            _getOfficeopenxml(exports) {
+                if (exports['application/mathofficeXML']) {
+                    return exports['application/mathofficeXML'];
+                }
+                return exports.OFFICEOPENXMLMATH;
+            }
+
+            _getSymboltree(exports) {
+                return JSON.stringify(exports.SYMBOLTREE);
+            }
+
+            _displaymath(resulttypes, mimetypes) {
+                return !((resulttypes.length > 0) || (mimetypes.length > 0));
+            }
+
+            _displaylatex(resulttypes, mimetypes) {
+                return (resulttypes.indexOf('LATEX') > -1) || (mimetypes.indexOf('application/x-latex') > -1);
+            }
+
+            _displaymathml(resulttypes, mimetypes) {
+                return (resulttypes.indexOf('MATHML') > -1) || (mimetypes.indexOf('application/mathml+xml') > -1);
+            }
+
+            _displayofficeopenxml(resulttypes, mimetypes) {
+                return (resulttypes.indexOf('OFFICEOPENXMLMATH') > -1) || (mimetypes.indexOf('application/mathofficeXML') > -1);
+            }
+
+            _displaysymboltree(resulttypes, mimetypes) {
+                return resulttypes.indexOf('SYMBOLTREE') > -1;
+            }
+
+        }
+        customElements.define(MyScriptMathExports.is, MyScriptMathExports);
+    </script>
+</dom-module>
+

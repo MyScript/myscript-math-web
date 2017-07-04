@@ -1,23 +1,9 @@
-
-<!---
-
-This README is automatically generated from the comments in these files:
-paper-toast.html
-
-Edit those files, and our readme bot will duplicate them over here!
-Edit this file, and the bot will squash your changes :)
-
-The bot does some handling of markdown. Please file a bug if it does the wrong
-thing! https://github.com/PolymerLabs/tedium/issues
-
--->
-
 [![Build status](https://travis-ci.org/PolymerElements/paper-toast.svg?branch=master)](https://travis-ci.org/PolymerElements/paper-toast)
 
 _[Demo and API docs](https://elements.polymer-project.org/elements/paper-toast)_
 
 
-##&lt;paper-toast&gt;
+## &lt;paper-toast&gt;
 
 Material design: [Snackbars & toasts](https://www.google.com/design/spec/components/snackbars-toasts.html)
 

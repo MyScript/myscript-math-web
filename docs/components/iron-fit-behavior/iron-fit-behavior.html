@@ -57,7 +57,6 @@ within `fitInto` boundaries, while preserving the element's CSS margin values.
 @demo demo/index.html
 @polymerBehavior
 */
-
   Polymer.IronFitBehavior = {
 
     properties: {
@@ -253,7 +252,6 @@ within `fitInto` boundaries, while preserving the element's CSS margin values.
       if (typeof this._isRTL === 'undefined') {
         this._isRTL = window.getComputedStyle(this).direction == 'rtl';
       }
-          
       this.positionTarget = this.positionTarget || this._defaultPositionTarget;
       if (this.autoFitOnAttach) {
         if (window.getComputedStyle(this).display === 'none') {
@@ -261,8 +259,19 @@ within `fitInto` boundaries, while preserving the element's CSS margin values.
             this.fit();
           }.bind(this));
         } else {
+          // NOTE: shadydom applies distribution asynchronously
+          // for performance reasons webcomponents/shadydom#120
+          // Flush to get correct layout info.
+          window.ShadyDOM && ShadyDOM.flush();
           this.fit();
         }
+      }
+    },
+
+    detached: function() {
+      if (this.__deferredFit) {
+        clearTimeout(this.__deferredFit);
+        this.__deferredFit = null;
       }
     },
 
@@ -378,7 +387,8 @@ within `fitInto` boundaries, while preserving the element's CSS margin values.
         height: rect.height + margin.top + margin.bottom
       };
 
-      var position = this.__getPosition(this._localeHorizontalAlign, this.verticalAlign, size, positionRect, fitRect);
+      var position = this.__getPosition(this._localeHorizontalAlign, this.verticalAlign, size, positionRect,
+        fitRect);
 
       var left = position.left + margin.left;
       var top = position.top + margin.top;
@@ -573,7 +583,7 @@ within `fitInto` boundaries, while preserving the element's CSS margin values.
         // For dynamicAlign and noOverlap we'll have more than one candidate, so
         // we'll have to check the croppedArea to make the best choice.
         if (!this.dynamicAlign && !this.noOverlap &&
-            pos.verticalAlign === vAlign && pos.horizontalAlign === hAlign) {
+          pos.verticalAlign === vAlign && pos.horizontalAlign === hAlign) {
           position = pos;
           break;
         }
@@ -581,7 +591,7 @@ within `fitInto` boundaries, while preserving the element's CSS margin values.
         // Align is ok if alignment preferences are respected. If no preferences,
         // it is considered ok.
         var alignOk = (!vAlign || pos.verticalAlign === vAlign) &&
-                      (!hAlign || pos.horizontalAlign === hAlign);
+          (!hAlign || pos.horizontalAlign === hAlign);
 
         // Filter out elements that don't match the alignment (if defined).
         // With dynamicAlign, we need to consider all the positions to find the

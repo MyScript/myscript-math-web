@@ -1,59 +1,70 @@
-
-<!---
-
-This README is automatically generated from the comments in these files:
-iron-doc-property.html  iron-doc-viewer.html
-
-Edit those files, and our readme bot will duplicate them over here!
-Edit this file, and the bot will squash your changes :)
-
-The bot does some handling of markdown. Please file a bug if it does the wrong
-thing! https://github.com/PolymerLabs/tedium/issues
-
--->
-
 [![Build status](https://travis-ci.org/PolymerElements/iron-doc-viewer.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-doc-viewer)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://beta.webcomponents.org/element/PolymerElements/iron-doc-viewer)
 
-_[Demo and API docs](https://elements.polymer-project.org/elements/iron-doc-viewer)_
+## &lt;iron-doc-viewer&gt;
 
+A collection of elements that display documentation about custom elements,
+mixins, classes, and more using the JSON descriptor format produced by [Polymer
+Analyzer](https://github.com/Polymer/polymer-analyzer).
 
-##&lt;iron-doc-viewer&gt;
+You may also be interested in
+[`<iron-component-page>`](https://github.com/PolymerElements/iron-component-page),
+which composes the iron-doc elements into a more complete documentation
+browser.
 
-Renders documentation describing an element's API.
+### Elements
 
-`iron-doc-viewer` renders element and behavior descriptions as extracted by
-[Hydrolysis](https://github.com/PolymerLabs/hydrolysis). You can provide them
-either via binding...
+* `<iron-doc-nav>` Show a table-of-contents.
+* `<iron-doc-viewer>` Manage routing and delegate to a child doc element.
+* `<iron-doc-element>` Show docs about a custom element.
+* `<iron-doc-behavior>` Show docs about a Polymer behavior.
+* `<iron-doc-namespace>` Show docs about a JavaScript namespace.
+* `<iron-doc-class>` Show docs about a JavaScript class.
+* `<iron-doc-mixin>` Show docs about a JavaScript mixin.
+
+### Routing
+
+`<iron-doc-viewer>` handles URL routing to provide permanent addresses for all
+locations in the documentation tree, including scroll anchor targets.
+
+By default it uses the URL fragment for routing (e.g.
+`docs.html#/elements/my-element#property-foo`), in order to support simple
+static file hosts.
+
+To use the real URL path for routing, set the `base-href` property to the
+server mount point, omitting the trailing slash (e.g. `/api/docs` or *empty
+string* for the root path). Note that this requires a host that serves the
+application from all paths that should be handled by the doc viewer.
+
+### Styling
+
+The iron-doc elements come with an optional material-design default theme that
+must be explicitly included as custom style:
 
 ```html
-<iron-doc-viewer descriptor="{{elementDescriptor}}"></iron-doc-viewer>
+<link rel="import" href="../iron-doc-viewer/default-theme.html">
+
+<custom-style>
+  <style is="custom-style" include="iron-doc-default-theme"></style>
+</custom-style>
 ```
 
-...or by placing the element descriptor in JSON as the text content of an
-`iron-doc-viewer`:
+The following custom properties and mixins are available for styling:
 
-```javascript
-<iron-doc-viewer>
-  {
-    "is": "awesome-sauce",
-    "properties": [
-      {"name": "isAwesome", "type": "boolean", "desc": "Is it awesome?"},
-    ]
-  }
-</iron-doc-viewer>
-```
+Custom property | Description | Default
+----------------|-------------|----------
+`--iron-doc-accent-color` | Color for emphasis (e.g. hyperlink hover). | `#1565c0`
+`--iron-doc-font-body` | Mixin applied to non-code text. | `{}`
+`--iron-doc-font-code` | Mixin applied to code snippets. | `{}`
+`--iron-doc-title` | Mixin applied to page titles. | `{}`
+`--iron-doc-heading` | Mixin applied to section headings. | `{}`
 
-However, be aware that due to current limitations in Polymer 0.8, *changes* to
-the text content will not be respected, only the initial value will be loaded.
-If you wish to update the documented element, please set it via the `descriptor`
-property.
+### Previous versions
 
+The 3.x `iron-doc` elements described here have major breaking changes versus
+the 1.x and 2.x versions. Previous versions were based on *Hydrolysis*, the
+predecessor to Polymer Analyzer. Hydrolysis is no longer maintained and does
+not support analysis of Polymer 2 elements.
 
-
-##&lt;iron-doc-property&gt;
-
-Renders documentation describing a specific property of an element.
-
-Give it a hydrolysis `PropertyDescriptor` (via `descriptor`), and watch it go!
-
-
+If you still need the previous version, see the
+[2.x branch](https://github.com/PolymerElements/iron-doc-viewer/tree/2.x).

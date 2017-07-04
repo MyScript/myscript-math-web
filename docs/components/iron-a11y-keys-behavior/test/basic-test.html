@@ -63,6 +63,7 @@ suite('Polymer.IronA11yKeysBehavior', function() {
   var keys;
 
   suiteSetup(function() {
+    /** @polymerBehavior */
     var KeysTestBehavior = [Polymer.IronA11yKeysBehavior, {
       properties: {
         keyCount: {
@@ -128,6 +129,7 @@ suite('Polymer.IronA11yKeysBehavior', function() {
       }
     });
 
+    /** @polymerBehavior */
     var XA11yBehavior = {
       keyBindings: {
         'enter': '_keyHandler'
@@ -289,6 +291,14 @@ suite('Polymer.IronA11yKeysBehavior', function() {
         expect(keys.keyboardEventMatchesKeys(event, 'up')).to.be.equal(true);
         event.key = 'ArrowUp';
         expect(keys.keyboardEventMatchesKeys(event, 'up')).to.be.equal(true);
+      });
+
+      test('can handle function keys', function() {
+        var event = new CustomEvent('keydown');
+        event.keyCode = 112;
+        expect(keys.keyboardEventMatchesKeys(event, 'f1')).to.be.equal(true);
+        event.keyCode = 123;
+        expect(keys.keyboardEventMatchesKeys(event, 'f12')).to.be.equal(true);
       });
     });
 

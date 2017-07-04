@@ -220,6 +220,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       this.backdropElement.style.zIndex = this._getZ(overlay) - 1;
       this.backdropElement.opened = !!overlay;
+      // Property observers are not fired until element is attached
+      // in Polymer 2.x, so we ensure element is attached if needed.
+      // https://github.com/Polymer/polymer/issues/4526
+      this.backdropElement.prepare();
     },
 
     /**

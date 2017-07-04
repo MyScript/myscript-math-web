@@ -151,7 +151,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           validKey = String.fromCharCode(32 + keyCode);
         } else if (keyCode >= 112 && keyCode <= 123) {
           // function keys f1-f12
-          validKey = 'f' + (keyCode - 112);
+          validKey = 'f' + (keyCode - 112 + 1);
         } else if (keyCode >= 48 && keyCode <= 57) {
           // top 0-9 keys
           validKey = String(keyCode - 48);
@@ -337,6 +337,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * Can be used to imperatively add a key binding to the implementing
        * element. This is the imperative equivalent of declaring a keybinding
        * in the `keyBindings` prototype property.
+       *
+       * @param {string} eventString
+       * @param {string} handlerName
        */
       addOwnKeyBinding: function(eventString, handlerName) {
         this._imperativeKeyBindings[eventString] = handlerName;

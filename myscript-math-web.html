@@ -9,7 +9,15 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-math-web>
 
-@demo
+@demo demo/customstyle.html
+@demo demo/debug.html
+@demo demo/index.html
+@demo demo/init-error.html
+@demo demo/legacy.html
+@demo demo/officeopenxml.html
+@demo demo/programmatic-init.html
+@demo demo/stats.html
+@demo demo/symboltree.html
 -->
 <dom-module id="myscript-math-web">
     <template>
@@ -442,7 +450,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 this.myscriptcommonelement.configuration = this._buildConfiguration();
 
                 this.currentListeners = {};
-                const eventTypes = Object
+                Object
                     .keys(MyScript.Constants.EventType)
                     .map(key => MyScript.Constants.EventType[key])
                     .forEach(type => this.currentListeners[type] = (event) => {

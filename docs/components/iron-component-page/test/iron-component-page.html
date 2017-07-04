@@ -9,35 +9,75 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <html>
-<head>
-  <title>iron-component-page</title>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>iron-component-page tests</title>
 
-  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <script src="../../web-component-tester/browser.js"></script>
-  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../test-fixture/test-fixture-mocha.js"></script>
 
-  <link rel="import" href="../../polymer/polymer.html">
-  <link rel="import" href="../../test-fixture/test-fixture.html">
-  <link rel="import" href="../iron-component-page.html">
-</head>
-<body>
+    <link rel="import" href="../../polymer/polymer.html">
+    <link rel="import" href="../../test-fixture/test-fixture.html">
 
-  <test-fixture id="basic">
-    <template>
-      <iron-component-page src="test-element.html"></iron-component-page>
-    </template>
-  </test-fixture>
+    <link rel="import" href="../iron-component-page.html">
+  </head>
+  <body>
 
-  <script>
-    suite('active-state', function() {
+    <test-fixture id="basic">
+      <template>
+        <iron-component-page></iron-component-page>
+      </template>
+    </test-fixture>
 
-      var testElement;
+    <script>
+      var descriptor = {
+        "elements": [
+          {
+            "name": "my-element",
+            "description": "I am an element",
+            "demos": [
+              {
+                "url": "demo/fancy-demo.html",
+                "description": "My Fancy Demo"
+              }
+            ]
+          }
+        ]
+      };
 
-      setup(function() {
-        testElement = fixture('basic');
+      describe('<iron-component-page>', function() {
+        var server, page;
+
+        beforeEach(function(done) {
+          server = sinon.fakeServer.create();
+          server.respondImmediately = true;
+          server.respondWith('GET', 'analysis.json', [
+            200, {'Content-Type': 'application/json'},
+            JSON.stringify(descriptor)
+          ]);
+
+          page = fixture('basic');
+
+          // Just a flush should be ok, but Safari 9 consistently needs more.
+          setTimeout(done, 500);
+        });
+
+        afterEach(function() {
+          server.restore();
+        });
+
+        it('fetches default descriptor name and renders from it', function() {
+          var view = page
+              .$$('iron-doc-viewer')
+              .$$('iron-doc-namespace')
+              .$$('iron-doc-summary');
+          var text = Polymer.dom(view.root).textContent;
+          expect(text).contains('my-element');
+        });
       });
+    </script>
 
-    });
-  </script>
-</body>
+  </body>
 </html>

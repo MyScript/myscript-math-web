@@ -7,21 +7,12 @@
 
     <title>WEBSOCKET Text iink</title>
 
-    <link rel="prefetch" href="../dist/fonts/stix/STIXGeneral-Bold.otf">
-    <link rel="prefetch" href="../dist/fonts/stix/STIXGeneral-BoldItalic.otf">
-    <link rel="prefetch" href="../dist/fonts/stix/STIXGeneral-Italic.otf">
-    <link rel="prefetch" href="../dist/fonts/stix/STIXGeneral-Regular.otf">
-    <link rel="prefetch" href="../dist/fonts/stix/STIXSizeThreeSym-Bold.otf">
-    <link rel="prefetch" href="../dist/fonts/stix/STIXSizeThreeSym-Regular.otf">
-    <link rel="prefetch" href="../dist/fonts/diagram/segoeui.otf">
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" >
     <link rel="stylesheet" href="../dist/myscript.min.css"/>
     <link rel="stylesheet" href="samples.css">
 
     <!-- Live reload with webpack -->
     <script type="text/javascript" src="http://localhost:8080/webpack-dev-server.js"></script>
-    <script type="text/javascript" src="../../node_modules/pepjs/dist/pep.min.js"></script>
+    <script type="text/javascript" src="../node_modules/pepjs/dist/pep.min.js"></script>
     <script type="text/javascript" src="../dist/myscript.min.js"></script>
 </head>
 <body>
@@ -33,6 +24,7 @@
         <button id="redo" disabled></button>
         <button id="export" disabled></button>
         <button id="convert" disabled></button>
+        <button id="close">Close socket</button>
     </div>
     <div id="editor"></div>
 </div>
@@ -44,6 +36,7 @@
   var clearElement = document.getElementById('clear');
   var exportElement = document.getElementById('export');
   var convertElement = document.getElementById('convert');
+  var closeElement = document.getElementById('close');
 
   editorElement.addEventListener('load', function () {
     exportElement.disabled = false;
@@ -78,6 +71,13 @@
   convertElement.addEventListener('pointerdown', function () {
     editorElement['data-myscript-editor'].convert();
   });
+  closeElement.addEventListener('pointerdown', function () {
+    var editor = editorElement['data-myscript-editor'];
+    editor.recognizer.close(editor.configuration, editor.model, editor.recognizerContext, function (err, res) {
+      console.log('Closed', res);
+      editor.recognizerContext.websocket.autoReconnect = true;
+    });
+  });
 
   /**
    * Attach an editor to the document
@@ -93,12 +93,16 @@
         scheme: 'https',
         host: 'newcloud.myscript.com',
         applicationKey: '7d223f9e-a3cb-4213-ba4b-85e930605f8b',
-        hmacKey: 'f35a21d1-aae3-4b98-8c5e-11e146e82130'
+        hmacKey: '5ab1935e-529a-4d48-a695-158450e52b13',
+        websocket: {
+          pingEnabled: false,
+          autoReconnect: true
+        }
       },
       v4: {
         text: {
           mimeTypes: ['text/plain']
-        }
+        },
       }
     }
   });
