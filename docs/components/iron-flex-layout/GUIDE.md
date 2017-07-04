@@ -205,7 +205,7 @@ The classes listed here are included in the `iron-flex` module of the `iron-flex
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout.html">
     <dom-module id="demo-element">
       <template>
@@ -272,7 +272,7 @@ The classes listed here are included in the `iron-flex` module of the `iron-flex
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout.html">
     <dom-module id="demo-element">
       <template>
@@ -333,7 +333,7 @@ The same rules can be used for children in vertical layouts.
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout.html">
     <dom-module id="demo-element">
       <template>
@@ -403,7 +403,7 @@ The classes listed here are included in the `iron-flex-factors` module of the `i
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout.html">
     <dom-module id="demo-element">
       <template>
@@ -460,7 +460,7 @@ By default, children stretch to fit the cross-axis (e.g. _vertical_ stretching i
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout-classes.html">
     <dom-module id="demo-element">
       <template>
@@ -500,7 +500,7 @@ by adding the `center` class or applying the `--layout-center` mixin.
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout-classes.html">
     <dom-module id="demo-element">
       <template>
@@ -537,7 +537,7 @@ by adding the `center` class or applying the `--layout-center` mixin.
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout.html">
     <dom-module id="demo-element">
       <template>
@@ -586,7 +586,7 @@ classes, or by applying the `--layout-start` or `--layout-end` mixins.
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout-classes.html">
     <dom-module id="demo-element">
       <template>
@@ -623,7 +623,7 @@ classes, or by applying the `--layout-start` or `--layout-end` mixins.
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout.html">
     <dom-module id="demo-element">
       <template>
@@ -667,7 +667,7 @@ classes, or by applying the `--layout-start` or `--layout-end` mixins.
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout-classes.html">
     <dom-module id="demo-element">
       <template>
@@ -704,7 +704,7 @@ classes, or by applying the `--layout-start` or `--layout-end` mixins.
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout.html">
     <dom-module id="demo-element">
       <template>
@@ -764,7 +764,7 @@ The classes listed here are included in the `iron-flex-alignment` module of the 
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout-classes.html">
     <dom-module id="demo-element">
       <template>
@@ -801,7 +801,7 @@ The classes listed here are included in the `iron-flex-alignment` module of the 
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout.html">
     <dom-module id="demo-element">
       <template>
@@ -845,7 +845,7 @@ The classes listed here are included in the `iron-flex-alignment` module of the 
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout-classes.html">
     <dom-module id="demo-element">
       <template>
@@ -882,7 +882,7 @@ The classes listed here are included in the `iron-flex-alignment` module of the 
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout.html">
     <dom-module id="demo-element">
       <template>
@@ -928,7 +928,7 @@ The classes listed here are included in the `iron-flex-alignment` module of the 
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout-classes.html">
     <dom-module id="demo-element">
       <template>
@@ -977,7 +977,7 @@ Class | Mixin | Result
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout-classes.html">
     <dom-module id="demo-element">
       <template>
@@ -1017,7 +1017,7 @@ Class | Mixin | Result
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout.html">
     <dom-module id="demo-element">
       <template>
@@ -1088,7 +1088,7 @@ Wrapped layouts can be enabled with the `wrap` class or `--layout-wrap` mixin.
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout-classes.html">
     <dom-module id="demo-element">
       <template>
@@ -1140,7 +1140,7 @@ The classes listed here are included in the `iron-flex-reverse` module of the `i
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout.html">
     <dom-module id="demo-element">
       <template>
@@ -1229,7 +1229,7 @@ to fit inside of.
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout-classes.html">
     <dom-module id="demo-element">
       <template>

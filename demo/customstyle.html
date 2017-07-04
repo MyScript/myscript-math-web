@@ -7,23 +7,23 @@
 
     <title>myscript-math-web demo</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="../myscript-math-web.html">
     <link rel="stylesheet" href="demo.css">
-    <!-- is="custom-style" is mandatory to overide css variables -->
-    <style is="custom-style">
-        .ms-editor canvas.ms-rendering-canvas {
-            z-index: 10;
-            background: no-repeat url(https://farm6.staticflickr.com/5526/10976824044_aebaebdb12_z_d.jpg);
-            background-size: cover;
-        }
-        myscript-math-web {
-            --myscript-math-web-background-color: #ff7314;
-            --myscript-math-web-focus-background-color: #ff7314;
-            --myscript-math-web-disabled-background-color: #060903;
-            --myscript-math-exports-color: #060903;
-        }
-    </style>
+    <custom-style>
+        <style>
+            myscript-math-web {
+                --myscript-math-web-background: url(https://farm6.staticflickr.com/5526/10976824044_aebaebdb12_z_d.jpg);
+                --myscript-math-web-line-pattern: none;
+                --myscript-math-web-loader-background: #ff7314;
+                --myscript-math-web-loader-color: #F5F6F7;
+                --myscript-math-web-button-background: #ff7314;
+                --myscript-math-web-button-focus-background: #ff7314;
+                --myscript-math-web-button-disabled-background: #060903;
+                --myscript-math-web-exports-color: #FF9917;
+            }
+        </style>
+    </custom-style>
 </head>
 <body>
     <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->

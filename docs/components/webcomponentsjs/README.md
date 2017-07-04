@@ -25,7 +25,7 @@ different browsers and spec readiness:
 - `webcomponents-hi-ce.js` -- HTML Imports and Custom Elements v1 (needed by Safari 10)
 - `webcomponents-hi-sd-ce.js` -- HTML Imports, Custom Elements v1 and Shady DOM/CSS (needed by Safari 9, Firefox, Edge)
 - `webcomponents-sd-ce.js` -- Custom Elements and Shady DOM/CSS (no HTML Imports)
-- `webcomponents-lite.js` -- all of the polyfills: HTML Imports, Custom Elements, Shady DOM/CSS and generic platform polyfills (such as ES6 Promise, Constructable events, etc.) (needed by Internet Explorer 11), and Template (needed by IE 11 and Edge)
+- `webcomponents-loader.js` -- all of the polyfills: HTML Imports, Custom Elements, Shady DOM/CSS and generic platform polyfills (such as ES6 Promise, Constructable events, etc.) (needed by Internet Explorer 11), and Template (needed by IE 11 and Edge)
 
 If you are only targeting a specific browser, you can just use the bundle that's
 needed by it; alternatively, if your server is capable of serving different assets based on user agent, you can send the polyfill bundle that's necessary for the browser making that request.
@@ -133,7 +133,7 @@ Copyright (c) 2015 The Polymer Authors. All rights reserved.
 
 Under native HTML Imports, `<script>` tags in the main document block the loading of such imports. This is to ensure the imports have loaded and any registered elements in them have been upgraded.
 
-The `webcomponents-lite.js` polyfill (as well as the smaller bundles and the loader) parse element definitions and handle their upgrade asynchronously. If prematurely fetching the element from the DOM before it has an opportunity to upgrade, you'll be working with an `HTMLUnknownElement`.
+The `webcomponents-loader.js` polyfill (as well as the smaller bundles and the loader) parse element definitions and handle their upgrade asynchronously. If prematurely fetching the element from the DOM before it has an opportunity to upgrade, you'll be working with an `HTMLUnknownElement`.
 
 For these situations, you can use the `WebComponentsReady` event as a signal before interacting with the element. The criteria for this event to fire is all Custom Elements with definitions registered by the time HTML Imports available at load time have loaded have upgraded.
 

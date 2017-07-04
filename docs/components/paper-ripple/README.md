@@ -12,7 +12,7 @@ effect can be visualized as a concentric circle with motion.
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="paper-ripple.html">
     <style is="custom-style">
       div {

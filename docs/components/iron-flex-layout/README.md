@@ -18,7 +18,7 @@ Sample use:
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.min.js"></script>
     <link rel="import" href="iron-flex-layout-classes.html">
     <dom-module id="demo-element">
       <template>

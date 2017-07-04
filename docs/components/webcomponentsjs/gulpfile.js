@@ -120,7 +120,7 @@ gulp.task('debugify-hi-sd-ce-pf', () => {
   // The es6-promise polyfill needs to set the correct context.
   // See https://github.com/rollup/rollup/wiki/Troubleshooting#this-is-undefined
   const extraOptions = {context: 'window'};
-  return debugify('webcomponents-hi-sd-ce-pf', 'webcomponents-lite', extraOptions)
+  return debugify('webcomponents-hi-sd-ce-pf', 'webcomponents-loader', extraOptions)
 });
 
 gulp.task('debugify-sd-ce', () => {
@@ -140,7 +140,7 @@ gulp.task('closurify-hi-sd-ce', () => {
 });
 
 gulp.task('closurify-hi-sd-ce-pf', () => {
-  return closurify('webcomponents-hi-sd-ce-pf', 'webcomponents-lite')
+  return closurify('webcomponents-hi-sd-ce-pf', 'webcomponents-loader')
 });
 
 gulp.task('closurify-sd-ce', () => {

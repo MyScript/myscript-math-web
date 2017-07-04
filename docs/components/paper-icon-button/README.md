@@ -31,7 +31,7 @@ from the icon set to use.
 ```html
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="paper-icon-button.html">
     <link rel="import" href="../iron-icons/iron-icons.html">
     <next-code-block></next-code-block>

@@ -13,11 +13,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 234,
+              "line": 247,
               "column": 20
             },
             "end": {
-              "line": 238,
+              "line": 251,
               "column": 21
             }
           },
@@ -33,11 +33,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 242,
+              "line": 255,
               "column": 20
             },
             "end": {
-              "line": 246,
+              "line": 259,
               "column": 21
             }
           },
@@ -53,11 +53,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 250,
+              "line": 263,
               "column": 20
             },
             "end": {
-              "line": 254,
+              "line": 267,
               "column": 21
             }
           },
@@ -73,11 +73,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 258,
+              "line": 271,
               "column": 20
             },
             "end": {
-              "line": 262,
+              "line": 275,
               "column": 21
             }
           },
@@ -93,11 +93,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 266,
+              "line": 279,
               "column": 20
             },
             "end": {
-              "line": 270,
+              "line": 283,
               "column": 21
             }
           },
@@ -113,11 +113,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 274,
+              "line": 287,
               "column": 20
             },
             "end": {
-              "line": 278,
+              "line": 291,
               "column": 21
             }
           },
@@ -133,11 +133,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 282,
+              "line": 295,
               "column": 20
             },
             "end": {
-              "line": 286,
+              "line": 299,
               "column": 21
             }
           },
@@ -153,11 +153,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 292,
+              "line": 305,
               "column": 20
             },
             "end": {
-              "line": 295,
+              "line": 308,
               "column": 21
             }
           },
@@ -172,11 +172,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 301,
+              "line": 314,
               "column": 20
             },
             "end": {
-              "line": 304,
+              "line": 317,
               "column": 21
             }
           },
@@ -191,11 +191,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 309,
+              "line": 322,
               "column": 20
             },
             "end": {
-              "line": 315,
+              "line": 328,
               "column": 21
             }
           },
@@ -214,11 +214,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 319,
+              "line": 332,
               "column": 20
             },
             "end": {
-              "line": 321,
+              "line": 334,
               "column": 21
             }
           },
@@ -233,11 +233,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 327,
+              "line": 340,
               "column": 20
             },
             "end": {
-              "line": 330,
+              "line": 343,
               "column": 21
             }
           },
@@ -254,11 +254,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 334,
+              "line": 347,
               "column": 20
             },
             "end": {
-              "line": 339,
+              "line": 352,
               "column": 21
             }
           },
@@ -276,11 +276,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 343,
+              "line": 356,
               "column": 20
             },
             "end": {
-              "line": 348,
+              "line": 361,
               "column": 21
             }
           },
@@ -298,11 +298,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 352,
+              "line": 365,
               "column": 20
             },
             "end": {
-              "line": 357,
+              "line": 370,
               "column": 21
             }
           },
@@ -320,11 +320,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 361,
+              "line": 374,
               "column": 20
             },
             "end": {
-              "line": 366,
+              "line": 379,
               "column": 21
             }
           },
@@ -342,11 +342,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 370,
+              "line": 383,
               "column": 20
             },
             "end": {
-              "line": 375,
+              "line": 388,
               "column": 21
             }
           },
@@ -364,11 +364,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 379,
+              "line": 392,
               "column": 20
             },
             "end": {
-              "line": 384,
+              "line": 397,
               "column": 21
             }
           },
@@ -386,11 +386,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 388,
+              "line": 401,
               "column": 20
             },
             "end": {
-              "line": 393,
+              "line": 406,
               "column": 21
             }
           },
@@ -408,11 +408,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 397,
+              "line": 410,
               "column": 20
             },
             "end": {
-              "line": 402,
+              "line": 415,
               "column": 21
             }
           },
@@ -430,11 +430,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 406,
+              "line": 419,
               "column": 20
             },
             "end": {
-              "line": 410,
+              "line": 423,
               "column": 21
             }
           },
@@ -450,11 +450,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 414,
+              "line": 427,
               "column": 20
             },
             "end": {
-              "line": 418,
+              "line": 431,
               "column": 21
             }
           },
@@ -470,11 +470,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 422,
+              "line": 435,
               "column": 20
             },
             "end": {
-              "line": 426,
+              "line": 439,
               "column": 21
             }
           },
@@ -490,11 +490,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 430,
+              "line": 443,
               "column": 20
             },
             "end": {
-              "line": 434,
+              "line": 447,
               "column": 21
             }
           },
@@ -510,11 +510,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 439,
+              "line": 452,
               "column": 20
             },
             "end": {
-              "line": 442,
+              "line": 455,
               "column": 21
             }
           },
@@ -531,11 +531,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 446,
+              "line": 459,
               "column": 20
             },
             "end": {
-              "line": 450,
+              "line": 463,
               "column": 21
             }
           },
@@ -552,11 +552,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 454,
+              "line": 467,
               "column": 12
             },
             "end": {
-              "line": 459,
+              "line": 472,
               "column": 13
             }
           },
@@ -573,11 +573,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 461,
+              "line": 474,
               "column": 12
             },
             "end": {
-              "line": 551,
+              "line": 564,
               "column": 13
             }
           },
@@ -590,11 +590,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 553,
+              "line": 566,
               "column": 12
             },
             "end": {
-              "line": 562,
+              "line": 575,
               "column": 13
             }
           },
@@ -607,11 +607,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 567,
+              "line": 580,
               "column": 12
             },
             "end": {
-              "line": 571,
+              "line": 584,
               "column": 13
             }
           },
@@ -624,11 +624,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 576,
+              "line": 589,
               "column": 12
             },
             "end": {
-              "line": 580,
+              "line": 593,
               "column": 13
             }
           },
@@ -641,11 +641,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 585,
+              "line": 598,
               "column": 12
             },
             "end": {
-              "line": 589,
+              "line": 602,
               "column": 13
             }
           },
@@ -658,11 +658,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 594,
+              "line": 607,
               "column": 12
             },
             "end": {
-              "line": 598,
+              "line": 611,
               "column": 13
             }
           },
@@ -679,11 +679,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 603,
+              "line": 616,
               "column": 12
             },
             "end": {
-              "line": 607,
+              "line": 620,
               "column": 13
             }
           },
@@ -696,11 +696,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 613,
+              "line": 626,
               "column": 12
             },
             "end": {
-              "line": 617,
+              "line": 630,
               "column": 13
             }
           },
@@ -713,11 +713,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 619,
+              "line": 632,
               "column": 12
             },
             "end": {
-              "line": 626,
+              "line": 639,
               "column": 13
             }
           },
@@ -734,11 +734,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 628,
+              "line": 641,
               "column": 12
             },
             "end": {
-              "line": 634,
+              "line": 647,
               "column": 13
             }
           },
@@ -755,11 +755,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 636,
+              "line": 649,
               "column": 12
             },
             "end": {
-              "line": 646,
+              "line": 659,
               "column": 13
             }
           },
@@ -776,11 +776,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 648,
+              "line": 661,
               "column": 12
             },
             "end": {
-              "line": 658,
+              "line": 671,
               "column": 13
             }
           },
@@ -793,11 +793,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 660,
+              "line": 673,
               "column": 12
             },
             "end": {
-              "line": 686,
+              "line": 699,
               "column": 13
             }
           },
@@ -809,41 +809,37 @@
       "demos": [
         {
           "url": "demo/customstyle.html",
-          "description": ""
+          "description": "Customize your component"
         },
         {
           "url": "demo/debug.html",
-          "description": ""
+          "description": "Debug your component"
         },
         {
           "url": "demo/iink_preview.html",
-          "description": ""
+          "description": "IInk preview"
         },
         {
-          "url": "demo/init_error.html",
-          "description": ""
+          "url": "demo/index.html",
+          "description": "Get started"
+        },
+        {
+          "url": "demo/init-error.html",
+          "description": "Display initialization error"
         },
         {
           "url": "demo/programmatic-init.html",
-          "description": ""
-        },
-        {
-          "url": "demo/shadow_dom.html",
-          "description": ""
-        },
-        {
-          "url": "demo/stats.html",
-          "description": ""
+          "description": "Programmatic initialization"
         }
       ],
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 172,
+          "line": 185,
           "column": 8
         },
         "end": {
-          "line": 688,
+          "line": 701,
           "column": 9
         }
       },
@@ -856,11 +852,11 @@
           "description": "<b>not mutable</b><br />\nThe current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)",
           "sourceRange": {
             "start": {
-              "line": 234,
+              "line": 247,
               "column": 20
             },
             "end": {
-              "line": 238,
+              "line": 251,
               "column": 21
             }
           },
@@ -872,11 +868,11 @@
           "description": "The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.",
           "sourceRange": {
             "start": {
-              "line": 242,
+              "line": 255,
               "column": 20
             },
             "end": {
-              "line": 246,
+              "line": 259,
               "column": 21
             }
           },
@@ -888,11 +884,11 @@
           "description": "Scheme to use to connect to MyScript Cloud or Server. (https or http)",
           "sourceRange": {
             "start": {
-              "line": 250,
+              "line": 263,
               "column": 20
             },
             "end": {
-              "line": 254,
+              "line": 267,
               "column": 21
             }
           },
@@ -904,11 +900,11 @@
           "description": "The current recognition service host.",
           "sourceRange": {
             "start": {
-              "line": 258,
+              "line": 271,
               "column": 20
             },
             "end": {
-              "line": 262,
+              "line": 275,
               "column": 21
             }
           },
@@ -920,11 +916,11 @@
           "description": "Cloud API version to use (eg V3 or V4)",
           "sourceRange": {
             "start": {
-              "line": 266,
+              "line": 279,
               "column": 20
             },
             "end": {
-              "line": 270,
+              "line": 283,
               "column": 21
             }
           },
@@ -936,11 +932,11 @@
           "description": "Delay without any user input before asking for recognition, only use with REST protocol.",
           "sourceRange": {
             "start": {
-              "line": 274,
+              "line": 287,
               "column": 20
             },
             "end": {
-              "line": 278,
+              "line": 291,
               "column": 21
             }
           },
@@ -952,11 +948,11 @@
           "description": "Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol.",
           "sourceRange": {
             "start": {
-              "line": 282,
+              "line": 295,
               "column": 20
             },
             "end": {
-              "line": 286,
+              "line": 299,
               "column": 21
             }
           },
@@ -968,11 +964,11 @@
           "description": "Application key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />\n<b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 292,
+              "line": 305,
               "column": 20
             },
             "end": {
-              "line": 295,
+              "line": 308,
               "column": 21
             }
           },
@@ -984,11 +980,11 @@
           "description": "HMAC key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />\n<b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 301,
+              "line": 314,
               "column": 20
             },
             "end": {
-              "line": 304,
+              "line": 317,
               "column": 21
             }
           },
@@ -1000,11 +996,11 @@
           "description": "Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.\n(see demo/programmatic-init.html for a better understanding)",
           "sourceRange": {
             "start": {
-              "line": 309,
+              "line": 322,
               "column": 20
             },
             "end": {
-              "line": 315,
+              "line": 328,
               "column": 21
             }
           },
@@ -1016,11 +1012,11 @@
           "description": "The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.",
           "sourceRange": {
             "start": {
-              "line": 319,
+              "line": 332,
               "column": 20
             },
             "end": {
-              "line": 321,
+              "line": 334,
               "column": 21
             }
           },
@@ -1032,11 +1028,11 @@
           "description": "Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs DefaultConfiguration.js file)\nConfiguration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.\nConfiguration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).",
           "sourceRange": {
             "start": {
-              "line": 327,
+              "line": 340,
               "column": 20
             },
             "end": {
-              "line": 330,
+              "line": 343,
               "column": 21
             }
           },
@@ -1048,11 +1044,11 @@
           "description": "Color of the stroke",
           "sourceRange": {
             "start": {
-              "line": 334,
+              "line": 347,
               "column": 20
             },
             "end": {
-              "line": 339,
+              "line": 352,
               "column": 21
             }
           },
@@ -1064,11 +1060,11 @@
           "description": "Width of the stroke",
           "sourceRange": {
             "start": {
-              "line": 343,
+              "line": 356,
               "column": 20
             },
             "end": {
-              "line": 348,
+              "line": 361,
               "column": 21
             }
           },
@@ -1080,11 +1076,11 @@
           "description": "True if undo is available",
           "sourceRange": {
             "start": {
-              "line": 352,
+              "line": 365,
               "column": 20
             },
             "end": {
-              "line": 357,
+              "line": 370,
               "column": 21
             }
           },
@@ -1096,11 +1092,11 @@
           "description": "True if redo is available",
           "sourceRange": {
             "start": {
-              "line": 361,
+              "line": 374,
               "column": 20
             },
             "end": {
-              "line": 366,
+              "line": 379,
               "column": 21
             }
           },
@@ -1112,11 +1108,11 @@
           "description": "True if there is something to clear",
           "sourceRange": {
             "start": {
-              "line": 370,
+              "line": 383,
               "column": 20
             },
             "end": {
-              "line": 375,
+              "line": 388,
               "column": 21
             }
           },
@@ -1128,11 +1124,11 @@
           "description": "True if export button could be displayed.",
           "sourceRange": {
             "start": {
-              "line": 379,
+              "line": 392,
               "column": 20
             },
             "end": {
-              "line": 384,
+              "line": 397,
               "column": 21
             }
           },
@@ -1144,11 +1140,11 @@
           "description": "True if convert button could be displayed.",
           "sourceRange": {
             "start": {
-              "line": 388,
+              "line": 401,
               "column": 20
             },
             "end": {
-              "line": 393,
+              "line": 406,
               "column": 21
             }
           },
@@ -1160,11 +1156,11 @@
           "description": "If set to true, hide the buttons (Trash, Undo, Redo).",
           "sourceRange": {
             "start": {
-              "line": 397,
+              "line": 410,
               "column": 20
             },
             "end": {
-              "line": 402,
+              "line": 415,
               "column": 21
             }
           },
@@ -1176,11 +1172,11 @@
           "description": "True if the undo/redo feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 406,
+              "line": 419,
               "column": 20
             },
             "end": {
-              "line": 410,
+              "line": 423,
               "column": 21
             }
           },
@@ -1192,11 +1188,11 @@
           "description": "True if the clear feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 414,
+              "line": 427,
               "column": 20
             },
             "end": {
-              "line": 418,
+              "line": 431,
               "column": 21
             }
           },
@@ -1208,11 +1204,11 @@
           "description": "True if the export feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 422,
+              "line": 435,
               "column": 20
             },
             "end": {
-              "line": 426,
+              "line": 439,
               "column": 21
             }
           },
@@ -1224,11 +1220,11 @@
           "description": "True if the convert feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 430,
+              "line": 443,
               "column": 20
             },
             "end": {
-              "line": 434,
+              "line": 447,
               "column": 21
             }
           },
@@ -1240,11 +1236,11 @@
           "description": "Exports.",
           "sourceRange": {
             "start": {
-              "line": 439,
+              "line": 452,
               "column": 20
             },
             "end": {
-              "line": 442,
+              "line": 455,
               "column": 21
             }
           },
@@ -1256,11 +1252,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 446,
+              "line": 459,
               "column": 20
             },
             "end": {
-              "line": 450,
+              "line": 463,
               "column": 21
             }
           },
@@ -4220,11 +4216,11 @@
       "demos": [
         {
           "url": "demo/languages.html",
-          "description": ""
+          "description": "Get started"
         },
         {
           "url": "demo/languages-selector-init.html",
-          "description": ""
+          "description": "Programmatic initialization"
         }
       ],
       "metadata": {},

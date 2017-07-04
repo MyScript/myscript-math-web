@@ -6,7 +6,7 @@ Polymer lets you build encapsulated, reusable elements that work just like stand
 
 ```html
 <!-- Polyfill Web Components for older browsers -->
-<script src="webcomponentsjs/webcomponents-lite.js"></script>
+<script src="webcomponentsjs/webcomponents-loader.js"></script>
 
 <!-- Import element -->
 <link rel="import" href="google-map.html">
@@ -22,7 +22,7 @@ Or if you'd just like to download the library, check out our [releases page](htt
 ## Polymer 2.0 now at Release Candidate!
 Polymer 2.0 is now at Release Candidate stage, and will be the future focus of Polymer development going forward.  We intend to keep the 2.x public API stable barring critical feedback or issues during the release candidate period.  For background and migration information on the 2.x see the [2.0 documentation](https://www.polymer-project.org/2.0/docs/about_20) on the website or the [2.0 section below](#release-candidate), and we welcome your feedback via [issues](https://github.com/Polymer/polymer/issues/new) or [Slack](https://polymer-slack.herokuapp.com/).
 
-**To evaluate Polymer 2.0**, please point your bower at the latest `2.0.0-rc.x` tag for polymer, and be sure load to the `webcomponentsjs/webcomponents-lite.js` or `webcomponentsjs/webcomponents-loader.js` polyfills from the latest `v1.0.0-rc.x` tag of [`webcomponentsjs`](https://github.com/webcomponents/webcomponentsjs)
+**To evaluate Polymer 2.0**, please point your bower at the latest `2.0.0-rc.x` tag for polymer, and be sure load to the `webcomponentsjs/webcomponents-loader.js` or `webcomponentsjs/webcomponents-loader.js` polyfills from the latest `v1.0.0-rc.x` tag of [`webcomponentsjs`](https://github.com/webcomponents/webcomponentsjs)
 
 👀 **Looking for Polymer v1.x?** Please see the [the v1 branch](https://github.com/Polymer/polymer/tree/1.x)
 
@@ -371,7 +371,7 @@ See below for a visual guide on migrating Polymer 1.0's declarative syntax to th
 
 ## Polyfills
 
-Polymer 2.0 has been developed alongside and tested with a new suite of V1-spec compatible polyfills for Custom Elements and Shadow DOM.   Polymer 2.0 is compatible the latest releases of [`webcomponentsjs/webcomponents-lite.js`](https://github.com/webcomponents/webcomponentsjs), which is included as a bower dependency to Polymer 2.x.
+Polymer 2.0 has been developed alongside and tested with a new suite of V1-spec compatible polyfills for Custom Elements and Shadow DOM.   Polymer 2.0 is compatible the latest releases of [`webcomponentsjs/webcomponents-loader.js`](https://github.com/webcomponents/webcomponentsjs), which is included as a bower dependency to Polymer 2.x.
 
 ## Breaking Changes
 Below is a list of intentional breaking changes made in Polymer 2.0, along with their rationale/justification and migration guidance.  If you find changes that broke existing code not documented here, please [file an issue](https://github.com/Polymer/polymer/issues/new) and we'll investigate to determine whether they are expected/intentional or not.

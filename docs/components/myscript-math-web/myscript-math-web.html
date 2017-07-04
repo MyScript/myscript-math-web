@@ -9,29 +9,45 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-math-web>
 
-@demo demo/customstyle.html
-@demo demo/debug.html
-@demo demo/index.html
-@demo demo/init-error.html
-@demo demo/legacy.html
-@demo demo/officeopenxml.html
-@demo demo/programmatic-init.html
-@demo demo/stats.html
-@demo demo/symboltree.html
+Custom property | Description | Default
+----------------|-------------|----------
+`--myscript-math-web-background` | Background of the editor | none
+`--myscript-math-web-color` | Color of the editor | #FFFFFF
+`--myscript-math-web-line-pattern` | Line pattern to apply on the editor | Classic notebook pattern
+`--myscript-math-web-loader-background` | Background of the loader | #1A9FFF
+`--myscript-math-web-loader-color` | Color of the loader | #F5F6F7
+`--myscript-math-web-button-background` | Buttons background | #1A9FFF
+`--myscript-math-web-button-focus-background` | Buttons focus background | #1A9FFF
+`--myscript-math-web-button-disabled-background` | Buttons disabled background | #F5F6F7
+`--myscript-math-web-exports-color` | Math exports color | #1580CD
+
+@demo demo/customstyle.html Customize your component
+@demo demo/debug.html Debug your component
+@demo demo/index.html Get started
+@demo demo/init-error.html Display initialization error
+@demo demo/legacy.html Use legacy API
+@demo demo/officeopenxml.html Setup OfficeOpenXml export
+@demo demo/programmatic-init.html Programmatic initialization
+@demo demo/stats.html Get statistics
+@demo demo/symboltree.html Setup SymbolTree export
 -->
 <dom-module id="myscript-math-web">
     <template>
         <style>
             :host {
+                --myscript-math-web-background: none;
+                --myscript-math-web-color: #FFFFFF;
+                --myscript-math-web-line-pattern: url(data:image/svg+xml;charset=utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij4KICA8cGF0aCBzdHJva2U9IiNGNUY2RjciIGQ9Ik0wLjUsMCBMMC41LDE4IE0wLDAuNSBMMTgsMC41Ii8+Cjwvc3ZnPgo=);
+                --myscript-math-web-loader-background: #1A9FFF;
+                --myscript-math-web-loader-color: #F5F6F7;
+                --myscript-math-web-button-background: #1A9FFF;
+                --myscript-math-web-button-focus-background: #1A9FFF;
+                --myscript-math-web-button-disabled-background: #F5F6F7;
+                --myscript-math-web-exports-color: #1A9FFF;
+
                 box-sizing: border-box;
                 touch-action: none;
                 display: block;
-                --myscript-common-element-color: var(--myscript-math-web-color, #FFFFFF);
-                --myscript-common-element-background-color: var(--myscript-math-web-background-color, #1A9FFF);
-                --myscript-common-element-focus-background-color: var(--myscript-math-web-focus-background-color, #1A9FFF);
-                --myscript-common-element-disabled-background-color: var(--myscript-math-web-disabled-background-color, #F5F6F7);
-
-                --myscript-math-exports-color: #1A9FFF;
             }
 
             [hidden] {
@@ -39,12 +55,23 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             }
 
             myscript-math-exports {
+                --myscript-math-exports-color: var(--myscript-math-web-exports-color);
+
                 height: 100px;
                 font-size: larger;
                 overflow: auto;
             }
 
             myscript-common-element {
+                --myscript-common-element-background: var(--myscript-math-web-background);
+                --myscript-common-element-color: var(--myscript-math-web-color);
+                --myscript-common-element-line-pattern: var(--myscript-math-web-line-pattern);
+                --myscript-common-element-loader-background: var(--myscript-math-web-loader-background);
+                --myscript-common-element-loader-color: var(--myscript-math-web-loader-color);
+                --myscript-common-element-button-background: var(--myscript-math-web-button-background);
+                --myscript-common-element-button-focus-background: var(--myscript-math-web-button-focus-background);
+                --myscript-common-element-button-disabled-background: var(--myscript-math-web-button-disabled-background);
+
                 height: calc(100% - 100px);
             }
 
