@@ -6,37 +6,22 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <title>myscript-common-element basic demo</title>
+    <title>Index</title>
 
     <link rel="stylesheet" href="demo.css">
-
-    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../../paper-toast/paper-toast.html">
-    <link rel="import" href="../myscript-common-element.html">
 </head>
-<custom-style>
-    <style>
-        paper-toast {
-            --paper-toast-background-color: #1A9FFF;
-            --paper-toast-color: white;
-        }
-    </style>
-</custom-style>
 <body>
-    <paper-toast class="fit-top"></paper-toast>
-    <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-    <myscript-common-element
-        type="SHAPE"
-        host="webdemoapi.myscript.com"
-        applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
-    </myscript-common-element>
+    <ul>
+        <li><a href="get_started.html">(get_started.html)</a> Get started with SHAPE</li>
+        <li><a href="v4_configuration.html">(v4_configuration.html)</a> Use interactive ink api for MATH (v4)</li>
+        <li><a href="handle_exports.html">(handle_exports.html)</a> Handle exports</li>
+        <li><a href="handle_error.html">(handle_error.html)</a> Handle error</li>
+        <li><a href="styling.html">(styling.html)</a> Customize your component style</li>
+        <li><a href="programmatic_init.html">(programmatic_init.html)</a> Programmatic initialization</li>
+        <li><a href="get_stats.html">(get_stats.html)</a> Get statistics</li>
+        <li><a href="debug.html">(debug.html)</a> Debug your component</li>
+        <li><a href="get_languages.html">(get_languages.html)</a> Get available languages</li>
+        <li><a href="get_languages_programmatic.html">(get_languages_programmatic.html)</a> Get available languages programmatically</li>
+    </ul>
 </body>
-<script>
-    const paperToast = document.querySelector('paper-toast');
-    document.querySelector('myscript-common-element').addEventListener('exported', function (event) {
-        paperToast.text = 'Recognition object contains : ' + JSON.stringify(event.detail);
-        paperToast.fitIn = paperToast.show();
-    });
-</script>
 </html>

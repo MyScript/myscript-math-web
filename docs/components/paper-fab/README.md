@@ -15,7 +15,7 @@ See `iron-iconset` for more information about how to use a custom icon set.
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="paper-fab.html">
     <link rel="import" href="../iron-icons/iron-icons.html">
     <custom-style>

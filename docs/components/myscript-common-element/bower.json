@@ -24,6 +24,8 @@
     "!myscript-languages-element.html",
     "!myscriptjs-import.html",
     "!pepjs-import.html",
+    "!index.html",
+    "!analysis.json",
     "!bower.json",
     "!demo/**/*"
   ],

@@ -21,15 +21,13 @@ Custom property | Description | Default
 `--myscript-math-web-button-disabled-background` | Buttons disabled background | #F5F6F7
 `--myscript-math-web-exports-color` | Math exports color | #1580CD
 
-@demo demo/customstyle.html Customize your component
+@demo demo/get_started.html Get started
+@demo demo/v4_configuration.html Use interactive ink api (v4)
+@demo demo/handle_error.html Handle error
+@demo demo/styling.html Customize your component style
+@demo demo/programmatic_init.html Programmatic initialization
+@demo demo/get_stats.html Get statistics
 @demo demo/debug.html Debug your component
-@demo demo/index.html Get started
-@demo demo/init-error.html Display initialization error
-@demo demo/legacy.html Use legacy API
-@demo demo/officeopenxml.html Setup OfficeOpenXml export
-@demo demo/programmatic-init.html Programmatic initialization
-@demo demo/stats.html Get statistics
-@demo demo/symboltree.html Setup SymbolTree export
 -->
 <dom-module id="myscript-math-web">
     <template>
@@ -197,7 +195,7 @@ Custom property | Description | Default
                     },
                     /**
                      * Properties to set when you wish to set attributes in javascript. unloaded attributes shoudl be removed once all properties are set.
-                     * (see demo/programmatic-init.html for a better understanding)
+                     * (see demo/programmatic_init.html for a better understanding)
                      */
                     unloaded: {
                         type: Boolean,
@@ -209,7 +207,7 @@ Custom property | Description | Default
                     /**
                      * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
                      * Configuration values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.
-                     * Configuration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).
+                     * Configuration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).
                      */
                     configuration: {
                         type: Object,

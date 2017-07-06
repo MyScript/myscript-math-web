@@ -6,24 +6,14 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <title>myscript-common-element basic demo</title>
+    <title>Activate debugger</title>
 
     <link rel="stylesheet" href="demo.css">
 
     <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../../paper-toast/paper-toast.html">
     <link rel="import" href="../myscript-common-element.html">
 </head>
-<custom-style>
-    <style>
-        paper-toast {
-            --paper-toast-background-color: #1A9FFF;
-            --paper-toast-color: white;
-        }
-    </style>
-</custom-style>
 <body>
-    <paper-toast class="fit-top"></paper-toast>
     <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
     <myscript-common-element
         debug
@@ -33,11 +23,4 @@
         hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
     </myscript-common-element>
 </body>
-<script>
-    const paperToast = document.querySelector('paper-toast');
-    document.querySelector('myscript-common-element').addEventListener('exported', function (event) {
-        paperToast.text = 'Recognition object contains : ' + JSON.stringify(event.detail);
-        paperToast.fitIn = paperToast.show();
-    });
-</script>
 </html>

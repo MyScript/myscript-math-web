@@ -14,16 +14,36 @@
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-common-element>
 
-@demo
+### Styling
+
+`<myscript-common-element>` provides the following custom properties for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--myscript-common-element-background` | Background of the editor | none
+`--myscript-common-element-color` | Color of the editor | #FFFFFF
+`--myscript-common-element-line-pattern` | Line pattern to apply on the editor | Classic notebook pattern
+`--myscript-common-element-loader-background` | Background of the loader | #1A9FFF
+`--myscript-common-element-loader-color` | Color of the loader | #F5F6F7
+`--myscript-common-element-button-background` | Buttons background | #1A9FFF
+`--myscript-common-element-button-focus-background` | Buttons focus background | #1A9FFF
+`--myscript-common-element-button-disabled-background` | Buttons disabled background | #F5F6F7
+
+@demo demo/get_started.html Get started with SHAPE
+@demo demo/v4_configuration.html Use interactive ink api for MATH (v4)
+@demo demo/handle_exports.html Handle exports
+@demo demo/handle_error.html Handle error
+@demo demo/styling.html Customize your component style
+@demo demo/programmatic_init.html Programmatic initialization
+@demo demo/get_stats.html Get statistics
+@demo demo/debug.html Debug your component
 -->
 <dom-module id="myscript-common-element">
     <template>
         <style>
-            @import url(https://fonts.googleapis.com/css?family=Open+Sans);
-
             :host {
                 --myscript-common-element-background: none;
-                --myscript-common-element-color: #FFFFFF;
+                --myscript-common-element-color: #1A9FFF;
                 --myscript-common-element-line-pattern: url(data:image/svg+xml;charset=utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij4KICA8cGF0aCBzdHJva2U9IiNGNUY2RjciIGQ9Ik0wLjUsMCBMMC41LDE4IE0wLDAuNSBMMTgsMC41Ii8+Cjwvc3ZnPgo=);
                 --myscript-common-element-loader-background: #1A9FFF;
                 --myscript-common-element-loader-color: #F5F6F7;
@@ -136,48 +156,6 @@
                     -webkit-transform: rotate(360deg);
                 }
             }
-
-            @font-face {
-                font-family: stixgeneral;
-                src: url(../myscript/dist/fonts/stix/STIXGeneral-Regular.otf);
-            }
-
-            @font-face {
-                font-family: stixgeneral;
-                src: url(../myscript/dist/fonts/stix/STIXGeneral-BoldItalic.otf);
-                font-style: italic;
-                font-weight: bold;
-            }
-
-            @font-face {
-                font-family: stixgeneral;
-                src: url(../myscript/dist/fonts/stix/STIXGeneral-Italic.otf);
-                font-style: italic;
-            }
-
-            @font-face {
-                font-family: stixgeneral;
-                src: url(../myscript/dist/fonts/stix/STIXGeneral-Bold.otf);
-                font-weight: bold;
-            }
-
-            @font-face {
-                font-family: stix-bolditalic;
-                src: url(../myscript/dist/fonts/stix/STIXGeneral-BoldItalic.otf);
-                font-style: italic;
-                font-weight: bold;
-            }
-
-            @font-face {
-                font-family: stixsizethreesym;
-                src: url(../myscript/dist/fonts/stix/STIXSizeThreeSym-Regular.otf);
-            }
-
-            @font-face {
-                font-family: stixsizethreesym;
-                src: url(../myscript/dist/fonts/stix/STIXSizeThreeSym-Bold.otf);
-                font-weight: bold;
-            }
         </style>
         <div class="loader" hidden="[[ !unloaded ]]"></div>
         <div class="error-msg" hidden>MyScript recognition server is not reachable. Please reload once you are
@@ -211,6 +189,56 @@
             static get is() {
                 return 'myscript-common-element'
             }
+
+            /**
+             * Fired when element is fully loaded.
+             * @event load
+             */
+
+            /**
+             * Fired when undo is triggered.
+             * @event undo
+             */
+
+            /**
+             * Fired when redo is triggered.
+             * @event redo
+             */
+
+            /**
+             * Fired when clear is triggered.
+             * @event clear
+             */
+
+            /**
+             * Fired when export is triggered.
+             * @event export
+             */
+
+            /**
+             * Fired when conversion is triggered.
+             * @event convert
+             */
+
+            /**
+             * Fired when editor state changed.
+             * @event change
+             */
+
+            /**
+             * Fired when export is done.
+             * @event exported
+             */
+
+            /**
+             * Fired when conversion is done.
+             * @event converted
+             */
+
+            /**
+             * Fired on error.
+             * @event error
+             */
 
             static get properties() {
                 return {
@@ -291,7 +319,7 @@
                     },
                     /**
                      * Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.
-                     * (see demo/programmatic-init.html for a better understanding)
+                     * (see demo/programmatic_init.html for a better understanding)
                      */
                     unloaded: {
                         type: Boolean,
@@ -309,7 +337,7 @@
                     /**
                      * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs DefaultConfiguration.js file)
                      * Configuration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.
-                     * Configuration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).
+                     * Configuration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).
                      */
                     configuration: {
                         type: Object,
@@ -335,7 +363,6 @@
                     },
                     /**
                      * True if undo is available
-                     * @private
                      */
                     canundo: {
                         type: Boolean,
@@ -345,7 +372,6 @@
                     },
                     /**
                      * True if redo is available
-                     * @private
                      */
                     canredo: {
                         type: Boolean,
@@ -355,7 +381,6 @@
                     },
                     /**
                      * True if there is something to clear
-                     * @private
                      */
                     canclear: {
                         type: Boolean,
@@ -365,7 +390,6 @@
                     },
                     /**
                      * True if export button could be displayed.
-                     * @private
                      */
                     canexport: {
                         type: Boolean,
@@ -375,7 +399,6 @@
                     },
                     /**
                      * True if convert button could be displayed.
-                     * @private
                      */
                     canconvert: {
                         type: Boolean,
@@ -553,36 +576,55 @@
                 this.logger.info('common-element detached');
             }
 
+            /**
+             * Clear all context
+             */
             clear() {
                 if (this.editor) {
                     this.editor.clear();
                 }
             }
 
+            /**
+             * Undo action
+             */
             undo() {
                 if (this.editor) {
                     this.editor.undo();
                 }
             }
 
+            /**
+             * Redo action
+             */
             redo() {
                 if (this.editor) {
                     this.editor.redo();
                 }
             }
 
+            /**
+             * Trigger export
+             */
             askForExport(exports) {
                 if (this.editor) {
                     this.editor.askForExport(exports);
                 }
             }
 
+            /**
+             * Trigger convert
+             */
             convert() {
                 if (this.editor) {
                     this.editor.convert();
                 }
             }
 
+            /**
+             * Return the stats allowing to monitor what ink size is send to the server.
+             * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+             */
             getStats() {
                 if (this.editor) {
                     return this.editor.stats;
