@@ -45,6 +45,7 @@ Custom property | Description | Default
                 --myscript-common-element-background: none;
                 --myscript-common-element-color: #1A9FFF;
                 --myscript-common-element-line-pattern: url(data:image/svg+xml;charset=utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij4KICA8cGF0aCBzdHJva2U9IiNGNUY2RjciIGQ9Ik0wLjUsMCBMMC41LDE4IE0wLDAuNSBMMTgsMC41Ii8+Cjwvc3ZnPgo=);
+                --myscript-common-element-capture-background: none;
                 --myscript-common-element-loader-background: #1A9FFF;
                 --myscript-common-element-loader-color: #F5F6F7;
                 --myscript-common-element-button-background: #1A9FFF;
@@ -107,6 +108,11 @@ Custom property | Description | Default
                 background: var(--myscript-common-element-line-pattern);
             }
 
+            .ms-editor canvas.ms-capture-canvas,
+            .ms-editor svg {
+                background: var(--myscript-common-element-capture-background);
+            }
+
             .error-msg {
                 position: absolute;
                 z-index: 30;
@@ -161,25 +167,23 @@ Custom property | Description | Default
         <div class="error-msg" hidden>MyScript recognition server is not reachable. Please reload once you are
             connected
         </div>
-        <template is="dom-if" if="[[ !hidebuttons ]]">
-            <nav>
-                <paper-fab mini src$="[[importPath]]clear.svg" title="clear" on-tap="clear"
-                           disabled="[[ !canclear ]]" hidden="[[ disableclear ]]">
-                </paper-fab>
-                <paper-fab mini src$="[[importPath]]undo.svg" title="undo" on-tap="undo"
-                           disabled="[[ !canundo ]]" hidden="[[ disableundoredo ]]">
-                </paper-fab>
-                <paper-fab mini src$="[[importPath]]redo.svg" title="redo" on-tap="redo"
-                           disabled="[[ !canredo ]]" hidden="[[ disableundoredo ]]">
-                </paper-fab>
-                <paper-fab mini src$="[[importPath]]export.svg" title="export" on-tap="askForExport"
-                           disabled="[[ !canexport ]]" hidden="[[ disableexport ]]">
-                </paper-fab>
-                <paper-fab mini src$="[[importPath]]convert.svg" title="convert" on-tap="convert"
-                           disabled="[[ !canconvert ]]" hidden="[[ disableconvert ]]">
-                </paper-fab>
-            </nav>
-        </template>
+        <nav hidden="[[ disablecontrols ]]">
+            <paper-fab mini src$="[[importPath]]clear.svg" title="clear" on-tap="clear"
+                       disabled="[[ !canclear ]]" hidden="[[ disableclearcontrol ]]">
+            </paper-fab>
+            <paper-fab mini src$="[[importPath]]undo.svg" title="undo" on-tap="undo"
+                       disabled="[[ !canundo ]]" hidden="[[ disableundoredocontrol ]]">
+            </paper-fab>
+            <paper-fab mini src$="[[importPath]]redo.svg" title="redo" on-tap="redo"
+                       disabled="[[ !canredo ]]" hidden="[[ disableundoredocontrol ]]">
+            </paper-fab>
+            <paper-fab mini src$="[[importPath]]export.svg" title="export" on-tap="askForExport"
+                       disabled="[[ !canexport ]]" hidden="[[ disableexportcontrol ]]">
+            </paper-fab>
+            <paper-fab mini src$="[[importPath]]convert.svg" title="convert" on-tap="convert"
+                       disabled="[[ !canconvert ]]" hidden="[[ disableconvertcontrol ]]">
+            </paper-fab>
+        </nav>
         <div id="editorDomElement" class="ms-editor"></div>
         <paper-toast class="fit-bottom"></paper-toast>
     </template>
@@ -407,42 +411,42 @@ Custom property | Description | Default
                         notify: true
                     },
                     /**
-                     * If set to true, hide the buttons (Trash, Undo, Redo).
+                     * If set to true, remove the controls (undo/redo, clear...).
                      */
-                    hidebuttons: {
+                    disablecontrols: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false,
                         notify: true
                     },
                     /**
-                     * True if the undo/redo feature is disabled, false otherwise
+                     * If set to true, remove the undo/redo controls.
                      */
-                    disableundoredo: {
+                    disableundoredocontrol: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false
                     },
                     /**
-                     * True if the clear feature is disabled, false otherwise
+                     * If set to true, remove the clear control.
                      */
-                    disableclear: {
+                    disableclearcontrol: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false
                     },
                     /**
-                     * True if the export feature is disabled, false otherwise
+                     * If set to true, remove the export control.
                      */
-                    disableexport: {
+                    disableexportcontrol: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false
                     },
                     /**
-                     * True if the convert feature is disabled, false otherwise
+                     * If set to true, remove the convert control.
                      */
-                    disableconvert: {
+                    disableconvertcontrol: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false
@@ -558,11 +562,13 @@ Custom property | Description | Default
                     .keys(this.currentListeners)
                     .forEach(type => this.editorDomElement.addEventListener(type, this.currentListeners[type]));
 
+                Polymer.RenderStatus.beforeNextRender(this, () => {
                     this.editor = MyScript.register(this.editorDomElement, this._buildConfiguration(), this._buildCustomStyle());
                     this.configuration = this.editor.configuration;
 
-                this.logger.info('common-element attached');
-                this.initializing = false;
+                    this.logger.info('common-element attached');
+                    this.initializing = false;
+                })
             }
 
             disconnectedCallback() {

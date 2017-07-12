@@ -14,22 +14,11 @@
     <link rel="import" href="../myscript-languages-element.html">
 </head>
 <body>
-    <select id="language" disabled></select>
     <myscript-languages-element scheme="https"
                                 host="webdemoapi.myscript.com"
                                 applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-                                hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
+                                hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+                                select>
     </myscript-languages-element>
 </body>
-<script>
-    var currentLanguage = 'en_US';
-    var languageSelect = document.getElementById('language');
-    document.querySelector('myscript-languages-element').addEventListener('change', function (evt) {
-        evt.detail.forEach(function (language) {
-            var selected = currentLanguage === language.value;
-            languageSelect.options[languageSelect.options.length] = new Option(language.description, language.value, selected, selected);
-        });
-        languageSelect.disabled = false;
-    });
-</script>
 </html>

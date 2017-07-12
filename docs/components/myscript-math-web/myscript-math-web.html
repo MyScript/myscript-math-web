@@ -34,7 +34,7 @@ Custom property | Description | Default
         <style>
             :host {
                 --myscript-math-web-background: none;
-                --myscript-math-web-color: #FFFFFF;
+                --myscript-math-web-color: #1A9FFF;
                 --myscript-math-web-line-pattern: url(data:image/svg+xml;charset=utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij4KICA8cGF0aCBzdHJva2U9IiNGNUY2RjciIGQ9Ik0wLjUsMCBMMC41LDE4IE0wLDAuNSBMMTgsMC41Ii8+Cjwvc3ZnPgo=);
                 --myscript-math-web-loader-background: #1A9FFF;
                 --myscript-math-web-loader-color: #F5F6F7;
@@ -94,16 +94,16 @@ Custom property | Description | Default
             configuration="{{ configuration }}"
             strokecolor="{{ strokecolor }}"
             strokewidth="{{ strokewidth }}"
-            hidebuttons="{{ hidebuttons }}"
-            disableclear="{{ disableclear }}"
-            disableundoredo="{{ disableundoredo }}"
-            disableexport="{{ disableexport }}"
-            disableconvert="{{ disableconvert }}"
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
             exports="{{ exports }}"
-            debug="{{ debug }}">
+            debug="{{ debug }}"
+            disablecontrols="{{ disablecontrols }}"
+            disableclearcontrol="{{ disableclearcontrol }}"
+            disableundoredocontrol="{{ disableundoredocontrol }}"
+            disableexportcontrol="{{ disableexportcontrol }}"
+            disableconvertcontrol="{{ disableconvertcontrol }}">
         </myscript-common-element>
     </template>
     <script>
@@ -262,7 +262,7 @@ Custom property | Description | Default
                     /**
                      * If set to true, hide the buttons (Trash, Undo, Redo).
                      */
-                    hidebuttons: {
+                    disablecontrols: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false,
@@ -272,7 +272,7 @@ Custom property | Description | Default
                     /**
                      * True if the undo/redo feature is disabled, false otherwise
                      */
-                    disableundoredo: {
+                    disableundoredocontrol: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false
@@ -280,7 +280,7 @@ Custom property | Description | Default
                     /**
                      * True if the clear feature is disabled, false otherwise
                      */
-                    disableclear: {
+                    disableclearcontrol: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false
@@ -288,7 +288,7 @@ Custom property | Description | Default
                     /**
                      * True if the export feature is disabled, false otherwise
                      */
-                    disableexport: {
+                    disableexportcontrol: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false
@@ -296,7 +296,7 @@ Custom property | Description | Default
                     /**
                      * True if the typeset feature is disabled, false otherwise
                      */
-                    disableconvert: {
+                    disableconvertcontrol: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false
@@ -310,13 +310,6 @@ Custom property | Description | Default
                      */
                     myscriptcommonelement: {
                         type: Object
-                    },
-                    /**
-                     * If set to true, hide the export div tag.
-                     */
-                    hideexports: {
-                        type: Boolean,
-                        value: false
                     },
                     /**
                      * Math export types (LATEX, MATHML or SYMBOLTREE).

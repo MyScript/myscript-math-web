@@ -1,4 +1,4 @@
-# App Layout [![Build Status](https://travis-ci.org/PolymerElements/app-layout.svg?branch=2.0-preview)](https://travis-ci.org/PolymerElements/app-layout) [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://beta.webcomponents.org/element/PolymerElements/app-layout)
+# App Layout [![Build Status](https://travis-ci.org/PolymerElements/app-layout.svg?branch=master)](https://travis-ci.org/PolymerElements/app-layout) [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://beta.webcomponents.org/element/PolymerElements/app-layout)
 
 A collection of elements, along with guidelines and templates that can be used to structure your app’s layout.
 
@@ -6,7 +6,7 @@ A collection of elements, along with guidelines and templates that can be used t
 ```
 <custom-element-demo height="368">
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="app-drawer/app-drawer.html">
     <link rel="import" href="app-header/app-header.html">
     <link rel="import" href="app-toolbar/app-toolbar.html">
@@ -172,6 +172,7 @@ Here are some web apps built with App Layout:
 
 - Distribution is now done with slots, so things have changed because of that,
 
+  ##### app-drawer-layout
   **1.x**
   ```
   <app-drawer-layout>
@@ -187,7 +188,36 @@ Here are some web apps built with App Layout:
   </app-drawer-layout>
   ```
 
-  same for `app-header-layout` and `app-box`.
+  ##### app-header-layout
+  **1.x**
+  ```
+  <app-header-layout>
+    <app-header>...</app-header>
+    <div>content</div>
+  </app-header-layout>
+  ```
+  **2.0**
+  ```
+  <app-header-layout>
+    <app-header slot="header">...</app-header>
+    <div>content</div>
+  </app-header-layout>
+  ```
+
+  ##### app-box
+  **1.x**
+  ```
+  <app-box effects="...">
+    <img background ...>
+  </app-box>
+  ```
+  **2.0**
+  ```
+  <app-box effects="...">
+    <img slot="background" ...>
+  </app-box>
+  ```
+
 - In `app-drawer-layout`, the `drawer-toggle` element will not be automatically hidden
 when `app-drawer-layout` is not in narrow layout. To add this, add the following CSS rule where
 `app-drawer-layout` is used:
@@ -195,6 +225,15 @@ when `app-drawer-layout` is not in narrow layout. To add this, add the following
   ```css
   app-drawer-layout:not([narrow]) [drawer-toggle] {
     display: none;
+  }
+  ```
+- In `app-drawer-layout`, if you specify a value for `--app-drawer-width`, that value must be
+accessible by both `app-drawer` and `app-drawer-layout`. This can be done by defining the value
+on the `:host` that contains <app-drawer-layout> (or `html` if outside a shadow root):
+
+  ```css
+  :host {
+    --app-drawer-width: 300px;
   }
   ```
 - `app-scrollpos-control` has been removed from App Layout in favor of using multiple scrolling regions to preserve the scroll position. In terms of UX, [`document.rootScroller`](https://github.com/bokand/NonDocumentRootScroller) is a new web platform API that will allow non-document scroll to hide the address bar on mobile.

@@ -149,6 +149,17 @@ as you would a regular DOM element:
         value: false
       },
       /**
+       * If true, disables the default sanitization of any markdown received by
+       * a request and allows fetched unsanitized markdown
+       *
+       * e.g. fetching markdown via `src` that has HTML.
+       * Note: this value overrides `sanitize` if a request is made.
+       */
+      disableRemoteSanitization: {
+        type: Boolean,
+        value: false
+      },
+      /**
        * Use "smart" typographic punctuation for things like quotes and dashes.
        */
       smartypants: {
@@ -323,7 +334,7 @@ as you would a regular DOM element:
         // Note: if we are using the file:// protocol, the status code will be 0
         // for all outcomes (successful or otherwise).
         if (status === 0 || (status >= 200 && status < 300)) {
-          this.sanitize = true;
+          this.sanitize = !this.disableRemoteSanitization;
           this.markdown = e.target.response;
         } else {
           this._handleError(e);

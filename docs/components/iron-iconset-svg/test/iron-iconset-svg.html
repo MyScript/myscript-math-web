@@ -223,6 +223,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           expect(Polymer.dom(ironIcon.root).children.length - baseLength).to.be.equal(0);
         });
 
+        test('prevents SVG from receiving a tab stop in IE/Edge', function() {
+            iconset.applyIcon(div, 'rect');
+            expect(div.firstElementChild.getAttribute('focusable')).to.be.equal('false');
+        });
+
       });
 
     });

@@ -13,24 +13,26 @@
     <link rel="import" href="../myscript-math-web.html">
 </head>
 <body>
-    <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-    <myscript-math-web host="webdemoapi.myscript.com">
-    </myscript-math-web>
+    <myscript-math-web />
 </body>
 <script>
-    window.addEventListener("load", function () {
-        var configurationChanged = false;
-        var mathElement = document.querySelector('myscript-math-web');
-        mathElement.addEventListener("load", function () {
+    window.addEventListener('load', function () {
+        let configurationChanged = false;
+        const mathElement = document.querySelector('myscript-math-web');
+        mathElement.addEventListener('load', function () {
             if (!configurationChanged) {
-                console.log("All resources finished loading! Starting to init myscript-math-web");
-                var configuration = {
-                    // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
+                console.log('All resources finished loading! Starting to init myscript-math-web');
+                // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
+                const configuration = {
+                    scheme: 'https',
+                    host: 'webdemoapi.myscript.com',
                     applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
                     hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad'
                 };
                 // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-                mathElement.setAttribute('applicationkey', configuration.applicationKey);
+                mathElement.setAttribute('scheme', configuration.scheme);
+                mathElement.setAttribute('host', configuration.host);
+                mathElement.applicationkey = configuration.applicationKey;
                 mathElement.hmackey = configuration.hmacKey;
                 // Testing if options are taken into account
                 mathElement.configuration = {

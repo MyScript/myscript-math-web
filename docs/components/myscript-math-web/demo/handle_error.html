@@ -22,7 +22,7 @@
 <script>
     const paperToast = document.querySelector('paper-toast');
     document.querySelector('myscript-math-web').addEventListener('error', function (event) {
-        paperToast.text = 'Error : ' + JSON.stringify(event.detail);
+        paperToast.text = `Error : ${JSON.stringify(event.detail)}`;
         paperToast.fitIn = paperToast.show();
     });
 </script>

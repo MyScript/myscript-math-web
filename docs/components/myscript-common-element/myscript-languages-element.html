@@ -1,5 +1,5 @@
-<link rel="import" href="./myscriptjs-import.html">
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="./myscriptjs-import.html">
 <!--
 `myscript-languages-element` is a web component to retrieve CDK available languages.
 
@@ -8,10 +8,39 @@
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-languages-element>
 
-@demo get_languages.html Get languages
-@demo get_languages_programmatic.html Get languages programmatically
+@demo demo/get_languages.html Get languages
+@demo demo/get_languages_programmatic.html Get languages programmatically
 -->
 <dom-module id="myscript-languages-element">
+    <template>
+        <style>
+            :host {
+                box-sizing: border-box;
+                display: inline-block;
+            }
+
+            [hidden] {
+                display: none !important;
+            }
+
+            select {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                width: auto;
+                padding: .375rem 1.75rem .4375rem .75rem;
+                color: #131F26;
+                background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxOCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik00LjQyMi4yNmMtLjIzMy0uMzM3LS42MS0uMzM3LS44NDQgMEwuMTc1IDUuMTdDLS4xNDIgNS42MjguMDQ4IDYgLjYxIDZoNi43OGMuNTU4IDAgLjc1NC0uMzcuNDM1LS44M0w0LjQyMi4yNnptLjAyIDEzLjQ3Yy0uMjM2LjM0Mi0uNjE4LjM0Ny0uODUuMDFMLjE2NyA4LjgxOEMtLjE0NiA4LjM2Ny4wNDggOCAuNjA4IDhoNi43ODNjLjU1OCAwIC43NTUuMzcuNDM3LjgzbC0zLjM4NSA0Ljl6IiBmaWxsPSIjMTMxRjI2Ii8+PC9nPjwvc3ZnPg==) right center no-repeat #fff;
+                -webkit-appearance: none;
+                appearance: none;
+                height: 2.625rem;
+                font: 400 1.125rem "Source Sans Pro", sans-serif;
+                border: 1px solid #CED5D9;
+                border-radius: 3px;
+                -webkit-tap-highlight-color: transparent;
+            }
+        </style>
+        <select disabled="[[ unloaded ]]" hidden="[[ !select ]]"></select>
+    </template>
     <script>
         class MyScriptLanguagesElement extends Polymer.Element {
 
@@ -67,7 +96,8 @@
                      * Languages List
                      */
                     languages: {
-                        type: Object,
+                        type: Array,
+                        value: [],
                         notify: true
                     },
                     /**
@@ -97,6 +127,15 @@
                         type: Boolean,
                         value: false,
                         reflectToAttribute: true
+                    },
+                    /**
+                     * If set to true, display the language select.
+                     */
+                    select: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false,
+                        notify: true
                     }
                 }
             }
@@ -107,8 +146,23 @@
                 this.logger = MyScript.LoggerConfig.getLogger('languages-element');
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                 this.logger.info('attached callback');
+
+                this.selectElement = this.shadowRoot.querySelector('select');
+
+                this._selectHandler = (e) => {
+                    const selected = this.languages
+                        .filter(language => language.value === e.target.value);
+                    this.dispatchEvent(new CustomEvent('select', { detail: selected.length > 0 ? selected[0] : undefined }));
+                };
+
+                this.selectElement.addEventListener('change', this._selectHandler);
                 this.connected = true;
                 this._unloadedChanged(this.unloaded);
+            }
+
+            disconnectedCallback() {
+                super.disconnectedCallback();
+                this.selectElement.removeEventListener('change', this._selectHandler);
             }
 
             _unloadedChanged(unloaded) {
@@ -146,6 +200,22 @@
                 return this.configuration;
             }
 
+            _getConfigurationLanguageCode() {
+                if (this.configuration.recognitionParams.apiVersion === 'V4') {
+                    return this.configuration.recognitionParams.v4.lang;
+                } else if (this.configuration.recognitionParams.apiVersion === 'V3') {
+                    switch (this.configuration.recognitionParams.type) {
+                        case 'TEXT':
+                            return this.configuration.recognitionParams.v3.textParameter.language;
+                        case 'ANALYZER':
+                            return this.configuration.recognitionParams.v3.analyzerParameter.textParameter.language;
+                        default:
+                            return undefined;
+                    }
+                }
+                return undefined;
+            }
+
             _getLanguages() {
                 MyScript.getAvailableLanguageList(this._buildConfiguration(), this.sortbyvalue)
                     .then((res) => {
@@ -155,6 +225,13 @@
                                 return { 'value': key, 'description': res.result[key] };
                             });
                         this.unloaded = false;
+
+                        const currentLanguage = this._getConfigurationLanguageCode();
+                        this.languages.forEach((language) => {
+                            const selected = currentLanguage === language.value;
+                            this.selectElement.options[this.selectElement.options.length] = new Option(language.description, language.value, selected, selected)
+                        });
+                        this.selectElement.disabled = false;
                         this.dispatchEvent(new CustomEvent('change', { detail: this.languages }));
                         return this.languages;
                     })

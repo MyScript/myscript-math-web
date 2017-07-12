@@ -14,21 +14,23 @@
     <link rel="import" href="../myscript-common-element.html">
 </head>
 <body>
-    <myscript-common-element /> <!-- Minimal HTML tag -->
+    <myscript-common-element />
 </body>
 <script>
-    window.addEventListener("load", function () {
-        var commonElement = document.querySelector('myscript-common-element');
-        console.log("All resources finished loading! Starting to init myscript-common-element");
+    window.addEventListener('load', () => {
+        const commonElement = document.querySelector('myscript-common-element');
+        console.log('All resources finished loading! Starting to init myscript-common-element');
         // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-        var configuration = {
+        const configuration = {
             type: 'MATH',
+            scheme: 'https',
             host: 'webdemoapi.myscript.com',
             applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
             hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad'
         };
         // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
         commonElement.setAttribute('type', configuration.type);
+        commonElement.setAttribute('scheme', configuration.scheme);
         commonElement.setAttribute('host', configuration.host);
         commonElement.applicationkey = configuration.applicationKey;
         commonElement.hmackey = configuration.hmacKey;

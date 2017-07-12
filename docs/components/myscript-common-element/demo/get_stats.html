@@ -19,6 +19,7 @@
     <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
     <myscript-common-element
         type="MATH"
+        scheme="https"
         host="webdemoapi.myscript.com"
         applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
         hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
@@ -26,8 +27,8 @@
 </body>
 <script>
     const paperToast = document.querySelector('paper-toast');
-    document.querySelector('myscript-common-element').addEventListener('change', function (event) {
-        paperToast.text = 'Stats for this input are : ' + JSON.stringify(document.querySelector('myscript-common-element').getStats());
+    document.querySelector('myscript-common-element').addEventListener('change', (event) => {
+        paperToast.text = `Stats for this input are : ${JSON.stringify(event.target.getStats())}`;
         paperToast.fitIn = paperToast.show();
     });
 </script>
