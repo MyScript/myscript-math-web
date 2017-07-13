@@ -37,6 +37,7 @@
     "KaTeX": "katex#^0.7.1"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^3.0.0"
+    "iron-component-page": "PolymerElements/iron-component-page#^3.0.0",
+    "webcomponentsjs": "^1.0.1"
   }
 }
