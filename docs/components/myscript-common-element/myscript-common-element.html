@@ -108,8 +108,7 @@ Custom property | Description | Default
                 background: var(--myscript-common-element-line-pattern);
             }
 
-            .ms-editor canvas.ms-capture-canvas,
-            .ms-editor svg {
+            .ms-editor canvas.ms-capture-canvas {
                 background: var(--myscript-common-element-capture-background);
             }
 
@@ -339,7 +338,7 @@ Custom property | Description | Default
                         type: Object
                     },
                     /**
-                     * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs DefaultConfiguration.js file)
+                     * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)
                      * Configuration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.
                      * Configuration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).
                      */
@@ -348,22 +347,22 @@ Custom property | Description | Default
                         notify: true
                     },
                     /**
-                     * Color of the stroke
+                     * Color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
                      */
-                    strokecolor: {
+                    pencolor: {
                         type: String,
                         value: '#1580CD',
                         reflectToAttribute: true,
-                        observer: '_strokecolorChanged'
+                        observer: '_pencolorChanged'
                     },
                     /**
-                     * Width of the stroke
+                     * Width of strokes and primitives in mm (no other unit is supported yet)
                      */
-                    strokewidth: {
+                    penwidth: {
                         type: Number,
-                        value: 4,
+                        value: 1,
                         reflectToAttribute: true,
-                        observer: '_strokewidthChanged'
+                        observer: '_penwidthChanged'
                     },
                     /**
                      * True if undo is available
@@ -563,7 +562,7 @@ Custom property | Description | Default
                     .forEach(type => this.editorDomElement.addEventListener(type, this.currentListeners[type]));
 
                 Polymer.RenderStatus.beforeNextRender(this, () => {
-                    this.editor = MyScript.register(this.editorDomElement, this._buildConfiguration(), this._buildCustomStyle());
+                    this.editor = MyScript.register(this.editorDomElement, this._buildConfiguration(), this._buildPenStyle());
                     this.configuration = this.editor.configuration;
 
                     this.logger.info('common-element attached');
@@ -637,20 +636,20 @@ Custom property | Description | Default
                 }
             }
 
-            _strokecolorChanged(color) {
+            _pencolorChanged(color) {
                 if (this.editor && !this.initializing) {
-                    this.logger.trace('strokecolor changed', color);
-                    this._buildCustomStyle();
-                    this.editor.customStyle = this.customStyle;
+                    this.logger.trace('pencolor changed', color);
+                    this._buildPenStyle();
+                    this.editor.penStyle = this.penStyle;
                 }
 
             }
 
-            _strokewidthChanged(width) {
+            _penwidthChanged(width) {
                 if (this.editor && !this.initializing) {
                     this.logger.trace('strokewidth changed', width);
-                    this._buildCustomStyle();
-                    this.editor.customStyle = this.customStyle;
+                    this._buildPenStyle();
+                    this.editor.penStyle = this.penStyle;
                 }
             }
 
@@ -666,16 +665,13 @@ Custom property | Description | Default
                 }
             }
 
-            _buildCustomStyle() {
-                if (!this.customStyle) {
-                    this.customStyle = {};
+            _buildPenStyle() {
+                if (!this.penStyle) {
+                    this.penStyle = {};
                 }
-                if (!this.customStyle.stroke) {
-                    this.customStyle.stroke = {};
-                }
-                this.customStyle.stroke.color = this.strokecolor;
-                this.customStyle.stroke.width = this.strokewidth;
-                return this.customStyle;
+                this.penStyle.color = this.pencolor;
+                this.penStyle['-myscript-pen-width'] = this.penwidth;
+                return this.penStyle;
             }
 
             _buildConfiguration() {

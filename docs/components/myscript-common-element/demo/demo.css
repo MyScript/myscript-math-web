@@ -1,11 +1,8 @@
-html, body {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    padding: 0;
+body {
     margin: 0;
+    height: 100vh;
 }
 
 myscript-common-element {
-    height: 100vh;
+    height: 100%;
 }
