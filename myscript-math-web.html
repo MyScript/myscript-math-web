@@ -21,6 +21,8 @@ Custom property | Description | Default
 `--myscript-math-web-button-disabled-background` | Buttons disabled background | #F5F6F7
 `--myscript-math-web-exports-color` | Math exports color | #1580CD
 
+For a list of all events please refer to [MyScriptJS documentation](TODO Link to documentation).
+
 @demo demo/get_started.html Get started
 @demo demo/v4_configuration.html Use interactive ink api (v4)
 @demo demo/handle_error.html Handle error
@@ -308,6 +310,14 @@ Custom property | Description | Default
                     //                 End of recopy
                     // -----------------------------------------------------------------------------
                     /**
+                     * Hide the export zone when set to true.
+                     */
+                    hideexportzone: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
+                    /**
                      * The underlying myscriptcommonelement. This could allow to access more advanced properties.
                      */
                     myscriptcommonelement: {
@@ -323,12 +333,12 @@ Custom property | Description | Default
                         value: ['LATEX', 'MATHML']
                     },
                     /**
-                     * Math export types (application/x-latex, application/mathml+xml).
+                     * Math export types (application/x-latex, application/mathml+xml, application/mathofficeXML).
                      * @type {Array<String>}
                      */
                     mimetypes: {
                         type: Array,
-                        value: ['application/x-latex', 'application/mathml+xml']
+                        value: ['application/x-latex']
                     },
                     /**
                      * Enable or disable the solver. Enable by default.
@@ -357,18 +367,19 @@ Custom property | Description | Default
                         value: 'deg'
                     },
                     /**
-                     * If attribute is set activate the recognition of columnar operations.
+                     * If attribute is set activate the recognition of columnar operations. V3 only.
                      */
                     columnaroperation: {
                         type: Boolean,
                         value: false
                     },
                     /**
-                     * List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare. Currenlty
+                     * List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare. V3 only.
                      */
                     userresources: {
                         type: Array
                     },
+                    /* V3 only. */
                     scratchoutdetectionsensitivity: {
                         type: Number,
                         value: 1
@@ -426,16 +437,23 @@ Custom property | Description | Default
             /**
              * Launch export
              */
-            askForExport(exports) {
-                if (this.myscriptcommonelement) {
-                    this.myscriptcommonelement.askForExport(exports);
+            askForExport(mimeTypes) {
+                    if (this.myscriptcommonelement) {
+                        this.myscriptcommonelement.askForExport(mimeTypes);
+                    }
                 }
-            }
-
-            /**
-             * Return the stats allowing to monitor what ink size is send to the server.
-             * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
-             */
+                /**
+                 * Trigger convert
+                 */
+            convert() {
+                    if (this.myscriptcommonelement) {
+                        this.myscriptcommonelement.convert();
+                    }
+                }
+                /**
+                 * Return the stats allowing to monitor what ink size is send to the server.
+                 * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+                 */
             getStats() {
                 if (this.myscriptcommonelement) {
                     return this.myscriptcommonelement.getStats();
@@ -479,7 +497,9 @@ Custom property | Description | Default
                                 break;
                         }
                         // Just forwarding event there.
-                        this.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
+                        this.dispatchEvent(new CustomEvent(event.type, {
+                            detail: event.detail
+                        }));
                     });
 
                 Object
@@ -541,7 +561,7 @@ Custom property | Description | Default
 
             _displayExports(hideExports, unloaded) {
                 // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
-                return !hideExports && ( !unloaded || unloaded === true);
+                return !hideExports && (!unloaded || unloaded === true);
             }
 
         }
