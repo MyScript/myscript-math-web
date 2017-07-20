@@ -9,7 +9,7 @@
         {
           "name": "type",
           "type": "string",
-          "description": "<b>not mutable</b><br />\nThe current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)",
+          "description": "The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -258,14 +258,12 @@
               "column": 20
             },
             "end": {
-              "line": 356,
+              "line": 355,
               "column": 21
             }
           },
           "metadata": {
-            "polymer": {
-              "observer": "\"_pencolorChanged\""
-            }
+            "polymer": {}
           },
           "defaultValue": "\"#1580CD\""
         },
@@ -276,20 +274,58 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 360,
+              "line": 359,
               "column": 20
             },
             "end": {
-              "line": 365,
+              "line": 363,
               "column": 21
             }
           },
           "metadata": {
-            "polymer": {
-              "observer": "\"_penwidthChanged\""
-            }
+            "polymer": {}
           },
           "defaultValue": "1"
+        },
+        {
+          "name": "fontfamily",
+          "type": "string",
+          "description": "font-family used to render text conversion",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 367,
+              "column": 20
+            },
+            "end": {
+              "line": 371,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"Open Sans\""
+        },
+        {
+          "name": "fontsize",
+          "type": "number",
+          "description": "font-size used to render text conversion",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 375,
+              "column": 20
+            },
+            "end": {
+              "line": 379,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "10"
         },
         {
           "name": "canundo",
@@ -298,11 +334,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 369,
+              "line": 383,
               "column": 20
             },
             "end": {
-              "line": 374,
+              "line": 388,
               "column": 21
             }
           },
@@ -320,11 +356,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 378,
+              "line": 392,
               "column": 20
             },
             "end": {
-              "line": 383,
+              "line": 397,
               "column": 21
             }
           },
@@ -342,11 +378,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 387,
+              "line": 401,
               "column": 20
             },
             "end": {
-              "line": 392,
+              "line": 406,
               "column": 21
             }
           },
@@ -364,11 +400,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 396,
+              "line": 410,
               "column": 20
             },
             "end": {
-              "line": 401,
+              "line": 415,
               "column": 21
             }
           },
@@ -386,11 +422,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 405,
+              "line": 419,
               "column": 20
             },
             "end": {
-              "line": 410,
+              "line": 424,
               "column": 21
             }
           },
@@ -408,11 +444,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 414,
+              "line": 428,
               "column": 20
             },
             "end": {
-              "line": 419,
+              "line": 433,
               "column": 21
             }
           },
@@ -430,11 +466,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 423,
+              "line": 437,
               "column": 20
             },
             "end": {
-              "line": 427,
+              "line": 441,
               "column": 21
             }
           },
@@ -450,11 +486,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 431,
+              "line": 445,
               "column": 20
             },
             "end": {
-              "line": 435,
+              "line": 449,
               "column": 21
             }
           },
@@ -470,11 +506,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 439,
+              "line": 453,
               "column": 20
             },
             "end": {
-              "line": 443,
+              "line": 457,
               "column": 21
             }
           },
@@ -490,11 +526,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 447,
+              "line": 461,
               "column": 20
             },
             "end": {
-              "line": 451,
+              "line": 465,
               "column": 21
             }
           },
@@ -510,11 +546,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 456,
+              "line": 470,
               "column": 20
             },
             "end": {
-              "line": 459,
+              "line": 473,
               "column": 21
             }
           },
@@ -531,11 +567,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 463,
+              "line": 477,
               "column": 20
             },
             "end": {
-              "line": 467,
+              "line": 481,
               "column": 21
             }
           },
@@ -552,11 +588,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 471,
+              "line": 527,
               "column": 12
             },
             "end": {
-              "line": 476,
+              "line": 532,
               "column": 13
             }
           },
@@ -573,11 +609,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 478,
+              "line": 534,
               "column": 12
             },
             "end": {
-              "line": 570,
+              "line": 633,
               "column": 13
             }
           },
@@ -590,11 +626,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 572,
+              "line": 635,
               "column": 12
             },
             "end": {
-              "line": 581,
+              "line": 644,
               "column": 13
             }
           },
@@ -607,11 +643,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 586,
+              "line": 649,
               "column": 12
             },
             "end": {
-              "line": 590,
+              "line": 653,
               "column": 13
             }
           },
@@ -624,11 +660,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 595,
+              "line": 658,
               "column": 12
             },
             "end": {
-              "line": 599,
+              "line": 662,
               "column": 13
             }
           },
@@ -641,11 +677,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 604,
+              "line": 667,
               "column": 12
             },
             "end": {
-              "line": 608,
+              "line": 671,
               "column": 13
             }
           },
@@ -658,11 +694,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 613,
+              "line": 676,
               "column": 12
             },
             "end": {
-              "line": 617,
+              "line": 680,
               "column": 13
             }
           },
@@ -679,11 +715,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 622,
+              "line": 685,
               "column": 12
             },
             "end": {
-              "line": 626,
+              "line": 689,
               "column": 13
             }
           },
@@ -696,11 +732,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 632,
+              "line": 695,
               "column": 12
             },
             "end": {
-              "line": 636,
+              "line": 699,
               "column": 13
             }
           },
@@ -708,44 +744,56 @@
           "params": []
         },
         {
-          "name": "_pencolorChanged",
+          "name": "_updateTheme",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 638,
+              "line": 701,
               "column": 12
             },
             "end": {
-              "line": 645,
+              "line": 706,
               "column": 13
             }
           },
           "metadata": {},
           "params": [
             {
-              "name": "color"
+              "name": "editor"
+            },
+            {
+              "name": "fontfamily"
+            },
+            {
+              "name": "fontsize"
             }
           ]
         },
         {
-          "name": "_penwidthChanged",
+          "name": "_updatePenStyle",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 647,
+              "line": 708,
               "column": 12
             },
             "end": {
-              "line": 653,
+              "line": 713,
               "column": 13
             }
           },
           "metadata": {},
           "params": [
             {
-              "name": "width"
+              "name": "editor"
+            },
+            {
+              "name": "pencolor"
+            },
+            {
+              "name": "penwidth"
             }
           ]
         },
@@ -755,11 +803,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 655,
+              "line": 715,
               "column": 12
             },
             "end": {
-              "line": 665,
+              "line": 725,
               "column": 13
             }
           },
@@ -771,33 +819,16 @@
           ]
         },
         {
-          "name": "_buildPenStyle",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 667,
-              "column": 12
-            },
-            "end": {
-              "line": 674,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": []
-        },
-        {
           "name": "_buildConfiguration",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 676,
+              "line": 727,
               "column": 12
             },
             "end": {
-              "line": 702,
+              "line": 743,
               "column": 13
             }
           },
@@ -843,11 +874,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 189,
+          "line": 190,
           "column": 8
         },
         "end": {
-          "line": 704,
+          "line": 745,
           "column": 9
         }
       },
@@ -857,7 +888,7 @@
       "attributes": [
         {
           "name": "type",
-          "description": "<b>not mutable</b><br />\nThe current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)",
+          "description": "The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)",
           "sourceRange": {
             "start": {
               "line": 251,
@@ -1056,7 +1087,7 @@
               "column": 20
             },
             "end": {
-              "line": 356,
+              "line": 355,
               "column": 21
             }
           },
@@ -1068,11 +1099,43 @@
           "description": "Width of strokes and primitives in mm (no other unit is supported yet)",
           "sourceRange": {
             "start": {
-              "line": 360,
+              "line": 359,
               "column": 20
             },
             "end": {
-              "line": 365,
+              "line": 363,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "fontfamily",
+          "description": "font-family used to render text conversion",
+          "sourceRange": {
+            "start": {
+              "line": 367,
+              "column": 20
+            },
+            "end": {
+              "line": 371,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "fontsize",
+          "description": "font-size used to render text conversion",
+          "sourceRange": {
+            "start": {
+              "line": 375,
+              "column": 20
+            },
+            "end": {
+              "line": 379,
               "column": 21
             }
           },
@@ -1084,11 +1147,11 @@
           "description": "True if undo is available",
           "sourceRange": {
             "start": {
-              "line": 369,
+              "line": 383,
               "column": 20
             },
             "end": {
-              "line": 374,
+              "line": 388,
               "column": 21
             }
           },
@@ -1100,11 +1163,11 @@
           "description": "True if redo is available",
           "sourceRange": {
             "start": {
-              "line": 378,
+              "line": 392,
               "column": 20
             },
             "end": {
-              "line": 383,
+              "line": 397,
               "column": 21
             }
           },
@@ -1116,11 +1179,11 @@
           "description": "True if there is something to clear",
           "sourceRange": {
             "start": {
-              "line": 387,
+              "line": 401,
               "column": 20
             },
             "end": {
-              "line": 392,
+              "line": 406,
               "column": 21
             }
           },
@@ -1132,11 +1195,11 @@
           "description": "True if export button could be displayed.",
           "sourceRange": {
             "start": {
-              "line": 396,
+              "line": 410,
               "column": 20
             },
             "end": {
-              "line": 401,
+              "line": 415,
               "column": 21
             }
           },
@@ -1148,11 +1211,11 @@
           "description": "True if convert button could be displayed.",
           "sourceRange": {
             "start": {
-              "line": 405,
+              "line": 419,
               "column": 20
             },
             "end": {
-              "line": 410,
+              "line": 424,
               "column": 21
             }
           },
@@ -1164,11 +1227,11 @@
           "description": "If set to true, remove the controls (undo/redo, clear...).",
           "sourceRange": {
             "start": {
-              "line": 414,
+              "line": 428,
               "column": 20
             },
             "end": {
-              "line": 419,
+              "line": 433,
               "column": 21
             }
           },
@@ -1180,11 +1243,11 @@
           "description": "If set to true, remove the undo/redo controls.",
           "sourceRange": {
             "start": {
-              "line": 423,
+              "line": 437,
               "column": 20
             },
             "end": {
-              "line": 427,
+              "line": 441,
               "column": 21
             }
           },
@@ -1196,11 +1259,11 @@
           "description": "If set to true, remove the clear control.",
           "sourceRange": {
             "start": {
-              "line": 431,
+              "line": 445,
               "column": 20
             },
             "end": {
-              "line": 435,
+              "line": 449,
               "column": 21
             }
           },
@@ -1212,11 +1275,11 @@
           "description": "If set to true, remove the export control.",
           "sourceRange": {
             "start": {
-              "line": 439,
+              "line": 453,
               "column": 20
             },
             "end": {
-              "line": 443,
+              "line": 457,
               "column": 21
             }
           },
@@ -1228,11 +1291,11 @@
           "description": "If set to true, remove the convert control.",
           "sourceRange": {
             "start": {
-              "line": 447,
+              "line": 461,
               "column": 20
             },
             "end": {
-              "line": 451,
+              "line": 465,
               "column": 21
             }
           },
@@ -1244,11 +1307,11 @@
           "description": "Exports.",
           "sourceRange": {
             "start": {
-              "line": 456,
+              "line": 470,
               "column": 20
             },
             "end": {
-              "line": 459,
+              "line": 473,
               "column": 21
             }
           },
@@ -1260,11 +1323,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 463,
+              "line": 477,
               "column": 20
             },
             "end": {
-              "line": 467,
+              "line": 481,
               "column": 21
             }
           },
@@ -1407,11 +1470,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 56,
+              "line": 57,
               "column": 20
             },
             "end": {
-              "line": 60,
+              "line": 61,
               "column": 21
             }
           },
@@ -1427,11 +1490,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 64,
+              "line": 65,
               "column": 20
             },
             "end": {
-              "line": 68,
+              "line": 69,
               "column": 21
             }
           },
@@ -1447,11 +1510,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 72,
+              "line": 73,
               "column": 20
             },
             "end": {
-              "line": 76,
+              "line": 77,
               "column": 21
             }
           },
@@ -1467,11 +1530,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 82,
+              "line": 83,
               "column": 20
             },
             "end": {
-              "line": 85,
+              "line": 86,
               "column": 21
             }
           },
@@ -1486,11 +1549,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 89,
+              "line": 90,
               "column": 20
             },
             "end": {
-              "line": 93,
+              "line": 94,
               "column": 21
             }
           },
@@ -1506,11 +1569,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 97,
+              "line": 98,
               "column": 20
             },
             "end": {
-              "line": 101,
+              "line": 102,
               "column": 21
             }
           },
@@ -1528,11 +1591,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 106,
+              "line": 107,
               "column": 20
             },
             "end": {
-              "line": 112,
+              "line": 113,
               "column": 21
             }
           },
@@ -1551,11 +1614,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 118,
+              "line": 119,
               "column": 20
             },
             "end": {
-              "line": 121,
+              "line": 122,
               "column": 21
             }
           },
@@ -1572,11 +1635,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 125,
+              "line": 126,
               "column": 20
             },
             "end": {
-              "line": 129,
+              "line": 130,
               "column": 21
             }
           },
@@ -1592,11 +1655,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 133,
+              "line": 134,
               "column": 20
             },
             "end": {
-              "line": 138,
+              "line": 139,
               "column": 21
             }
           },
@@ -1616,11 +1679,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2235,
+              "line": 2319,
               "column": 6
             },
             "end": {
-              "line": 2260,
+              "line": 2344,
               "column": 7
             }
           },
@@ -1628,12 +1691,12 @@
           "params": [
             {
               "name": "template",
-              "type": "HTMLTemplateElement",
+              "type": "!HTMLTemplateElement",
               "description": "Template to stamp"
             }
           ],
           "return": {
-            "type": "DocumentFragment",
+            "type": "!StampedTemplate",
             "desc": "Cloned template content"
           },
           "inheritedFrom": "Polymer.PropertyEffects"
@@ -1645,11 +1708,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 443,
+              "line": 447,
               "column": 6
             },
             "end": {
-              "line": 448,
+              "line": 452,
               "column": 7
             }
           },
@@ -1689,11 +1752,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 457,
+              "line": 461,
               "column": 6
             },
             "end": {
-              "line": 459,
+              "line": 463,
               "column": 7
             }
           },
@@ -1724,11 +1787,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 468,
+              "line": 472,
               "column": 6
             },
             "end": {
-              "line": 470,
+              "line": 474,
               "column": 7
             }
           },
@@ -1759,24 +1822,30 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 716,
+              "line": 699,
               "column": 6
             },
             "end": {
-              "line": 724,
+              "line": 707,
               "column": 7
             }
           },
           "metadata": {},
           "params": [
             {
-              "name": "name"
+              "name": "name",
+              "type": "string",
+              "description": "Name of attribute."
             },
             {
-              "name": "old"
+              "name": "old",
+              "type": "?string",
+              "description": "Old value of attribute."
             },
             {
-              "name": "value"
+              "name": "value",
+              "type": "?string",
+              "description": "Current value of attribute."
             }
           ],
           "inheritedFrom": "Polymer.ElementMixin"
@@ -1788,11 +1857,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 576,
+              "line": 557,
               "column": 6
             },
             "end": {
-              "line": 616,
+              "line": 597,
               "column": 7
             }
           },
@@ -1807,18 +1876,20 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1107,
+              "line": 1183,
               "column": 6
             },
             "end": {
-              "line": 1111,
+              "line": 1187,
               "column": 7
             }
           },
           "metadata": {},
           "params": [
             {
-              "name": "props"
+              "name": "props",
+              "type": "Object",
+              "description": "Properties to initialize on the prototype"
             }
           ],
           "inheritedFrom": "Polymer.PropertyEffects"
@@ -1830,18 +1901,20 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1119,
+              "line": 1196,
               "column": 6
             },
             "end": {
-              "line": 1128,
+              "line": 1205,
               "column": 7
             }
           },
           "metadata": {},
           "params": [
             {
-              "name": "props"
+              "name": "props",
+              "type": "Object",
+              "description": "Properties to initialize on the instance"
             }
           ],
           "inheritedFrom": "Polymer.PropertyEffects"
@@ -1853,11 +1926,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-accessors.html",
             "start": {
-              "line": 204,
+              "line": 236,
               "column": 6
             },
             "end": {
-              "line": 208,
+              "line": 240,
               "column": 7
             }
           },
@@ -1883,11 +1956,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-accessors.html",
             "start": {
-              "line": 220,
+              "line": 252,
               "column": 6
             },
             "end": {
-              "line": 226,
+              "line": 258,
               "column": 7
             }
           },
@@ -1900,12 +1973,12 @@
             },
             {
               "name": "value",
-              "type": "string",
+              "type": "?string",
               "description": "of the attribute."
             },
             {
               "name": "type",
-              "type": "*",
+              "type": "*=",
               "description": "type to deserialize to."
             }
           ],
@@ -1918,11 +1991,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-accessors.html",
             "start": {
-              "line": 235,
+              "line": 267,
               "column": 6
             },
             "end": {
-              "line": 241,
+              "line": 273,
               "column": 7
             }
           },
@@ -1953,11 +2026,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-accessors.html",
             "start": {
-              "line": 255,
+              "line": 287,
               "column": 6
             },
             "end": {
-              "line": 262,
+              "line": 294,
               "column": 7
             }
           },
@@ -1988,11 +2061,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-accessors.html",
             "start": {
-              "line": 274,
+              "line": 306,
               "column": 6
             },
             "end": {
-              "line": 294,
+              "line": 326,
               "column": 7
             }
           },
@@ -2017,11 +2090,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-accessors.html",
             "start": {
-              "line": 313,
+              "line": 345,
               "column": 6
             },
             "end": {
-              "line": 355,
+              "line": 387,
               "column": 7
             }
           },
@@ -2029,12 +2102,12 @@
           "params": [
             {
               "name": "value",
-              "type": "string",
+              "type": "?string",
               "description": "Attribute value to deserialize."
             },
             {
               "name": "type",
-              "type": "*",
+              "type": "*=",
               "description": "Type to deserialize the string to."
             }
           ],
@@ -2051,11 +2124,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-accessors.html",
             "start": {
-              "line": 379,
+              "line": 411,
               "column": 6
             },
             "end": {
-              "line": 395,
+              "line": 431,
               "column": 7
             }
           },
@@ -2081,11 +2154,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-accessors.html",
             "start": {
-              "line": 403,
+              "line": 439,
               "column": 6
             },
             "end": {
-              "line": 405,
+              "line": 441,
               "column": 7
             }
           },
@@ -2110,11 +2183,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1389,
+              "line": 1472,
               "column": 6
             },
             "end": {
-              "line": 1393,
+              "line": 1476,
               "column": 7
             }
           },
@@ -2136,26 +2209,36 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1353,
+              "line": 1435,
               "column": 6
             },
             "end": {
-              "line": 1381,
+              "line": 1464,
               "column": 7
             }
           },
           "metadata": {},
           "params": [
             {
-              "name": "property"
+              "name": "property",
+              "type": "string",
+              "description": "Name of the property"
             },
             {
-              "name": "value"
+              "name": "value",
+              "type": "*",
+              "description": "Value to set"
             },
             {
-              "name": "shouldNotify"
+              "name": "shouldNotify",
+              "type": "boolean=",
+              "description": "True if property should fire notification\n  event (applies only for `notify: true` properties)"
             }
           ],
+          "return": {
+            "type": "boolean",
+            "desc": "Returns true if the property changed"
+          },
           "inheritedFrom": "Polymer.PropertyEffects"
         },
         {
@@ -2165,11 +2248,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-accessors.html",
             "start": {
-              "line": 456,
+              "line": 493,
               "column": 6
             },
             "end": {
-              "line": 458,
+              "line": 495,
               "column": 7
             }
           },
@@ -2194,11 +2277,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1403,
+              "line": 1486,
               "column": 6
             },
             "end": {
-              "line": 1407,
+              "line": 1490,
               "column": 7
             }
           },
@@ -2213,11 +2296,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-accessors.html",
             "start": {
-              "line": 486,
+              "line": 523,
               "column": 6
             },
             "end": {
-              "line": 495,
+              "line": 532,
               "column": 7
             }
           },
@@ -2232,11 +2315,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-accessors.html",
             "start": {
-              "line": 506,
+              "line": 543,
               "column": 6
             },
             "end": {
-              "line": 514,
+              "line": 551,
               "column": 7
             }
           },
@@ -2251,11 +2334,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 648,
+              "line": 627,
               "column": 6
             },
             "end": {
-              "line": 654,
+              "line": 633,
               "column": 7
             }
           },
@@ -2270,11 +2353,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1542,
+              "line": 1625,
               "column": 6
             },
             "end": {
-              "line": 1575,
+              "line": 1658,
               "column": 7
             }
           },
@@ -2299,11 +2382,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-accessors.html",
             "start": {
-              "line": 569,
+              "line": 606,
               "column": 6
             },
             "end": {
-              "line": 576,
+              "line": 613,
               "column": 7
             }
           },
@@ -2338,11 +2421,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1142,
+              "line": 1219,
               "column": 6
             },
             "end": {
-              "line": 1150,
+              "line": 1227,
               "column": 7
             }
           },
@@ -2373,11 +2456,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1159,
+              "line": 1236,
               "column": 6
             },
             "end": {
-              "line": 1165,
+              "line": 1242,
               "column": 7
             }
           },
@@ -2408,11 +2491,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1176,
+              "line": 1253,
               "column": 6
             },
             "end": {
-              "line": 1179,
+              "line": 1256,
               "column": 7
             }
           },
@@ -2442,11 +2525,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1189,
+              "line": 1266,
               "column": 6
             },
             "end": {
-              "line": 1191,
+              "line": 1268,
               "column": 7
             }
           },
@@ -2471,11 +2554,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1201,
+              "line": 1278,
               "column": 6
             },
             "end": {
-              "line": 1203,
+              "line": 1280,
               "column": 7
             }
           },
@@ -2500,11 +2583,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1213,
+              "line": 1290,
               "column": 6
             },
             "end": {
-              "line": 1215,
+              "line": 1292,
               "column": 7
             }
           },
@@ -2529,11 +2612,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1225,
+              "line": 1302,
               "column": 6
             },
             "end": {
-              "line": 1227,
+              "line": 1304,
               "column": 7
             }
           },
@@ -2558,11 +2641,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1259,
+              "line": 1336,
               "column": 6
             },
             "end": {
-              "line": 1291,
+              "line": 1368,
               "column": 7
             }
           },
@@ -2602,11 +2685,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1313,
+              "line": 1390,
               "column": 6
             },
             "end": {
-              "line": 1321,
+              "line": 1398,
               "column": 7
             }
           },
@@ -2637,11 +2720,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1417,
+              "line": 1500,
               "column": 6
             },
             "end": {
-              "line": 1422,
+              "line": 1505,
               "column": 7
             }
           },
@@ -2662,11 +2745,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1430,
+              "line": 1513,
               "column": 6
             },
             "end": {
-              "line": 1441,
+              "line": 1524,
               "column": 7
             }
           },
@@ -2681,11 +2764,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1455,
+              "line": 1538,
               "column": 6
             },
             "end": {
-              "line": 1468,
+              "line": 1551,
               "column": 7
             }
           },
@@ -2700,11 +2783,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 665,
+              "line": 644,
               "column": 6
             },
             "end": {
-              "line": 674,
+              "line": 653,
               "column": 7
             }
           },
@@ -2719,11 +2802,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1495,
+              "line": 1578,
               "column": 6
             },
             "end": {
-              "line": 1506,
+              "line": 1589,
               "column": 7
             }
           },
@@ -2749,11 +2832,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1586,
+              "line": 1669,
               "column": 6
             },
             "end": {
-              "line": 1596,
+              "line": 1679,
               "column": 7
             }
           },
@@ -2784,11 +2867,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1606,
+              "line": 1689,
               "column": 6
             },
             "end": {
-              "line": 1611,
+              "line": 1694,
               "column": 7
             }
           },
@@ -2814,11 +2897,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1622,
+              "line": 1705,
               "column": 6
             },
             "end": {
-              "line": 1627,
+              "line": 1710,
               "column": 7
             }
           },
@@ -2839,11 +2922,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1658,
+              "line": 1741,
               "column": 6
             },
             "end": {
-              "line": 1662,
+              "line": 1745,
               "column": 7
             }
           },
@@ -2869,11 +2952,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1683,
+              "line": 1766,
               "column": 6
             },
             "end": {
-              "line": 1685,
+              "line": 1768,
               "column": 7
             }
           },
@@ -2903,11 +2986,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1707,
+              "line": 1790,
               "column": 6
             },
             "end": {
-              "line": 1717,
+              "line": 1800,
               "column": 7
             }
           },
@@ -2938,11 +3021,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1733,
+              "line": 1816,
               "column": 6
             },
             "end": {
-              "line": 1742,
+              "line": 1825,
               "column": 7
             }
           },
@@ -2970,11 +3053,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1757,
+              "line": 1840,
               "column": 6
             },
             "end": {
-              "line": 1766,
+              "line": 1849,
               "column": 7
             }
           },
@@ -2999,11 +3082,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1785,
+              "line": 1868,
               "column": 6
             },
             "end": {
-              "line": 1802,
+              "line": 1885,
               "column": 7
             }
           },
@@ -3041,11 +3124,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1817,
+              "line": 1900,
               "column": 6
             },
             "end": {
-              "line": 1826,
+              "line": 1909,
               "column": 7
             }
           },
@@ -3070,11 +3153,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1842,
+              "line": 1925,
               "column": 6
             },
             "end": {
-              "line": 1850,
+              "line": 1933,
               "column": 7
             }
           },
@@ -3102,11 +3185,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1864,
+              "line": 1947,
               "column": 6
             },
             "end": {
-              "line": 1881,
+              "line": 1964,
               "column": 7
             }
           },
@@ -3132,11 +3215,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1893,
+              "line": 1976,
               "column": 6
             },
             "end": {
-              "line": 1900,
+              "line": 1983,
               "column": 7
             }
           },
@@ -3162,11 +3245,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1913,
+              "line": 1996,
               "column": 6
             },
             "end": {
-              "line": 1923,
+              "line": 2006,
               "column": 7
             }
           },
@@ -3197,11 +3280,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1935,
+              "line": 2018,
               "column": 6
             },
             "end": {
-              "line": 1941,
+              "line": 2024,
               "column": 7
             }
           },
@@ -3227,11 +3310,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1951,
+              "line": 2034,
               "column": 6
             },
             "end": {
-              "line": 1959,
+              "line": 2042,
               "column": 7
             }
           },
@@ -3252,11 +3335,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1969,
+              "line": 2052,
               "column": 6
             },
             "end": {
-              "line": 1982,
+              "line": 2065,
               "column": 7
             }
           },
@@ -3277,11 +3360,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 1995,
+              "line": 2078,
               "column": 6
             },
             "end": {
-              "line": 2001,
+              "line": 2084,
               "column": 7
             }
           },
@@ -3312,11 +3395,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2171,
+              "line": 2254,
               "column": 6
             },
             "end": {
-              "line": 2194,
+              "line": 2277,
               "column": 7
             }
           },
@@ -3334,7 +3417,7 @@
             }
           ],
           "return": {
-            "type": "Object",
+            "type": "!TemplateInfo",
             "desc": "Template metadata object; for `runtimeBinding`,\n  this is an instance of the prototypical template info"
           },
           "inheritedFrom": "Polymer.PropertyEffects"
@@ -3346,11 +3429,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2270,
+              "line": 2354,
               "column": 6
             },
             "end": {
-              "line": 2291,
+              "line": 2375,
               "column": 7
             }
           },
@@ -3358,7 +3441,7 @@
           "params": [
             {
               "name": "dom",
-              "type": "DocumentFragment",
+              "type": "!StampedTemplate",
               "description": "DocumentFragment previously returned\n  from `_stampTemplate` associated with the nodes to be removed"
             }
           ],
@@ -3370,11 +3453,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 142,
+              "line": 143,
               "column": 12
             },
             "end": {
-              "line": 160,
+              "line": 161,
               "column": 13
             }
           },
@@ -3387,11 +3470,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 162,
+              "line": 163,
               "column": 12
             },
             "end": {
-              "line": 165,
+              "line": 166,
               "column": 13
             }
           },
@@ -3405,11 +3488,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 688,
+              "line": 667,
               "column": 6
             },
             "end": {
-              "line": 703,
+              "line": 683,
               "column": 7
             }
           },
@@ -3434,11 +3517,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 742,
+              "line": 726,
               "column": 6
             },
             "end": {
-              "line": 746,
+              "line": 730,
               "column": 7
             }
           },
@@ -3459,11 +3542,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 759,
+              "line": 743,
               "column": 6
             },
             "end": {
-              "line": 764,
+              "line": 748,
               "column": 7
             }
           },
@@ -3492,11 +3575,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 167,
+              "line": 168,
               "column": 12
             },
             "end": {
-              "line": 172,
+              "line": 173,
               "column": 13
             }
           },
@@ -3513,11 +3596,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 174,
+              "line": 175,
               "column": 12
             },
             "end": {
-              "line": 200,
+              "line": 201,
               "column": 13
             }
           },
@@ -3530,11 +3613,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 202,
+              "line": 203,
               "column": 12
             },
             "end": {
-              "line": 216,
+              "line": 217,
               "column": 13
             }
           },
@@ -3547,11 +3630,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 218,
+              "line": 219,
               "column": 12
             },
             "end": {
-              "line": 242,
+              "line": 243,
               "column": 13
             }
           },
@@ -3567,11 +3650,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 195,
+              "line": 197,
               "column": 6
             },
             "end": {
-              "line": 206,
+              "line": 208,
               "column": 7
             }
           },
@@ -3579,17 +3662,17 @@
           "params": [
             {
               "name": "template",
-              "type": "HTMLTemplateElement",
+              "type": "!HTMLTemplateElement",
               "description": "Template to parse"
             },
             {
               "name": "outerTemplateInfo",
-              "type": "Object=",
+              "type": "TemplateInfo=",
               "description": "Template metadata from the outer\n  template, for parsing nested templates"
             }
           ],
           "return": {
-            "type": "Object",
+            "type": "!TemplateInfo",
             "desc": "Parsed template metadata"
           },
           "inheritedFrom": "Polymer.TemplateStamp"
@@ -3601,11 +3684,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 774,
+              "line": 759,
               "column": 6
             },
             "end": {
-              "line": 777,
+              "line": 762,
               "column": 7
             }
           },
@@ -3630,11 +3713,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2309,
+              "line": 2394,
               "column": 6
             },
             "end": {
-              "line": 2323,
+              "line": 2408,
               "column": 7
             }
           },
@@ -3647,12 +3730,12 @@
             },
             {
               "name": "templateInfo",
-              "type": "Object",
+              "type": "TemplateInfo",
               "description": "Template metadata for current template"
             },
             {
               "name": "nodeInfo",
-              "type": "Object",
+              "type": "NodeInfo",
               "description": "Node metadata for current template node"
             }
           ],
@@ -3669,11 +3752,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 254,
+              "line": 257,
               "column": 6
             },
             "end": {
-              "line": 288,
+              "line": 291,
               "column": 7
             }
           },
@@ -3686,12 +3769,12 @@
             },
             {
               "name": "templateInfo",
-              "type": "Object",
+              "type": "!TemplateInfo",
               "description": "Template metadata for current template"
             },
             {
               "name": "nodeInfo",
-              "type": "Object",
+              "type": "!NodeInfo",
               "description": "Node metadata for current template."
             }
           ],
@@ -3704,11 +3787,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2392,
+              "line": 2479,
               "column": 6
             },
             "end": {
-              "line": 2402,
+              "line": 2489,
               "column": 7
             }
           },
@@ -3721,12 +3804,12 @@
             },
             {
               "name": "templateInfo",
-              "type": "Object",
+              "type": "TemplateInfo",
               "description": "Template metadata for current template"
             },
             {
               "name": "nodeInfo",
-              "type": "Object",
+              "type": "NodeInfo",
               "description": "Node metadata for current template node"
             }
           ],
@@ -3743,11 +3826,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 326,
+              "line": 329,
               "column": 6
             },
             "end": {
-              "line": 335,
+              "line": 338,
               "column": 7
             }
           },
@@ -3755,17 +3838,17 @@
           "params": [
             {
               "name": "node",
-              "type": "Node",
+              "type": "Element",
               "description": "Node to parse"
             },
             {
               "name": "templateInfo",
-              "type": "Object",
+              "type": "TemplateInfo",
               "description": "Template metadata for current template"
             },
             {
               "name": "nodeInfo",
-              "type": "Object",
+              "type": "NodeInfo",
               "description": "Node metadata for current template."
             }
           ],
@@ -3782,11 +3865,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2341,
+              "line": 2427,
               "column": 6
             },
             "end": {
-              "line": 2377,
+              "line": 2463,
               "column": 7
             }
           },
@@ -3794,17 +3877,17 @@
           "params": [
             {
               "name": "node",
-              "type": "Node",
+              "type": "Element",
               "description": "Node to parse"
             },
             {
               "name": "templateInfo",
-              "type": "Object",
+              "type": "TemplateInfo",
               "description": "Template metadata for current template"
             },
             {
               "name": "nodeInfo",
-              "type": "Object",
+              "type": "NodeInfo",
               "description": "Node metadata for current template node"
             },
             {
@@ -3827,11 +3910,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 380,
+              "line": 384,
               "column": 6
             },
             "end": {
-              "line": 383,
+              "line": 387,
               "column": 7
             }
           },
@@ -3856,11 +3939,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-accessors.html",
             "start": {
-              "line": 110,
+              "line": 113,
               "column": 6
             },
             "end": {
-              "line": 115,
+              "line": 118,
               "column": 7
             }
           },
@@ -3875,11 +3958,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2040,
+              "line": 2123,
               "column": 6
             },
             "end": {
-              "line": 2042,
+              "line": 2125,
               "column": 7
             }
           },
@@ -3910,11 +3993,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2053,
+              "line": 2136,
               "column": 6
             },
             "end": {
-              "line": 2055,
+              "line": 2138,
               "column": 7
             }
           },
@@ -3945,11 +4028,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2069,
+              "line": 2152,
               "column": 6
             },
             "end": {
-              "line": 2071,
+              "line": 2154,
               "column": 7
             }
           },
@@ -3975,11 +4058,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2080,
+              "line": 2163,
               "column": 6
             },
             "end": {
-              "line": 2082,
+              "line": 2165,
               "column": 7
             }
           },
@@ -4000,11 +4083,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2099,
+              "line": 2182,
               "column": 6
             },
             "end": {
-              "line": 2101,
+              "line": 2184,
               "column": 7
             }
           },
@@ -4030,11 +4113,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2110,
+              "line": 2193,
               "column": 6
             },
             "end": {
-              "line": 2112,
+              "line": 2195,
               "column": 7
             }
           },
@@ -4055,11 +4138,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2127,
+              "line": 2210,
               "column": 6
             },
             "end": {
-              "line": 2129,
+              "line": 2212,
               "column": 7
             }
           },
@@ -4090,11 +4173,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2143,
+              "line": 2226,
               "column": 6
             },
             "end": {
-              "line": 2145,
+              "line": 2228,
               "column": 7
             }
           },
@@ -4119,11 +4202,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2208,
+              "line": 2291,
               "column": 6
             },
             "end": {
-              "line": 2214,
+              "line": 2297,
               "column": 7
             }
           },
@@ -4154,11 +4237,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2437,
+              "line": 2524,
               "column": 6
             },
             "end": {
-              "line": 2500,
+              "line": 2589,
               "column": 7
             }
           },
@@ -4176,7 +4259,7 @@
             }
           ],
           "return": {
-            "type": "Array.<Object>",
+            "type": "Array.<!BindingPart>",
             "desc": "Array of binding part metadata"
           },
           "inheritedFrom": "Polymer.PropertyEffects"
@@ -4188,11 +4271,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
             "start": {
-              "line": 2516,
+              "line": 2605,
               "column": 6
             },
             "end": {
-              "line": 2533,
+              "line": 2622,
               "column": 7
             }
           },
@@ -4200,12 +4283,12 @@
           "params": [
             {
               "name": "inst",
-              "type": "HTMLElement",
+              "type": "this",
               "description": "Element that should be used as scope for\n  binding dependencies"
             },
             {
               "name": "part",
-              "type": "Object",
+              "type": "BindingPart",
               "description": "Binding part metadata"
             },
             {
@@ -4242,11 +4325,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 492,
+              "line": 471,
               "column": 6
             },
             "end": {
-              "line": 496,
+              "line": 475,
               "column": 7
             }
           },
@@ -4268,11 +4351,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 44,
+          "line": 45,
           "column": 8
         },
         "end": {
-          "line": 244,
+          "line": 245,
           "column": 9
         }
       },
@@ -4285,11 +4368,11 @@
           "description": "<b>not mutable</b><br />\nThe current recognition type (e.g. TEXT or ANALYZER)",
           "sourceRange": {
             "start": {
-              "line": 56,
+              "line": 57,
               "column": 20
             },
             "end": {
-              "line": 60,
+              "line": 61,
               "column": 21
             }
           },
@@ -4301,11 +4384,11 @@
           "description": "Scheme to use to connect to MyScript Cloud or Server. (https or http)",
           "sourceRange": {
             "start": {
-              "line": 64,
+              "line": 65,
               "column": 20
             },
             "end": {
-              "line": 68,
+              "line": 69,
               "column": 21
             }
           },
@@ -4317,11 +4400,11 @@
           "description": "The current recognition service host.",
           "sourceRange": {
             "start": {
-              "line": 72,
+              "line": 73,
               "column": 20
             },
             "end": {
-              "line": 76,
+              "line": 77,
               "column": 21
             }
           },
@@ -4333,11 +4416,11 @@
           "description": "Application key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />\n<b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 82,
+              "line": 83,
               "column": 20
             },
             "end": {
-              "line": 85,
+              "line": 86,
               "column": 21
             }
           },
@@ -4349,11 +4432,11 @@
           "description": "Language list sorts by values parameter. If false, language list sort by canonical name",
           "sourceRange": {
             "start": {
-              "line": 89,
+              "line": 90,
               "column": 20
             },
             "end": {
-              "line": 93,
+              "line": 94,
               "column": 21
             }
           },
@@ -4365,11 +4448,11 @@
           "description": "Languages List",
           "sourceRange": {
             "start": {
-              "line": 97,
+              "line": 98,
               "column": 20
             },
             "end": {
-              "line": 101,
+              "line": 102,
               "column": 21
             }
           },
@@ -4381,11 +4464,11 @@
           "description": "Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.\n(see demo/get_languages_programmatic.html for a better understanding)",
           "sourceRange": {
             "start": {
-              "line": 106,
+              "line": 107,
               "column": 20
             },
             "end": {
-              "line": 112,
+              "line": 113,
               "column": 21
             }
           },
@@ -4397,11 +4480,11 @@
           "description": "Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)\nConfiguration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.\nConfiguration values are not reflected to myscript-languages-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).",
           "sourceRange": {
             "start": {
-              "line": 118,
+              "line": 119,
               "column": 20
             },
             "end": {
-              "line": 121,
+              "line": 122,
               "column": 21
             }
           },
@@ -4413,11 +4496,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 125,
+              "line": 126,
               "column": 20
             },
             "end": {
-              "line": 129,
+              "line": 130,
               "column": 21
             }
           },
@@ -4429,11 +4512,11 @@
           "description": "If set to true, display the language select.",
           "sourceRange": {
             "start": {
-              "line": 133,
+              "line": 134,
               "column": 20
             },
             "end": {
-              "line": 138,
+              "line": 139,
               "column": 21
             }
           },

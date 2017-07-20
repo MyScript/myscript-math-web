@@ -19,7 +19,7 @@
   "license": "BSD-3-Clause",
   "ignore": [],
   "devDependencies": {
-    "web-component-tester": "^v6.0.0-prerelease.10",
+    "web-component-tester": "^v6.0.0",
     "custom-elements": "webcomponents/custom-elements#^v1.0.0",
     "es6-promise": "stefanpenner/es6-promise#^4.0.0",
     "html-imports": "webcomponents/html-imports#^v1.0.0",
@@ -28,14 +28,14 @@
     "template": "webcomponents/template#^v1.0.0",
     "webcomponents-platform": "webcomponents/webcomponents-platform#^v1.0.0"
   },
-  "version": "1.0.1",
-  "_release": "1.0.1",
+  "version": "1.0.3",
+  "_release": "1.0.3",
   "_resolution": {
     "type": "version",
-    "tag": "v1.0.1",
-    "commit": "1c3a4564796c66b2427dcd15618867b5a44edfac"
+    "tag": "v1.0.3",
+    "commit": "38be8e11f8c1f002d1871038807e2604ae0d62a7"
   },
   "_source": "https://github.com/Polymer/webcomponentsjs.git",
-  "_target": "^v1.0.0",
+  "_target": "^1.0.1",
   "_originalSource": "webcomponentsjs"
 }

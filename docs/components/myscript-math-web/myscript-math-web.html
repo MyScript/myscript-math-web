@@ -21,6 +21,8 @@ Custom property | Description | Default
 `--myscript-math-web-button-disabled-background` | Buttons disabled background | #F5F6F7
 `--myscript-math-web-exports-color` | Math exports color | #1580CD
 
+For a list of all events please refer to [MyScriptJS documentation](TODO Link to documentation).
+
 @demo demo/get_started.html Get started
 @demo demo/v4_configuration.html Use interactive ink api (v4)
 @demo demo/handle_error.html Handle error
@@ -79,7 +81,7 @@ Custom property | Description | Default
                 height: 100%;
             }
         </style>
-        <myscript-math-exports hidden="[[ !_displayExports(hideexports, unloaded) ]]"
+        <myscript-math-exports hidden="[[ !_displayExports(hideexportzone, unloaded) ]]"
                                exports="{{ exports }}"
                                debug="{{ debug }}">
         </myscript-math-exports>
@@ -94,13 +96,13 @@ Custom property | Description | Default
             recognitiontriggerdelay="{{ recognitiontriggerdelay }}"
             recognitionprocessdelay="{{ recognitionprocessdelay }}"
             configuration="{{ configuration }}"
-            pencolor="{{ pencolor }}"
-            penwidth="{{ penwidth }}"
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
             exports="{{ exports }}"
             debug="{{ debug }}"
+            pencolor="{{ pencolor }}"
+            penwidth="{{ penwidth }}"
             disablecontrols="{{ disablecontrols }}"
             disableclearcontrol="{{ disableclearcontrol }}"
             disableundoredocontrol="{{ disableundoredocontrol }}"
@@ -308,6 +310,14 @@ Custom property | Description | Default
                     //                 End of recopy
                     // -----------------------------------------------------------------------------
                     /**
+                     * Hide the export zone when set to true.
+                     */
+                    hideexportzone: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
+                    /**
                      * The underlying myscriptcommonelement. This could allow to access more advanced properties.
                      */
                     myscriptcommonelement: {
@@ -323,17 +333,23 @@ Custom property | Description | Default
                         value: ['LATEX', 'MATHML']
                     },
                     /**
-                     * Math export types (application/x-latex, application/mathml+xml).
+                     * Math export types (application/x-latex, application/mathml+xml, application/mathofficeXML).
                      * @type {Array<String>}
                      */
                     mimetypes: {
                         type: Array,
-                        value: ['application/x-latex', 'application/mathml+xml']
+                        value: ['application/x-latex']
                     },
+                    /**
+                     * Enable or disable the solver. Enable by default.
+                     */
                     solverenable: {
                         type: Boolean,
                         value: true
                     },
+                    /**
+                     * Number of digits displayed in the fractional part of the solver. For example 1/3 will be solved with 0.33333... if solverfractionalpartdigit is set to 5. By default set to 3.
+                     */
                     solverfractionalpartdigit: {
                         type: Number,
                         value: 3
@@ -351,18 +367,19 @@ Custom property | Description | Default
                         value: 'deg'
                     },
                     /**
-                     * If attribute is set activate the recognition of columnar operations.
+                     * If attribute is set activate the recognition of columnar operations. V3 only.
                      */
                     columnaroperation: {
                         type: Boolean,
                         value: false
                     },
                     /**
-                     * List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare.
+                     * List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare. V3 only.
                      */
                     userresources: {
                         type: Array
                     },
+                    /* V3 only. */
                     scratchoutdetectionsensitivity: {
                         type: Number,
                         value: 1
@@ -385,6 +402,33 @@ Custom property | Description | Default
                         reflectToAttribute: true
                     }
                 }
+            }
+
+            static _generateMathConfiguration(mimetypes, solverenable, solverfractionalpartdigit, solverdecimalseparator, solverroundingmode, solverangleunit, resulttypes, columnaroperation, userresources, scratchoutdetectionsensitivity) {
+                return {
+                    recognitionParams: {
+                        v3: {
+                            mathParameter: {
+                                resultTypes: resulttypes,
+                                columnarOperation: columnaroperation,
+                                userResources: userresources,
+                                scratchOutDetectionSensitivity: scratchoutdetectionsensitivity
+                            }
+                        },
+                        v4: {
+                            math: {
+                                mimeTypes: mimetypes,
+                                solver: {
+                                    enable: solverenable,
+                                    'fractional-part-digits': solverfractionalpartdigit,
+                                    'decimal-separator': solverdecimalseparator,
+                                    'rounding-mode': solverroundingmode,
+                                    'angle-unit': solverangleunit
+                                }
+                            }
+                        }
+                    }
+                };
             }
 
             //-----------------------------------------------------------------------
@@ -420,16 +464,23 @@ Custom property | Description | Default
             /**
              * Launch export
              */
-            askForExport(exports) {
-                if (this.myscriptcommonelement) {
-                    this.myscriptcommonelement.askForExport(exports);
+            askForExport(mimeTypes) {
+                    if (this.myscriptcommonelement) {
+                        this.myscriptcommonelement.askForExport(mimeTypes);
+                    }
                 }
-            }
-
-            /**
-             * Return the stats allowing to monitor what ink size is send to the server.
-             * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
-             */
+                /**
+                 * Trigger convert
+                 */
+            convert() {
+                    if (this.myscriptcommonelement) {
+                        this.myscriptcommonelement.convert();
+                    }
+                }
+                /**
+                 * Return the stats allowing to monitor what ink size is send to the server.
+                 * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+                 */
             getStats() {
                 if (this.myscriptcommonelement) {
                     return this.myscriptcommonelement.getStats();
@@ -473,7 +524,9 @@ Custom property | Description | Default
                                 break;
                         }
                         // Just forwarding event there.
-                        this.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
+                        this.dispatchEvent(new CustomEvent(event.type, {
+                            detail: event.detail
+                        }));
                     });
 
                 Object
@@ -498,44 +551,23 @@ Custom property | Description | Default
                 if (!this.configuration) {
                     this.configuration = {};
                 }
-                if (!this.configuration.recognitionParams) {
-                    this.configuration.recognitionParams = {};
-                }
-
-                if (!this.configuration.recognitionParams.v3) {
-                    this.configuration.recognitionParams.v3 = {};
-                }
-                if (!this.configuration.recognitionParams.v3.mathParameter) {
-                    this.configuration.recognitionParams.v3.mathParameter = {};
-                }
-
-                this.configuration.recognitionParams.v3.mathParameter.resultTypes = this.resulttypes;
-                this.configuration.recognitionParams.v3.mathParameter.columnarOperation = this.columnaroperation;
-                this.configuration.recognitionParams.v3.mathParameter.userResources = this.userresources;
-                this.configuration.recognitionParams.v3.mathParameter.scratchOutDetectionSensitivity = this.scratchoutdetectionsensitivity;
-
-                if (!this.configuration.recognitionParams.v4) {
-                    this.configuration.recognitionParams.v4 = {};
-                }
-                if (!this.configuration.recognitionParams.v4.math) {
-                    this.configuration.recognitionParams.v4.math = {};
-                }
-                if (!this.configuration.recognitionParams.v4.math.solver) {
-                    this.configuration.recognitionParams.v4.math.solver = {};
-                }
-
-                this.configuration.recognitionParams.v4.math.mimeTypes = this.mimetypes;
-                this.configuration.recognitionParams.v4.math.solver.enable = this.solverenable;
-                this.configuration.recognitionParams.v4.math.solver['fractional-part-digits'] = this.solverfractionalpartdigit;
-                this.configuration.recognitionParams.v4.math.solver['decimal-separator'] = this.solverdecimalseparator;
-                this.configuration.recognitionParams.v4.math.solver['rounding-mode'] = this.solverroundingmode;
-                this.configuration.recognitionParams.v4.math.solver['angle-unit'] = this.solverangleunit;
+                Object.assign(this.configuration, MyScriptMathWeb._generateMathConfiguration(
+                    this.mimetypes,
+                    this.solverenable,
+                    this.solverfractionalpartdigit,
+                    this.solverdecimalseparator,
+                    this.solverroundingmode,
+                    this.solverangleunit,
+                    this.resulttypes,
+                    this.columnaroperation,
+                    this.userresources,
+                    this.scratchoutdetectionsensitivity));
                 return this.configuration;
             }
 
             _displayExports(hideExports, unloaded) {
                 // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
-                return !hideExports && ( !unloaded || unloaded === true);
+                return !hideExports && (!unloaded || unloaded === true);
             }
 
         }

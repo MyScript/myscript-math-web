@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "cache-clean": "bower cache clean",
+    "install": "bower install",
+    "analyze": "polymer analyze myscript-math-exports.html myscript-math-web.html > analysis.json",
+    "start": "polymer serve"
+  }
+}

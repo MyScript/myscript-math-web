@@ -15,6 +15,7 @@
     <template>
         <style>
             :host {
+                contain: content;
                 box-sizing: border-box;
                 display: inline-block;
             }
@@ -45,7 +46,7 @@
         class MyScriptLanguagesElement extends Polymer.Element {
 
             static get is() {
-                return 'myscript-languages-element'
+                return 'myscript-languages-element';
             }
 
             static get properties() {

@@ -96,13 +96,13 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
             recognitiontriggerdelay="{{ recognitiontriggerdelay }}"
             recognitionprocessdelay="{{ recognitionprocessdelay }}"
             configuration="{{ configuration }}"
-            pencolor="{{ pencolor }}"
-            penwidth="{{ penwidth }}"
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
             exports="{{ exports }}"
             debug="{{ debug }}"
+            pencolor="{{ pencolor }}"
+            penwidth="{{ penwidth }}"
             disablecontrols="{{ disablecontrols }}"
             disableclearcontrol="{{ disableclearcontrol }}"
             disableundoredocontrol="{{ disableundoredocontrol }}"
@@ -404,6 +404,33 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
                 }
             }
 
+            static _generateMathConfiguration(mimetypes, solverenable, solverfractionalpartdigit, solverdecimalseparator, solverroundingmode, solverangleunit, resulttypes, columnaroperation, userresources, scratchoutdetectionsensitivity) {
+                return {
+                    recognitionParams: {
+                        v3: {
+                            mathParameter: {
+                                resultTypes: resulttypes,
+                                columnarOperation: columnaroperation,
+                                userResources: userresources,
+                                scratchOutDetectionSensitivity: scratchoutdetectionsensitivity
+                            }
+                        },
+                        v4: {
+                            math: {
+                                mimeTypes: mimetypes,
+                                solver: {
+                                    enable: solverenable,
+                                    'fractional-part-digits': solverfractionalpartdigit,
+                                    'decimal-separator': solverdecimalseparator,
+                                    'rounding-mode': solverroundingmode,
+                                    'angle-unit': solverangleunit
+                                }
+                            }
+                        }
+                    }
+                };
+            }
+
             //-----------------------------------------------------------------------
             //---------  Wrapping of myscript-common-element  methods    ------------
             //-----------------------------------------------------------------------
@@ -524,38 +551,17 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
                 if (!this.configuration) {
                     this.configuration = {};
                 }
-                if (!this.configuration.recognitionParams) {
-                    this.configuration.recognitionParams = {};
-                }
-
-                if (!this.configuration.recognitionParams.v3) {
-                    this.configuration.recognitionParams.v3 = {};
-                }
-                if (!this.configuration.recognitionParams.v3.mathParameter) {
-                    this.configuration.recognitionParams.v3.mathParameter = {};
-                }
-
-                this.configuration.recognitionParams.v3.mathParameter.resultTypes = this.resulttypes;
-                this.configuration.recognitionParams.v3.mathParameter.columnarOperation = this.columnaroperation;
-                this.configuration.recognitionParams.v3.mathParameter.userResources = this.userresources;
-                this.configuration.recognitionParams.v3.mathParameter.scratchOutDetectionSensitivity = this.scratchoutdetectionsensitivity;
-
-                if (!this.configuration.recognitionParams.v4) {
-                    this.configuration.recognitionParams.v4 = {};
-                }
-                if (!this.configuration.recognitionParams.v4.math) {
-                    this.configuration.recognitionParams.v4.math = {};
-                }
-                if (!this.configuration.recognitionParams.v4.math.solver) {
-                    this.configuration.recognitionParams.v4.math.solver = {};
-                }
-
-                this.configuration.recognitionParams.v4.math.mimeTypes = this.mimetypes;
-                this.configuration.recognitionParams.v4.math.solver.enable = this.solverenable;
-                this.configuration.recognitionParams.v4.math.solver['fractional-part-digits'] = this.solverfractionalpartdigit;
-                this.configuration.recognitionParams.v4.math.solver['decimal-separator'] = this.solverdecimalseparator;
-                this.configuration.recognitionParams.v4.math.solver['rounding-mode'] = this.solverroundingmode;
-                this.configuration.recognitionParams.v4.math.solver['angle-unit'] = this.solverangleunit;
+                Object.assign(this.configuration, MyScriptMathWeb._generateMathConfiguration(
+                    this.mimetypes,
+                    this.solverenable,
+                    this.solverfractionalpartdigit,
+                    this.solverdecimalseparator,
+                    this.solverroundingmode,
+                    this.solverangleunit,
+                    this.resulttypes,
+                    this.columnaroperation,
+                    this.userresources,
+                    this.scratchoutdetectionsensitivity));
                 return this.configuration;
             }
 

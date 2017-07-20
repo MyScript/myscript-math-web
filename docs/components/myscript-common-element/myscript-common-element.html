@@ -56,6 +56,7 @@ Custom property | Description | Default
                 --paper-fab-keyboard-focus-background: var(--myscript-common-element-button-focus-background);
                 --paper-fab-disabled-background: var(--myscript-common-element-button-disabled-background);
 
+                contain: content;
                 box-sizing: border-box;
                 touch-action: none;
                 display: block;
@@ -190,7 +191,7 @@ Custom property | Description | Default
         class MyScriptCommonElement extends Polymer.mixinBehaviors([Polymer.IronResizableBehavior], Polymer.Element) {
 
             static get is() {
-                return 'myscript-common-element'
+                return 'myscript-common-element';
             }
 
             /**
@@ -246,7 +247,6 @@ Custom property | Description | Default
             static get properties() {
                 return {
                     /**
-                     * <b>not mutable</b><br />
                      * The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)
                      */
                     type: {
@@ -352,8 +352,7 @@ Custom property | Description | Default
                     pencolor: {
                         type: String,
                         value: '#1580CD',
-                        reflectToAttribute: true,
-                        observer: '_pencolorChanged'
+                        reflectToAttribute: true
                     },
                     /**
                      * Width of strokes and primitives in mm (no other unit is supported yet)
@@ -361,8 +360,23 @@ Custom property | Description | Default
                     penwidth: {
                         type: Number,
                         value: 1,
-                        reflectToAttribute: true,
-                        observer: '_penwidthChanged'
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * font-family used to render text conversion
+                     */
+                    fontfamily: {
+                        type: String,
+                        value: 'Open Sans',
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * font-size used to render text conversion
+                     */
+                    fontsize: {
+                        type: Number,
+                        value: 10.0,
+                        reflectToAttribute: true
                     },
                     /**
                      * True if undo is available
@@ -469,6 +483,48 @@ Custom property | Description | Default
                 }
             }
 
+            static get observers() {
+                return [
+                    '_updateTheme(editor, fontfamily, fontsize)',
+                    '_updatePenStyle(editor, pencolor, penwidth)'
+                ]
+            }
+
+            static _generateTheme(fontfamily, fontsize) {
+                return {
+                    '.text': {
+                        'font-family': fontfamily,
+                        'font-size': fontsize
+                    }
+                };
+            }
+
+            static _generatePenStyle(pencolor, penwidth) {
+                return {
+                    color: pencolor,
+                    '-myscript-pen-width': penwidth
+                };
+            }
+
+            static _generateConfiguration(recognitiontriggerdelay, recognitionprocessdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
+                return {
+                    recognitionTriggerOn: protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP',
+                    recognitionTriggerDelay: recognitiontriggerdelay,
+                    recognitionProcessDelay: recognitionprocessdelay,
+                    recognitionParams: {
+                        type,
+                        protocol,
+                        apiVersion: apiversion,
+                        server: {
+                            scheme,
+                            host,
+                            applicationKey: applicationkey,
+                            hmacKey: hmackey
+                        }
+                    }
+                };
+            }
+
             _resizeHandler(event) {
                 if (this.editor) {
                     this.logger.trace('resizing', event);
@@ -507,20 +563,22 @@ Custom property | Description | Default
                             case MyScript.Constants.EventType.LOADED:
                                 this.unloaded = false;
                                 break;
-                            case MyScript.Constants.EventType.CHANGED: {
-                                if (event.detail) {
-                                    this.canclear = event.detail.canClear;
-                                    this.canundo = event.detail.canUndo;
-                                    this.canredo = event.detail.canRedo;
-                                    this.canexport = event.detail.canExport;
-                                    this.canconvert = event.detail.canConvert;
+                            case MyScript.Constants.EventType.CHANGED:
+                                {
+                                    if (event.detail) {
+                                        this.canclear = event.detail.canClear;
+                                        this.canundo = event.detail.canUndo;
+                                        this.canredo = event.detail.canRedo;
+                                        this.canexport = event.detail.canExport;
+                                        this.canconvert = event.detail.canConvert;
+                                    }
                                 }
-                            }
                                 break;
-                            case MyScript.Constants.EventType.EXPORTED: {
-                                this.exports = event.detail ? event.detail.exports : {};
-                                this.errorElement.setAttribute('hidden', 'true');
-                            }
+                            case MyScript.Constants.EventType.EXPORTED:
+                                {
+                                    this.exports = event.detail ? event.detail.exports : {};
+                                    this.errorElement.setAttribute('hidden', 'true');
+                                }
                                 break;
                             case MyScript.Constants.EventType.CLEAR:
                                 this.exports = {};
@@ -534,7 +592,7 @@ Custom property | Description | Default
                                             event.detail.serverMessage.error.result &&
                                             event.detail.serverMessage.error.result.error &&
                                             (event.detail.serverMessage.error.result.error === 'InvalidApplicationKeyException' ||
-                                            event.detail.serverMessage.error.result.error === 'InvalidHMACSignatureException')) {
+                                                event.detail.serverMessage.error.result.error === 'InvalidHMACSignatureException')) {
                                             this.errorElement.innerText = 'Application credentials are invalid. Please check or regenerate your application key and hmackey.';
                                         } else {
                                             this.errorElement.innerText = 'MyScript recognition server is not reachable. Please reload once you are connected';
@@ -554,7 +612,9 @@ Custom property | Description | Default
                                 break;
                         }
                         // Just forwarding event there.
-                        this.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
+                        this.dispatchEvent(new CustomEvent(event.type, {
+                            detail: event.detail
+                        }));
                     });
 
                 Object
@@ -562,7 +622,10 @@ Custom property | Description | Default
                     .forEach(type => this.editorDomElement.addEventListener(type, this.currentListeners[type]));
 
                 Polymer.RenderStatus.beforeNextRender(this, () => {
-                    this.editor = MyScript.register(this.editorDomElement, this._buildConfiguration(), this._buildPenStyle());
+                    this.editor = MyScript.register(this.editorDomElement,
+                                                    this._buildConfiguration(),
+                                                    MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
+                                                    MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
                     this.configuration = this.editor.configuration;
 
                     this.logger.info('common-element attached');
@@ -636,20 +699,17 @@ Custom property | Description | Default
                 }
             }
 
-            _pencolorChanged(color) {
-                if (this.editor && !this.initializing) {
-                    this.logger.trace('pencolor changed', color);
-                    this._buildPenStyle();
-                    this.editor.penStyle = this.penStyle;
+            _updateTheme(editor, fontfamily, fontsize) {
+                if (editor) {
+                    editor.theme = MyScriptCommonElement._generateTheme(fontfamily, fontsize);
+                    this.logger.trace('theme changed', editor.theme);
                 }
-
             }
 
-            _penwidthChanged(width) {
-                if (this.editor && !this.initializing) {
-                    this.logger.trace('strokewidth changed', width);
-                    this._buildPenStyle();
-                    this.editor.penStyle = this.penStyle;
+            _updatePenStyle(editor, pencolor, penwidth) {
+                if (editor) {
+                    editor.penStyle = MyScriptCommonElement._generatePenStyle(pencolor, penwidth);
+                    this.logger.trace('penStyle changed', editor.penStyle);
                 }
             }
 
@@ -665,40 +725,21 @@ Custom property | Description | Default
                 }
             }
 
-            _buildPenStyle() {
-                if (!this.penStyle) {
-                    this.penStyle = {};
-                }
-                this.penStyle.color = this.pencolor;
-                this.penStyle['-myscript-pen-width'] = this.penwidth;
-                return this.penStyle;
-            }
-
             _buildConfiguration() {
                 if (!this.configuration) {
                     this.configuration = {};
                 }
-                this.configuration.recognitionTriggerDelay = this.recognitiontriggerdelay;
-                this.configuration.recognitionProcessDelay = this.recognitionprocessdelay;
-                if (this.protocol === 'REST') {
-                    this.configuration.recognitionTriggerOn = 'QUIET_PERIOD';
-                } else {
-                    this.configuration.recognitionTriggerOn = 'POINTER_UP';
-                }
-                if (!this.configuration.recognitionParams) {
-                    this.configuration.recognitionParams = {};
-                }
-                this.configuration.recognitionParams.type = this.type;
-                this.configuration.recognitionParams.protocol = this.protocol;
-                this.configuration.recognitionParams.apiVersion = this.apiversion;
-                if (!this.configuration.recognitionParams.server) {
-                    this.configuration.recognitionParams.server = {};
-                }
-                this.configuration.recognitionParams.server.scheme = this.scheme;
-                this.configuration.recognitionParams.server.host = this.host;
-                this.configuration.recognitionParams.server.applicationKey = this.applicationkey;
-                this.configuration.recognitionParams.server.hmacKey = this.hmackey;
-                this.configuration.recognitionParams.server.scheme = this.scheme;
+                Object.assign(this.configuration, MyScriptCommonElement._generateConfiguration(
+                    this.recognitiontriggerdelay,
+                    this.recognitionprocessdelay,
+                    this.type,
+                    this.protocol,
+                    this.apiversion,
+                    this.scheme,
+                    this.host,
+                    this.applicationkey,
+                    this.hmackey)
+                );
                 return this.configuration;
             }
 

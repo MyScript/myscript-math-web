@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Those three meta make the capture of handwriting inputs easier on modile devices -->
+    <title>myscript-common-element demo</title>
+
+    <!-- As web components are not fully support -->
+    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <!-- myscript-common-element is import to be used later -->
+    <link rel="import" href="../../myscript-common-element.html">
+    <!-- we use a paper toast for the purpose of this demo -->
+    <link rel="import" href="../../../paper-toast/paper-toast.html">
+
+
+    <style>
+        body {
+            margin: 0;
+            height: 95vh;
+        }
+        
+        myscript-common-element {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <paper-toast class="fit-top"></paper-toast>
+    <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+    <myscript-common-element apiversion="V4" type="MATH" protocol="WEBSOCKET" scheme="https" host="newcloud.myscript.com" applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60" hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
+    </myscript-common-element>
+    <script>
+        const paperToast = document.querySelector('paper-toast');
+        document.querySelector('myscript-common-element').addEventListener('exported', (event) => {
+            paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
+            paperToast.fitIn = paperToast.show();
+        });
+    </script>
+</body>
+
+</html>
