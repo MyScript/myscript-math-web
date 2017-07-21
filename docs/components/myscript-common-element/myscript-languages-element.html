@@ -119,7 +119,10 @@
                      */
                     configuration: {
                         type: Object,
-                        notify: true
+                        notify: true,
+                        value() {
+                            return this._buildConfiguration();
+                        }
                     },
                     /**
                      * True to display console output, false otherwise.
@@ -139,6 +142,60 @@
                         notify: true
                     }
                 }
+            }
+
+            static _generateConfiguration(configuration, recognitiontriggerdelay, recognitionprocessdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
+                // FIXME: find a way to do a proper deep merge
+                const conf = Object.assign({}, configuration);
+                if (!conf.recognitionParams) {
+                    conf.recognitionParams = {};
+                }
+                if (!conf.recognitionParams.server) {
+                    conf.recognitionParams.server = {};
+                }
+                if (recognitiontriggerdelay) {
+                    conf.recognitionTriggerDelay = recognitiontriggerdelay;
+                }
+                if (recognitionprocessdelay) {
+                    conf.recognitionProcessDelay = recognitionprocessdelay;
+                }
+                if (protocol) {
+                    conf.recognitionTriggerOn = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
+                    conf.recognitionParams.protocol = protocol;
+                }
+                if (type) {
+                    conf.recognitionParams.type = type;
+                }
+                if (apiversion) {
+                    conf.recognitionParams.apiVersion = apiversion;
+                }
+                if (scheme) {
+                    conf.recognitionParams.server.scheme = scheme;
+                }
+                if (host) {
+                    conf.recognitionParams.server.host = host;
+                }
+                if (applicationkey) {
+                    conf.recognitionParams.server.applicationKey = applicationkey;
+                }
+                if (hmackey) {
+                    conf.recognitionParams.server.hmacKey = hmackey;
+                }
+                return conf;
+            }
+
+            _buildConfiguration() {
+                return MyScriptCommonElement._generateConfiguration(
+                    this.configuration,
+                    this.recognitiontriggerdelay,
+                    this.recognitionprocessdelay,
+                    this.type,
+                    this.protocol,
+                    this.apiversion,
+                    this.scheme,
+                    this.host,
+                    this.applicationkey,
+                    this.hmackey);
             }
 
             connectedCallback() {
@@ -171,34 +228,6 @@
                     this.logger.trace('unloaded changed', unloaded);
                     this._getLanguages();
                 }
-            }
-
-            _buildConfiguration() {
-                if (!this.configuration) {
-                    this.configuration = {};
-                }
-                this.configuration.recognitionTriggerDelay = this.recognitiontriggerdelay;
-                this.configuration.recognitionProcessDelay = this.recognitionprocessdelay;
-                if (this.protocol === 'REST') {
-                    this.configuration.recognitionTriggerOn = 'QUIET_PERIOD';
-                } else {
-                    this.configuration.recognitionTriggerOn = 'POINTER_UP';
-                }
-                if (!this.configuration.recognitionParams) {
-                    this.configuration.recognitionParams = {};
-                }
-                this.configuration.recognitionParams.type = this.type;
-                this.configuration.recognitionParams.protocol = this.protocol;
-                this.configuration.recognitionParams.apiVersion = this.apiversion;
-                if (!this.configuration.recognitionParams.server) {
-                    this.configuration.recognitionParams.server = {};
-                }
-                this.configuration.recognitionParams.server.scheme = this.scheme;
-                this.configuration.recognitionParams.server.host = this.host;
-                this.configuration.recognitionParams.server.applicationKey = this.applicationkey;
-                this.configuration.recognitionParams.server.hmacKey = this.hmackey;
-                this.configuration.recognitionParams.server.scheme = this.scheme;
-                return this.configuration;
             }
 
             _getConfigurationLanguageCode() {

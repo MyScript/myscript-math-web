@@ -86,10 +86,7 @@ Custom property | Description | Default
             }
 
             _getLatex(exports) {
-                if (exports['application/x-latex']) {
-                    return exports['application/x-latex'] || '';
-                }
-                return exports.LATEX || '';
+                return exports? exports['application/x-latex'] || exports.LATEX || '' : '';
             }
 
             _getLatexCleaned(exports) {
@@ -102,21 +99,15 @@ Custom property | Description | Default
             }
 
             _getMathml(exports) {
-                if (exports['application/mathml+xml']) {
-                    return exports['application/mathml+xml'];
-                }
-                return exports.MATHML;
+                return exports? exports['application/mathml+xml'] || exports.MATHML || '' : '';
             }
 
             _getOfficeopenxml(exports) {
-                if (exports['application/mathofficeXML']) {
-                    return exports['application/mathofficeXML'];
-                }
-                return exports.OFFICEOPENXMLMATH;
+                return exports? exports['application/mathofficeXML'] || exports.OFFICEOPENXMLMATH || '' : '';
             }
 
             _getSymboltree(exports) {
-                return JSON.stringify(exports.SYMBOLTREE);
+                return (exports && exports.SYMBOLTREE)? JSON.stringify(exports.SYMBOLTREE) : '';
             }
 
             _displaymath(resulttypes, mimetypes) {

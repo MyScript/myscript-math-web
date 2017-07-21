@@ -1,0 +1,36 @@
+<!doctype html>
+<!--doctype html is mandatory to have Katex work correctly -->
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Those three meta make the capture of handwriting inputs easier on modile devices -->
+    <title>myscript-math-web demo</title>
+
+    <!-- As web components are not fully support -->
+    <script src="../../bower-components/webcomponentsjs/webcomponents-lite.js"></script>
+
+    <!-- myscript-math-web is import to be used later -->
+    <link rel="import" href="../../bower_components/myscript-math-web/myscript-math-web.html">
+
+    <style>
+        body {
+            margin: 0;
+            height: 95vh;
+        }
+        
+        myscript-math-web {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+    <myscript-math-web apiversion="V4" host="newcloud.myscript.com" applicationkey="<YOUR APPLICATION KEY>" hmackey="<YOUR HMAC KEY KEY>">
+    </myscript-math-web>
+</body>
+
+</html>

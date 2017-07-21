@@ -16,10 +16,10 @@
     <myscript-math-web />
 </body>
 <script>
-    window.addEventListener('load', function () {
+    window.addEventListener('load', () => {
         let configurationChanged = false;
         const mathElement = document.querySelector('myscript-math-web');
-        mathElement.addEventListener('load', function () {
+        mathElement.addEventListener('load', () => {
             if (!configurationChanged) {
                 console.log('All resources finished loading! Starting to init myscript-math-web');
                 // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account

@@ -344,7 +344,10 @@ Custom property | Description | Default
                      */
                     configuration: {
                         type: Object,
-                        notify: true
+                        notify: true,
+                        value() {
+                            return this._buildConfiguration();
+                        }
                     },
                     /**
                      * Color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
@@ -506,23 +509,58 @@ Custom property | Description | Default
                 };
             }
 
-            static _generateConfiguration(recognitiontriggerdelay, recognitionprocessdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
-                return {
-                    recognitionTriggerOn: protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP',
-                    recognitionTriggerDelay: recognitiontriggerdelay,
-                    recognitionProcessDelay: recognitionprocessdelay,
-                    recognitionParams: {
-                        type,
-                        protocol,
-                        apiVersion: apiversion,
-                        server: {
-                            scheme,
-                            host,
-                            applicationKey: applicationkey,
-                            hmacKey: hmackey
-                        }
-                    }
-                };
+            static _generateConfiguration(configuration, recognitiontriggerdelay, recognitionprocessdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
+                // FIXME: find a way to do a proper deep merge
+                const conf = Object.assign({}, configuration);
+                if (!conf.recognitionParams) {
+                    conf.recognitionParams = {};
+                }
+                if (!conf.recognitionParams.server) {
+                    conf.recognitionParams.server = {};
+                }
+                if (recognitiontriggerdelay) {
+                    conf.recognitionTriggerDelay = recognitiontriggerdelay;
+                }
+                if (recognitionprocessdelay) {
+                    conf.recognitionProcessDelay = recognitionprocessdelay;
+                }
+                if (protocol) {
+                    conf.recognitionTriggerOn = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
+                    conf.recognitionParams.protocol = protocol;
+                }
+                if (type) {
+                    conf.recognitionParams.type = type;
+                }
+                if (apiversion) {
+                    conf.recognitionParams.apiVersion = apiversion;
+                }
+                if (scheme) {
+                    conf.recognitionParams.server.scheme = scheme;
+                }
+                if (host) {
+                    conf.recognitionParams.server.host = host;
+                }
+                if (applicationkey) {
+                    conf.recognitionParams.server.applicationKey = applicationkey;
+                }
+                if (hmackey) {
+                    conf.recognitionParams.server.hmacKey = hmackey;
+                }
+                return conf;
+            }
+
+            _buildConfiguration() {
+                return MyScriptCommonElement._generateConfiguration(
+                    this.configuration,
+                    this.recognitiontriggerdelay,
+                    this.recognitionprocessdelay,
+                    this.type,
+                    this.protocol,
+                    this.apiversion,
+                    this.scheme,
+                    this.host,
+                    this.applicationkey,
+                    this.hmackey);
             }
 
             _resizeHandler(event) {
@@ -546,7 +584,6 @@ Custom property | Description | Default
                             .setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                     });
 
-                this.initializing = true;
                 this.logger.info('common-element attached callback');
 
                 this.editorDomElement = this.shadowRoot.querySelector('#editorDomElement');
@@ -561,24 +598,23 @@ Custom property | Description | Default
                         this.logger.trace(event.type + ' event intercepted', event);
                         switch (event.type) {
                             case MyScript.Constants.EventType.LOADED:
+                                this.configuration = this.editor.configuration;
                                 this.unloaded = false;
                                 break;
-                            case MyScript.Constants.EventType.CHANGED:
-                                {
-                                    if (event.detail) {
-                                        this.canclear = event.detail.canClear;
-                                        this.canundo = event.detail.canUndo;
-                                        this.canredo = event.detail.canRedo;
-                                        this.canexport = event.detail.canExport;
-                                        this.canconvert = event.detail.canConvert;
-                                    }
+                            case MyScript.Constants.EventType.CHANGED: {
+                                if (event.detail) {
+                                    this.canclear = event.detail.canClear;
+                                    this.canundo = event.detail.canUndo;
+                                    this.canredo = event.detail.canRedo;
+                                    this.canexport = event.detail.canExport;
+                                    this.canconvert = event.detail.canConvert;
                                 }
+                            }
                                 break;
-                            case MyScript.Constants.EventType.EXPORTED:
-                                {
-                                    this.exports = event.detail ? event.detail.exports : {};
-                                    this.errorElement.setAttribute('hidden', 'true');
-                                }
+                            case MyScript.Constants.EventType.EXPORTED: {
+                                this.exports = event.detail ? event.detail.exports : {};
+                                this.errorElement.setAttribute('hidden', 'true');
+                            }
                                 break;
                             case MyScript.Constants.EventType.CLEAR:
                                 this.exports = {};
@@ -626,10 +662,7 @@ Custom property | Description | Default
                                                     this._buildConfiguration(),
                                                     MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
                                                     MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
-                    this.configuration = this.editor.configuration;
-
                     this.logger.info('common-element attached');
-                    this.initializing = false;
                 })
             }
 
@@ -715,35 +748,16 @@ Custom property | Description | Default
 
             _unloadedChanged(unloaded) {
                 this.exports = undefined;
-                this._buildConfiguration();
-                if (this.editor && !this.initializing) {
+                if (this.editor) {
                     this.logger.trace('unloaded changed', unloaded);
                     if (unloaded === true) {
                         this.errorElement.setAttribute('hidden', 'true');
-                        this.editor.configuration = this.configuration;
+                        this.editor.configuration = this._buildConfiguration();
                     }
                 }
             }
-
-            _buildConfiguration() {
-                if (!this.configuration) {
-                    this.configuration = {};
-                }
-                Object.assign(this.configuration, MyScriptCommonElement._generateConfiguration(
-                    this.recognitiontriggerdelay,
-                    this.recognitionprocessdelay,
-                    this.type,
-                    this.protocol,
-                    this.apiversion,
-                    this.scheme,
-                    this.host,
-                    this.applicationkey,
-                    this.hmackey)
-                );
-                return this.configuration;
-            }
-
         }
+
         customElements.define(MyScriptCommonElement.is, MyScriptCommonElement);
     </script>
 </dom-module>

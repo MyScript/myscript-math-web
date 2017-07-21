@@ -237,7 +237,7 @@
               "column": 20
             },
             "end": {
-              "line": 347,
+              "line": 350,
               "column": 21
             }
           },
@@ -254,11 +254,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 351,
+              "line": 354,
               "column": 20
             },
             "end": {
-              "line": 355,
+              "line": 358,
               "column": 21
             }
           },
@@ -274,11 +274,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 359,
+              "line": 362,
               "column": 20
             },
             "end": {
-              "line": 363,
+              "line": 366,
               "column": 21
             }
           },
@@ -294,11 +294,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 367,
+              "line": 370,
               "column": 20
             },
             "end": {
-              "line": 371,
+              "line": 374,
               "column": 21
             }
           },
@@ -314,11 +314,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 375,
+              "line": 378,
               "column": 20
             },
             "end": {
-              "line": 379,
+              "line": 382,
               "column": 21
             }
           },
@@ -334,11 +334,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 383,
+              "line": 386,
               "column": 20
             },
             "end": {
-              "line": 388,
+              "line": 391,
               "column": 21
             }
           },
@@ -356,11 +356,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 392,
+              "line": 395,
               "column": 20
             },
             "end": {
-              "line": 397,
+              "line": 400,
               "column": 21
             }
           },
@@ -378,11 +378,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 401,
+              "line": 404,
               "column": 20
             },
             "end": {
-              "line": 406,
+              "line": 409,
               "column": 21
             }
           },
@@ -400,11 +400,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 410,
+              "line": 413,
               "column": 20
             },
             "end": {
-              "line": 415,
+              "line": 418,
               "column": 21
             }
           },
@@ -422,11 +422,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 419,
+              "line": 422,
               "column": 20
             },
             "end": {
-              "line": 424,
+              "line": 427,
               "column": 21
             }
           },
@@ -444,11 +444,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 428,
+              "line": 431,
               "column": 20
             },
             "end": {
-              "line": 433,
+              "line": 436,
               "column": 21
             }
           },
@@ -466,11 +466,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 437,
+              "line": 440,
               "column": 20
             },
             "end": {
-              "line": 441,
+              "line": 444,
               "column": 21
             }
           },
@@ -486,11 +486,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 445,
+              "line": 448,
               "column": 20
             },
             "end": {
-              "line": 449,
+              "line": 452,
               "column": 21
             }
           },
@@ -506,11 +506,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 453,
+              "line": 456,
               "column": 20
             },
             "end": {
-              "line": 457,
+              "line": 460,
               "column": 21
             }
           },
@@ -526,11 +526,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 461,
+              "line": 464,
               "column": 20
             },
             "end": {
-              "line": 465,
+              "line": 468,
               "column": 21
             }
           },
@@ -546,11 +546,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 470,
+              "line": 473,
               "column": 20
             },
             "end": {
-              "line": 473,
+              "line": 476,
               "column": 21
             }
           },
@@ -567,11 +567,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 477,
+              "line": 480,
               "column": 20
             },
             "end": {
-              "line": 481,
+              "line": 484,
               "column": 21
             }
           },
@@ -583,16 +583,33 @@
       ],
       "methods": [
         {
+          "name": "_buildConfiguration",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 551,
+              "column": 12
+            },
+            "end": {
+              "line": 563,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
           "name": "_resizeHandler",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 527,
+              "line": 565,
               "column": 12
             },
             "end": {
-              "line": 532,
+              "line": 570,
               "column": 13
             }
           },
@@ -609,11 +626,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 534,
+              "line": 572,
               "column": 12
             },
             "end": {
-              "line": 633,
+              "line": 666,
               "column": 13
             }
           },
@@ -626,11 +643,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 635,
+              "line": 668,
               "column": 12
             },
             "end": {
-              "line": 644,
+              "line": 677,
               "column": 13
             }
           },
@@ -643,11 +660,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 649,
+              "line": 682,
               "column": 12
             },
             "end": {
-              "line": 653,
+              "line": 686,
               "column": 13
             }
           },
@@ -660,11 +677,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 658,
+              "line": 691,
               "column": 12
             },
             "end": {
-              "line": 662,
+              "line": 695,
               "column": 13
             }
           },
@@ -677,11 +694,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 667,
+              "line": 700,
               "column": 12
             },
             "end": {
-              "line": 671,
+              "line": 704,
               "column": 13
             }
           },
@@ -694,11 +711,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 676,
+              "line": 709,
               "column": 12
             },
             "end": {
-              "line": 680,
+              "line": 713,
               "column": 13
             }
           },
@@ -715,11 +732,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 685,
+              "line": 718,
               "column": 12
             },
             "end": {
-              "line": 689,
+              "line": 722,
               "column": 13
             }
           },
@@ -732,11 +749,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 695,
+              "line": 728,
               "column": 12
             },
             "end": {
-              "line": 699,
+              "line": 732,
               "column": 13
             }
           },
@@ -749,11 +766,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 701,
+              "line": 734,
               "column": 12
             },
             "end": {
-              "line": 706,
+              "line": 739,
               "column": 13
             }
           },
@@ -776,11 +793,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 708,
+              "line": 741,
               "column": 12
             },
             "end": {
-              "line": 713,
+              "line": 746,
               "column": 13
             }
           },
@@ -803,11 +820,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 715,
+              "line": 748,
               "column": 12
             },
             "end": {
-              "line": 725,
+              "line": 757,
               "column": 13
             }
           },
@@ -817,23 +834,6 @@
               "name": "unloaded"
             }
           ]
-        },
-        {
-          "name": "_buildConfiguration",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 727,
-              "column": 12
-            },
-            "end": {
-              "line": 743,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": []
         }
       ],
       "staticMethods": [],
@@ -878,7 +878,7 @@
           "column": 8
         },
         "end": {
-          "line": 745,
+          "line": 758,
           "column": 9
         }
       },
@@ -1071,7 +1071,7 @@
               "column": 20
             },
             "end": {
-              "line": 347,
+              "line": 350,
               "column": 21
             }
           },
@@ -1083,11 +1083,11 @@
           "description": "Color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "sourceRange": {
             "start": {
-              "line": 351,
+              "line": 354,
               "column": 20
             },
             "end": {
-              "line": 355,
+              "line": 358,
               "column": 21
             }
           },
@@ -1099,11 +1099,11 @@
           "description": "Width of strokes and primitives in mm (no other unit is supported yet)",
           "sourceRange": {
             "start": {
-              "line": 359,
+              "line": 362,
               "column": 20
             },
             "end": {
-              "line": 363,
+              "line": 366,
               "column": 21
             }
           },
@@ -1115,11 +1115,11 @@
           "description": "font-family used to render text conversion",
           "sourceRange": {
             "start": {
-              "line": 367,
+              "line": 370,
               "column": 20
             },
             "end": {
-              "line": 371,
+              "line": 374,
               "column": 21
             }
           },
@@ -1131,11 +1131,11 @@
           "description": "font-size used to render text conversion",
           "sourceRange": {
             "start": {
-              "line": 375,
+              "line": 378,
               "column": 20
             },
             "end": {
-              "line": 379,
+              "line": 382,
               "column": 21
             }
           },
@@ -1147,11 +1147,11 @@
           "description": "True if undo is available",
           "sourceRange": {
             "start": {
-              "line": 383,
+              "line": 386,
               "column": 20
             },
             "end": {
-              "line": 388,
+              "line": 391,
               "column": 21
             }
           },
@@ -1163,11 +1163,11 @@
           "description": "True if redo is available",
           "sourceRange": {
             "start": {
-              "line": 392,
+              "line": 395,
               "column": 20
             },
             "end": {
-              "line": 397,
+              "line": 400,
               "column": 21
             }
           },
@@ -1179,11 +1179,11 @@
           "description": "True if there is something to clear",
           "sourceRange": {
             "start": {
-              "line": 401,
+              "line": 404,
               "column": 20
             },
             "end": {
-              "line": 406,
+              "line": 409,
               "column": 21
             }
           },
@@ -1195,11 +1195,11 @@
           "description": "True if export button could be displayed.",
           "sourceRange": {
             "start": {
-              "line": 410,
+              "line": 413,
               "column": 20
             },
             "end": {
-              "line": 415,
+              "line": 418,
               "column": 21
             }
           },
@@ -1211,11 +1211,11 @@
           "description": "True if convert button could be displayed.",
           "sourceRange": {
             "start": {
-              "line": 419,
+              "line": 422,
               "column": 20
             },
             "end": {
-              "line": 424,
+              "line": 427,
               "column": 21
             }
           },
@@ -1227,11 +1227,11 @@
           "description": "If set to true, remove the controls (undo/redo, clear...).",
           "sourceRange": {
             "start": {
-              "line": 428,
+              "line": 431,
               "column": 20
             },
             "end": {
-              "line": 433,
+              "line": 436,
               "column": 21
             }
           },
@@ -1243,11 +1243,11 @@
           "description": "If set to true, remove the undo/redo controls.",
           "sourceRange": {
             "start": {
-              "line": 437,
+              "line": 440,
               "column": 20
             },
             "end": {
-              "line": 441,
+              "line": 444,
               "column": 21
             }
           },
@@ -1259,11 +1259,11 @@
           "description": "If set to true, remove the clear control.",
           "sourceRange": {
             "start": {
-              "line": 445,
+              "line": 448,
               "column": 20
             },
             "end": {
-              "line": 449,
+              "line": 452,
               "column": 21
             }
           },
@@ -1275,11 +1275,11 @@
           "description": "If set to true, remove the export control.",
           "sourceRange": {
             "start": {
-              "line": 453,
+              "line": 456,
               "column": 20
             },
             "end": {
-              "line": 457,
+              "line": 460,
               "column": 21
             }
           },
@@ -1291,11 +1291,11 @@
           "description": "If set to true, remove the convert control.",
           "sourceRange": {
             "start": {
-              "line": 461,
+              "line": 464,
               "column": 20
             },
             "end": {
-              "line": 465,
+              "line": 468,
               "column": 21
             }
           },
@@ -1307,11 +1307,11 @@
           "description": "Exports.",
           "sourceRange": {
             "start": {
-              "line": 470,
+              "line": 473,
               "column": 20
             },
             "end": {
-              "line": 473,
+              "line": 476,
               "column": 21
             }
           },
@@ -1323,11 +1323,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 477,
+              "line": 480,
               "column": 20
             },
             "end": {
-              "line": 481,
+              "line": 484,
               "column": 21
             }
           },
@@ -1618,7 +1618,7 @@
               "column": 20
             },
             "end": {
-              "line": 122,
+              "line": 125,
               "column": 21
             }
           },
@@ -1635,11 +1635,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 126,
+              "line": 129,
               "column": 20
             },
             "end": {
-              "line": 130,
+              "line": 133,
               "column": 21
             }
           },
@@ -1655,11 +1655,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 134,
+              "line": 137,
               "column": 20
             },
             "end": {
-              "line": 139,
+              "line": 142,
               "column": 21
             }
           },
@@ -3453,11 +3453,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 143,
+              "line": 200,
               "column": 12
             },
             "end": {
-              "line": 161,
+              "line": 218,
               "column": 13
             }
           },
@@ -3470,11 +3470,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 163,
+              "line": 220,
               "column": 12
             },
             "end": {
-              "line": 166,
+              "line": 223,
               "column": 13
             }
           },
@@ -3570,16 +3570,33 @@
           "inheritedFrom": "Polymer.ElementMixin"
         },
         {
+          "name": "_buildConfiguration",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 186,
+              "column": 12
+            },
+            "end": {
+              "line": 198,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
           "name": "_unloadedChanged",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 168,
+              "line": 225,
               "column": 12
             },
             "end": {
-              "line": 173,
+              "line": 230,
               "column": 13
             }
           },
@@ -3591,33 +3608,16 @@
           ]
         },
         {
-          "name": "_buildConfiguration",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 175,
-              "column": 12
-            },
-            "end": {
-              "line": 201,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": []
-        },
-        {
           "name": "_getConfigurationLanguageCode",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 203,
+              "line": 232,
               "column": 12
             },
             "end": {
-              "line": 217,
+              "line": 246,
               "column": 13
             }
           },
@@ -3630,11 +3630,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 219,
+              "line": 248,
               "column": 12
             },
             "end": {
-              "line": 243,
+              "line": 272,
               "column": 13
             }
           },
@@ -4355,7 +4355,7 @@
           "column": 8
         },
         "end": {
-          "line": 245,
+          "line": 274,
           "column": 9
         }
       },
@@ -4484,7 +4484,7 @@
               "column": 20
             },
             "end": {
-              "line": 122,
+              "line": 125,
               "column": 21
             }
           },
@@ -4496,11 +4496,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 126,
+              "line": 129,
               "column": 20
             },
             "end": {
-              "line": 130,
+              "line": 133,
               "column": 21
             }
           },
@@ -4512,11 +4512,11 @@
           "description": "If set to true, display the language select.",
           "sourceRange": {
             "start": {
-              "line": 134,
+              "line": 137,
               "column": 20
             },
             "end": {
-              "line": 139,
+              "line": 142,
               "column": 21
             }
           },

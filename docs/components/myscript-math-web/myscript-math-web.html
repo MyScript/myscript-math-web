@@ -117,6 +117,56 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
                 return 'myscript-math-web'
             }
 
+            /**
+             * Fired when element is fully loaded.
+             * @event load
+             */
+
+            /**
+             * Fired when undo is triggered.
+             * @event undo
+             */
+
+            /**
+             * Fired when redo is triggered.
+             * @event redo
+             */
+
+            /**
+             * Fired when clear is triggered.
+             * @event clear
+             */
+
+            /**
+             * Fired when export is triggered.
+             * @event export
+             */
+
+            /**
+             * Fired when conversion is triggered.
+             * @event convert
+             */
+
+            /**
+             * Fired when editor state changed.
+             * @event change
+             */
+
+            /**
+             * Fired when export is done.
+             * @event exported
+             */
+
+            /**
+             * Fired when conversion is done.
+             * @event converted
+             */
+
+            /**
+             * Fired on error.
+             * @event error
+             */
+
             static get properties() {
                 return {
                     // ----------------------------------------------------------------------------------------------
@@ -404,31 +454,78 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
                 }
             }
 
-            static _generateMathConfiguration(mimetypes, solverenable, solverfractionalpartdigit, solverdecimalseparator, solverroundingmode, solverangleunit, resulttypes, columnaroperation, userresources, scratchoutdetectionsensitivity) {
-                return {
-                    recognitionParams: {
-                        v3: {
-                            mathParameter: {
-                                resultTypes: resulttypes,
-                                columnarOperation: columnaroperation,
-                                userResources: userresources,
-                                scratchOutDetectionSensitivity: scratchoutdetectionsensitivity
-                            }
-                        },
-                        v4: {
-                            math: {
-                                mimeTypes: mimetypes,
-                                solver: {
-                                    enable: solverenable,
-                                    'fractional-part-digits': solverfractionalpartdigit,
-                                    'decimal-separator': solverdecimalseparator,
-                                    'rounding-mode': solverroundingmode,
-                                    'angle-unit': solverangleunit
-                                }
-                            }
-                        }
-                    }
-                };
+            static _generateMathConfiguration(configuration, mimetypes, solverenable, solverfractionalpartdigit, solverdecimalseparator, solverroundingmode, solverangleunit, resulttypes, columnaroperation, userresources, scratchoutdetectionsensitivity) {
+                // FIXME: find a way to do a proper deep merge
+                const conf = Object.assign({}, configuration);
+                if (!conf.recognitionParams) {
+                    conf.recognitionParams = {};
+                }
+                if (!conf.recognitionParams.v3) {
+                    conf.recognitionParams.v3 = {};
+                }
+                if (!conf.recognitionParams.v3.mathParameter) {
+                    conf.recognitionParams.v3.mathParameter = {};
+                }
+                if (!conf.recognitionParams.v4) {
+                    conf.recognitionParams.v4 = {};
+                }
+                if (!conf.recognitionParams.v4.math) {
+                    conf.recognitionParams.v4.math = {};
+                }
+                if (!conf.recognitionParams.v4.math.solver) {
+                    conf.recognitionParams.v4.math.solver = {};
+                }
+                if (resulttypes) {
+                    conf.recognitionParams.v3.mathParameter.resultTypes = resulttypes;
+                }
+                if (columnaroperation) {
+                    conf.recognitionParams.v3.mathParameter.columnarOperation = columnaroperation;
+                }
+                if (userresources) {
+                    conf.recognitionParams.v3.mathParameter.userResources = userresources;
+                }
+                if (scratchoutdetectionsensitivity) {
+                    conf.recognitionParams.v3.mathParameter.scratchOutDetectionSensitivity = scratchoutdetectionsensitivity;
+                }
+                if (mimetypes) {
+                    conf.recognitionParams.v4.math.mimeTypes = mimetypes;
+                }
+                if (solverenable) {
+                    conf.recognitionParams.v4.math.solver.enable = solverenable;
+                }
+                if (solverfractionalpartdigit) {
+                    conf.recognitionParams.v4.math.solver['fractional-part-digits'] = solverfractionalpartdigit;
+                }
+                if (solverdecimalseparator) {
+                    conf.recognitionParams.v4.math.solver['decimal-separator'] = solverdecimalseparator;
+                }
+                if (solverroundingmode) {
+                    conf.recognitionParams.v4.math.solver['rounding-mode'] = solverroundingmode;
+                }
+                if (solverangleunit) {
+                    conf.recognitionParams.v4.math.solver['angle-unit'] = solverangleunit;
+                }
+                return conf;
+            }
+
+            _buildConfiguration() {
+                return MyScriptMathWeb._generateMathConfiguration(
+                    this.configuration,
+                    this.mimetypes,
+                    this.solverenable,
+                    this.solverfractionalpartdigit,
+                    this.solverdecimalseparator,
+                    this.solverroundingmode,
+                    this.solverangleunit,
+                    this.resulttypes,
+                    this.columnaroperation,
+                    this.userresources,
+                    this.scratchoutdetectionsensitivity);
+            }
+
+            constructor() {
+                super();
+                this.configuration = this._buildConfiguration(); // Build default configuration to use in common element
             }
 
             //-----------------------------------------------------------------------
@@ -491,9 +588,10 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
             //---------  Wrapping END                                    ------------
             //-----------------------------------------------------------------------
             _unloadedChanged(unloaded) {
-                this._buildConfiguration();
-                if (unloaded === true) {
-                    if (this.myscriptcommonelement && !this.initializing) {
+                if (this.myscriptcommonelement) {
+                    this.logger.trace('unloaded changed', unloaded);
+                    if (unloaded === true) {
+                        this.myscriptcommonelement.configuration = this._buildConfiguration();
                         this.myscriptcommonelement.unloaded = true;
                     }
                 }
@@ -505,10 +603,8 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
                 this.logger = MyScript.LoggerConfig.getLogger('math-web');
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
 
-                this.initializing = true;
                 this.logger.info('attached callback');
                 this.myscriptcommonelement = this.shadowRoot.querySelector('myscript-common-element');
-                this.myscriptcommonelement.configuration = this._buildConfiguration();
 
                 this.currentListeners = {};
                 Object
@@ -534,7 +630,6 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
                     .forEach(type => this.myscriptcommonelement.addEventListener(type, this.currentListeners[type]));
 
                 this.logger.info('attached');
-                this.initializing = false;
             }
 
             disconnectedCallback() {
@@ -545,24 +640,6 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
                     .keys(this.currentListeners)
                     .forEach(type => this.myscriptcommonelement.removeEventListener(type, this.currentListeners[type]));
                 this.logger.info('detached');
-            }
-
-            _buildConfiguration() {
-                if (!this.configuration) {
-                    this.configuration = {};
-                }
-                Object.assign(this.configuration, MyScriptMathWeb._generateMathConfiguration(
-                    this.mimetypes,
-                    this.solverenable,
-                    this.solverfractionalpartdigit,
-                    this.solverdecimalseparator,
-                    this.solverroundingmode,
-                    this.solverangleunit,
-                    this.resulttypes,
-                    this.columnaroperation,
-                    this.userresources,
-                    this.scratchoutdetectionsensitivity));
-                return this.configuration;
             }
 
             _displayExports(hideExports, unloaded) {
