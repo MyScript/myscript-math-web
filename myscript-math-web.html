@@ -561,9 +561,9 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
             /**
              * Launch export
              */
-            askForExport(mimeTypes) {
+            exportContent(mimeTypes) {
                     if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.askForExport(mimeTypes);
+                        this.myscriptcommonelement.exportContent(mimeTypes);
                     }
                 }
                 /**
@@ -597,12 +597,14 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
                 }
             }
 
-            connectedCallback() {
-                super.connectedCallback();
-
+            constructor() {
+                super();
                 this.logger = MyScript.LoggerConfig.getLogger('math-web');
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+            }
 
+            connectedCallback() {
+                super.connectedCallback();
                 this.logger.info('attached callback');
                 this.myscriptcommonelement = this.shadowRoot.querySelector('myscript-common-element');
 

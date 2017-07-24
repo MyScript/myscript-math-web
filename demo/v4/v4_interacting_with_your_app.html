@@ -81,7 +81,7 @@
 
         const checkBehavior = () => {
             myscriptMathWebElement.convert();
-            const functionOutput = myscriptMathWebElement.askForExport('application/x-latex');
+            const functionOutput = myscriptMathWebElement.exportContent('application/x-latex');
             console.log('Output :' + functionOutput);
         };
         checkElement.addEventListener('click', checkBehavior);
