@@ -70,7 +70,7 @@
     editorElement['data-myscript-editor'].clear();
   });
   exportElement.addEventListener('pointerdown', function () {
-    editorElement['data-myscript-editor'].askForExport('application/mathofficeXML');
+    editorElement['data-myscript-editor'].exportContent('application/mathofficeXML');
   });
   convertElement.addEventListener('pointerdown', function () {
     editorElement['data-myscript-editor'].convert();
@@ -96,8 +96,8 @@
       protocol: 'WEBSOCKET',
       apiVersion: 'V4',
       server: {
-        scheme: 'http',
-        host: 'localhost:8897',
+        scheme: 'https',
+        host: 'newcloud.myscript.com',
         applicationKey: '7d223f9e-a3cb-4213-ba4b-85e930605f8b',
         hmacKey: '5ab1935e-529a-4d48-a695-158450e52b13',
         websocket: {

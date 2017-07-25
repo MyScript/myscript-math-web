@@ -706,7 +706,7 @@
           "params": []
         },
         {
-          "name": "askForExport",
+          "name": "exportContent",
           "description": "Trigger export",
           "privacy": "public",
           "sourceRange": {

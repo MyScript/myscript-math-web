@@ -48,6 +48,7 @@
     disableexportcontrol
     disableconvertcontrol
     hideexportzone
+    ondemand
     apiversion="V4"
     scheme="https"
     host="newcloud.myscript.com"
@@ -81,7 +82,7 @@
 
         const checkBehavior = () => {
             myscriptMathWebElement.convert();
-            const functionOutput = myscriptMathWebElement.exportContent('application/x-latex');
+            const functionOutput = myscriptMathWebElement.exportContent();
             console.log('Output :' + functionOutput);
         };
         checkElement.addEventListener('click', checkBehavior);

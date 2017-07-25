@@ -72,7 +72,7 @@
   });
   exportElement.addEventListener('pointerdown', function () {
     exportElement.disabled = true;
-    editorElement['data-myscript-editor'].askForExport('application/x-latex');
+    editorElement['data-myscript-editor'].exportContent('application/x-latex');
   });
 
   /**

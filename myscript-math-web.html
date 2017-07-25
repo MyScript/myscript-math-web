@@ -93,8 +93,9 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
             scheme="{{ scheme }}"
             applicationkey="{{ applicationkey }}"
             hmackey="{{ hmackey }}"
-            recognitiontriggerdelay="{{ recognitiontriggerdelay }}"
-            recognitionprocessdelay="{{ recognitionprocessdelay }}"
+            triggerdelay="{{ triggerdelay }}"
+            processdelay="{{ processdelay }}"
+            ondemand="{{ ondemand }}"
             configuration="{{ configuration }}"
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
@@ -208,7 +209,7 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
                     /**
                      * Delay without any user input before asking for recognition, only use in REST mode.
                      */
-                    recognitiontriggerdelay: {
+                    triggerdelay: {
                         type: Number,
                         reflectToAttribute: true,
                         value: 2000
@@ -216,10 +217,18 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
                     /**
                      * Delay without any export received before processing the last one received, only use in WEBSOCKET mode.
                      */
-                    recognitionprocessdelay: {
+                    processdelay: {
                         type: Number,
                         reflectToAttribute: true,
                         value: 1000
+                    },
+                    /**
+                     * True if export should be done on-demand, false otherwise
+                     */
+                    ondemand: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
                     },
                     /**
                      * The recognition timeout, only use in REST mode.
@@ -561,9 +570,9 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
             /**
              * Launch export
              */
-            exportContent(mimeTypes) {
+            exportContent() {
                     if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.exportContent(mimeTypes);
+                        this.myscriptcommonelement.exportContent();
                     }
                 }
                 /**
