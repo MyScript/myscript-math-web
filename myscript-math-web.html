@@ -21,15 +21,13 @@ Custom property | Description | Default
 `--myscript-math-web-button-disabled-background` | Buttons disabled background | #F5F6F7
 `--myscript-math-web-exports-color` | Math exports color | #1580CD
 
-For a list of all events please refer to [MyScriptJS documentation](TODO Link to documentation).
-
-@demo demo/get_started.html Get started
-@demo demo/v4_configuration.html Use interactive ink api (v4)
-@demo demo/handle_error.html Handle error
-@demo demo/styling.html Customize your component style
-@demo demo/programmatic_init.html Programmatic initialization
-@demo demo/get_stats.html Get statistics
-@demo demo/debug.html Debug your component
+@demo examples/get_started.html Get started
+@demo examples/v4_configuration.html Use interactive ink api (v4)
+@demo examples/handle_error.html Handle error
+@demo examples/styling.html Customize your component style
+@demo examples/programmatic_init.html Programmatic initialization
+@demo examples/get_stats.html Get statistics
+@demo examples/debug.html Debug your component
 -->
 <dom-module id="myscript-math-web">
     <template>
@@ -37,7 +35,7 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
             :host {
                 --myscript-math-web-background: none;
                 --myscript-math-web-color: #1A9FFF;
-                --myscript-math-web-line-pattern: url(data:image/svg+xml;charset=utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij4KICA8cGF0aCBzdHJva2U9IiNGNUY2RjciIGQ9Ik0wLjUsMCBMMC41LDE4IE0wLDAuNSBMMTgsMC41Ii8+Cjwvc3ZnPgo=);
+                --myscript-math-web-line-pattern: repeating-linear-gradient(to bottom, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px), repeating-linear-gradient(to right, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px);
                 --myscript-math-web-capture-background: none;
                 --myscript-math-web-loader-background: #1A9FFF;
                 --myscript-math-web-loader-color: #F5F6F7;
@@ -108,7 +106,20 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
             disableclearcontrol="{{ disableclearcontrol }}"
             disableundoredocontrol="{{ disableundoredocontrol }}"
             disableexportcontrol="{{ disableexportcontrol }}"
-            disableconvertcontrol="{{ disableconvertcontrol }}">
+            disableconvertcontrol="{{ disableconvertcontrol }}"
+            unloaded="{{ unloaded }}"
+            editor="{{ editor }}"
+            on-load="_loadListener"
+            on-change="_changeListener"
+            on-exported="_exportedListener"
+            on-converted="_convertedListener"
+            on-undo="_undoListener"
+            on-redo="_redoListener"
+            on-clear="_clearListener"
+            on-export="_exportListener"
+            on-convert="_convertListener"
+            on-idle="_idleListener"
+            on-error="_errorListener">
         </myscript-common-element>
     </template>
     <script>
@@ -257,18 +268,25 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
                         reflectToAttribute: true
                     },
                     /**
-                     * Properties to set when you wish to set attributes in javascript. unloaded attributes shoudl be removed once all properties are set.
+                     * Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.
                      * (see demo/programmatic_init.html for a better understanding)
                      */
                     unloaded: {
                         type: Boolean,
-                        value: true,
+                        value: false,
                         notify: true,
                         reflectToAttribute: true,
                         observer: '_unloadedChanged'
                     },
                     /**
-                     * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
+                     * The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.
+                     */
+                    editor: {
+                        type: Object,
+                        notify: true
+                    },
+                    /**
+                     * Set the additional configuration used to feed MyScript Editor (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)
                      * Configuration values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.
                      * Configuration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).
                      */
@@ -532,8 +550,88 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
                     this.scratchoutdetectionsensitivity);
             }
 
+            _loadListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _changeListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _exportedListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _convertedListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _undoListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _redoListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _clearListener(event) {
+                this.exports = {};
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _exportListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _convertListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _idleListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _errorListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
             constructor() {
                 super();
+                this.logger = MyScript.LoggerConfig.getLogger('math-web');
+                this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                 this.configuration = this._buildConfiguration(); // Build default configuration to use in common element
             }
 
@@ -597,59 +695,20 @@ For a list of all events please refer to [MyScriptJS documentation](TODO Link to
             //---------  Wrapping END                                    ------------
             //-----------------------------------------------------------------------
             _unloadedChanged(unloaded) {
-                if (this.myscriptcommonelement) {
-                    this.logger.trace('unloaded changed', unloaded);
-                    if (unloaded === true) {
-                        this.myscriptcommonelement.configuration = this._buildConfiguration();
-                        this.myscriptcommonelement.unloaded = true;
-                    }
+                this.logger.trace('unloaded changed', unloaded);
+                if (!unloaded) {
+                    this.configuration = this._buildConfiguration();
                 }
-            }
-
-            constructor() {
-                super();
-                this.logger = MyScript.LoggerConfig.getLogger('math-web');
-                this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
             }
 
             connectedCallback() {
                 super.connectedCallback();
-                this.logger.info('attached callback');
                 this.myscriptcommonelement = this.shadowRoot.querySelector('myscript-common-element');
-
-                this.currentListeners = {};
-                Object
-                    .keys(MyScript.Constants.EventType)
-                    .map(key => MyScript.Constants.EventType[key])
-                    .forEach(type => this.currentListeners[type] = (event) => {
-                        this.logger.trace(event.type + ' event intercepted', event);
-                        switch (event.type) {
-                            case MyScript.Constants.EventType.LOADED:
-                                this.unloaded = false;
-                                break;
-                            default:
-                                break;
-                        }
-                        // Just forwarding event there.
-                        this.dispatchEvent(new CustomEvent(event.type, {
-                            detail: event.detail
-                        }));
-                    });
-
-                Object
-                    .keys(this.currentListeners)
-                    .forEach(type => this.myscriptcommonelement.addEventListener(type, this.currentListeners[type]));
-
                 this.logger.info('attached');
             }
 
             disconnectedCallback() {
                 super.disconnectedCallback();
-
-                this.logger.info('detached callback');
-                Object
-                    .keys(this.currentListeners)
-                    .forEach(type => this.myscriptcommonelement.removeEventListener(type, this.currentListeners[type]));
                 this.logger.info('detached');
             }
 

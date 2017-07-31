@@ -19,10 +19,11 @@
   "ignore": [
     "*",
     "!LICENSE",
-    "!myscript.html",
     "!package.json",
     "!bower.json",
-    "!dist/**/*",
-    "!samples/**/*"
-  ]
+    "!dist/**/*"
+  ],
+  "dependencies": {
+    "pepjs": "^0.4.3"
+  }
 }

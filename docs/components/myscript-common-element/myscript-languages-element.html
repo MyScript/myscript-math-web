@@ -8,8 +8,8 @@
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-languages-element>
 
-@demo demo/get_languages.html Get languages
-@demo demo/get_languages_programmatic.html Get languages programmatically
+@demo examples/myscript-languages-element/get_languages.html Get languages
+@demo examples/myscript-languages-element/get_languages_programmatic.html Get languages programmatically
 -->
 <dom-module id="myscript-languages-element">
     <template>
@@ -144,24 +144,27 @@
                 }
             }
 
-            static _generateConfiguration(configuration, recognitiontriggerdelay, recognitionprocessdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
+            static _generateConfiguration(configuration, triggerdelay, processdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
+                if (!conf.triggers) {
+                    conf.triggers = {};
+                }
                 if (!conf.recognitionParams) {
                     conf.recognitionParams = {};
                 }
                 if (!conf.recognitionParams.server) {
                     conf.recognitionParams.server = {};
                 }
-                if (recognitiontriggerdelay) {
-                    conf.recognitionTriggerDelay = recognitiontriggerdelay;
+                if (triggerdelay) {
+                    conf.triggerDelay = triggerdelay;
                 }
-                if (recognitionprocessdelay) {
-                    conf.recognitionProcessDelay = recognitionprocessdelay;
+                if (processdelay) {
+                    conf.processDelay = processdelay;
                 }
                 if (protocol) {
-                    conf.recognitionTriggerOn = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
                     conf.recognitionParams.protocol = protocol;
+                    conf.triggers.exportContent = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
                 }
                 if (type) {
                     conf.recognitionParams.type = type;
@@ -185,10 +188,10 @@
             }
 
             _buildConfiguration() {
-                return MyScriptCommonElement._generateConfiguration(
+                return MyScriptLanguagesElement._generateConfiguration(
                     this.configuration,
-                    this.recognitiontriggerdelay,
-                    this.recognitionprocessdelay,
+                    this.triggerdelay,
+                    this.processdelay,
                     this.type,
                     this.protocol,
                     this.apiversion,
@@ -198,11 +201,21 @@
                     this.hmackey);
             }
 
-            connectedCallback() {
-                super.connectedCallback();
-
+            constructor() {
+                super();
                 this.logger = MyScript.LoggerConfig.getLogger('languages-element');
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+                Object
+                    .keys(MyScript.Constants.Logger)
+                    .forEach((key) => {
+                        MyScript.LoggerConfig
+                            .getLogger(MyScript.Constants.Logger[key])
+                            .setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+                    });
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
                 this.logger.info('attached callback');
 
                 this.selectElement = this.shadowRoot.querySelector('select');
@@ -210,7 +223,9 @@
                 this._selectHandler = (e) => {
                     const selected = this.languages
                         .filter(language => language.value === e.target.value);
-                    this.dispatchEvent(new CustomEvent('select', { detail: selected.length > 0 ? selected[0] : undefined }));
+                    this.dispatchEvent(new CustomEvent('select', {
+                        detail: selected.length > 0 ? selected[0] : undefined
+                    }));
                 };
 
                 this.selectElement.addEventListener('change', this._selectHandler);
@@ -252,7 +267,10 @@
                         this.languages = Object
                             .keys(res.result)
                             .map((key) => {
-                                return { 'value': key, 'description': res.result[key] };
+                                return {
+                                    'value': key,
+                                    'description': res.result[key]
+                                };
                             });
                         this.unloaded = false;
 
@@ -262,13 +280,17 @@
                             this.selectElement.options[this.selectElement.options.length] = new Option(language.description, language.value, selected, selected)
                         });
                         this.selectElement.disabled = false;
-                        this.dispatchEvent(new CustomEvent('change', { detail: this.languages }));
+                        this.dispatchEvent(new CustomEvent('change', {
+                            detail: this.languages
+                        }));
                         return this.languages;
                     })
                     .catch((err) => {
                         this.languages = [];
                         this.unloaded = false;
-                        this.dispatchEvent(new CustomEvent('error', { detail: err }));
+                        this.dispatchEvent(new CustomEvent('error', {
+                            detail: err
+                        }));
                     });
             }
 

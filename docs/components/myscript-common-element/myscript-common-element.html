@@ -29,14 +29,17 @@ Custom property | Description | Default
 `--myscript-common-element-button-focus-background` | Buttons focus background | #1A9FFF
 `--myscript-common-element-button-disabled-background` | Buttons disabled background | #F5F6F7
 
-@demo demo/get_started.html Get started with SHAPE
-@demo demo/v4_configuration.html Use interactive ink api for MATH (v4)
-@demo demo/handle_exports.html Handle exports
-@demo demo/handle_error.html Handle error
-@demo demo/styling.html Customize your component style
-@demo demo/programmatic_init.html Programmatic initialization
-@demo demo/get_stats.html Get statistics
-@demo demo/debug.html Debug your component
+@demo examples/v4/index.html Get started (iink SDK web)
+@demo examples/v4/exporting_on_demand.html Handling exports (iink SDK web)
+@demo examples/v4/customizing_style.html Customizing style (iink SDK web)
+@demo examples/v4/exporting_on_demand.html Exporting on demand (iink SDK web)
+@demo examples/v3/index.html Get started (CDK v3.2)
+@demo examples/v3/handling_exports.html Handling exports (CDK 3.2)
+@demo examples/v3/customizing_style.html Customizing style (CDK 3.2)
+@demo examples/programmatic_init.html Configuring component with Javascript
+@demo examples/handling_errors.html Demonstration of error handling
+@demo examples/get_stats.html Accessing the editor stats
+
 -->
 <dom-module id="myscript-common-element">
     <template>
@@ -44,7 +47,7 @@ Custom property | Description | Default
             :host {
                 --myscript-common-element-background: none;
                 --myscript-common-element-color: #1A9FFF;
-                --myscript-common-element-line-pattern: url(data:image/svg+xml;charset=utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij4KICA8cGF0aCBzdHJva2U9IiNGNUY2RjciIGQ9Ik0wLjUsMCBMMC41LDE4IE0wLDAuNSBMMTgsMC41Ii8+Cjwvc3ZnPgo=);
+                --myscript-common-element-line-pattern: repeating-linear-gradient(to bottom, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px), repeating-linear-gradient(to right, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px);
                 --myscript-common-element-capture-background: none;
                 --myscript-common-element-loader-background: #1A9FFF;
                 --myscript-common-element-loader-color: #F5F6F7;
@@ -127,7 +130,9 @@ Custom property | Description | Default
             }
 
             .error-msg::after {
-                content: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTI4cHgiIGhlaWdodD0iMTI4cHgiIHZpZXdCb3g9IjAgMCA2MTIgNjEyIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgoJPGcgaWQ9ImNsb3VkLW9mZiIgZmlsbD0iIzFhOWZmZiI+CgkJPHBhdGggZD0iTTQ5NC43LDIyOS41Yy0xNy44NTEtODYuNy05NC4zNTEtMTUzLTE4OC43LTE1M2MtMzguMjUsMC03My45NSwxMC4yLTEwMiwzMC42bDM4LjI1LDM4LjI1ICAgIGMxNy44NS0xMi43NSw0MC44LTE3Ljg1LDYzLjc1LTE3Ljg1Yzc2LjUsMCwxNDAuMjUsNjMuNzUsMTQwLjI1LDE0MC4yNXYxMi43NWgzOC4yNWM0My4zNSwwLDc2LjUsMzMuMTUsNzYuNSw3Ni41ICAgIGMwLDI4LjA1LTE1LjMsNTMuNTUtNDAuOCw2Ni4zbDM4LjI1LDM4LjI1QzU5MS42LDQzOC42LDYxMiw0MDAuMzUsNjEyLDM1N0M2MTIsMjkwLjcsNTU4LjQ1LDIzNC42LDQ5NC43LDIyOS41eiBNNzYuNSwxMDkuNjUgICAgbDcxLjQsNjguODVDNjYuMywxODMuNiwwLDI0OS45LDAsMzMxLjVjMCw4NC4xNSw2OC44NSwxNTMsMTUzLDE1M2gyOTguMzVsNTEsNTFsMzMuMTUtMzMuMTVMMTA5LjY1LDc2LjVMNzYuNSwxMDkuNjV6ICAgICBNMTk2LjM1LDIyOS41bDIwNCwyMDRIMTUzYy01Ni4xLDAtMTAyLTQ1LjktMTAyLTEwMmMwLTU2LjEsNDUuOS0xMDIsMTAyLTEwMkgxOTYuMzV6IiAvPgoJPC9nPgo8L3N2Zz4K);
+                display: block;
+                content: url(data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCA3Ni41IDYxMiA0NTkiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiPgogICAgPHBhdGggZmlsbD0iIzFBOUZGRiIgZD0iTTQ5NC43LDIyOS41Yy0xNy44NTEtODYuNy05NC4zNTEtMTUzLTE4OC43LTE1M2MtMzguMjUsMC03My45NSwxMC4yLTEwMiwzMC42bDM4LjI1LDM4LjI1IGMxNy44NS0xMi43NSw0MC44LTE3Ljg1LDYzLjc1LTE3Ljg1Yzc2LjUsMCwxNDAuMjUsNjMuNzUsMTQwLjI1LDE0MC4yNXYxMi43NWgzOC4yNWM0My4zNSwwLDc2LjUsMzMuMTUsNzYuNSw3Ni41IGMwLDI4LjA1LTE1LjMsNTMuNTUtNDAuOCw2Ni4zbDM4LjI1LDM4LjI1QzU5MS42LDQzOC42LDYxMiw0MDAuMzUsNjEyLDM1N0M2MTIsMjkwLjcsNTU4LjQ1LDIzNC42LDQ5NC43LDIyOS41eiBNNzYuNSwxMDkuNjUgbDcxLjQsNjguODVDNjYuMywxODMuNiwwLDI0OS45LDAsMzMxLjVjMCw4NC4xNSw2OC44NSwxNTMsMTUzLDE1M2gyOTguMzVsNTEsNTFsMzMuMTUtMzMuMTVMMTA5LjY1LDc2LjVMNzYuNSwxMDkuNjV6IE0xOTYuMzUsMjI5LjVsMjA0LDIwNEgxNTNjLTU2LjEsMC0xMDItNDUuOS0xMDItMTAyYzAtNTYuMSw0NS45LTEwMiwxMDItMTAySDE5Ni4zNXoiIC8+Cjwvc3ZnPgo=);
+                margin-top: 20px;
             }
 
             .loader {
@@ -163,10 +168,6 @@ Custom property | Description | Default
                 }
             }
         </style>
-        <div class="loader" hidden="[[ !unloaded ]]"></div>
-        <div class="error-msg" hidden>MyScript recognition server is not reachable. Please reload once you are
-            connected
-        </div>
         <nav hidden="[[ disablecontrols ]]">
             <paper-fab mini src$="[[importPath]]clear.svg" title="clear" on-tap="clear"
                        disabled="[[ !canclear ]]" hidden="[[ disableclearcontrol ]]">
@@ -184,7 +185,20 @@ Custom property | Description | Default
                        disabled="[[ !canconvert ]]" hidden="[[ disableconvertcontrol ]]">
             </paper-fab>
         </nav>
-        <div id="editorDomElement" class="ms-editor"></div>
+        <div id="editorDomElement"
+             class="ms-editor"
+             on-load="_loadListener"
+             on-change="_changeListener"
+             on-exported="_exportedListener"
+             on-converted="_convertedListener"
+             on-undo="_undoListener"
+             on-redo="_redoListener"
+             on-clear="_clearListener"
+             on-export="_exportListener"
+             on-convert="_convertListener"
+             on-idle="_idleListener"
+             on-error="_errorListener">
+        </div>
         <paper-toast class="fit-bottom"></paper-toast>
     </template>
     <script>
@@ -255,12 +269,12 @@ Custom property | Description | Default
                         value: 'TEXT'
                     },
                     /**
-                     * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
+                     * The current recognition protocol (WEBSOCKET or REST). We strongly recommend using WebSocket.
                      */
                     protocol: {
                         type: String,
                         reflectToAttribute: true,
-                        value: 'REST'
+                        value: 'WEBSOCKET'
                     },
                     /**
                      * Scheme to use to connect to MyScript Cloud or Server. (https or http)
@@ -287,20 +301,28 @@ Custom property | Description | Default
                         value: 'V3'
                     },
                     /**
-                     * Delay without any user input before asking for recognition, only use with REST protocol.
+                     * Delay without any user input before asking for recognition, only use with REST protocol if not on-demand.
                      */
-                    recognitiontriggerdelay: {
+                    triggerdelay: {
                         type: Number,
                         reflectToAttribute: true,
                         value: 2000
                     },
                     /**
-                     * Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol.
+                     * Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol if not on-demand.
                      */
-                    recognitionprocessdelay: {
+                    processdelay: {
                         type: Number,
                         reflectToAttribute: true,
                         value: 1000
+                    },
+                    /**
+                     * True if export should be done on-demand, false otherwise
+                     */
+                    ondemand: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
                     },
                     /**
                      * Application key to use for recognition on MyScript handwriting recognition server.<br />
@@ -326,7 +348,7 @@ Custom property | Description | Default
                      */
                     unloaded: {
                         type: Boolean,
-                        value: true,
+                        value: false,
                         notify: true,
                         reflectToAttribute: true,
                         observer: '_unloadedChanged'
@@ -335,7 +357,8 @@ Custom property | Description | Default
                      * The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.
                      */
                     editor: {
-                        type: Object
+                        type: Object,
+                        notify: true
                     },
                     /**
                      * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)
@@ -344,10 +367,7 @@ Custom property | Description | Default
                      */
                     configuration: {
                         type: Object,
-                        notify: true,
-                        value() {
-                            return this._buildConfiguration();
-                        }
+                        notify: true
                     },
                     /**
                      * Color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
@@ -509,24 +529,30 @@ Custom property | Description | Default
                 };
             }
 
-            static _generateConfiguration(configuration, recognitiontriggerdelay, recognitionprocessdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
+            static _generateConfiguration(configuration, triggerdelay, processdelay, ondemand, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
+                if (!conf.triggers) {
+                    conf.triggers = {};
+                }
                 if (!conf.recognitionParams) {
                     conf.recognitionParams = {};
                 }
                 if (!conf.recognitionParams.server) {
                     conf.recognitionParams.server = {};
                 }
-                if (recognitiontriggerdelay) {
-                    conf.recognitionTriggerDelay = recognitiontriggerdelay;
+                if (triggerdelay) {
+                    conf.triggerdelay = triggerdelay;
                 }
-                if (recognitionprocessdelay) {
-                    conf.recognitionProcessDelay = recognitionprocessdelay;
+                if (processdelay) {
+                    conf.processdelay = processdelay;
                 }
                 if (protocol) {
-                    conf.recognitionTriggerOn = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
                     conf.recognitionParams.protocol = protocol;
+                    conf.triggers.exportContent = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
+                }
+                if (ondemand) {
+                    conf.triggers.exportContent = 'DEMAND';
                 }
                 if (type) {
                     conf.recognitionParams.type = type;
@@ -552,8 +578,9 @@ Custom property | Description | Default
             _buildConfiguration() {
                 return MyScriptCommonElement._generateConfiguration(
                     this.configuration,
-                    this.recognitiontriggerdelay,
-                    this.recognitionprocessdelay,
+                    this.triggerdelay,
+                    this.processdelay,
+                    this.ondemand,
                     this.type,
                     this.protocol,
                     this.apiversion,
@@ -563,17 +590,107 @@ Custom property | Description | Default
                     this.hmackey);
             }
 
-            _resizeHandler(event) {
+            _resizeListener(event) {
                 if (this.editor) {
                     this.logger.trace('resizing', event);
                     this.editor.resize();
                 }
             }
 
-            connectedCallback() {
-                super.connectedCallback();
-                this.addEventListener('iron-resize', this._resizeHandler);
+            _loadListener(event) {
+                this.configuration = this.editor.configuration;
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
 
+            _changeListener(event) {
+                if (event.detail) {
+                    this.canclear = event.detail.canClear;
+                    this.canundo = event.detail.canUndo;
+                    this.canredo = event.detail.canRedo;
+                    this.canexport = event.detail.canExport;
+                    this.canconvert = event.detail.canConvert;
+                }
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _exportedListener(event) {
+                this.exports = event.detail ? event.detail.exports : {};
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _convertedListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _undoListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _redoListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _clearListener(event) {
+                this.exports = {};
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _exportListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _convertListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _idleListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _errorListener(event) {
+                this.logger.error('error', event);
+                if (event.detail && event.detail.message && (!event.detail.recoverable || event.detail.recoverable === true)) {
+                    this.paperToast.text = event.detail.message;
+                    this.paperToast.fitIn = this.paperToast.show();
+                }
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            constructor() {
+                super();
                 this.logger = MyScript.LoggerConfig.getLogger('common-element');
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                 Object
@@ -583,98 +700,21 @@ Custom property | Description | Default
                             .getLogger(MyScript.Constants.Logger[key])
                             .setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                     });
+            }
 
-                this.logger.info('common-element attached callback');
-
+            connectedCallback() {
+                super.connectedCallback();
+                this.addEventListener('iron-resize', this._resizeListener);
                 this.editorDomElement = this.shadowRoot.querySelector('#editorDomElement');
-                this.errorElement = this.shadowRoot.querySelector('.error-msg');
                 this.paperToast = this.shadowRoot.querySelector('paper-toast');
-
-                this.currentListeners = {};
-                Object
-                    .keys(MyScript.Constants.EventType)
-                    .map(key => MyScript.Constants.EventType[key])
-                    .forEach(type => this.currentListeners[type] = (event) => {
-                        this.logger.trace(event.type + ' event intercepted', event);
-                        switch (event.type) {
-                            case MyScript.Constants.EventType.LOADED:
-                                this.configuration = this.editor.configuration;
-                                this.unloaded = false;
-                                break;
-                            case MyScript.Constants.EventType.CHANGED: {
-                                if (event.detail) {
-                                    this.canclear = event.detail.canClear;
-                                    this.canundo = event.detail.canUndo;
-                                    this.canredo = event.detail.canRedo;
-                                    this.canexport = event.detail.canExport;
-                                    this.canconvert = event.detail.canConvert;
-                                }
-                            }
-                                break;
-                            case MyScript.Constants.EventType.EXPORTED: {
-                                this.exports = event.detail ? event.detail.exports : {};
-                                this.errorElement.setAttribute('hidden', 'true');
-                            }
-                                break;
-                            case MyScript.Constants.EventType.CLEAR:
-                                this.exports = {};
-                                break;
-                            case MyScript.Constants.EventType.ERROR:
-                                this.logger.trace('error detected');
-                                if (event.detail) {
-                                    if (event.detail.recoverable === false) {
-                                        if (event.detail.serverMessage &&
-                                            event.detail.serverMessage.error &&
-                                            event.detail.serverMessage.error.result &&
-                                            event.detail.serverMessage.error.result.error &&
-                                            (event.detail.serverMessage.error.result.error === 'InvalidApplicationKeyException' ||
-                                                event.detail.serverMessage.error.result.error === 'InvalidHMACSignatureException')) {
-                                            this.errorElement.innerText = 'Application credentials are invalid. Please check or regenerate your application key and hmackey.';
-                                        } else {
-                                            this.errorElement.innerText = 'MyScript recognition server is not reachable. Please reload once you are connected';
-                                        }
-                                        this.errorElement.removeAttribute('hidden');
-                                    } else if (event.detail.message) {
-                                        this.paperToast.text = event.detail.message;
-                                        this.paperToast.fitIn = this.paperToast.show();
-                                    } else {
-                                        this.logger.error('not managed error', event);
-                                    }
-                                } else {
-                                    this.logger.error('not managed error', event);
-                                }
-                                break;
-                            default:
-                                break;
-                        }
-                        // Just forwarding event there.
-                        this.dispatchEvent(new CustomEvent(event.type, {
-                            detail: event.detail
-                        }));
-                    });
-
-                Object
-                    .keys(this.currentListeners)
-                    .forEach(type => this.editorDomElement.addEventListener(type, this.currentListeners[type]));
-
-                Polymer.RenderStatus.beforeNextRender(this, () => {
-                    this.editor = MyScript.register(this.editorDomElement,
-                                                    this._buildConfiguration(),
-                                                    MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
-                                                    MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
-                    this.logger.info('common-element attached');
-                })
+                this._unloadedChanged(this.unloaded);
+                this.logger.info('common-element connected');
             }
 
             disconnectedCallback() {
                 super.disconnectedCallback();
-                this.removeEventListener('iron-resize', this._resizeHandler);
-
-                this.logger.info('common-element detached callback');
-                Object
-                    .keys(this.currentListeners)
-                    .forEach(type => this.editorDomElement.removeEventListener(type, this.currentListeners[type]));
-                this.logger.info('common-element detached');
+                this.removeEventListener('iron-resize', this._resizeListener);
+                this.logger.info('common-element disconnected');
             }
 
             /**
@@ -707,9 +747,9 @@ Custom property | Description | Default
             /**
              * Trigger export
              */
-            exportContent(exports) {
+            exportContent() {
                 if (this.editor) {
-                    this.editor.exportContent(exports);
+                    this.editor.exportContent();
                 }
             }
 
@@ -748,11 +788,17 @@ Custom property | Description | Default
 
             _unloadedChanged(unloaded) {
                 this.exports = undefined;
-                if (this.editor) {
-                    this.logger.trace('unloaded changed', unloaded);
-                    if (unloaded === true) {
-                        this.errorElement.setAttribute('hidden', 'true');
+                this.logger.trace('unloaded changed', unloaded);
+                if (unloaded === false && this.editorDomElement) {
+                    if (this.editor) {
                         this.editor.configuration = this._buildConfiguration();
+                    } else {
+                        Polymer.RenderStatus.beforeNextRender(this, () => {
+                            this.editor = MyScript.register(this.editorDomElement,
+                                                            this._buildConfiguration(),
+                                                            MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
+                                                            MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
+                        });
                     }
                 }
             }

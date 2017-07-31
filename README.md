@@ -44,17 +44,17 @@ myscript-math-web is a web component that can be used in every web application (
    
 4. Use it!
 
-[Test it live](https://myscript.github.io/myscript-math-web/components/myscript-math-web/demo/)!
+[Test it live](https://myscript.github.io/myscript-math-web/components/myscript-math-web/examples/)!
 
 ## Examples
 
-- [demo/get_started.html](demo/get_started.html) Get started
-- [demo/v4_configuration.html](demo/v4_configuration.html) Use interactive ink api (v4)
-- [demo/handle_error.html](demo/handle_error.html) Handle error
-- [demo/styling.html](demo/styling.html) Customize your component style
-- [demo/programmatic_init.html](demo/programmatic_init.html) Programmatic initialization
-- [demo/get_stats.html](demo/get_stats.html) Get statistics
-- [demo/debug.html](demo/debug.html) Debug your component
+- [examples/get_started.html](examples/get_started.html) Get started
+- [examples/v4_configuration.html](examples/v4_configuration.html) Use interactive ink api (v4)
+- [examples/handle_error.html](examples/handle_error.html) Handle error
+- [examples/styling.html](examples/styling.html) Customize your component style
+- [examples/programmatic_init.html](examples/programmatic_init.html) Programmatic initialization
+- [examples/get_stats.html](examples/get_stats.html) Get statistics
+- [examples/debug.html](examples/debug.html) Debug your component
 
 ## Documentation 
 
