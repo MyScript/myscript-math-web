@@ -80,36 +80,36 @@ Custom property | Description | Default
             }
         </style>
         <myscript-math-exports hidden="[[ !_displayExports(hideexportzone, unloaded) ]]"
-                               exports="{{ exports }}"
-                               debug="{{ debug }}">
+                               exports="[[ exports ]]"
+                               debug="[[ debug ]]">
         </myscript-math-exports>
         <myscript-common-element
             type="MATH"
-            protocol="{{ protocol }}"
-            apiversion="{{ apiversion }}"
-            host="{{ host }}"
-            scheme="{{ scheme }}"
-            applicationkey="{{ applicationkey }}"
-            hmackey="{{ hmackey }}"
-            triggerdelay="{{ triggerdelay }}"
-            processdelay="{{ processdelay }}"
-            ondemand="{{ ondemand }}"
+            protocol="[[ protocol ]]"
+            apiversion="[[ apiversion ]]"
+            host="[[ host ]]"
+            scheme="[[ scheme ]]"
+            applicationkey="[[ applicationkey ]]"
+            hmackey="[[ hmackey ]]"
+            triggerdelay="[[ triggerdelay ]]"
+            processdelay="[[ processdelay ]]"
+            ondemand="[[ ondemand ]]"
+            debug="[[ debug ]]"
             configuration="{{ configuration }}"
+            editor="{{ editor }}"
+            exports="{{ exports }}"
+            initialized="{{ initialized }}"
+            unloaded="{{ unloaded }}"
+            pencolor="[[ pencolor ]]"
+            penwidth="[[ penwidth ]]"
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
-            exports="{{ exports }}"
-            debug="{{ debug }}"
-            pencolor="{{ pencolor }}"
-            penwidth="{{ penwidth }}"
-            disablecontrols="{{ disablecontrols }}"
-            disableclearcontrol="{{ disableclearcontrol }}"
-            disableundoredocontrol="{{ disableundoredocontrol }}"
-            disableexportcontrol="{{ disableexportcontrol }}"
-            disableconvertcontrol="{{ disableconvertcontrol }}"
-            unloaded="{{ unloaded }}"
-            editor="{{ editor }}"
-            on-load="_loadListener"
+            disablecontrols="[[ disablecontrols ]]"
+            disableclearcontrol="[[ disableclearcontrol ]]"
+            disableundoredocontrol="[[ disableundoredocontrol ]]"
+            disableexportcontrol="[[ disableexportcontrol ]]"
+            disableconvertcontrol="[[ disableconvertcontrol ]]"
             on-change="_changeListener"
             on-exported="_exportedListener"
             on-converted="_convertedListener"
@@ -128,11 +128,6 @@ Custom property | Description | Default
             static get is() {
                 return 'myscript-math-web'
             }
-
-            /**
-             * Fired when element is fully loaded.
-             * @event load
-             */
 
             /**
              * Fired when undo is triggered.
@@ -277,6 +272,15 @@ Custom property | Description | Default
                         notify: true,
                         reflectToAttribute: true,
                         observer: '_unloadedChanged'
+                    },
+                    /**
+                     * True if editor is initialized
+                     */
+                    initialized: {
+                        type: Boolean,
+                        value: false,
+                        notify: true,
+                        reflectToAttribute: true
                     },
                     /**
                      * The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.
@@ -548,13 +552,6 @@ Custom property | Description | Default
                     this.columnaroperation,
                     this.userresources,
                     this.scratchoutdetectionsensitivity);
-            }
-
-            _loadListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
             }
 
             _changeListener(event) {

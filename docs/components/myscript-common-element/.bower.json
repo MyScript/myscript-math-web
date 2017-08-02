@@ -42,11 +42,11 @@
     "iron-component-page": "PolymerElements/iron-component-page#^3.0.0",
     "webcomponentsjs": "^1.0.1"
   },
-  "_release": "8ab07ba13e",
+  "_release": "5af7f6dc2e",
   "_resolution": {
     "type": "branch",
     "branch": "2.0.0-alpha1",
-    "commit": "8ab07ba13e0da32ffa762942f5e36a09f17497f2"
+    "commit": "5af7f6dc2ec4ee6fdf571425c7dfadcb4bd314cd"
   },
   "_source": "https://github.com/MyScript/myscript-common-element.git",
   "_target": "2.0.0-alpha1",

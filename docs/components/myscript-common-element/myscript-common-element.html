@@ -187,7 +187,6 @@ Custom property | Description | Default
         </nav>
         <div id="editorDomElement"
              class="ms-editor"
-             on-load="_loadListener"
              on-change="_changeListener"
              on-exported="_exportedListener"
              on-converted="_convertedListener"
@@ -207,11 +206,6 @@ Custom property | Description | Default
             static get is() {
                 return 'myscript-common-element';
             }
-
-            /**
-             * Fired when element is fully loaded.
-             * @event load
-             */
 
             /**
              * Fired when undo is triggered.
@@ -352,6 +346,16 @@ Custom property | Description | Default
                         notify: true,
                         reflectToAttribute: true,
                         observer: '_unloadedChanged'
+                    },
+                    /**
+                     * True if editor is initialized
+                     */
+                    initialized: {
+                        type: Boolean,
+                        value: false,
+                        notify: true,
+                        reflectToAttribute: true,
+                        observer: '_initializedChanged'
                     },
                     /**
                      * The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.
@@ -597,16 +601,9 @@ Custom property | Description | Default
                 }
             }
 
-            _loadListener(event) {
-                this.configuration = this.editor.configuration;
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
             _changeListener(event) {
                 if (event.detail) {
+                    this.initialized = event.detail.initialized;
                     this.canclear = event.detail.canClear;
                     this.canundo = event.detail.canUndo;
                     this.canredo = event.detail.canRedo;
@@ -783,6 +780,12 @@ Custom property | Description | Default
                 if (editor) {
                     editor.penStyle = MyScriptCommonElement._generatePenStyle(pencolor, penwidth);
                     this.logger.trace('penStyle changed', editor.penStyle);
+                }
+            }
+
+            _initializedChanged(initialized) {
+                if (initialized === true) {
+                    this.configuration = this.editor.configuration;
                 }
             }
 
