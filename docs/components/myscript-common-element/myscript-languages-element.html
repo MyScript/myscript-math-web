@@ -40,7 +40,7 @@
                 -webkit-tap-highlight-color: transparent;
             }
         </style>
-        <select disabled="[[ unloaded ]]" hidden="[[ !select ]]"></select>
+        <select disabled="[[ unloaded ]]" hidden="[[ !select ]]" on-change="_selectListener"></select>
     </template>
     <script>
         class MyScriptLanguagesElement extends Polymer.Element {
@@ -107,7 +107,7 @@
                      */
                     unloaded: {
                         type: Boolean,
-                        value: true,
+                        value: false,
                         notify: true,
                         reflectToAttribute: true,
                         observer: '_unloadedChanged'
@@ -119,10 +119,7 @@
                      */
                     configuration: {
                         type: Object,
-                        notify: true,
-                        value() {
-                            return this._buildConfiguration();
-                        }
+                        notify: true
                     },
                     /**
                      * True to display console output, false otherwise.
@@ -140,11 +137,20 @@
                         reflectToAttribute: true,
                         value: false,
                         notify: true
+                    },
+                    /**
+                     * The recognition language used by the recognition process.
+                     */
+                    language: {
+                        type: String,
+                        notify: true,
+                        reflectToAttribute: true,
+                        value: 'en_US'
                     }
                 }
             }
 
-            static _generateConfiguration(configuration, triggerdelay, processdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
+            static _generateConfiguration(configuration, language, triggerdelay, processdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
                 if (!conf.triggers) {
@@ -155,6 +161,25 @@
                 }
                 if (!conf.recognitionParams.server) {
                     conf.recognitionParams.server = {};
+                }
+                if (!conf.recognitionParams.v3) {
+                    conf.recognitionParams.v3 = {};
+                }
+                if (!conf.recognitionParams.v3.textParameter) {
+                    conf.recognitionParams.v3.textParameter = {};
+                }
+                if (!conf.recognitionParams.v3.textParameter.textProperties) {
+                    conf.recognitionParams.v3.textParameter.textProperties = {};
+                }
+                if (!conf.recognitionParams.v4) {
+                    conf.recognitionParams.v4 = {};
+                }
+                if (!conf.recognitionParams.v4.text) {
+                    conf.recognitionParams.v4.text = {};
+                }
+                if (language) {
+                    conf.recognitionParams.v3.textParameter.language = language;
+                    conf.recognitionParams.v4.lang = language;
                 }
                 if (triggerdelay) {
                     conf.triggerDelay = triggerdelay;
@@ -190,6 +215,7 @@
             _buildConfiguration() {
                 return MyScriptLanguagesElement._generateConfiguration(
                     this.configuration,
+                    this.language,
                     this.triggerdelay,
                     this.processdelay,
                     this.type,
@@ -199,6 +225,14 @@
                     this.host,
                     this.applicationkey,
                     this.hmackey);
+            }
+
+            _selectListener(event) {
+                this.languages = this.languages.map(language => Object.assign(language, { selected: language.value === event.target.value }));
+                this.language = this.languages.find(language => language.selected);
+                this.dispatchEvent(new CustomEvent('change', {
+                    detail: this.languages
+                }));
             }
 
             constructor() {
@@ -212,53 +246,26 @@
                             .getLogger(MyScript.Constants.Logger[key])
                             .setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                     });
+                this.configuration = this._buildConfiguration(); // Build default configuration
             }
 
             connectedCallback() {
                 super.connectedCallback();
-                this.logger.info('attached callback');
-
                 this.selectElement = this.shadowRoot.querySelector('select');
-
-                this._selectHandler = (e) => {
-                    const selected = this.languages
-                        .filter(language => language.value === e.target.value);
-                    this.dispatchEvent(new CustomEvent('select', {
-                        detail: selected.length > 0 ? selected[0] : undefined
-                    }));
-                };
-
-                this.selectElement.addEventListener('change', this._selectHandler);
-                this.connected = true;
                 this._unloadedChanged(this.unloaded);
+                this.logger.info('languages connected');
             }
 
             disconnectedCallback() {
                 super.disconnectedCallback();
-                this.selectElement.removeEventListener('change', this._selectHandler);
+                this.logger.info('languages disconnected');
             }
 
             _unloadedChanged(unloaded) {
-                if (this.connected === true && unloaded === true) {
+                if (unloaded === false && (this.select === true ? this.selectElement : true)) {
                     this.logger.trace('unloaded changed', unloaded);
                     this._getLanguages();
                 }
-            }
-
-            _getConfigurationLanguageCode() {
-                if (this.configuration.recognitionParams.apiVersion === 'V4') {
-                    return this.configuration.recognitionParams.v4.lang;
-                } else if (this.configuration.recognitionParams.apiVersion === 'V3') {
-                    switch (this.configuration.recognitionParams.type) {
-                        case 'TEXT':
-                            return this.configuration.recognitionParams.v3.textParameter.language;
-                        case 'ANALYZER':
-                            return this.configuration.recognitionParams.v3.analyzerParameter.textParameter.language;
-                        default:
-                            return undefined;
-                    }
-                }
-                return undefined;
             }
 
             _getLanguages() {
@@ -268,16 +275,14 @@
                             .keys(res.result)
                             .map((key) => {
                                 return {
-                                    'value': key,
-                                    'description': res.result[key]
+                                    value: key,
+                                    description: res.result[key],
+                                    selected: this.language === key
                                 };
                             });
-                        this.unloaded = false;
 
-                        const currentLanguage = this._getConfigurationLanguageCode();
                         this.languages.forEach((language) => {
-                            const selected = currentLanguage === language.value;
-                            this.selectElement.options[this.selectElement.options.length] = new Option(language.description, language.value, selected, selected)
+                            this.selectElement.options[this.selectElement.options.length] = new Option(language.description, language.value, language.selected, language.selected)
                         });
                         this.selectElement.disabled = false;
                         this.dispatchEvent(new CustomEvent('change', {
@@ -287,7 +292,6 @@
                     })
                     .catch((err) => {
                         this.languages = [];
-                        this.unloaded = false;
                         this.dispatchEvent(new CustomEvent('error', {
                             detail: err
                         }));

@@ -99,7 +99,7 @@ Custom property | Description | Default
             editor="{{ editor }}"
             exports="{{ exports }}"
             initialized="{{ initialized }}"
-            unloaded="{{ unloaded }}"
+            unloaded="{{ commonunloaded }}"
             pencolor="[[ pencolor ]]"
             penwidth="[[ penwidth ]]"
             canclear="[[ canclear ]]"
@@ -270,8 +270,14 @@ Custom property | Description | Default
                         type: Boolean,
                         value: false,
                         notify: true,
-                        reflectToAttribute: true,
-                        observer: '_unloadedChanged'
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * @private
+                     */
+                    commonunloaded: {
+                        type: Boolean,
+                        computed: '_computeCommonUnloaded(unloaded)'
                     },
                     /**
                      * True if editor is initialized
@@ -407,7 +413,6 @@ Custom property | Description | Default
                     /**
                      * Math export types (LATEX, MATHML or SYMBOLTREE).
                      * <b>Warning</b>: v3 only, for v4, use mimetypes instead
-                     * @type {Array<String>}
                      */
                     resulttypes: {
                         type: Array,
@@ -415,7 +420,6 @@ Custom property | Description | Default
                     },
                     /**
                      * Math export types (application/x-latex, application/mathml+xml, application/mathofficeXML).
-                     * @type {Array<String>}
                      */
                     mimetypes: {
                         type: Array,
@@ -691,11 +695,12 @@ Custom property | Description | Default
             //-----------------------------------------------------------------------
             //---------  Wrapping END                                    ------------
             //-----------------------------------------------------------------------
-            _unloadedChanged(unloaded) {
+            _computeCommonUnloaded(unloaded) {
                 this.logger.trace('unloaded changed', unloaded);
-                if (!unloaded) {
+                if (unloaded === false) {
                     this.configuration = this._buildConfiguration();
                 }
+                return unloaded;
             }
 
             connectedCallback() {
