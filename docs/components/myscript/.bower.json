@@ -19,18 +19,17 @@
   "ignore": [
     "*",
     "!LICENSE",
+    "!myscript.html",
     "!package.json",
     "!bower.json",
-    "!dist/**/*"
+    "!dist/**/*",
+    "!samples/**/*"
   ],
-  "dependencies": {
-    "pepjs": "^0.4.3"
-  },
-  "_release": "29d35d79b1",
+  "_release": "8fc7a8d2d8",
   "_resolution": {
     "type": "branch",
     "branch": "2.0.0-alpha1",
-    "commit": "29d35d79b11182d435f92dc0d50ed0c703de88fe"
+    "commit": "8fc7a8d2d81623bfbdb923b3edb8d53b1be1bdd1"
   },
   "_source": "https://github.com/MyScript/MyScriptJS.git",
   "_target": "2.0.0-alpha1",

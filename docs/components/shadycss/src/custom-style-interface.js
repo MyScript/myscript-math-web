@@ -86,17 +86,25 @@ export default class CustomStyleInterface {
    * @return {!Array<!CustomStyleProvider>}
    */
   processStyles() {
-    const cs = this['customStyles'];
+    let cs = this['customStyles'];
     for (let i = 0; i < cs.length; i++) {
-      const customStyle = cs[i];
+      let customStyle = cs[i];
       if (customStyle[CACHED_STYLE]) {
         continue;
       }
-      const style = this.getStyleForCustomStyle(customStyle);
+      let style = this.getStyleForCustomStyle(customStyle);
       if (style) {
         // HTMLImports polyfill may have cloned the style into the main document,
         // which is referenced with __appliedElement.
-        const styleToTransform = /** @type {!HTMLStyleElement} */(style['__appliedElement'] || style);
+        // Also, we must copy over the attributes.
+        let appliedStyle = /** @type {HTMLStyleElement} */(style['__appliedElement']);
+        if (appliedStyle) {
+          for (let i = 0; i < style.attributes.length; i++) {
+            let attr = style.attributes[i];
+            appliedStyle.setAttribute(attr.name, attr.value);
+          }
+        }
+        let styleToTransform = appliedStyle || style;
         if (transformFn) {
           transformFn(styleToTransform);
         }

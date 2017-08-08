@@ -40,7 +40,7 @@
     "iron-component-page": "PolymerElements/iron-component-page#^3.0.0",
     "webcomponentsjs": "^1.0.1"
   },
-  "_source": "/home/fxg/projects/webcomponents/myscript-math-web",
+  "_source": "/DEV/projets/webcomponents/myscript-math-web",
   "_target": "*",
   "_originalSource": "../../myscript-math-web",
   "_direct": true

@@ -8,14 +8,13 @@
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-languages-element>
 
-@demo examples/myscript-languages-element/get_languages.html Get languages
-@demo examples/myscript-languages-element/get_languages_programmatic.html Get languages programmatically
+@demo demo/get_languages.html Get languages
+@demo demo/get_languages_programmatic.html Get languages programmatically
 -->
 <dom-module id="myscript-languages-element">
     <template>
         <style>
             :host {
-                contain: content;
                 box-sizing: border-box;
                 display: inline-block;
             }
@@ -40,13 +39,13 @@
                 -webkit-tap-highlight-color: transparent;
             }
         </style>
-        <select disabled="[[ unloaded ]]" hidden="[[ !select ]]" on-change="_selectListener"></select>
+        <select disabled="[[ unloaded ]]" hidden="[[ !select ]]"></select>
     </template>
     <script>
         class MyScriptLanguagesElement extends Polymer.Element {
 
             static get is() {
-                return 'myscript-languages-element';
+                return 'myscript-languages-element'
             }
 
             static get properties() {
@@ -107,7 +106,7 @@
                      */
                     unloaded: {
                         type: Boolean,
-                        value: false,
+                        value: true,
                         notify: true,
                         reflectToAttribute: true,
                         observer: '_unloadedChanged'
@@ -137,135 +136,84 @@
                         reflectToAttribute: true,
                         value: false,
                         notify: true
-                    },
-                    /**
-                     * The recognition language used by the recognition process.
-                     */
-                    language: {
-                        type: String,
-                        notify: true,
-                        reflectToAttribute: true,
-                        value: 'en_US'
                     }
                 }
             }
 
-            static _generateConfiguration(configuration, language, triggerdelay, processdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
-                // FIXME: find a way to do a proper deep merge
-                const conf = Object.assign({}, configuration);
-                if (!conf.triggers) {
-                    conf.triggers = {};
-                }
-                if (!conf.recognitionParams) {
-                    conf.recognitionParams = {};
-                }
-                if (!conf.recognitionParams.server) {
-                    conf.recognitionParams.server = {};
-                }
-                if (!conf.recognitionParams.v3) {
-                    conf.recognitionParams.v3 = {};
-                }
-                if (!conf.recognitionParams.v3.textParameter) {
-                    conf.recognitionParams.v3.textParameter = {};
-                }
-                if (!conf.recognitionParams.v3.textParameter.textProperties) {
-                    conf.recognitionParams.v3.textParameter.textProperties = {};
-                }
-                if (!conf.recognitionParams.v4) {
-                    conf.recognitionParams.v4 = {};
-                }
-                if (!conf.recognitionParams.v4.text) {
-                    conf.recognitionParams.v4.text = {};
-                }
-                if (language) {
-                    conf.recognitionParams.v3.textParameter.language = language;
-                    conf.recognitionParams.v4.lang = language;
-                }
-                if (triggerdelay) {
-                    conf.triggerDelay = triggerdelay;
-                }
-                if (processdelay) {
-                    conf.processDelay = processdelay;
-                }
-                if (protocol) {
-                    conf.recognitionParams.protocol = protocol;
-                    conf.triggers.exportContent = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
-                }
-                if (type) {
-                    conf.recognitionParams.type = type;
-                }
-                if (apiversion) {
-                    conf.recognitionParams.apiVersion = apiversion;
-                }
-                if (scheme) {
-                    conf.recognitionParams.server.scheme = scheme;
-                }
-                if (host) {
-                    conf.recognitionParams.server.host = host;
-                }
-                if (applicationkey) {
-                    conf.recognitionParams.server.applicationKey = applicationkey;
-                }
-                if (hmackey) {
-                    conf.recognitionParams.server.hmacKey = hmackey;
-                }
-                return conf;
-            }
-
-            _buildConfiguration() {
-                return MyScriptLanguagesElement._generateConfiguration(
-                    this.configuration,
-                    this.language,
-                    this.triggerdelay,
-                    this.processdelay,
-                    this.type,
-                    this.protocol,
-                    this.apiversion,
-                    this.scheme,
-                    this.host,
-                    this.applicationkey,
-                    this.hmackey);
-            }
-
-            _selectListener(event) {
-                this.languages = this.languages.map(language => Object.assign(language, { selected: language.value === event.target.value }));
-                this.language = this.languages.find(language => language.selected);
-                this.dispatchEvent(new CustomEvent('change', {
-                    detail: this.languages
-                }));
-            }
-
-            constructor() {
-                super();
-                this.logger = MyScript.LoggerConfig.getLogger('languages-element');
-                this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
-                Object
-                    .keys(MyScript.Constants.Logger)
-                    .forEach((key) => {
-                        MyScript.LoggerConfig
-                            .getLogger(MyScript.Constants.Logger[key])
-                            .setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
-                    });
-                this.configuration = this._buildConfiguration(); // Build default configuration
-            }
-
             connectedCallback() {
                 super.connectedCallback();
+
+                this.logger = MyScript.LoggerConfig.getLogger('languages-element');
+                this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+                this.logger.info('attached callback');
+
                 this.selectElement = this.shadowRoot.querySelector('select');
+
+                this._selectHandler = (e) => {
+                    const selected = this.languages
+                        .filter(language => language.value === e.target.value);
+                    this.dispatchEvent(new CustomEvent('select', { detail: selected.length > 0 ? selected[0] : undefined }));
+                };
+
+                this.selectElement.addEventListener('change', this._selectHandler);
+                this.connected = true;
                 this._unloadedChanged(this.unloaded);
-                this.logger.info('languages connected');
             }
 
             disconnectedCallback() {
                 super.disconnectedCallback();
-                this.logger.info('languages disconnected');
+                this.selectElement.removeEventListener('change', this._selectHandler);
             }
 
             _unloadedChanged(unloaded) {
-                if (unloaded === false && (this.select === true ? this.selectElement : true)) {
+                if (this.connected === true && unloaded === true) {
                     this.logger.trace('unloaded changed', unloaded);
                     this._getLanguages();
                 }
+            }
+
+            _buildConfiguration() {
+                if (!this.configuration) {
+                    this.configuration = {};
+                }
+                this.configuration.recognitionTriggerDelay = this.recognitiontriggerdelay;
+                this.configuration.recognitionProcessDelay = this.recognitionprocessdelay;
+                if (this.protocol === 'REST') {
+                    this.configuration.recognitionTriggerOn = 'QUIET_PERIOD';
+                } else {
+                    this.configuration.recognitionTriggerOn = 'POINTER_UP';
+                }
+                if (!this.configuration.recognitionParams) {
+                    this.configuration.recognitionParams = {};
+                }
+                this.configuration.recognitionParams.type = this.type;
+                this.configuration.recognitionParams.protocol = this.protocol;
+                this.configuration.recognitionParams.apiVersion = this.apiversion;
+                if (!this.configuration.recognitionParams.server) {
+                    this.configuration.recognitionParams.server = {};
+                }
+                this.configuration.recognitionParams.server.scheme = this.scheme;
+                this.configuration.recognitionParams.server.host = this.host;
+                this.configuration.recognitionParams.server.applicationKey = this.applicationkey;
+                this.configuration.recognitionParams.server.hmacKey = this.hmackey;
+                this.configuration.recognitionParams.server.scheme = this.scheme;
+                return this.configuration;
+            }
+
+            _getConfigurationLanguageCode() {
+                if (this.configuration.recognitionParams.apiVersion === 'V4') {
+                    return this.configuration.recognitionParams.v4.lang;
+                } else if (this.configuration.recognitionParams.apiVersion === 'V3') {
+                    switch (this.configuration.recognitionParams.type) {
+                        case 'TEXT':
+                            return this.configuration.recognitionParams.v3.textParameter.language;
+                        case 'ANALYZER':
+                            return this.configuration.recognitionParams.v3.analyzerParameter.textParameter.language;
+                        default:
+                            return undefined;
+                    }
+                }
+                return undefined;
             }
 
             _getLanguages() {
@@ -274,27 +222,23 @@
                         this.languages = Object
                             .keys(res.result)
                             .map((key) => {
-                                return {
-                                    value: key,
-                                    description: res.result[key],
-                                    selected: this.language === key
-                                };
+                                return { 'value': key, 'description': res.result[key] };
                             });
+                        this.unloaded = false;
 
+                        const currentLanguage = this._getConfigurationLanguageCode();
                         this.languages.forEach((language) => {
-                            this.selectElement.options[this.selectElement.options.length] = new Option(language.description, language.value, language.selected, language.selected)
+                            const selected = currentLanguage === language.value;
+                            this.selectElement.options[this.selectElement.options.length] = new Option(language.description, language.value, selected, selected)
                         });
                         this.selectElement.disabled = false;
-                        this.dispatchEvent(new CustomEvent('change', {
-                            detail: this.languages
-                        }));
+                        this.dispatchEvent(new CustomEvent('change', { detail: this.languages }));
                         return this.languages;
                     })
                     .catch((err) => {
                         this.languages = [];
-                        this.dispatchEvent(new CustomEvent('error', {
-                            detail: err
-                        }));
+                        this.unloaded = false;
+                        this.dispatchEvent(new CustomEvent('error', { detail: err }));
                     });
             }
 
