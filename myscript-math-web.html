@@ -9,17 +9,17 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-math-web>
 
-Custom property | Description | Default
-----------------|-------------|----------
-`--myscript-math-web-background` | Background of the editor | none
-`--myscript-math-web-color` | Color of the editor | #FFFFFF
-`--myscript-math-web-line-pattern` | Line pattern to apply on the editor | Classic notebook pattern
-`--myscript-math-web-loader-background` | Background of the loader | #1A9FFF
-`--myscript-math-web-loader-color` | Color of the loader | #F5F6F7
-`--myscript-math-web-button-background` | Buttons background | #1A9FFF
-`--myscript-math-web-button-focus-background` | Buttons focus background | #1A9FFF
-`--myscript-math-web-button-disabled-background` | Buttons disabled background | #F5F6F7
-`--myscript-math-web-exports-color` | Math exports color | #1580CD
+| CSS variable | Default|
+|----------------|----------|
+|`--myscript-math-web-background`  | none|
+|`--myscript-math-web-color` | #FFFFFF|
+|`--myscript-math-web-line-pattern` | _Classic notebook pattern_|
+|`--myscript-math-web-loader-background`  | #1A9FFF|
+|`--myscript-math-web-loader-color`  | #F5F6F7|
+|`--myscript-math-web-button-background`  | #1A9FFF|
+|`--myscript-math-web-button-focus-background`  | #1A9FFF|
+|`--myscript-math-web-button-disabled-background`  | #F5F6F7|
+|`--myscript-math-web-exports-color` | #1580CD|
 
 @demo examples/get_started.html Get started
 @demo examples/v4_configuration.html Use interactive ink api (v4)
@@ -110,16 +110,16 @@ Custom property | Description | Default
             disableundoredocontrol="[[ disableundoredocontrol ]]"
             disableexportcontrol="[[ disableexportcontrol ]]"
             disableconvertcontrol="[[ disableconvertcontrol ]]"
-            on-change="_changeListener"
-            on-exported="_exportedListener"
-            on-converted="_convertedListener"
-            on-undo="_undoListener"
-            on-redo="_redoListener"
-            on-clear="_clearListener"
-            on-export="_exportListener"
-            on-convert="_convertListener"
-            on-idle="_idleListener"
-            on-error="_errorListener">
+            on-change="_forwardEventListener"
+            on-exported="_forwardEventListener"
+            on-converted="_forwardEventListener"
+            on-undo="_forwardEventListener"
+            on-redo="_forwardEventListener"
+            on-clear="_forwardEventListener"
+            on-export="_forwardEventListener"
+            on-convert="_forwardEventListener"
+            on-idle="_forwardEventListener"
+            on-error="_forwardEventListener">
         </myscript-common-element>
     </template>
     <script>
@@ -558,71 +558,7 @@ Custom property | Description | Default
                     this.scratchoutdetectionsensitivity);
             }
 
-            _changeListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _exportedListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _convertedListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _undoListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _redoListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _clearListener(event) {
-                this.exports = {};
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _exportListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _convertListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _idleListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _errorListener(event) {
+            _forwardEventListener(event) {
                 // Just forwarding event there.
                 this.dispatchEvent(new CustomEvent(event.type, {
                     detail: event.detail
