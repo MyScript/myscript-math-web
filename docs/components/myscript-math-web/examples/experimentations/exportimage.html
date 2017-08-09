@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyScript Web Demo</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="../../myscript-math-web.html">
+    <script src="rasterizeHTML.allinone.js"></script>
+</head>
+
+<style>
+    html, body {
+        position: absolute;
+        height: 100vh;
+        width: 100vw;
+        padding: 0;
+        margin: 0;
+        display: flex;
+    }
+    myscript-math-web {
+        height: 100vh;
+        width: 50vw;
+        border-right: solid .3vw darkblue ;
+    }
+    .exportButtons {
+        display: flex;
+        margin: 0.5vh;
+    }
+    .indigo {
+        margin: 0.5vh;
+        width: 23vw;
+        color: white;
+        background-color: mediumpurple;
+        font-size: medium;
+    }
+    .controleGenerationZone {
+        background: lightsteelblue;
+        height: 100vh;
+        width: 49.7vw;
+        display: flex;
+        flex-direction: column;
+    }
+    #displayAsImageCanvas {
+        border: solid 0.3vh lightsalmon;
+    }
+    .displayAsImage {
+        border: solid 0.3vh lightslategray;
+    }
+
+</style>
+
+<body touch-action="none">
+<myscript-math-web id="myscriptMathWebElement"
+                   host="webdemoapi.myscript.com"
+                   applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+                   hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
+</myscript-math-web>
+<div class="controleGenerationZone">
+    <div class="exportButtons">
+        <button id="exportImageCanvasButton" onClick="displayCanvasAsImage()" class="indigo">Export ink as image</button>
+        <button id="exportTypeSetCanvasButton" onClick="displayTypeSetAsImage()" class="indigo">Export typeset as image</button>
+    </div>
+    <img id="displayInk" class="displayAsImage"/>
+</div>
+<script>
+        // Button behaviour to display strokes in a specified canvas zone
+        function displayCanvasAsImage (e)
+        {
+            var inkPaperPointer = document.getElementById('myscriptMathWebElement')._myscriptCommonElement._inkPaper;
+            var displayInk = document.getElementById('displayInk');
+            var imageDataToRender = inkPaperPointer.getInkAsImageData();
+            if(imageDataToRender){
+                console.log(imageDataToRender);
+                displayInk.width = imageDataToRender.width;
+                displayInk.height = imageDataToRender.height;
+                displayInk.src = inkPaperPointer.getInkAsPng();
+            } else {
+                console.log("Please write something before trying to export something");
+            }
+        }
+        // Button behaviour to display typeset in a specified canvas zone
+        function displayTypeSetAsImage (e)
+        {
+
+        }
+        // Debug code to print LATEX output
+        var solvingZoneElement
+            = document.getElementById('myscriptMathWebElement');
+        solvingZoneElement.addEventListener("exported",
+            function () {
+                var result = solvingZoneElement.result["LATEX"];
+                console.log(result);
+            }
+        );
+</script>
+</body>
+</html>
