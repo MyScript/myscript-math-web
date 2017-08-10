@@ -104,6 +104,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             unloaded="{{ commonunloaded }}"
             pencolor="[[ pencolor ]]"
             penwidth="[[ penwidth ]]"
+            themecolor="[[ themecolor ]]"
+            themewidth="[[ themewidth ]]"
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
@@ -313,9 +315,23 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         notify: true
                     },
                     /**
-                     * Color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
+                     * Pen color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
                      */
                     pencolor: {
+                        type: String,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * Pen width in mm (no other unit is supported yet)
+                     */
+                    penwidth: {
+                        type: Number,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
+                     */
+                    themecolor: {
                         type: String,
                         value: '#1580CD',
                         reflectToAttribute: true
@@ -323,7 +339,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     /**
                      * Width of strokes and primitives in mm (no other unit is supported yet)
                      */
-                    penwidth: {
+                    themewidth: {
                         type: Number,
                         value: 1,
                         reflectToAttribute: true

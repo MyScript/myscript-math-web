@@ -373,7 +373,7 @@ Custom property | Description | Default
                         notify: true
                     },
                     /**
-                     * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)
+                     * Set the additional configuration used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)
                      * Configuration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.
                      * Configuration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).
                      */
@@ -382,9 +382,23 @@ Custom property | Description | Default
                         notify: true
                     },
                     /**
-                     * Color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
+                     * Pen color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
                      */
                     pencolor: {
+                        type: String,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * Pen width in mm (no other unit is supported yet)
+                     */
+                    penwidth: {
+                        type: Number,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
+                     */
+                    themecolor: {
                         type: String,
                         value: '#1580CD',
                         reflectToAttribute: true
@@ -392,7 +406,7 @@ Custom property | Description | Default
                     /**
                      * Width of strokes and primitives in mm (no other unit is supported yet)
                      */
-                    penwidth: {
+                    themewidth: {
                         type: Number,
                         value: 1,
                         reflectToAttribute: true
@@ -520,13 +534,17 @@ Custom property | Description | Default
 
             static get observers() {
                 return [
-                    '_updateTheme(editor, fontfamily, fontsize)',
+                    '_updateTheme(editor, themecolor, themewidth, fontfamily, fontsize)',
                     '_updatePenStyle(editor, pencolor, penwidth)'
                 ]
             }
 
-            static _generateTheme(fontfamily, fontsize) {
+            static _generateTheme(themecolor, themewidth, fontfamily, fontsize) {
                 return {
+                    ink: {
+                        color: themecolor,
+                        '-myscript-pen-width': themewidth
+                    },
                     '.text': {
                         'font-family': fontfamily,
                         'font-size': fontsize
@@ -535,10 +553,9 @@ Custom property | Description | Default
             }
 
             static _generatePenStyle(pencolor, penwidth) {
-                return {
-                    color: pencolor,
-                    '-myscript-pen-width': penwidth
-                };
+                const colorStyle = pencolor ? { color: pencolor } : undefined;
+                const widthStyle = penwidth ? { '-myscript-pen-width': penwidth } : undefined;
+                return Object.assign({}, colorStyle, widthStyle);
             }
 
             static _generateConfiguration(configuration, triggerdelay, processdelay, ondemand, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
@@ -734,9 +751,9 @@ Custom property | Description | Default
                 }
             }
 
-            _updateTheme(editor, fontfamily, fontsize) {
+            _updateTheme(editor, themecolor, themewidth, fontfamily, fontsize) {
                 if (editor) {
-                    editor.theme = MyScriptCommonElement._generateTheme(fontfamily, fontsize);
+                    editor.theme = MyScriptCommonElement._generateTheme(themecolor, themewidth, fontfamily, fontsize);
                     this.logger.trace('theme changed', editor.theme);
                 }
             }
@@ -765,7 +782,7 @@ Custom property | Description | Default
                             this.editor = MyScript.register(this.editorDomElement,
                                 this._buildConfiguration(),
                                 MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
-                                MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
+                                MyScriptCommonElement._generateTheme(this.themecolor, this.themewidth, this.fontfamily, this.fontsize));
                         });
                     }
                 }
