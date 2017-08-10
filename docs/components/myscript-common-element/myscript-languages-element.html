@@ -8,8 +8,13 @@
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-languages-element>
 
+<<<<<<< HEAD
 @demo demo/get_languages.html Get languages
 @demo demo/get_languages_programmatic.html Get languages programmatically
+=======
+@demo examples/non-version-specific/get_languages.html Get languages
+@demo examples/non-version-specific/get_languages_programmatic.html Get languages programmatically
+>>>>>>> [DEV] Add loaded event
 -->
 <dom-module id="myscript-languages-element">
     <template>
@@ -140,8 +145,97 @@
                 }
             }
 
+<<<<<<< HEAD
             connectedCallback() {
                 super.connectedCallback();
+=======
+            static _generateConfiguration(configuration, language, triggerdelay, processdelay, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
+                // FIXME: find a way to do a proper deep merge
+                const conf = Object.assign({}, configuration);
+                if (!conf.triggers) {
+                    conf.triggers = {};
+                }
+                if (!conf.recognitionParams) {
+                    conf.recognitionParams = {};
+                }
+                if (!conf.recognitionParams.server) {
+                    conf.recognitionParams.server = {};
+                }
+                if (!conf.recognitionParams.v3) {
+                    conf.recognitionParams.v3 = {};
+                }
+                if (!conf.recognitionParams.v3.textParameter) {
+                    conf.recognitionParams.v3.textParameter = {};
+                }
+                if (!conf.recognitionParams.v3.textParameter.textProperties) {
+                    conf.recognitionParams.v3.textParameter.textProperties = {};
+                }
+                if (!conf.recognitionParams.v4) {
+                    conf.recognitionParams.v4 = {};
+                }
+                if (!conf.recognitionParams.v4.text) {
+                    conf.recognitionParams.v4.text = {};
+                }
+                if (language) {
+                    conf.recognitionParams.v3.textParameter.language = language;
+                    conf.recognitionParams.v4.lang = language;
+                }
+                if (triggerdelay) {
+                    conf.triggerDelay = triggerdelay;
+                }
+                if (processdelay) {
+                    conf.processDelay = processdelay;
+                }
+                if (protocol) {
+                    conf.recognitionParams.protocol = protocol;
+                    conf.triggers.exportContent = protocol === 'REST' ? 'QUIET_PERIOD' : 'POINTER_UP';
+                }
+                if (type) {
+                    conf.recognitionParams.type = type;
+                }
+                if (apiversion) {
+                    conf.recognitionParams.apiVersion = apiversion;
+                }
+                if (scheme) {
+                    conf.recognitionParams.server.scheme = scheme;
+                }
+                if (host) {
+                    conf.recognitionParams.server.host = host;
+                }
+                if (applicationkey) {
+                    conf.recognitionParams.server.applicationKey = applicationkey;
+                }
+                if (hmackey) {
+                    conf.recognitionParams.server.hmacKey = hmackey;
+                }
+                return conf;
+            }
+
+            _buildConfiguration() {
+                return MyScriptLanguagesElement._generateConfiguration(
+                    this.configuration,
+                    this.language,
+                    this.triggerdelay,
+                    this.processdelay,
+                    this.type,
+                    this.protocol,
+                    this.apiversion,
+                    this.scheme,
+                    this.host,
+                    this.applicationkey,
+                    this.hmackey);
+            }
+
+            _selectListener(event) {
+                this.languages = this.languages.map(language => Object.assign(language, {
+                    selected: language.value === event.target.value
+                }));
+                this.language = this.languages.find(language => language.selected);
+                this.dispatchEvent(new CustomEvent('change', {
+                    detail: this.languages
+                }));
+            }
+>>>>>>> [DEV] Add loaded event
 
                 this.logger = MyScript.LoggerConfig.getLogger('languages-element');
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);

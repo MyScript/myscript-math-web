@@ -1,6 +1,10 @@
 {
   "name": "@webcomponents/webcomponentsjs",
+<<<<<<< HEAD
   "version": "1.0.2",
+=======
+  "version": "1.0.7",
+>>>>>>> [DEV] Add loaded event
   "description": "Web Components Polyfills",
   "main": "webcomponents-lite.js",
   "directories": {

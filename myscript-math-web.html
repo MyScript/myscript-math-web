@@ -112,6 +112,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             disableundoredocontrol="[[ disableundoredocontrol ]]"
             disableexportcontrol="[[ disableexportcontrol ]]"
             disableconvertcontrol="[[ disableconvertcontrol ]]"
+            on-loaded="_forwardEventListener"
             on-change="_forwardEventListener"
             on-exported="_forwardEventListener"
             on-converted="_forwardEventListener"
@@ -130,6 +131,11 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             static get is() {
                 return 'myscript-math-web'
             }
+
+            /**
+             * Fired when editor is loaded.
+             * @event loaded
+             */
 
             /**
              * Fired when undo is triggered.

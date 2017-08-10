@@ -325,8 +325,10 @@ element.
       },
 
       /**
-       * Changes the completes promise chain from generateRequest to reject with an object
-       *  containing the error message as well as the request.
+       * Changes the [`completes`](iron-request#property-completes) promise chain 
+       * from `generateRequest` to reject with an object
+       * containing the original request, as well an error message.
+       * If false (default), the promise rejects with an error message only.
        */
       rejectWithRequest: {
         type: Boolean,

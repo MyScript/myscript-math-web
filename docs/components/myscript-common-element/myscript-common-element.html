@@ -29,6 +29,7 @@ Custom property | Description | Default
 `--myscript-common-element-button-focus-background` | Buttons focus background | #1A9FFF
 `--myscript-common-element-button-disabled-background` | Buttons disabled background | #F5F6F7
 
+<<<<<<< HEAD
 @demo demo/get_started.html Get started with SHAPE
 @demo demo/v4_configuration.html Use interactive ink api for MATH (v4)
 @demo demo/handle_exports.html Handle exports
@@ -37,6 +38,21 @@ Custom property | Description | Default
 @demo demo/programmatic_init.html Programmatic initialization
 @demo demo/get_stats.html Get statistics
 @demo demo/debug.html Debug your component
+=======
+@demo examples/v4/index.html Get started [V4]
+@demo examples/v4/exporting_on_demand.html Handling exports [V4]
+@demo examples/v4/customizing_style.html Customizing style [V4]
+@demo examples/v4/exporting_on_demand.html Exporting on demand [V4]
+@demo examples/v4/change_language.html Change language implementation [V4]
+@demo examples/v4/programmatic_init.html Configuring component with Javascript [V4]
+@demo examples/v3/index.html Get started [V3]
+@demo examples/v3/handling_exports.html Handling exports [V3]
+@demo examples/v3/customizing_style.html Customizing style [V3]
+@demo examples/v3/programmatic_init.html Configuring component with Javascript [V3]
+@demo examples/index.html Other demonstrations
+
+
+>>>>>>> [DEV] Add loaded event
 -->
 <dom-module id="myscript-common-element">
     <template>
@@ -183,7 +199,24 @@ Custom property | Description | Default
                        disabled="[[ !canconvert ]]" hidden="[[ disableconvertcontrol ]]">
             </paper-fab>
         </nav>
+<<<<<<< HEAD
         <div id="editorDomElement" class="ms-editor"></div>
+=======
+        <div id="editorDomElement"
+             class="ms-editor"
+             on-loaded="_changeListener"
+             on-change="_changeListener"
+             on-exported="_exportedListener"
+             on-converted="_convertedListener"
+             on-undo="_forwardListener"
+             on-redo="_forwardListener"
+             on-clear="_forwardListener"
+             on-export="_forwardListener"
+             on-convert="_forwardListener"
+             on-idle="_forwardListener"
+             on-error="_errorListener">
+        </div>
+>>>>>>> [DEV] Add loaded event
         <paper-toast class="fit-bottom"></paper-toast>
     </template>
     <script>
@@ -194,8 +227,13 @@ Custom property | Description | Default
             }
 
             /**
+<<<<<<< HEAD
              * Fired when element is fully loaded.
              * @event load
+=======
+             * Fired when editor is loaded.
+             * @event loaded
+>>>>>>> [DEV] Add loaded event
              */
 
             /**
@@ -322,7 +360,7 @@ Custom property | Description | Default
                     },
                     /**
                      * Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.
-                     * (see demo/programmatic_init.html for a better understanding)
+                     * (see examples/v4/programmatic_init.html for a better understanding)
                      */
                     unloaded: {
                         type: Boolean,
@@ -476,9 +514,53 @@ Custom property | Description | Default
                 }
             }
 
+<<<<<<< HEAD
             connectedCallback() {
                 super.connectedCallback();
                 this.addEventListener('iron-resize', this._resizeHandler);
+=======
+            _changeListener(event) {
+                if (event.detail) {
+                    this.initialized = event.detail.initialized;
+                    this.canclear = event.detail.canClear;
+                    this.canundo = event.detail.canUndo;
+                    this.canredo = event.detail.canRedo;
+                    this.canexport = event.detail.canExport;
+                    this.canconvert = event.detail.canConvert;
+                }
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _exportedListener(event) {
+                this.exports = event.detail ? event.detail.exports : {};
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _forwardListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _errorListener(event) {
+                this.logger.error('error', event);
+                if (event.detail && event.detail.message && (!event.detail.recoverable ||  event.detail.recoverable === true)) {
+                    this.paperToast.text = event.detail.message;
+                    this.paperToast.fitIn = this.paperToast.show();
+                }
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+>>>>>>> [DEV] Add loaded event
 
                 this.logger = MyScript.LoggerConfig.getLogger('common-element');
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
@@ -655,12 +737,26 @@ Custom property | Description | Default
 
             _unloadedChanged(unloaded) {
                 this.exports = undefined;
+<<<<<<< HEAD
                 this._buildConfiguration();
                 if (this.editor && !this.initializing) {
                     this.logger.trace('unloaded changed', unloaded);
                     if (unloaded === true) {
                         this.errorElement.setAttribute('hidden', 'true');
                         this.editor.configuration = this.configuration;
+=======
+                this.logger.trace('unloaded changed', unloaded);
+                if (unloaded === false && this.editorDomElement) {
+                    if (this.editor) {
+                        this.editor.configuration = this._buildConfiguration();
+                    } else {
+                        Polymer.RenderStatus.beforeNextRender(this, () => {
+                            this.editor = MyScript.register(this.editorDomElement,
+                                this._buildConfiguration(),
+                                MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
+                                MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
+                        });
+>>>>>>> [DEV] Add loaded event
                     }
                 }
             }
