@@ -112,7 +112,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             disableundoredocontrol="[[ disableundoredocontrol ]]"
             disableexportcontrol="[[ disableexportcontrol ]]"
             disableconvertcontrol="[[ disableconvertcontrol ]]"
-<<<<<<< HEAD
+            on-loaded="_forwardEventListener"
             on-change="_forwardEventListener"
             on-exported="_forwardEventListener"
             on-converted="_forwardEventListener"
@@ -123,19 +123,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             on-convert="_forwardEventListener"
             on-idle="_forwardEventListener"
             on-error="_forwardEventListener">
-=======
-            on-loaded="_forwardListener"
-            on-change="_forwardListener"
-            on-exported="_forwardListener"
-            on-converted="_forwardListener"
-            on-undo="_forwardListener"
-            on-redo="_forwardListener"
-            on-clear="_forwardListener"
-            on-export="_forwardListener"
-            on-convert="_forwardListener"
-            on-idle="_forwardListener"
-            on-error="_forwardListener">
->>>>>>> [DEV] Add loaded event
         </myscript-common-element>
     </template>
     <script>
@@ -579,11 +566,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     this.scratchoutdetectionsensitivity);
             }
 
-<<<<<<< HEAD
             _forwardEventListener(event) {
-=======
-            _forwardListener(event) {
->>>>>>> [DEV] Add loaded event
                 // Just forwarding event there.
                 this.dispatchEvent(new CustomEvent(event.type, {
                     detail: event.detail

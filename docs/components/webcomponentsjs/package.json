@@ -1,10 +1,6 @@
 {
   "name": "@webcomponents/webcomponentsjs",
-<<<<<<< HEAD
-  "version": "1.0.2",
-=======
   "version": "1.0.7",
->>>>>>> [DEV] Add loaded event
   "description": "Web Components Polyfills",
   "main": "webcomponents-lite.js",
   "directories": {
@@ -33,7 +29,7 @@
   "devDependencies": {
     "@webcomponents/custom-elements": "^1.0.0",
     "@webcomponents/html-imports": "^1.0.0",
-    "@webcomponents/shadycss": "^1.0.0",
+    "@webcomponents/shadycss": "^1.0.3",
     "@webcomponents/shadydom": "^1.0.0",
     "@webcomponents/template": "^1.0.0",
     "@webcomponents/webcomponents-platform": "^1.0.0",

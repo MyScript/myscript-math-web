@@ -42,19 +42,11 @@
     "iron-component-page": "PolymerElements/iron-component-page#^3.0.0",
     "webcomponentsjs": "^1.0.1"
   },
-<<<<<<< HEAD
-  "_release": "4ad02d4b04",
-  "_resolution": {
-    "type": "branch",
-    "branch": "2.0.0-alpha1",
-    "commit": "4ad02d4b041f3dc9a30a8423d067265d54e8adf9"
-=======
   "_release": "3f0166030c",
   "_resolution": {
     "type": "branch",
     "branch": "2.0.0-alpha1",
     "commit": "3f0166030cdaf6c01a8a829408bbde9cfffa4cfe"
->>>>>>> [DEV] Add loaded event
   },
   "_source": "https://github.com/MyScript/myscript-common-element.git",
   "_target": "2.0.0-alpha1",
