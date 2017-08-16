@@ -331,9 +331,9 @@
           }
         },
         {
-          "name": "themecolor",
-          "type": "string",
-          "description": "Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
+          "name": "penstyle",
+          "type": "Object",
+          "description": "Set the additional penStyle used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultPenStyle.js file)",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -341,7 +341,28 @@
               "column": 20
             },
             "end": {
-              "line": 404,
+              "line": 403,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "themecolor",
+          "type": "string",
+          "description": "Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 407,
+              "column": 20
+            },
+            "end": {
+              "line": 411,
               "column": 21
             }
           },
@@ -357,11 +378,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 408,
+              "line": 415,
               "column": 20
             },
             "end": {
-              "line": 412,
+              "line": 419,
               "column": 21
             }
           },
@@ -371,44 +392,25 @@
           "defaultValue": "1"
         },
         {
-          "name": "fontfamily",
-          "type": "string",
-          "description": "font-family used to render text conversion",
+          "name": "theme",
+          "type": "Object",
+          "description": "Set the additional theme used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultTheme.js file)",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 416,
+              "line": 423,
               "column": 20
             },
             "end": {
-              "line": 420,
+              "line": 426,
               "column": 21
             }
           },
           "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "\"Open Sans\""
-        },
-        {
-          "name": "fontsize",
-          "type": "number",
-          "description": "font-size used to render text conversion",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 424,
-              "column": 20
-            },
-            "end": {
-              "line": 428,
-              "column": 21
+            "polymer": {
+              "notify": true
             }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "10"
+          }
         },
         {
           "name": "canundo",
@@ -417,11 +419,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 432,
+              "line": 430,
               "column": 20
             },
             "end": {
-              "line": 437,
+              "line": 435,
               "column": 21
             }
           },
@@ -439,11 +441,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 441,
+              "line": 439,
               "column": 20
             },
             "end": {
-              "line": 446,
+              "line": 444,
               "column": 21
             }
           },
@@ -461,11 +463,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 450,
+              "line": 448,
               "column": 20
             },
             "end": {
-              "line": 455,
+              "line": 453,
               "column": 21
             }
           },
@@ -483,11 +485,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 459,
+              "line": 457,
               "column": 20
             },
             "end": {
-              "line": 464,
+              "line": 462,
               "column": 21
             }
           },
@@ -505,11 +507,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 468,
+              "line": 466,
               "column": 20
             },
             "end": {
-              "line": 473,
+              "line": 471,
               "column": 21
             }
           },
@@ -527,11 +529,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 477,
+              "line": 475,
               "column": 20
             },
             "end": {
-              "line": 482,
+              "line": 480,
               "column": 21
             }
           },
@@ -549,11 +551,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 486,
+              "line": 484,
               "column": 20
             },
             "end": {
-              "line": 490,
+              "line": 488,
               "column": 21
             }
           },
@@ -569,11 +571,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 494,
+              "line": 492,
               "column": 20
             },
             "end": {
-              "line": 498,
+              "line": 496,
               "column": 21
             }
           },
@@ -589,11 +591,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 502,
+              "line": 500,
               "column": 20
             },
             "end": {
-              "line": 506,
+              "line": 504,
               "column": 21
             }
           },
@@ -609,11 +611,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 510,
+              "line": 508,
               "column": 20
             },
             "end": {
-              "line": 514,
+              "line": 512,
               "column": 21
             }
           },
@@ -629,11 +631,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 519,
+              "line": 517,
               "column": 20
             },
             "end": {
-              "line": 522,
+              "line": 520,
               "column": 21
             }
           },
@@ -650,11 +652,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 526,
+              "line": 524,
               "column": 20
             },
             "end": {
-              "line": 530,
+              "line": 528,
               "column": 21
             }
           },
@@ -671,11 +673,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 606,
+              "line": 612,
               "column": 12
             },
             "end": {
-              "line": 619,
+              "line": 625,
               "column": 13
             }
           },
@@ -688,11 +690,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 621,
+              "line": 627,
               "column": 12
             },
             "end": {
-              "line": 626,
+              "line": 632,
               "column": 13
             }
           },
@@ -709,11 +711,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 628,
+              "line": 634,
               "column": 12
             },
             "end": {
-              "line": 641,
+              "line": 647,
               "column": 13
             }
           },
@@ -730,11 +732,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 643,
+              "line": 649,
               "column": 12
             },
             "end": {
-              "line": 649,
+              "line": 655,
               "column": 13
             }
           },
@@ -751,11 +753,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 651,
+              "line": 657,
               "column": 12
             },
             "end": {
-              "line": 656,
+              "line": 662,
               "column": 13
             }
           },
@@ -772,11 +774,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 658,
+              "line": 664,
               "column": 12
             },
             "end": {
-              "line": 668,
+              "line": 674,
               "column": 13
             }
           },
@@ -793,11 +795,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 683,
+              "line": 689,
               "column": 12
             },
             "end": {
-              "line": 690,
+              "line": 696,
               "column": 13
             }
           },
@@ -810,11 +812,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 692,
+              "line": 698,
               "column": 12
             },
             "end": {
-              "line": 696,
+              "line": 702,
               "column": 13
             }
           },
@@ -827,11 +829,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 701,
+              "line": 707,
               "column": 12
             },
             "end": {
-              "line": 705,
+              "line": 711,
               "column": 13
             }
           },
@@ -844,11 +846,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 710,
+              "line": 716,
               "column": 12
             },
             "end": {
-              "line": 714,
+              "line": 720,
               "column": 13
             }
           },
@@ -861,11 +863,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 719,
+              "line": 725,
               "column": 12
             },
             "end": {
-              "line": 723,
+              "line": 729,
               "column": 13
             }
           },
@@ -878,11 +880,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 728,
+              "line": 734,
               "column": 12
             },
             "end": {
-              "line": 732,
+              "line": 738,
               "column": 13
             }
           },
@@ -895,11 +897,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 737,
+              "line": 743,
               "column": 12
             },
             "end": {
-              "line": 741,
+              "line": 747,
               "column": 13
             }
           },
@@ -912,11 +914,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 747,
+              "line": 753,
               "column": 12
             },
             "end": {
-              "line": 751,
+              "line": 757,
               "column": 13
             }
           },
@@ -929,11 +931,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 753,
+              "line": 759,
               "column": 12
             },
             "end": {
-              "line": 758,
+              "line": 764,
               "column": 13
             }
           },
@@ -943,16 +945,13 @@
               "name": "editor"
             },
             {
+              "name": "theme"
+            },
+            {
               "name": "themecolor"
             },
             {
               "name": "themewidth"
-            },
-            {
-              "name": "fontfamily"
-            },
-            {
-              "name": "fontsize"
             }
           ]
         },
@@ -962,11 +961,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 760,
+              "line": 766,
               "column": 12
             },
             "end": {
-              "line": 765,
+              "line": 771,
               "column": 13
             }
           },
@@ -974,6 +973,9 @@
           "params": [
             {
               "name": "editor"
+            },
+            {
+              "name": "penstyle"
             },
             {
               "name": "pencolor"
@@ -989,11 +991,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 767,
+              "line": 773,
               "column": 12
             },
             "end": {
-              "line": 771,
+              "line": 777,
               "column": 13
             }
           },
@@ -1010,11 +1012,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 773,
+              "line": 779,
               "column": 12
             },
             "end": {
-              "line": 788,
+              "line": 794,
               "column": 13
             }
           },
@@ -1076,7 +1078,7 @@
           "column": 8
         },
         "end": {
-          "line": 789,
+          "line": 795,
           "column": 9
         }
       },
@@ -1341,15 +1343,31 @@
           "type": "number"
         },
         {
-          "name": "themecolor",
-          "description": "Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
+          "name": "penstyle",
+          "description": "Set the additional penStyle used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultPenStyle.js file)",
           "sourceRange": {
             "start": {
               "line": 400,
               "column": 20
             },
             "end": {
-              "line": 404,
+              "line": 403,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "themecolor",
+          "description": "Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
+          "sourceRange": {
+            "start": {
+              "line": 407,
+              "column": 20
+            },
+            "end": {
+              "line": 411,
               "column": 21
             }
           },
@@ -1361,11 +1379,11 @@
           "description": "Width of strokes and primitives in mm (no other unit is supported yet)",
           "sourceRange": {
             "start": {
-              "line": 408,
+              "line": 415,
               "column": 20
             },
             "end": {
-              "line": 412,
+              "line": 419,
               "column": 21
             }
           },
@@ -1373,47 +1391,31 @@
           "type": "number"
         },
         {
-          "name": "fontfamily",
-          "description": "font-family used to render text conversion",
+          "name": "theme",
+          "description": "Set the additional theme used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultTheme.js file)",
           "sourceRange": {
             "start": {
-              "line": 416,
+              "line": 423,
               "column": 20
             },
             "end": {
-              "line": 420,
+              "line": 426,
               "column": 21
             }
           },
           "metadata": {},
-          "type": "string"
-        },
-        {
-          "name": "fontsize",
-          "description": "font-size used to render text conversion",
-          "sourceRange": {
-            "start": {
-              "line": 424,
-              "column": 20
-            },
-            "end": {
-              "line": 428,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "number"
+          "type": "Object"
         },
         {
           "name": "canundo",
           "description": "True if undo is available",
           "sourceRange": {
             "start": {
-              "line": 432,
+              "line": 430,
               "column": 20
             },
             "end": {
-              "line": 437,
+              "line": 435,
               "column": 21
             }
           },
@@ -1425,11 +1427,11 @@
           "description": "True if redo is available",
           "sourceRange": {
             "start": {
-              "line": 441,
+              "line": 439,
               "column": 20
             },
             "end": {
-              "line": 446,
+              "line": 444,
               "column": 21
             }
           },
@@ -1441,11 +1443,11 @@
           "description": "True if there is something to clear",
           "sourceRange": {
             "start": {
-              "line": 450,
+              "line": 448,
               "column": 20
             },
             "end": {
-              "line": 455,
+              "line": 453,
               "column": 21
             }
           },
@@ -1457,11 +1459,11 @@
           "description": "True if export button could be displayed.",
           "sourceRange": {
             "start": {
-              "line": 459,
+              "line": 457,
               "column": 20
             },
             "end": {
-              "line": 464,
+              "line": 462,
               "column": 21
             }
           },
@@ -1473,11 +1475,11 @@
           "description": "True if convert button could be displayed.",
           "sourceRange": {
             "start": {
-              "line": 468,
+              "line": 466,
               "column": 20
             },
             "end": {
-              "line": 473,
+              "line": 471,
               "column": 21
             }
           },
@@ -1489,11 +1491,11 @@
           "description": "If set to true, remove the controls (undo/redo, clear...).",
           "sourceRange": {
             "start": {
-              "line": 477,
+              "line": 475,
               "column": 20
             },
             "end": {
-              "line": 482,
+              "line": 480,
               "column": 21
             }
           },
@@ -1505,11 +1507,11 @@
           "description": "If set to true, remove the undo/redo controls.",
           "sourceRange": {
             "start": {
-              "line": 486,
+              "line": 484,
               "column": 20
             },
             "end": {
-              "line": 490,
+              "line": 488,
               "column": 21
             }
           },
@@ -1521,11 +1523,11 @@
           "description": "If set to true, remove the clear control.",
           "sourceRange": {
             "start": {
-              "line": 494,
+              "line": 492,
               "column": 20
             },
             "end": {
-              "line": 498,
+              "line": 496,
               "column": 21
             }
           },
@@ -1537,11 +1539,11 @@
           "description": "If set to true, remove the export control.",
           "sourceRange": {
             "start": {
-              "line": 502,
+              "line": 500,
               "column": 20
             },
             "end": {
-              "line": 506,
+              "line": 504,
               "column": 21
             }
           },
@@ -1553,11 +1555,11 @@
           "description": "If set to true, remove the convert control.",
           "sourceRange": {
             "start": {
-              "line": 510,
+              "line": 508,
               "column": 20
             },
             "end": {
-              "line": 514,
+              "line": 512,
               "column": 21
             }
           },
@@ -1569,11 +1571,11 @@
           "description": "Exports.",
           "sourceRange": {
             "start": {
-              "line": 519,
+              "line": 517,
               "column": 20
             },
             "end": {
-              "line": 522,
+              "line": 520,
               "column": 21
             }
           },
@@ -1585,11 +1587,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 526,
+              "line": 524,
               "column": 20
             },
             "end": {
-              "line": 530,
+              "line": 528,
               "column": 21
             }
           },
@@ -1680,6 +1682,18 @@
           "type": "CustomEvent",
           "name": "configuration-changed",
           "description": "Fired when the `configuration` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "penstyle-changed",
+          "description": "Fired when the `penstyle` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "theme-changed",
+          "description": "Fired when the `theme` property changes.",
           "metadata": {}
         },
         {

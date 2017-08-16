@@ -22,11 +22,13 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 |`--myscript-math-web-exports-color` | #1580CD|
 
 @demo examples/v4/get_started.html Get started [V4]
+@demo examples/v4/styling.html Customization of style [V4]
 @demo examples/v4/v4_custom_commands.html Redifining the controls [V4]
 @demo examples/v4/v4_interacting_with_your_app.html Answering a math question[V4]
 @demo examples/v4/v4_solver_disable.html Disable solver [V4]
 @demo examples/v4/v4_solver_tunned.html Tunning the solver [V4]
 @demo examples/v3/get_started.html Get started [V3]
+@demo examples/v3/styling.html Customization of style [V3]
 @demo examples/v3/handle_exports.html Handle exports [V3]
 @demo examples/index.html Other examples
 
@@ -104,8 +106,10 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             unloaded="{{ commonunloaded }}"
             pencolor="[[ pencolor ]]"
             penwidth="[[ penwidth ]]"
+            penstyle="[[ penstyle ]]"
             themecolor="[[ themecolor ]]"
             themewidth="[[ themewidth ]]"
+            theme="[[ commontheme ]]"
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
@@ -329,6 +333,13 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         reflectToAttribute: true
                     },
                     /**
+                     * Set the additional penStyle used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultPenStyle.js file)
+                     */
+                    penstyle: {
+                        type: Object,
+                        notify: true
+                    },
+                    /**
                      * Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
                      */
                     themecolor: {
@@ -343,6 +354,28 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         type: Number,
                         value: 1,
                         reflectToAttribute: true
+                    },
+                    /**
+                     * font-family used to render text conversion
+                     */
+                    fontfamily: {
+                        type: String,
+                        value: 'STIXGeneral',
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * Set the additional theme used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultTheme.js file)
+                     */
+                    theme: {
+                        type: Object,
+                        notify: true
+                    },
+                    /**
+                     * @private
+                     */
+                    commontheme: {
+                        type: Object,
+                        computed: '_computeCommonTheme(theme, fontfamily)'
                     },
                     /**
                      * True if undo is available
@@ -513,6 +546,18 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 }
             }
 
+            static _generateMathTheme(theme, fontfamily) {
+                // FIXME: find a way to do a proper deep merge
+                const stylesheet = Object.assign({}, theme);
+                if (!stylesheet['.math']) {
+                    stylesheet['.math'] = {};
+                }
+                if (fontfamily) {
+                    stylesheet['.math']['font-family'] = fontfamily;
+                }
+                return stylesheet;
+            }
+
             static _generateMathConfiguration(configuration, mimetypes, solverenable, solverfractionalpartdigit, solverdecimalseparator, solverroundingmode, solverangleunit, resulttypes, columnaroperation, userresources, scratchoutdetectionsensitivity) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
@@ -661,6 +706,10 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     this.configuration = this._buildConfiguration();
                 }
                 return unloaded;
+            }
+
+            _computeCommonTheme(theme, fontfamily) {
+                return MyScriptMathWeb._generateMathTheme(theme, fontfamily);
             }
 
             connectedCallback() {

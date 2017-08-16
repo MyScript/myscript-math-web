@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <title>Styling</title>
+
+    <link rel="stylesheet" href="../examples.css">
+    <style>
+        nav {
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav span {
+            display: flex;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        myscript-math-web {
+            height: calc(100% - 60px);
+        }
+    </style>
+
+    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="../../../paper-toggle-button/paper-toggle-button.html">
+    <link rel="import" href="../../../paper-swatch-picker/paper-swatch-picker.html">
+    <link rel="import" href="../../../paper-slider/paper-slider.html">
+    <link rel="import" href="../../myscript-math-web.html">
+    <custom-style>
+        <style>
+            myscript-math-web {
+                --myscript-math-web-background: url(https://farm6.staticflickr.com/5526/10976824044_aebaebdb12_z_d.jpg);
+                --myscript-math-web-color: #ff7314;
+                --myscript-math-web-line-pattern: none;
+                --myscript-math-web-loader-background: #ff7314;
+                --myscript-math-web-loader-color: #F5F6F7;
+                --myscript-math-web-button-background: #ff7314;
+                --myscript-math-web-button-focus-background: #ff7314;
+                --myscript-math-web-button-disabled-background: #060903;
+                --myscript-math-web-exports-color: #FF9917;
+            }
+        </style>
+    </custom-style>
+</head>
+
+<body>
+<nav>
+    <span>
+        <paper-toggle-button id="penenabled">Enable pen color/width</paper-toggle-button>
+        <span id="pensettings" class="hidden">
+            <paper-swatch-picker id="pencolor" color="#ff7314"></paper-swatch-picker>
+            <paper-slider id="penwidth" snaps min="1" max="5" value="2"></paper-slider>
+        </span>
+    </span>
+    <select id="theme">
+        <option value="normal-white">Normal white theme</option>
+        <option value="thin-green">Thin green theme</option>
+        <option value="bold-red">Bold red theme</option>
+    </select>
+</nav>
+<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+<myscript-math-web apiversion="V4"
+                   scheme="https"
+                   host="newcloud.myscript.com"
+                   applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
+                   hmackey="5ab1935e-529a-4d48-a695-158450e52b13"
+                   themewidth="2"
+                   themecolor="#FFFFFF">
+</myscript-math-web>
+<script>
+    const themes = [{
+        name: 'normal-white',
+        color: '#FFFFFF',
+        width: 2
+    }, {
+        name: 'thin-green',
+        color: '#2E7D32',
+        width: 1
+    }, {
+        name: 'bold-red',
+        color: '#B71C1C',
+        width: 3
+    }];
+
+    const component = document.querySelector('myscript-math-web');
+    const penSettings = document.querySelector('#pensettings');
+    const penColor = document.querySelector('#pencolor');
+    const penWidth = document.querySelector('#penwidth');
+
+    document.querySelector('#theme').addEventListener('change', (event) => {
+        const selectedTheme = themes.find(theme => theme.name === event.target.value);
+        if (selectedTheme) {
+            component.themecolor = selectedTheme.color;
+            component.themewidth = selectedTheme.width;
+            component.fontsize = selectedTheme.fontsize;
+        }
+    });
+    document.querySelector('#penenabled').addEventListener('change', (event) => {
+        if (event.target.checked) {
+            penSettings.classList.remove('hidden');
+            component.pencolor = penColor.color;
+            component.penwidth = penWidth.value;
+        } else {
+            penSettings.classList.add('hidden');
+            component.pencolor = undefined;
+            component.penwidth = undefined;
+        }
+    });
+    penColor.addEventListener('color-changed', (event) => {
+        component.pencolor = event.target.color;
+    });
+    penWidth.addEventListener('change', (event) => {
+        component.penwidth = event.target.value;
+    });
+</script>
+</body>
+
+</html>

@@ -10,8 +10,30 @@
     <title>Styling</title>
 
     <link rel="stylesheet" href="../examples.css">
+    <style>
+        nav {
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav span {
+            display: flex;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        myscript-common-element {
+            height: calc(100% - 60px);
+        }
+    </style>
 
     <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="../../../paper-toggle-button/paper-toggle-button.html">
+    <link rel="import" href="../../../paper-swatch-picker/paper-swatch-picker.html">
+    <link rel="import" href="../../../paper-slider/paper-slider.html">
     <link rel="import" href="../../myscript-common-element.html">
     <custom-style>
         <style>
@@ -30,6 +52,20 @@
 </head>
 
 <body>
+    <nav>
+        <span>
+            <paper-toggle-button id="penenabled">Enable pen color/width</paper-toggle-button>
+            <span id="pensettings" class="hidden">
+                <paper-swatch-picker id="pencolor" color="#ff7314"></paper-swatch-picker>
+                <paper-slider id="penwidth" snaps min="1" max="5" value="2"></paper-slider>
+            </span>
+        </span>
+        <select id="theme">
+            <option value="normal-white">Normal white theme</option>
+            <option value="thin-green">Thin green theme</option>
+            <option value="bold-red">Bold red theme</option>
+        </select>
+    </nav>
     <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
     <myscript-common-element type="SHAPE"
                              scheme="https"
@@ -37,11 +73,56 @@
                              protocol="REST"
                              applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
                              hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
-                             pencolor="#FFFFFF"
-                             penwidth="2"
+                             themecolor="#FFFFFF"
+                             themewidth="2"
                              disableexportcontrol
                              disableconvertcontrol>
     </myscript-common-element>
 </body>
+<script>
+    const themes = [{
+        name: 'normal-white',
+        color: '#FFFFFF',
+        width: '2'
+    }, {
+        name: 'thin-green',
+        color: '#2E7D32',
+        width: '1'
+    }, {
+        name: 'bold-red',
+        color: '#B71C1C',
+        width: '3'
+    }];
+
+    const component = document.querySelector('myscript-common-element');
+    const penSettings = document.querySelector('#pensettings');
+    const penColor = document.querySelector('#pencolor');
+    const penWidth = document.querySelector('#penwidth');
+
+    document.querySelector('#theme').addEventListener('change', (event) => {
+        const selectedTheme = themes.find(theme => theme.name === event.target.value);
+        if (selectedTheme) {
+            component.themecolor = selectedTheme.color;
+            component.themewidth = selectedTheme.width;
+        }
+    });
+    document.querySelector('#penenabled').addEventListener('change', (event) => {
+        if (event.target.checked) {
+            penSettings.classList.remove('hidden');
+            component.pencolor = penColor.color;
+            component.penwidth = penWidth.value;
+        } else {
+            penSettings.classList.add('hidden');
+            component.pencolor = undefined;
+            component.penwidth = undefined;
+        }
+    });
+    penColor.addEventListener('color-changed', (event) => {
+        component.pencolor = event.target.color;
+    });
+    penWidth.addEventListener('change', (event) => {
+        component.penwidth = event.target.value;
+    });
+</script>
 
 </html>

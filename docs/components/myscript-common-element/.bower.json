@@ -40,13 +40,16 @@
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^3.0.0",
-    "webcomponentsjs": "^1.0.1"
+    "webcomponentsjs": "^1.0.1",
+    "paper-swatch-picker": "^2.0.1",
+    "paper-toggle-button": "^2.0.0",
+    "paper-slider": "^2.0.2"
   },
-  "_release": "fdfc383bce",
+  "_release": "8e331b54eb",
   "_resolution": {
     "type": "branch",
     "branch": "2.0.0-alpha1",
-    "commit": "fdfc383bcee4acd3ea09f6597bc66e4cec5edfbd"
+    "commit": "8e331b54eb2293ab4859d0978e8a7f0cc812fce4"
   },
   "_source": "https://github.com/MyScript/myscript-common-element.git",
   "_target": "2.0.0-alpha1",

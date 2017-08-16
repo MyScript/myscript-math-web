@@ -108,6 +108,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="Sanitizer">
+    <template>
+      <marked-element sanitize>
+        <div id="output" slot="markdown-html"></div>
+        <script type="text/markdown">
+[Link](http://url.com" onclick="alert(1)")
+<a href="http://url.com" onclick="alert(1)">Link</a>
+```html
+<a href="http://url.com" onclick="alert(1)">Link</a>
+```
+        </script>
+      </marked-element>
+    </template>
+  </test-fixture>
+
   <test-fixture id="CustomCallbackFunction">
     <template>
       <marked-element>
@@ -205,6 +220,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
       test('has sanitize', function() {
         expect(markedElement.sanitize).to.equal(false);
+      });
+      test('has sanitizer', function() {
+        expect(markedElement.sanitizer).to.equal(null);
       });
       test('has pedantic', function() {
         expect(markedElement.pedantic).to.equal(false);
@@ -373,6 +391,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       });
 
+    });
+
+    suite('<marked-element> with custom sanitizer', function() {
+      var markedElement;
+      var outputElement;
+      var proofElement;
+
+      setup(function() {
+        markedElement = fixture('Sanitizer');
+        outputElement = document.getElementById('output');
+        proofElement = document.createElement('div');
+      });
+
+      test('takes custom sanitizer', function() {
+        markedElement.sanitizer = function (input) {
+          return input
+            .replace(/ onclick="[^"]+"/, '');
+        };
+        proofElement.innerHTML = '<p><a href="http://url.com&quot; onclick=&quot;alert(1">Link</a>")\n<a href="http://url.com">Link</a></p>\n<pre><code class="lang-html">&lt;a href="http://url.com" onclick="alert(1)"&gt;Link&lt;/a&gt;\n</code></pre>\n';
+        expect(outputElement.innerHTML).to.include(proofElement.innerHTML);
+      });
     });
 
     suite('<marked-element> with custom renderer', function() {

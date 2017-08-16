@@ -38,6 +38,9 @@
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^3.0.0",
-    "webcomponentsjs": "^1.0.1"
+    "webcomponentsjs": "^1.0.1",
+    "paper-swatch-picker": "^2.0.1",
+    "paper-toggle-button": "^2.0.0",
+    "paper-slider": "^2.0.2"
   }
 }
