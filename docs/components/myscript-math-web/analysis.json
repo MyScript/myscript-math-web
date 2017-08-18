@@ -8367,11 +8367,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 714,
+              "line": 727,
               "column": 12
             },
             "end": {
-              "line": 718,
+              "line": 731,
               "column": 13
             }
           },
@@ -8384,11 +8384,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 720,
+              "line": 733,
               "column": 12
             },
             "end": {
-              "line": 723,
+              "line": 736,
               "column": 13
             }
           },
@@ -8583,11 +8583,38 @@
             },
             "end": {
               "line": 680,
-              "column": 17
+              "column": 13
             }
           },
           "metadata": {},
           "params": []
+        },
+        {
+          "name": "importContent",
+          "description": "Launch import",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 687,
+              "column": 12
+            },
+            "end": {
+              "line": 691,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "point",
+              "type": "{x: Number, y: Number}",
+              "description": "Insert point coordinates"
+            },
+            {
+              "name": "data",
+              "type": "Blob"
+            }
+          ]
         },
         {
           "name": "convert",
@@ -8595,12 +8622,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 684,
+              "line": 696,
               "column": 12
             },
             "end": {
-              "line": 688,
-              "column": 17
+              "line": 700,
+              "column": 13
             }
           },
           "metadata": {},
@@ -8612,11 +8639,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 693,
+              "line": 706,
               "column": 12
             },
             "end": {
-              "line": 697,
+              "line": 710,
               "column": 13
             }
           },
@@ -8629,11 +8656,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 702,
+              "line": 715,
               "column": 12
             },
             "end": {
-              "line": 708,
+              "line": 721,
               "column": 13
             }
           },
@@ -8650,11 +8677,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 710,
+              "line": 723,
               "column": 12
             },
             "end": {
-              "line": 712,
+              "line": 725,
               "column": 13
             }
           },
@@ -8674,11 +8701,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 725,
+              "line": 738,
               "column": 12
             },
             "end": {
-              "line": 728,
+              "line": 741,
               "column": 13
             }
           },
@@ -9438,7 +9465,7 @@
           "column": 8
         },
         "end": {
-          "line": 730,
+          "line": 743,
           "column": 9
         }
       },

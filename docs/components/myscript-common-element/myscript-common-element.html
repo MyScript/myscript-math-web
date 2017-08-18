@@ -739,6 +739,17 @@ Custom property | Description | Default
             }
 
             /**
+             * Trigger import
+             * @param {{x: Number, y: Number}} point Insert point coordinates
+             * @param {Blob} data
+             */
+            importContent(point, data) {
+                if (this.editor) {
+                    this.editor.importContent(point, data);
+                }
+            }
+
+            /**
              * Trigger convert
              */
             convert() {

@@ -675,22 +675,35 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
              * Launch export
              */
             exportContent() {
-                    if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.exportContent();
-                    }
+                if (this.myscriptcommonelement) {
+                    this.myscriptcommonelement.exportContent();
                 }
-                /**
-                 * Trigger convert
-                 */
+            }
+
+            /**
+             * Launch import
+             * @param {{x: Number, y: Number}} point Insert point coordinates
+             * @param {Blob} data
+             */
+            importContent(point, data) {
+                if (this.myscriptcommonelement) {
+                    this.myscriptcommonelement.importContent(point, data);
+                }
+            }
+
+            /**
+             * Trigger convert
+             */
             convert() {
-                    if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.convert();
-                    }
+                if (this.myscriptcommonelement) {
+                    this.myscriptcommonelement.convert();
                 }
-                /**
-                 * Return the stats allowing to monitor what ink size is send to the server.
-                 * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
-                 */
+            }
+
+            /**
+             * Return the stats allowing to monitor what ink size is send to the server.
+             * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+             */
             getStats() {
                 if (this.myscriptcommonelement) {
                     return this.myscriptcommonelement.getStats();
@@ -729,6 +742,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             }
 
         }
+
         customElements.define(MyScriptMathWeb.is, MyScriptMathWeb);
     </script>
 </dom-module>
