@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+
+<head>
+    <!-- Those three meta make the capture of handwriting inputs easier on modile devices -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <title>Import LaTeX</title>
+
+    <link rel="stylesheet" href="../examples.css">
+    <style>
+        nav {
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav span {
+            display: flex;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        myscript-common-element {
+            height: calc(100% - 60px);
+        }
+    </style>
+
+    <!-- As web components are not fully support -->
+    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+    <!-- myscript-common-element is import to be used later -->
+    <link rel="import" href="../../myscript-common-element.html">
+    <!-- we use a paper toast for the purpose of this demo -->
+    <link rel="import" href="../../../paper-toast/paper-toast.html">
+</head>
+
+<body>
+<nav>
+    <span>
+            <input type="text" id="latex" value="\sqrt {\dfrac {2} {3}}">
+    </span>
+</nav>
+<paper-toast class="fit-top"></paper-toast>
+<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+<myscript-common-element apiversion="V4"
+                         type="MATH"
+                         protocol="WEBSOCKET"
+                         scheme="https"
+                         host="newcloud.myscript.com"
+                         applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+                         hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+                         debug>
+</myscript-common-element>
+<script>
+    const paperToast = document.querySelector('paper-toast');
+    const component = document.querySelector('myscript-common-element');
+    const latexInput = document.querySelector('#latex');
+
+    component.addEventListener('exported', (event) => {
+        paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
+        paperToast.fitIn = paperToast.show();
+    });
+
+    latexInput.addEventListener('change', function(e) {
+        component.importContent({x: 0, y: 0}, new Blob([e.target.value], {type : 'application/x-latex'}));
+    });
+
+    component.importContent({x: 0, y: 0}, new Blob([latexInput.value], {type : 'application/x-latex'}));
+</script>
+</body>
+
+</html>
