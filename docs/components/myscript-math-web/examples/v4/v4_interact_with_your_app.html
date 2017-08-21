@@ -6,55 +6,65 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <title>myscript-math-web : interact with your application</title>
+    <title>Interact with your application</title>
 
     <link rel="stylesheet" href="../examples.css">
+    <style>
+        nav {
+            background-color: lightgrey;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+        }
+
+        myscript-math-web {
+            height: calc(100% - 60px);
+        }
+
+        .question {
+            color: #1A9FFF;
+            font-size: 20px;
+            padding-left: 10px;
+        }
+
+        .ok {
+            --paper-fab-background: #008000 !important;
+        }
+
+        .ko {
+            --paper-fab-background: #FF0000 !important;
+        }
+
+        .check {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: white !important;
+        }
+    </style>
 
     <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="../../myscript-math-web.html">
     <custom-style>
         <style>
-            .question {
-                color: #1A9FFF;
-                font-size: 20px;
-                padding: 20px;
-                background-color: lightgrey;
-                height: 30px;
-                max-height: 30px;
-            }
-
-            myscript-math-web {
-                height: calc(100% - 70px);
-            }
-
-            .ok {
-                --paper-fab-background: #008000 !important;
-            }
-
-            .ko {
-                --paper-fab-background: #FF0000 !important;
-            }
-
-            .check {
-                position: absolute;
-                bottom: 20px;
-                right: 20px;
+            paper-fab {
                 --paper-button-ink-color: white;
                 --paper-fab-background: #1A9FFF;
-                color: white !important;
             }
         </style>
     </custom-style>
 </head>
 
 <body>
-    <!-- TODO Add a textarea where we can import latex and then edit it -->
-    <!--
-
+    <nav>
+        <p class="question">What is the formula of mass energy equivalence invented by Albert Einstein ?</p>
+        <input type="text" id="latex" value="E=">
+    </nav>
 <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-    <div class="question">What is the formula of mass energy equivalence invented by Albert Einstein ?</div>
     <myscript-math-web disableexportcontrol
                        disableconvertcontrol
+                       disablesolver
                        hideexportzone
                        ondemand
                        apiversion="V4"
@@ -62,9 +72,6 @@
                        host="newcloud.myscript.com"
                        applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
                        hmackey="5ab1935e-529a-4d48-a695-158450e52b13"
-                       solverfractionalpartdigit="5"
-                       solverdecimalseparator=","
-                       solverangleunit="rad"
                        mimetypes='["application/x-latex"]'>
     </myscript-math-web>
     <paper-fab icon="check" title="check" class="check"></paper-fab>
@@ -72,11 +79,14 @@
         window.addEventListener('load', () => {
             const myscriptMathWebElement = document.querySelector('myscript-math-web');
             const checkElement = document.querySelector('paper-fab');
+            const latexInput = document.querySelector('input#latex');
+            myscriptMathWebElement.importContent({ x: 200, y: 200 }, new Blob([latexInput.value], { type: 'application/x-latex' }));
 
             myscriptMathWebElement.addEventListener('exported', (evt) => {
                 console.log('exported ', evt);
                 if (evt.detail.exports) {
                     const latexExport = evt.detail.exports['application/x-latex'] || '';
+                    latexInput.value = latexExport;
                     console.log('We got: ', latexExport);
                     if ("E=mc^{2}" === latexExport) {
                         checkElement.classList.remove('ko');
@@ -88,6 +98,10 @@
                         myscriptMathWebElement.themecolor = '#FF0000';
                     }
                 }
+            });
+
+            latexInput.addEventListener('change', function (e) {
+                myscriptMathWebElement.importContent({ x: 200, y: 200 }, new Blob([e.target.value], { type: 'application/x-latex' }));
             });
 
             checkElement.addEventListener('click', () => {
