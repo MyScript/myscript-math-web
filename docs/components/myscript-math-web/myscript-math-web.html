@@ -483,11 +483,12 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         value: ['application/x-latex']
                     },
                     /**
-                     * Enable or disable the solver. Enable by default.
+                     * True if the solver feature is disabled, false otherwise
                      */
-                    solverenable: {
+                    disablesolver: {
                         type: Boolean,
-                        value: true
+                        reflectToAttribute: true,
+                        value: false
                     },
                     /**
                      * Number of digits displayed in the fractional part of the solver. For example 1/3 will be solved with 0.33333... if solverfractionalpartdigit is set to 5. By default set to 3.
@@ -552,13 +553,13 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 if (!stylesheet['.math']) {
                     stylesheet['.math'] = {};
                 }
-                if (fontfamily) {
+                if (fontfamily !== undefined) {
                     stylesheet['.math']['font-family'] = fontfamily;
                 }
                 return stylesheet;
             }
 
-            static _generateMathConfiguration(configuration, mimetypes, solverenable, solverfractionalpartdigit, solverdecimalseparator, solverroundingmode, solverangleunit, resulttypes, columnaroperation, userresources, scratchoutdetectionsensitivity) {
+            static _generateMathConfiguration(configuration, mimetypes, disablesolver, solverfractionalpartdigit, solverdecimalseparator, solverroundingmode, solverangleunit, resulttypes, columnaroperation, userresources, scratchoutdetectionsensitivity) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
                 if (!conf.recognitionParams) {
@@ -579,34 +580,34 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 if (!conf.recognitionParams.v4.math.solver) {
                     conf.recognitionParams.v4.math.solver = {};
                 }
-                if (resulttypes) {
+                if (resulttypes !== undefined) {
                     conf.recognitionParams.v3.mathParameter.resultTypes = resulttypes;
                 }
-                if (columnaroperation) {
+                if (columnaroperation !== undefined) {
                     conf.recognitionParams.v3.mathParameter.columnarOperation = columnaroperation;
                 }
-                if (userresources) {
+                if (userresources !== undefined) {
                     conf.recognitionParams.v3.mathParameter.userResources = userresources;
                 }
-                if (scratchoutdetectionsensitivity) {
+                if (scratchoutdetectionsensitivity !== undefined) {
                     conf.recognitionParams.v3.mathParameter.scratchOutDetectionSensitivity = scratchoutdetectionsensitivity;
                 }
-                if (mimetypes) {
+                if (mimetypes !== undefined) {
                     conf.recognitionParams.v4.math.mimeTypes = mimetypes;
                 }
-                if (solverenable) {
-                    conf.recognitionParams.v4.math.solver.enable = solverenable;
+                if (disablesolver !== undefined) {
+                    conf.recognitionParams.v4.math.solver.enable = !disablesolver;
                 }
                 if (solverfractionalpartdigit) {
                     conf.recognitionParams.v4.math.solver['fractional-part-digits'] = solverfractionalpartdigit;
                 }
-                if (solverdecimalseparator) {
+                if (solverdecimalseparator !== undefined) {
                     conf.recognitionParams.v4.math.solver['decimal-separator'] = solverdecimalseparator;
                 }
-                if (solverroundingmode) {
+                if (solverroundingmode !== undefined) {
                     conf.recognitionParams.v4.math.solver['rounding-mode'] = solverroundingmode;
                 }
-                if (solverangleunit) {
+                if (solverangleunit !== undefined) {
                     conf.recognitionParams.v4.math.solver['angle-unit'] = solverangleunit;
                 }
                 return conf;
@@ -616,7 +617,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 return MyScriptMathWeb._generateMathConfiguration(
                     this.configuration,
                     this.mimetypes,
-                    this.solverenable,
+                    this.disablesolver,
                     this.solverfractionalpartdigit,
                     this.solverdecimalseparator,
                     this.solverroundingmode,
