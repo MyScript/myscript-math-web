@@ -9426,11 +9426,11 @@
           "description": "Customization of style [V4]"
         },
         {
-          "url": "examples/v4/v4_custom_commands.html",
-          "description": "Redifining the controls [V4]"
+          "url": "examples/v4/v4_custom_controls.html",
+          "description": "Redefining the controls [V4]"
         },
         {
-          "url": "examples/v4/v4_interacting_with_your_app.html",
+          "url": "examples/v4/v4_interact_with_your_app.html",
           "description": "Answering a math question[V4]"
         },
         {
@@ -9438,8 +9438,8 @@
           "description": "Disable solver [V4]"
         },
         {
-          "url": "examples/v4/v4_solver_tunned.html",
-          "description": "Tunning the solver [V4]"
+          "url": "examples/v4/v4_solver_tuned.html",
+          "description": "Tuning the solver [V4]"
         },
         {
           "url": "examples/v3/get_started.html",

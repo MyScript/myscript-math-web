@@ -44,8 +44,19 @@
 
 <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
     <div class="question">What is the formula of mass energy equivalence invented by Albert Einstein ?</div>
-    <myscript-math-web disableexportcontrol disableconvertcontrol hideexportzone ondemand apiversion="V4" scheme="https" host="newcloud.myscript.com" applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b" hmackey="5ab1935e-529a-4d48-a695-158450e52b13" solverfractionalpartdigit="5"
-        solverdecimalseparator="," solverangleunit="rad" mimetypes='[]'>
+    <myscript-math-web disableexportcontrol
+                       disableconvertcontrol
+                       hideexportzone
+                       ondemand
+                       apiversion="V4"
+                       scheme="https"
+                       host="newcloud.myscript.com"
+                       applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
+                       hmackey="5ab1935e-529a-4d48-a695-158450e52b13"
+                       solverfractionalpartdigit="5"
+                       solverdecimalseparator=","
+                       solverangleunit="rad"
+                       mimetypes='[]'>
     </myscript-math-web>
     <paper-fab icon="check" title="check" class="check"></paper-fab>
     <script>
@@ -53,7 +64,7 @@
             const myscriptMathWebElement = document.querySelector('myscript-math-web');
             const checkElement = document.querySelector('.check');
 
-            const exportedBehavior = (evt) => {
+            myscriptMathWebElement.addEventListener('exported', (evt) => {
                 console.log('exported ', evt);
                 if (evt.detail.exports) {
                     const latexExport = evt.detail.exports['application/x-latex'] || '';
@@ -65,15 +76,13 @@
                         checkElement.style.setProperty('background-color', "red");
                     }
                 }
-            };
-            myscriptMathWebElement.addEventListener('exported', exportedBehavior);
+            });
 
-            const checkBehavior = () => {
+            checkElement.addEventListener('click', () => {
                 myscriptMathWebElement.convert();
                 const functionOutput = myscriptMathWebElement.exportContent();
                 console.log('Output :' + functionOutput);
-            };
-            checkElement.addEventListener('click', checkBehavior);
+            });
         })
     </script>
 </body>
