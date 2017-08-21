@@ -12,31 +12,40 @@
 
     <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="../../myscript-math-web.html">
+    <custom-style>
+        <style>
+            .question {
+                color: #1A9FFF;
+                font-size: 20px;
+                padding: 20px;
+                background-color: lightgrey;
+                height: 30px;
+                max-height: 30px;
+            }
 
+            myscript-math-web {
+                height: calc(100% - 70px);
+            }
+
+            .ok {
+                --paper-fab-background: #008000 !important;
+            }
+
+            .ko {
+                --paper-fab-background: #FF0000 !important;
+            }
+
+            .check {
+                position: absolute;
+                bottom: 20px;
+                right: 20px;
+                --paper-button-ink-color: white;
+                --paper-fab-background: #1A9FFF;
+                color: white !important;
+            }
+        </style>
+    </custom-style>
 </head>
-<style is="custom-style">
-    .question {
-        color: #1A9FFF;
-        font-size: 20px;
-        padding: 20px;
-        background-color: lightgrey;
-        height: 30px;
-        max-height: 30px;
-    }
-    
-    myscript-math-web {
-        height: calc(100% - 70px);
-    }
-    
-    .check {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        --paper-button-ink-color: white;
-        background-color: #1A9FFF;
-        color: white !important;
-    }
-</style>
 
 <body>
     <!-- TODO Add a textarea where we can import latex and then edit it -->
@@ -56,24 +65,27 @@
                        solverfractionalpartdigit="5"
                        solverdecimalseparator=","
                        solverangleunit="rad"
-                       mimetypes='[]'>
+                       mimetypes='["application/x-latex"]'>
     </myscript-math-web>
     <paper-fab icon="check" title="check" class="check"></paper-fab>
     <script>
         window.addEventListener('load', () => {
             const myscriptMathWebElement = document.querySelector('myscript-math-web');
-            const checkElement = document.querySelector('.check');
+            const checkElement = document.querySelector('paper-fab');
 
             myscriptMathWebElement.addEventListener('exported', (evt) => {
                 console.log('exported ', evt);
                 if (evt.detail.exports) {
                     const latexExport = evt.detail.exports['application/x-latex'] || '';
-                    const eEqualMC2 = "E=mc^{2}" === latexExport;
-                    console.log('We got E=mc2 :', eEqualMC2);
-                    if (eEqualMC2) {
-                        checkElement.style.setProperty('background-color', "green");
+                    console.log('We got: ', latexExport);
+                    if ("E=mc^{2}" === latexExport) {
+                        checkElement.classList.remove('ko');
+                        checkElement.classList.add('ok');
+                        myscriptMathWebElement.themecolor = '#008000';
                     } else {
-                        checkElement.style.setProperty('background-color', "red");
+                        checkElement.classList.remove('ok');
+                        checkElement.classList.add('ko');
+                        myscriptMathWebElement.themecolor = '#FF0000';
                     }
                 }
             });
