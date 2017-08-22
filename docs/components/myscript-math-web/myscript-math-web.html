@@ -356,6 +356,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         reflectToAttribute: true
                     },
                     /**
+                     * Generated items color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
+                     */
+                    generatedcolor: {
+                        type: String,
+                        value: '#000000',
+                        reflectToAttribute: true
+                    },
+                    /**
                      * font-family used to render text conversion
                      */
                     fontfamily: {
@@ -375,7 +383,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                      */
                     commontheme: {
                         type: Object,
-                        computed: '_computeCommonTheme(theme, fontfamily)'
+                        computed: '_computeCommonTheme(theme, fontfamily, generatedcolor)'
                     },
                     /**
                      * True if undo is available
@@ -547,14 +555,21 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 }
             }
 
-            static _generateMathTheme(theme, fontfamily) {
+            static _generateMathTheme(theme, fontfamily, generatedcolor) {
                 // FIXME: find a way to do a proper deep merge
                 const stylesheet = Object.assign({}, theme);
                 if (!stylesheet['.math']) {
                     stylesheet['.math'] = {};
                 }
+                if (!stylesheet['.math-solved']) {
+                    stylesheet['.math-solved'] = {};
+                }
                 if (fontfamily !== undefined) {
                     stylesheet['.math']['font-family'] = fontfamily;
+                    stylesheet['.math-solved']['font-family'] = fontfamily;
+                }
+                if (generatedcolor !== undefined) {
+                    stylesheet['.math-solved'].color = generatedcolor;
                 }
                 return stylesheet;
             }
@@ -722,8 +737,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 return unloaded;
             }
 
-            _computeCommonTheme(theme, fontfamily) {
-                return MyScriptMathWeb._generateMathTheme(theme, fontfamily);
+            _computeCommonTheme(theme, fontfamily, generatedcolor) {
+                return MyScriptMathWeb._generateMathTheme(theme, fontfamily, generatedcolor);
             }
 
             connectedCallback() {

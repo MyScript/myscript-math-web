@@ -74,20 +74,24 @@
                    applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
                    hmackey="5ab1935e-529a-4d48-a695-158450e52b13"
                    themewidth="2"
-                   themecolor="#FFFFFF">
+                   themecolor="#FFFFFF"
+                   solvercolor="#A8A8A8">
 </myscript-math-web>
 <script>
     const themes = [{
         name: 'normal-white',
         color: '#FFFFFF',
+        resultColor: '#A8A8A8',
         width: 2
     }, {
         name: 'thin-green',
-        color: '#2E7D32',
+        color: '#00FF00',
+        resultColor: '#2E7D32',
         width: 1
     }, {
         name: 'bold-red',
-        color: '#B71C1C',
+        color: '#FF0000',
+        resultColor: '#B71C1C',
         width: 3
     }];
 
@@ -102,6 +106,7 @@
             component.themecolor = selectedTheme.color;
             component.themewidth = selectedTheme.width;
             component.fontsize = selectedTheme.fontsize;
+            component.solvercolor = selectedTheme.resultColor;
         }
     });
     document.querySelector('#penenabled').addEventListener('change', (event) => {

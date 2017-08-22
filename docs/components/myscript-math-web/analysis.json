@@ -6076,9 +6076,9 @@
           "defaultValue": "1"
         },
         {
-          "name": "fontfamily",
+          "name": "generatedcolor",
           "type": "string",
-          "description": "font-family used to render text conversion",
+          "description": "Generated items color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -6087,6 +6087,26 @@
             },
             "end": {
               "line": 364,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"#000000\""
+        },
+        {
+          "name": "fontfamily",
+          "type": "string",
+          "description": "font-family used to render text conversion",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 368,
+              "column": 20
+            },
+            "end": {
+              "line": 372,
               "column": 21
             }
           },
@@ -6102,11 +6122,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 368,
+              "line": 376,
               "column": 20
             },
             "end": {
-              "line": 371,
+              "line": 379,
               "column": 21
             }
           },
@@ -6123,11 +6143,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 375,
+              "line": 383,
               "column": 20
             },
             "end": {
-              "line": 378,
+              "line": 386,
               "column": 21
             }
           },
@@ -6144,11 +6164,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 383,
+              "line": 391,
               "column": 20
             },
             "end": {
-              "line": 388,
+              "line": 396,
               "column": 21
             }
           },
@@ -6166,11 +6186,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 393,
+              "line": 401,
               "column": 20
             },
             "end": {
-              "line": 398,
+              "line": 406,
               "column": 21
             }
           },
@@ -6188,11 +6208,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 403,
+              "line": 411,
               "column": 20
             },
             "end": {
-              "line": 408,
+              "line": 416,
               "column": 21
             }
           },
@@ -6210,11 +6230,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 412,
+              "line": 420,
               "column": 20
             },
             "end": {
-              "line": 417,
+              "line": 425,
               "column": 21
             }
           },
@@ -6232,26 +6252,6 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 422,
-              "column": 20
-            },
-            "end": {
-              "line": 426,
-              "column": 21
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "false"
-        },
-        {
-          "name": "disableclearcontrol",
-          "type": "boolean",
-          "description": "True if the clear feature is disabled, false otherwise",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
               "line": 430,
               "column": 20
             },
@@ -6266,9 +6266,9 @@
           "defaultValue": "false"
         },
         {
-          "name": "disableexportcontrol",
+          "name": "disableclearcontrol",
           "type": "boolean",
-          "description": "True if the export feature is disabled, false otherwise",
+          "description": "True if the clear feature is disabled, false otherwise",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -6286,9 +6286,9 @@
           "defaultValue": "false"
         },
         {
-          "name": "disableconvertcontrol",
+          "name": "disableexportcontrol",
           "type": "boolean",
-          "description": "True if the typeset feature is disabled, false otherwise",
+          "description": "True if the export feature is disabled, false otherwise",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -6306,17 +6306,37 @@
           "defaultValue": "false"
         },
         {
+          "name": "disableconvertcontrol",
+          "type": "boolean",
+          "description": "True if the typeset feature is disabled, false otherwise",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 454,
+              "column": 20
+            },
+            "end": {
+              "line": 458,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
           "name": "hideexportzone",
           "type": "boolean",
           "description": "Hide the export zone when set to true.",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 458,
+              "line": 466,
               "column": 20
             },
             "end": {
-              "line": 462,
+              "line": 470,
               "column": 21
             }
           },
@@ -6332,11 +6352,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 466,
+              "line": 474,
               "column": 20
             },
             "end": {
-              "line": 468,
+              "line": 476,
               "column": 21
             }
           },
@@ -6351,11 +6371,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 473,
+              "line": 481,
               "column": 20
             },
             "end": {
-              "line": 476,
+              "line": 484,
               "column": 21
             }
           },
@@ -6371,11 +6391,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 480,
+              "line": 488,
               "column": 20
             },
             "end": {
-              "line": 483,
+              "line": 491,
               "column": 21
             }
           },
@@ -6391,11 +6411,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 487,
+              "line": 495,
               "column": 20
             },
             "end": {
-              "line": 491,
+              "line": 499,
               "column": 21
             }
           },
@@ -6411,46 +6431,6 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 495,
-              "column": 20
-            },
-            "end": {
-              "line": 498,
-              "column": 21
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "3"
-        },
-        {
-          "name": "solverdecimalseparator",
-          "type": "string",
-          "description": "",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 499,
-              "column": 20
-            },
-            "end": {
-              "line": 502,
-              "column": 21
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "\".\""
-        },
-        {
-          "name": "solverroundingmode",
-          "type": "string",
-          "description": "",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
               "line": 503,
               "column": 20
             },
@@ -6462,10 +6442,10 @@
           "metadata": {
             "polymer": {}
           },
-          "defaultValue": "\"half up\""
+          "defaultValue": "3"
         },
         {
-          "name": "solverangleunit",
+          "name": "solverdecimalseparator",
           "type": "string",
           "description": "",
           "privacy": "public",
@@ -6482,6 +6462,46 @@
           "metadata": {
             "polymer": {}
           },
+          "defaultValue": "\".\""
+        },
+        {
+          "name": "solverroundingmode",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 511,
+              "column": 20
+            },
+            "end": {
+              "line": 514,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"half up\""
+        },
+        {
+          "name": "solverangleunit",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 515,
+              "column": 20
+            },
+            "end": {
+              "line": 518,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
           "defaultValue": "\"deg\""
         },
         {
@@ -6491,11 +6511,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 514,
+              "line": 522,
               "column": 20
             },
             "end": {
-              "line": 517,
+              "line": 525,
               "column": 21
             }
           },
@@ -6511,11 +6531,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 521,
+              "line": 529,
               "column": 20
             },
             "end": {
-              "line": 523,
+              "line": 531,
               "column": 21
             }
           },
@@ -6530,11 +6550,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 525,
+              "line": 533,
               "column": 20
             },
             "end": {
-              "line": 528,
+              "line": 536,
               "column": 21
             }
           },
@@ -6550,11 +6570,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 534,
+              "line": 542,
               "column": 20
             },
             "end": {
-              "line": 537,
+              "line": 545,
               "column": 21
             }
           },
@@ -6571,11 +6591,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 541,
+              "line": 549,
               "column": 20
             },
             "end": {
-              "line": 545,
+              "line": 553,
               "column": 21
             }
           },
@@ -8367,11 +8387,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 728,
+              "line": 743,
               "column": 12
             },
             "end": {
-              "line": 732,
+              "line": 747,
               "column": 13
             }
           },
@@ -8384,11 +8404,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 734,
+              "line": 749,
               "column": 12
             },
             "end": {
-              "line": 737,
+              "line": 752,
               "column": 13
             }
           },
@@ -8489,11 +8509,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 615,
+              "line": 630,
               "column": 12
             },
             "end": {
-              "line": 628,
+              "line": 643,
               "column": 13
             }
           },
@@ -8506,11 +8526,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 630,
+              "line": 645,
               "column": 12
             },
             "end": {
-              "line": 635,
+              "line": 650,
               "column": 13
             }
           },
@@ -8527,11 +8547,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 650,
+              "line": 665,
               "column": 12
             },
             "end": {
-              "line": 654,
+              "line": 669,
               "column": 13
             }
           },
@@ -8544,11 +8564,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 659,
+              "line": 674,
               "column": 12
             },
             "end": {
-              "line": 663,
+              "line": 678,
               "column": 13
             }
           },
@@ -8561,11 +8581,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 668,
+              "line": 683,
               "column": 12
             },
             "end": {
-              "line": 672,
+              "line": 687,
               "column": 13
             }
           },
@@ -8578,11 +8598,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 677,
+              "line": 692,
               "column": 12
             },
             "end": {
-              "line": 681,
+              "line": 696,
               "column": 13
             }
           },
@@ -8595,11 +8615,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 688,
+              "line": 703,
               "column": 12
             },
             "end": {
-              "line": 692,
+              "line": 707,
               "column": 13
             }
           },
@@ -8622,11 +8642,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 697,
+              "line": 712,
               "column": 12
             },
             "end": {
-              "line": 701,
+              "line": 716,
               "column": 13
             }
           },
@@ -8639,11 +8659,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 707,
+              "line": 722,
               "column": 12
             },
             "end": {
-              "line": 711,
+              "line": 726,
               "column": 13
             }
           },
@@ -8656,11 +8676,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 716,
+              "line": 731,
               "column": 12
             },
             "end": {
-              "line": 722,
+              "line": 737,
               "column": 13
             }
           },
@@ -8677,11 +8697,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 724,
+              "line": 739,
               "column": 12
             },
             "end": {
-              "line": 726,
+              "line": 741,
               "column": 13
             }
           },
@@ -8692,6 +8712,9 @@
             },
             {
               "name": "fontfamily"
+            },
+            {
+              "name": "generatedcolor"
             }
           ]
         },
@@ -8701,11 +8724,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 739,
+              "line": 754,
               "column": 12
             },
             "end": {
-              "line": 742,
+              "line": 757,
               "column": 13
             }
           },
@@ -9465,7 +9488,7 @@
           "column": 8
         },
         "end": {
-          "line": 744,
+          "line": 759,
           "column": 9
         }
       },
@@ -9778,8 +9801,8 @@
           "type": "number"
         },
         {
-          "name": "fontfamily",
-          "description": "font-family used to render text conversion",
+          "name": "generatedcolor",
+          "description": "Generated items color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "sourceRange": {
             "start": {
               "line": 360,
@@ -9794,15 +9817,31 @@
           "type": "string"
         },
         {
-          "name": "theme",
-          "description": "Set the additional theme used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultTheme.js file)",
+          "name": "fontfamily",
+          "description": "font-family used to render text conversion",
           "sourceRange": {
             "start": {
               "line": 368,
               "column": 20
             },
             "end": {
-              "line": 371,
+              "line": 372,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "theme",
+          "description": "Set the additional theme used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultTheme.js file)",
+          "sourceRange": {
+            "start": {
+              "line": 376,
+              "column": 20
+            },
+            "end": {
+              "line": 379,
               "column": 21
             }
           },
@@ -9814,11 +9853,11 @@
           "description": "If set to true, hide the buttons (Trash, Undo, Redo).",
           "sourceRange": {
             "start": {
-              "line": 412,
+              "line": 420,
               "column": 20
             },
             "end": {
-              "line": 417,
+              "line": 425,
               "column": 21
             }
           },
@@ -9828,22 +9867,6 @@
         {
           "name": "disableundoredocontrol",
           "description": "True if the undo/redo feature is disabled, false otherwise",
-          "sourceRange": {
-            "start": {
-              "line": 422,
-              "column": 20
-            },
-            "end": {
-              "line": 426,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        },
-        {
-          "name": "disableclearcontrol",
-          "description": "True if the clear feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
               "line": 430,
@@ -9858,8 +9881,8 @@
           "type": "boolean"
         },
         {
-          "name": "disableexportcontrol",
-          "description": "True if the export feature is disabled, false otherwise",
+          "name": "disableclearcontrol",
+          "description": "True if the clear feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
               "line": 438,
@@ -9874,8 +9897,8 @@
           "type": "boolean"
         },
         {
-          "name": "disableconvertcontrol",
-          "description": "True if the typeset feature is disabled, false otherwise",
+          "name": "disableexportcontrol",
+          "description": "True if the export feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
               "line": 446,
@@ -9890,15 +9913,31 @@
           "type": "boolean"
         },
         {
+          "name": "disableconvertcontrol",
+          "description": "True if the typeset feature is disabled, false otherwise",
+          "sourceRange": {
+            "start": {
+              "line": 454,
+              "column": 20
+            },
+            "end": {
+              "line": 458,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
           "name": "hideexportzone",
           "description": "Hide the export zone when set to true.",
           "sourceRange": {
             "start": {
-              "line": 458,
+              "line": 466,
               "column": 20
             },
             "end": {
-              "line": 462,
+              "line": 470,
               "column": 21
             }
           },
@@ -9910,11 +9949,11 @@
           "description": "The underlying myscriptcommonelement. This could allow to access more advanced properties.",
           "sourceRange": {
             "start": {
-              "line": 466,
+              "line": 474,
               "column": 20
             },
             "end": {
-              "line": 468,
+              "line": 476,
               "column": 21
             }
           },
@@ -9926,11 +9965,11 @@
           "description": "Math export types (LATEX, MATHML or SYMBOLTREE).\n<b>Warning</b>: v3 only, for v4, use mimetypes instead",
           "sourceRange": {
             "start": {
-              "line": 473,
+              "line": 481,
               "column": 20
             },
             "end": {
-              "line": 476,
+              "line": 484,
               "column": 21
             }
           },
@@ -9942,11 +9981,11 @@
           "description": "Math export types (application/x-latex, application/mathml+xml, application/mathofficeXML).",
           "sourceRange": {
             "start": {
-              "line": 480,
+              "line": 488,
               "column": 20
             },
             "end": {
-              "line": 483,
+              "line": 491,
               "column": 21
             }
           },
@@ -9958,11 +9997,11 @@
           "description": "True if the solver feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 487,
+              "line": 495,
               "column": 20
             },
             "end": {
-              "line": 491,
+              "line": 499,
               "column": 21
             }
           },
@@ -9974,38 +10013,6 @@
           "description": "Number of digits displayed in the fractional part of the solver. For example 1/3 will be solved with 0.33333... if solverfractionalpartdigit is set to 5. By default set to 3.",
           "sourceRange": {
             "start": {
-              "line": 495,
-              "column": 20
-            },
-            "end": {
-              "line": 498,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "number"
-        },
-        {
-          "name": "solverdecimalseparator",
-          "description": "",
-          "sourceRange": {
-            "start": {
-              "line": 499,
-              "column": 20
-            },
-            "end": {
-              "line": 502,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "string"
-        },
-        {
-          "name": "solverroundingmode",
-          "description": "",
-          "sourceRange": {
-            "start": {
               "line": 503,
               "column": 20
             },
@@ -10015,10 +10022,10 @@
             }
           },
           "metadata": {},
-          "type": "string"
+          "type": "number"
         },
         {
-          "name": "solverangleunit",
+          "name": "solverdecimalseparator",
           "description": "",
           "sourceRange": {
             "start": {
@@ -10034,15 +10041,47 @@
           "type": "string"
         },
         {
+          "name": "solverroundingmode",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 511,
+              "column": 20
+            },
+            "end": {
+              "line": 514,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "solverangleunit",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 515,
+              "column": 20
+            },
+            "end": {
+              "line": 518,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
           "name": "columnaroperation",
           "description": "If attribute is set activate the recognition of columnar operations. V3 only.",
           "sourceRange": {
             "start": {
-              "line": 514,
+              "line": 522,
               "column": 20
             },
             "end": {
-              "line": 517,
+              "line": 525,
               "column": 21
             }
           },
@@ -10054,11 +10093,11 @@
           "description": "List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare. V3 only.",
           "sourceRange": {
             "start": {
-              "line": 521,
+              "line": 529,
               "column": 20
             },
             "end": {
-              "line": 523,
+              "line": 531,
               "column": 21
             }
           },
@@ -10070,11 +10109,11 @@
           "description": "V3 only.",
           "sourceRange": {
             "start": {
-              "line": 525,
+              "line": 533,
               "column": 20
             },
             "end": {
-              "line": 528,
+              "line": 536,
               "column": 21
             }
           },
@@ -10086,11 +10125,11 @@
           "description": "Exports.",
           "sourceRange": {
             "start": {
-              "line": 534,
+              "line": 542,
               "column": 20
             },
             "end": {
-              "line": 537,
+              "line": 545,
               "column": 21
             }
           },
@@ -10102,11 +10141,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 541,
+              "line": 549,
               "column": 20
             },
             "end": {
-              "line": 545,
+              "line": 553,
               "column": 21
             }
           },
