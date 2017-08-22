@@ -893,7 +893,7 @@
         },
         {
           "name": "importContent",
-          "description": "Trigger import",
+          "description": "Import content",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -919,25 +919,30 @@
           ]
         },
         {
-          "name": "convert",
-          "description": "Trigger convert",
+          "name": "importInk",
+          "description": "Import ink",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 754,
+              "line": 755,
               "column": 12
             },
             "end": {
-              "line": 758,
+              "line": 759,
               "column": 13
             }
           },
           "metadata": {},
-          "params": []
+          "params": [
+            {
+              "name": "strokes",
+              "type": "Array.<Object>"
+            }
+          ]
         },
         {
-          "name": "getStats",
-          "description": "Return the stats allowing to monitor what ink size is send to the server.\nStats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB",
+          "name": "convert",
+          "description": "Trigger convert",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -953,16 +958,33 @@
           "params": []
         },
         {
+          "name": "getStats",
+          "description": "Return the stats allowing to monitor what ink size is send to the server.\nStats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 774,
+              "column": 12
+            },
+            "end": {
+              "line": 778,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
           "name": "_updateTheme",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 770,
+              "line": 780,
               "column": 12
             },
             "end": {
-              "line": 775,
+              "line": 785,
               "column": 13
             }
           },
@@ -988,11 +1010,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 777,
+              "line": 787,
               "column": 12
             },
             "end": {
-              "line": 782,
+              "line": 792,
               "column": 13
             }
           },
@@ -1018,11 +1040,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 784,
+              "line": 794,
               "column": 12
             },
             "end": {
-              "line": 788,
+              "line": 798,
               "column": 13
             }
           },
@@ -1039,11 +1061,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 790,
+              "line": 800,
               "column": 12
             },
             "end": {
-              "line": 805,
+              "line": 815,
               "column": 13
             }
           },
@@ -1105,7 +1127,7 @@
           "column": 8
         },
         "end": {
-          "line": 806,
+          "line": 816,
           "column": 9
         }
       },

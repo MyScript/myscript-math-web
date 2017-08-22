@@ -739,13 +739,23 @@ Custom property | Description | Default
             }
 
             /**
-             * Trigger import
+             * Import content
              * @param {{x: Number, y: Number}} point Insert point coordinates
              * @param {Blob} data
              */
             importContent(point, data) {
                 if (this.editor) {
                     this.editor.importContent(point, data);
+                }
+            }
+
+            /**
+             * Import ink
+             * @param {Array<Object>} strokes
+             */
+            importInk(strokes) {
+                if (this.editor) {
+                    this.editor.importInk(strokes);
                 }
             }
 

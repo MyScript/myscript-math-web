@@ -470,12 +470,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         value: false
                     },
                     /**
-                     * The underlying myscriptcommonelement. This could allow to access more advanced properties.
-                     */
-                    myscriptcommonelement: {
-                        type: Object
-                    },
-                    /**
                      * Math export types (LATEX, MATHML or SYMBOLTREE).
                      * <b>Warning</b>: v3 only, for v4, use mimetypes instead
                      */
@@ -664,8 +658,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
              * Clear all context
              */
             clear() {
-                if (this.myscriptcommonelement) {
-                    this.myscriptcommonelement.clear();
+                if (this.editor) {
+                    this.editor.clear();
                 }
             }
 
@@ -673,8 +667,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
              * Undo action, and launch recognition if timeout is set
              */
             undo() {
-                if (this.myscriptcommonelement) {
-                    this.myscriptcommonelement.undo();
+                if (this.editor) {
+                    this.editor.undo();
                 }
             }
 
@@ -682,8 +676,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
              * Redo action, and launch recognition if timeout is set
              */
             redo() {
-                if (this.myscriptcommonelement) {
-                    this.myscriptcommonelement.redo();
+                if (this.editor) {
+                    this.editor.redo();
                 }
             }
 
@@ -691,19 +685,29 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
              * Launch export
              */
             exportContent() {
-                if (this.myscriptcommonelement) {
-                    this.myscriptcommonelement.exportContent();
+                if (this.editor) {
+                    this.editor.exportContent();
                 }
             }
 
             /**
-             * Launch import
+             * Import content
              * @param {{x: Number, y: Number}} point Insert point coordinates
              * @param {Blob} data
              */
             importContent(point, data) {
-                if (this.myscriptcommonelement) {
-                    this.myscriptcommonelement.importContent(point, data);
+                if (this.editor) {
+                    this.editor.importContent(point, data);
+                }
+            }
+
+            /**
+             * Import ink
+             * @param {Array<Object>} strokes
+             */
+            importInk(strokes) {
+                if (this.editor) {
+                    this.editor.importInk(strokes);
                 }
             }
 
@@ -711,8 +715,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
              * Trigger convert
              */
             convert() {
-                if (this.myscriptcommonelement) {
-                    this.myscriptcommonelement.convert();
+                if (this.editor) {
+                    this.editor.convert();
                 }
             }
 
@@ -721,8 +725,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
              * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
              */
             getStats() {
-                if (this.myscriptcommonelement) {
-                    return this.myscriptcommonelement.getStats();
+                if (this.editor) {
+                    return this.editor.getStats();
                 }
             }
 
@@ -743,7 +747,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 
             connectedCallback() {
                 super.connectedCallback();
-                this.myscriptcommonelement = this.shadowRoot.querySelector('myscript-common-element');
                 this.logger.info('attached');
             }
 
