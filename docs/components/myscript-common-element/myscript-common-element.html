@@ -189,6 +189,7 @@ Custom property | Description | Default
         </nav>
         <div id="editorDomElement"
              class="ms-editor"
+             on-idle="_idleListener"
              on-loaded="_changeListener"
              on-change="_changeListener"
              on-exported="_exportedListener"
@@ -198,7 +199,6 @@ Custom property | Description | Default
              on-clear="_forwardListener"
              on-export="_forwardListener"
              on-convert="_forwardListener"
-             on-idle="_forwardListener"
              on-error="_errorListener">
         </div>
         <paper-toast class="fit-bottom"></paper-toast>
@@ -209,6 +209,11 @@ Custom property | Description | Default
             static get is() {
                 return 'myscript-common-element';
             }
+
+            /**
+             * Fired when editor is idle.
+             * @event idle
+             */
 
             /**
              * Fired when editor is loaded.
@@ -520,6 +525,14 @@ Custom property | Description | Default
                         notify: true
                     },
                     /**
+                     * True if component is idle
+                     */
+                    idle: {
+                        type: Boolean,
+                        value: true,
+                        notify: true
+                    },
+                    /**
                      * True to display console output, false otherwise.
                      */
                     debug: {
@@ -640,6 +653,16 @@ Custom property | Description | Default
                     this.canredo = event.detail.canRedo;
                     this.canexport = event.detail.canExport;
                     this.canconvert = event.detail.canConvert;
+                }
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _idleListener(event) {
+                if (event.detail) {
+                    this.idle = event.detail.idle;
                 }
                 // Just forwarding event there.
                 this.dispatchEvent(new CustomEvent(event.type, {
@@ -774,7 +797,7 @@ Custom property | Description | Default
              */
             getStats() {
                 if (this.editor) {
-                    return this.editor.stats;
+                    return this.editor.getStats();
                 }
             }
 

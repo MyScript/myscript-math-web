@@ -113,6 +113,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
+            idle="[[ idle ]]"
             disablecontrols="[[ disablecontrols ]]"
             disableclearcontrol="[[ disableclearcontrol ]]"
             disableundoredocontrol="[[ disableundoredocontrol ]]"
@@ -137,6 +138,11 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             static get is() {
                 return 'myscript-math-web'
             }
+
+            /**
+             * Fired when editor is idle.
+             * @event idle
+             */
 
             /**
              * Fired when editor is loaded.
@@ -536,6 +542,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                      */
                     exports: {
                         type: Object,
+                        notify: true
+                    },
+                    /**
+                     * True if component is idle
+                     */
+                    idle: {
+                        type: Boolean,
+                        value: true,
                         notify: true
                     },
                     /**
