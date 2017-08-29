@@ -21,10 +21,6 @@
             display: flex;
         }
 
-        .hidden {
-            display: none;
-        }
-
         myscript-math-web {
             height: calc(100% - 60px);
         }
@@ -34,41 +30,30 @@
     <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
     <!-- myscript-common-element is import to be used later -->
     <link rel="import" href="../../myscript-math-web.html">
-    <!-- we use a paper toast for the purpose of this demo -->
-    <link rel="import" href="../../../paper-toast/paper-toast.html">
 </head>
 
 <body>
 <nav>
     <span>
-            <input type="text" id="latex" value="\sqrt {\dfrac {2} {3}}">
+        <input type="text" id="latex" placeholder="e.g. \sqrt {\dfrac {2} {3}}"/>
+        <button id="importLatex">Import</button>
     </span>
 </nav>
-<paper-toast class="fit-top"></paper-toast>
 <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
 <myscript-math-web apiversion="V4"
                    protocol="WEBSOCKET"
                    scheme="https"
                    host="newcloud.myscript.com"
                    applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-                   hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
-                   debug>
+                   hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
 </myscript-math-web>
 <script>
-    const paperToast = document.querySelector('paper-toast');
     const component = document.querySelector('myscript-math-web');
-    const latexInput = document.querySelector('#latex');
+    const latexInput = document.getElementById('latex');
 
-    component.addEventListener('exported', (event) => {
-        paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
-        paperToast.fitIn = paperToast.show();
+    document.getElementById('importLatex').addEventListener('click', function () {
+        component.importContent({ x: 0, y: 0 }, new Blob([latexInput.value], { type: 'application/x-latex' }));
     });
-
-    latexInput.addEventListener('change', function (e) {
-        component.importContent({ x: 0, y: 0 }, new Blob([e.target.value], { type: 'application/x-latex' }));
-    });
-
-    component.importContent({ x: 0, y: 0 }, new Blob([latexInput.value], { type: 'application/x-latex' }));
 </script>
 </body>
 

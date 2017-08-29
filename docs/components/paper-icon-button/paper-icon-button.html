@@ -19,7 +19,8 @@ Material design: [Icon toggles](https://www.google.com/design/spec/components/bu
 `paper-icon-button` is a button with an image placed at the center. When the user touches
 the button, a ripple effect emanates from the center of the button.
 
-`paper-icon-button` includes a default icon set.  Use `icon` to specify which icon
+`paper-icon-button` does not include a default icon set. To use icons from the default
+set, include `PolymerElements/iron-icons/iron-icons.html`, and use the `icon` attribute to specify which icon
 from the icon set to use.
 
     <paper-icon-button icon="menu"></paper-icon-button>
@@ -108,6 +109,10 @@ Custom property | Description | Default
         cursor: auto;
 
         @apply --paper-icon-button-disabled;
+      }
+
+      :host([hidden]) {
+        display: none !important;
       }
 
       :host(:hover) {
