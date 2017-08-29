@@ -22,6 +22,7 @@
     "!LICENSE",
     "!myscript-common-element.html",
     "!myscript-languages-element.html",
+    "!myscript-stylesheet.html",
     "!myscriptjs-import.html",
     "!pepjs-import.html",
     "!index.html",
@@ -45,11 +46,11 @@
     "paper-toggle-button": "^2.0.0",
     "paper-slider": "^2.0.2"
   },
-  "_release": "a9e689c1ae",
+  "_release": "0837f35082",
   "_resolution": {
     "type": "branch",
     "branch": "2.0.0-alpha1",
-    "commit": "a9e689c1ae09cbd2dceac596169a1ccc71215e9b"
+    "commit": "0837f35082184a0f2a5eae280f6943725384a3f0"
   },
   "_source": "https://github.com/MyScript/myscript-common-element.git",
   "_target": "2.0.0-alpha1",

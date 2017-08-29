@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
+<link rel="import" href="../myscript-common-element/myscript-stylesheet.html">
 <link rel="import" href="./myscript-math-exports.html">
 <!--
 The `myscript-math-web` is a turnkey solution for those who need to quickly implement MyScript Math recognition.
@@ -35,17 +36,18 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 -->
 <dom-module id="myscript-math-web">
     <template>
-        <style>
+        <style include="myscript-stylesheet">
             :host {
-                --myscript-math-web-background: none;
-                --myscript-math-web-color: #1A9FFF;
+                --myscript-math-web-background: var(--myscript-editor-background);
+                --myscript-math-web-color: var(--myscript-editor-color);
                 --myscript-math-web-line-pattern: repeating-linear-gradient(to bottom, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px), repeating-linear-gradient(to right, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px);
-                --myscript-math-web-capture-background: none;
-                --myscript-math-web-loader-background: #1A9FFF;
-                --myscript-math-web-loader-color: #F5F6F7;
-                --myscript-math-web-button-background: #1A9FFF;
-                --myscript-math-web-button-focus-background: #1A9FFF;
-                --myscript-math-web-button-disabled-background: #F5F6F7;
+                --myscript-math-web-capture-background: var(--myscript-editor-capture-background);
+                --myscript-math-web-button-background: var(--myscript-editor-button-background);
+                --myscript-math-web-button-focus-background: var(--myscript-editor-button-focus-background);
+                --myscript-math-web-button-disabled-background: var(--myscript-editor-button-disabled-background);
+                --myscript-math-web-error-background: var(--myscript-editor-error-background);
+                --myscript-math-web-loader : var(--myscript-editor-loader);
+                --myscript-math-web-error : var(--myscript-editor-error);
                 --myscript-math-web-exports-color: #1A9FFF;
 
                 box-sizing: border-box;
@@ -70,11 +72,12 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 --myscript-common-element-color: var(--myscript-math-web-color);
                 --myscript-common-element-line-pattern: var(--myscript-math-web-line-pattern);
                 --myscript-common-element-capture-background: var(--myscript-math-web-capture-background);
-                --myscript-common-element-loader-background: var(--myscript-math-web-loader-background);
-                --myscript-common-element-loader-color: var(--myscript-math-web-loader-color);
                 --myscript-common-element-button-background: var(--myscript-math-web-button-background);
                 --myscript-common-element-button-focus-background: var(--myscript-math-web-button-focus-background);
                 --myscript-common-element-button-disabled-background: var(--myscript-math-web-button-disabled-background);
+                --myscript-common-element-error-background: var(--myscript-math-web-error-background);
+                --myscript-common-element-error: var(--myscript-math-web-error);
+                --myscript-common-element-loader: var(--myscript-math-web-loader);
 
                 height: calc(100% - 100px);
             }

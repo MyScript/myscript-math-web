@@ -1,6 +1,7 @@
 <link rel="import" href="./pepjs-import.html">
 <link rel="import" href="./myscriptjs-import.html">
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="./myscript-stylesheet.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
@@ -43,42 +44,22 @@ CSS variable | Default
 -->
 <dom-module id="myscript-common-element">
     <template>
-        <style>
+        <style include="myscript-stylesheet">
             :host {
-                --myscript-common-element-background: none;
-                --myscript-common-element-color: #1A9FFF;
-                --myscript-common-element-line-pattern: repeating-linear-gradient(to bottom, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px), repeating-linear-gradient(to right, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px);
-                --myscript-common-element-capture-background: none;
-                --myscript-common-element-button-background: #1A9FFF;
-                --myscript-common-element-button-focus-background: #1A9FFF;
-                --myscript-common-element-button-disabled-background: #F5F6F7;
-                --myscript-common-element-error-background: url(data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCA3Ni41IDYxMiA0NTkiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiPgogICAgPHBhdGggZmlsbD0iIzFBOUZGRiIgZD0iTTQ5NC43LDIyOS41Yy0xNy44NTEtODYuNy05NC4zNTEtMTUzLTE4OC43LTE1M2MtMzguMjUsMC03My45NSwxMC4yLTEwMiwzMC42bDM4LjI1LDM4LjI1IGMxNy44NS0xMi43NSw0MC44LTE3Ljg1LDYzLjc1LTE3Ljg1Yzc2LjUsMCwxNDAuMjUsNjMuNzUsMTQwLjI1LDE0MC4yNXYxMi43NWgzOC4yNWM0My4zNSwwLDc2LjUsMzMuMTUsNzYuNSw3Ni41IGMwLDI4LjA1LTE1LjMsNTMuNTUtNDAuOCw2Ni4zbDM4LjI1LDM4LjI1QzU5MS42LDQzOC42LDYxMiw0MDAuMzUsNjEyLDM1N0M2MTIsMjkwLjcsNTU4LjQ1LDIzNC42LDQ5NC43LDIyOS41eiBNNzYuNSwxMDkuNjUgbDcxLjQsNjguODVDNjYuMywxODMuNiwwLDI0OS45LDAsMzMxLjVjMCw4NC4xNSw2OC44NSwxNTMsMTUzLDE1M2gyOTguMzVsNTEsNTFsMzMuMTUtMzMuMTVMMTA5LjY1LDc2LjVMNzYuNSwxMDkuNjV6IE0xOTYuMzUsMjI5LjVsMjA0LDIwNEgxNTNjLTU2LjEsMC0xMDItNDUuOS0xMDItMTAyYzAtNTYuMSw0NS45LTEwMiwxMDItMTAySDE5Ni4zNXoiIC8+Cjwvc3ZnPgo=);
+                --myscript-common-element-background: var(--myscript-editor-background);
+                --myscript-common-element-color: var(--myscript-editor-color);
+                --myscript-common-element-line-pattern: var(--myscript-editor-line-pattern);
+                --myscript-common-element-capture-background: var(--myscript-editor-capture-background);
+                --myscript-common-element-button-background: var(--myscript-editor-button-background);
+                --myscript-common-element-button-focus-background: var(--myscript-editor-button-focus-background);
+                --myscript-common-element-button-disabled-background: var(--myscript-editor-button-disabled-background);
+                --myscript-common-element-error-background: var(--myscript-editor-error-background);
+                --myscript-common-element-loader: var(--myscript-editor-loader);
+                --myscript-common-element-error: var(--myscript-editor-error);
 
                 --paper-fab-background: var(--myscript-common-element-button-background);
                 --paper-fab-keyboard-focus-background: var(--myscript-common-element-button-focus-background);
                 --paper-fab-disabled-background: var(--myscript-common-element-button-disabled-background);
-
-                --myscript-loader: {
-                    width: 120px;
-                    height: 120px;
-                    top: calc(50% - 60px);
-                    left: calc(50% - 60px);
-                    border: 16px solid #F5F6F7;
-                    border-radius: 50%;
-                    border-top-color: #1A9FFF;
-                    -webkit-animation: spin 2s linear infinite;
-                    animation: spin 2s linear infinite;
-                };
-
-                --myscript-error: {
-                    width: 200px;
-                    height: 200px;
-                    top: calc(50% - 100px);
-                    left: calc(50% - 100px);
-                    font-size: 16px;
-                    text-align: center;
-                    word-wrap: break-word;
-                };
 
                 contain: content;
                 box-sizing: border-box;
@@ -141,7 +122,7 @@ CSS variable | Default
             .error-msg {
                 z-index: 30;
                 position: absolute;
-                @apply --myscript-error;
+                @apply --myscript-common-element-error;
             }
 
             .error-msg::before {
@@ -151,61 +132,7 @@ CSS variable | Default
             .loader {
                 z-index: 35;
                 position: absolute;
-                @apply --myscript-loader;
-            }
-
-            @keyframes spin {
-                0% {
-                    transform: rotate(0deg);
-                }
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-
-            @keyframes rotate-plan {
-                0% {
-                    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-                }
-                25% {
-                    transform: perspective(120px) rotateX(0deg) rotateY(-180deg);
-                }
-                50% {
-                    transform: perspective(120px) rotateX(-180deg) rotateY(-180deg);
-                }
-                75% {
-                    transform: perspective(120px) rotateX(-180deg) rotateY(0deg);
-                }
-                100% {
-                    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-                }
-            }
-
-            @-webkit-keyframes rotate-plan {
-                0% {
-                    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
-                }
-                25% {
-                    -webkit-transform: perspective(120px) rotateX(180deg) rotateY(0deg)
-                }
-                50% {
-                    -webkit-transform: perspective(120px) rotateX(180deg) rotateY(180deg)
-                }
-                75% {
-                    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(180deg)
-                }
-                100% {
-                    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
-                }
-            }
-
-            @-webkit-keyframes spin {
-                0% {
-                    -webkit-transform: rotate(0deg);
-                }
-                100% {
-                    -webkit-transform: rotate(360deg);
-                }
+                @apply --myscript-common-element-loader;
             }
         </style>
         <nav hidden="[[ disablecontrols ]]">
