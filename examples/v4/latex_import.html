@@ -35,8 +35,8 @@
 <body>
 <nav>
     <span>
-        <input type="text" id="latex" placeholder="e.g. \sqrt {\dfrac {2} {3}}"/>
-        <button id="importLatex">Import</button>
+        <input type="text" id="importContentField" data-type="application/x-latex" placeholder="e.g. \sqrt {\dfrac {2} {3}}"/>
+        <button id="importContent">Import</button>
     </span>
 </nav>
 <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
@@ -49,10 +49,10 @@
 </myscript-math-web>
 <script>
     const component = document.querySelector('myscript-math-web');
-    const latexInput = document.getElementById('latex');
+    const latexInput = document.getElementById('importContentField');
 
-    document.getElementById('importLatex').addEventListener('click', function () {
-        component.importContent({ x: 0, y: 0 }, new Blob([latexInput.value], { type: 'application/x-latex' }));
+    document.getElementById('importContent').addEventListener('click', function () {
+        component.importContent({ x: 0, y: 0 }, new Blob([latexInput.value], { type: latexInput.dataset.type }));
     });
 </script>
 </body>

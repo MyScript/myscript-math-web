@@ -59,7 +59,8 @@
 <body>
     <nav>
         <p class="question">What is the formula of mass energy equivalence invented by Albert Einstein ?</p>
-        <input type="text" id="latex" value="E=">
+        <input type="text" id="importContentField" data-type="application/x-latex" placeholder="e.g. \sqrt {\dfrac {2} {3}}" value="E="/>
+        <button id="importContent">Import</button>
     </nav>
 <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
     <myscript-math-web disableexportcontrol
@@ -79,8 +80,8 @@
         window.addEventListener('load', () => {
             const myscriptMathWebElement = document.querySelector('myscript-math-web');
             const checkElement = document.querySelector('paper-fab');
-            const latexInput = document.querySelector('input#latex');
-            myscriptMathWebElement.importContent({ x: 200, y: 200 }, new Blob([latexInput.value], { type: 'application/x-latex' }));
+            const latexInput = document.getElementById('importContentField');
+            myscriptMathWebElement.importContent({ x: 200, y: 200 }, new Blob([latexInput.value], { type: latexInput.dataset.type }));
 
             myscriptMathWebElement.addEventListener('exported', (evt) => {
                 console.log('exported ', evt);
@@ -100,8 +101,9 @@
                 }
             });
 
-            latexInput.addEventListener('change', function (e) {
-                myscriptMathWebElement.importContent({ x: 200, y: 200 }, new Blob([e.target.value], { type: 'application/x-latex' }));
+
+            document.getElementById('importContent').addEventListener('click', function () {
+                myscriptMathWebElement.importContent({ x: 0, y: 0 }, new Blob([latexInput.value], { type: latexInput.dataset.type }));
             });
 
             checkElement.addEventListener('click', () => {
