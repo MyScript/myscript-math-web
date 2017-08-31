@@ -10,34 +10,34 @@
 
     <link rel="stylesheet" href="../examples.css">
     <style>
-        myscript-math-web {
+        myscript-common-element {
             height: calc(100% - 2.625rem);
         }
     </style>
 
     <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="../../../paper-toast/paper-toast.html">
-    <link rel="import" href="../../myscript-math-web.html">
+    <link rel="import" href="../../myscript-common-element.html">
 </head>
 <body>
-    <button onclick="myscriptMathWeb.undo()">undo</button>
-    <button onclick="myscriptMathWeb.redo()">redo</button>
-    <button onclick="myscriptMathWeb.clear()">clear</button>
-    <button onclick="myscriptMathWeb.exportContent()">export</button>
-    <button onclick="myscriptMathWeb.convert()">convert</button>
+    <button onclick="myscriptCommonElement.undo()">undo</button>
+    <button onclick="myscriptCommonElement.redo()">redo</button>
+    <button onclick="myscriptCommonElement.clear()">clear</button>
+    <button onclick="myscriptCommonElement.exportContent()">export</button>
+    <button onclick="myscriptCommonElement.convert()">convert</button>
     <paper-toast class="fit-top"></paper-toast>
     <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-    <myscript-math-web scheme="https"
+    <myscript-common-element scheme="https"
                        host="newcloud.myscript.com"
                        applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
                        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
                        ondemand
                        disablecontrols>
-    </myscript-math-web>
+    </myscript-common-element>
     <script>
-        const myscriptMathWeb = document.querySelector('myscript-math-web');
+        const myscriptCommonElement = document.querySelector('myscript-common-element');
         const paperToast = document.querySelector('paper-toast');
-        myscriptMathWeb.addEventListener('exported', (event) => {
+        myscriptCommonElement.addEventListener('exported', (event) => {
             paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
             paperToast.fitIn = paperToast.show();
         });

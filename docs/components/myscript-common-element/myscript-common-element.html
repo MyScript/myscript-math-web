@@ -31,11 +31,9 @@ CSS variable | Default
 @demo examples/non-version-specific/get_started.html Get started [V4]
 @demo examples/non-version-specific/handle_exports.html Handle exports [V4]
 @demo examples/non-version-specific/customize_style.html Customize style [V4]
-@demo examples/non-version-specific/export_on_demand.html Export on demand [V4]
-@demo examples/non-version-specific/change_language.html Change language implementation [V4]
-@demo examples/non-version-specific/programmatic_init.html Configuring component with Javascript [V4]
+@demo examples/non-version-specific/custom_controls.html Redefining the controls [V4]
 @demo examples/v4/import_content.html Import content [V4]
-@demo examples/v3/get_started_legacy.html Get started [V3]
+@demo examples/v3/rest_text.html Configure component with legacy api [V3]
 @demo examples/index.html Other demonstrations
 -->
 <dom-module id="myscript-common-element">
@@ -140,9 +138,6 @@ CSS variable | Default
             </paper-fab>
             <paper-fab mini src$="[[importPath]]redo.svg" title="redo" on-tap="redo"
                        disabled="[[ !canredo ]]" hidden="[[ disableundoredocontrol ]]">
-            </paper-fab>
-            <paper-fab mini src$="[[importPath]]export.svg" title="export" on-tap="exportContent"
-                       disabled="[[ !canexport ]]" hidden="[[ disableexportcontrol ]]">
             </paper-fab>
             <paper-fab mini src$="[[importPath]]convert.svg" title="convert" on-tap="convert"
                        disabled="[[ !canconvert ]]" hidden="[[ disableconvertcontrol ]]">
@@ -457,14 +452,6 @@ CSS variable | Default
                      * If set to true, remove the clear control.
                      */
                     disableclearcontrol: {
-                        type: Boolean,
-                        reflectToAttribute: true,
-                        value: false
-                    },
-                    /**
-                     * If set to true, remove the export control.
-                     */
-                    disableexportcontrol: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false

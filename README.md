@@ -48,13 +48,9 @@ myscript-math-web is a web component that can be used in every web application (
 
 ## Examples
 
-- [examples/get_started.html](examples/get_started.html) Get started
-- [examples/v4_configuration.html](examples/v4_configuration.html) Use interactive ink api (v4)
-- [examples/handle_error.html](examples/handle_error.html) Handle error
-- [examples/styling.html](examples/styling.html) Customize your component style
-- [examples/programmatic_init.html](examples/programmatic_init.html) Programmatic initialization
-- [examples/get_stats.html](examples/get_stats.html) Get statistics
-- [examples/debug.html](examples/debug.html) Debug your component
+- [examples/non-version-specific/get_started.html](examples/non-version-specific/get_started.html) Get started with iink
+- [examples/v3/websocket_math.html](examples/v3/websocket_math.html) Get started with legacy api (v3)
+- [examples/index.html](examples/index.html) Other demonstrations
 
 ## Documentation 
 
