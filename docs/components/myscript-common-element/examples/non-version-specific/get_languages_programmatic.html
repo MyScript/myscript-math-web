@@ -17,7 +17,7 @@
 
 <body>
     <select id="language" disabled></select>
-    <myscript-languages-element unloaded />
+    <myscript-languages-element unloaded apiversion="V3"/>
 </body>
 <script>
     window.addEventListener('load', () => {
@@ -25,15 +25,13 @@
         const languagesElement = document.querySelector('myscript-languages-element');
         console.log('All resources finished loading! Starting to init myscript-languages-element');
         const configuration = {
-            type: 'ANALYZER',
             scheme: 'https',
-            host: 'webdemoapi.myscript.com',
+            host: 'newcloud.myscript.com',
             applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
             hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad',
             sortByValue: true
         };
         // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-        languagesElement.setAttribute('type', configuration.type);
         languagesElement.setAttribute('scheme', configuration.scheme);
         languagesElement.setAttribute('host', configuration.host);
         languagesElement.applicationkey = configuration.applicationKey;

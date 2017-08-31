@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <title>Get statistics</title>
+    <title>Handle exports</title>
 
     <link rel="stylesheet" href="../examples.css">
 
@@ -27,8 +27,8 @@
 </body>
 <script>
     const paperToast = document.querySelector('paper-toast');
-    document.querySelector('myscript-common-element').addEventListener('change', (event) => {
-        paperToast.text = `Stats for this input are : ${JSON.stringify(event.target.getStats())}`;
+    document.querySelector('myscript-common-element').addEventListener('exported', (event) => {
+        paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
         paperToast.fitIn = paperToast.show();
     });
 </script>

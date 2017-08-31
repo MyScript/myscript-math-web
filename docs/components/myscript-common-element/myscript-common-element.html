@@ -10,7 +10,7 @@
 `myscript-common-element` is a web component wrapper around MyScriptJS editor.
 
     <myscript-common-element
-        type="SHAPE"
+        type="TEXT"
         applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-common-element>
@@ -28,19 +28,15 @@ CSS variable | Default
 `--myscript-common-element-button-focus-background` | #1A9FFF
 `--myscript-common-element-button-disabled-background` | #F5F6F7
 
-@demo examples/v4/index.html Get started [V4]
-@demo examples/v4/exporting_on_demand.html Handling exports [V4]
-@demo examples/v4/customizing_style.html Customizing style [V4]
-@demo examples/v4/exporting_on_demand.html Exporting on demand [V4]
-@demo examples/v4/change_language.html Change language implementation [V4]
-@demo examples/v4/programmatic_init.html Configuring component with Javascript [V4]
-@demo examples/v3/index.html Get started [V3]
-@demo examples/v3/handling_exports.html Handling exports [V3]
-@demo examples/v3/customizing_style.html Customizing style [V3]
-@demo examples/v3/programmatic_init.html Configuring component with Javascript [V3]
+@demo examples/non-version-specific/get_started.html Get started [V4]
+@demo examples/non-version-specific/handle_exports.html Handle exports [V4]
+@demo examples/non-version-specific/customize_style.html Customize style [V4]
+@demo examples/non-version-specific/export_on_demand.html Export on demand [V4]
+@demo examples/non-version-specific/change_language.html Change language implementation [V4]
+@demo examples/non-version-specific/programmatic_init.html Configuring component with Javascript [V4]
+@demo examples/v4/import_content.html Import content [V4]
+@demo examples/v3/get_started_legacy.html Get started [V3]
 @demo examples/index.html Other demonstrations
-
-
 -->
 <dom-module id="myscript-common-element">
     <template>
@@ -265,12 +261,12 @@ CSS variable | Default
                         value: 'cloud.myscript.com'
                     },
                     /**
-                     * Cloud API version to use (eg V3 or V4)
+                     * Cloud API version to use.
                      */
                     apiversion: {
                         type: String,
                         reflectToAttribute: true,
-                        value: 'V3'
+                        value: 'V4'
                     },
                     /**
                      * Delay without any user input before asking for recognition, only use with REST protocol if not on-demand.
@@ -665,6 +661,10 @@ CSS variable | Default
             constructor() {
                 super();
                 this.logger = MyScript.LoggerConfig.getLogger('common-element');
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                 Object
                     .keys(MyScript.Constants.Logger)
@@ -673,10 +673,6 @@ CSS variable | Default
                             .getLogger(MyScript.Constants.Logger[key])
                             .setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                     });
-            }
-
-            connectedCallback() {
-                super.connectedCallback();
                 this.addEventListener('iron-resize', this._resizeListener);
                 this.editorDomElement = this.shadowRoot.querySelector('#editorDomElement');
                 this.paperToast = this.shadowRoot.querySelector('paper-toast');

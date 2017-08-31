@@ -1,4 +1,4 @@
-# [v2.0.0](https://github.com/MyScript/myscript-text-web/tree/v2.0.0)
+# [v4.0.0](https://github.com/MyScript/myscript-text-web/tree/v4.0.0)
 
 ## Features
 - New events to be notified of editor changes. 

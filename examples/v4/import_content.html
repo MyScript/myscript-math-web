@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <title>Import LaTeX</title>
+    <title>Import content</title>
 
     <link rel="stylesheet" href="../examples.css">
     <style>
@@ -21,16 +21,15 @@
             display: flex;
         }
 
-        myscript-common-element {
+        myscript-math-web {
             height: calc(100% - 60px);
-
         }
     </style>
 
     <!-- As web components are not fully support -->
     <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
     <!-- myscript-common-element is import to be used later -->
-    <link rel="import" href="../../myscript-common-element.html">
+    <link rel="import" href="../../myscript-math-web.html">
 </head>
 
 <body>
@@ -41,16 +40,13 @@
     </span>
 </nav>
 <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-<myscript-common-element apiversion="V4"
-                         type="MATH"
-                         protocol="WEBSOCKET"
-                         scheme="https"
-                         host="newcloud.myscript.com"
-                         applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-                         hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
-</myscript-common-element>
+<myscript-math-web scheme="https"
+                   host="newcloud.myscript.com"
+                   applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+                   hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
+</myscript-math-web>
 <script>
-    const component = document.querySelector('myscript-common-element');
+    const component = document.querySelector('myscript-math-web');
     const latexInput = document.getElementById('importContentField');
 
     document.getElementById('importContent').addEventListener('click', function () {

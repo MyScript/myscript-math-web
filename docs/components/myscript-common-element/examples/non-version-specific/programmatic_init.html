@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <myscript-common-element protocol="WEBSOCKET" apiversion="V4" unloaded />
+    <myscript-common-element unloaded />
 </body>
 <script>
     window.addEventListener('load', () => {
@@ -24,7 +24,7 @@
         console.log('All resources finished loading! Starting to init myscript-common-element');
         // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
         const configuration = {
-            type: 'MATH',
+            type: 'TEXT',
             scheme: 'https',
             host: 'newcloud.myscript.com',
             applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
@@ -40,8 +40,8 @@
         commonElement.configuration = {
             recognitionParams: {
                 v4: {
-                    math: {
-                        mimeTypes: ['application/x-latex']
+                    text: {
+                        mimeTypes: ['text/plain']
                     }
                 }
             }

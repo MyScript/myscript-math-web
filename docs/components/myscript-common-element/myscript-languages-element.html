@@ -4,12 +4,13 @@
 `myscript-languages-element` is a web component to retrieve CDK available languages.
 
     <myscript-languages-element
+        type="TEXT"
         applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-languages-element>
 
-@demo examples/non-version-specific/get_languages.html Get languages
-@demo examples/non-version-specific/get_languages_programmatic.html Get languages programmatically
+@demo examples/non-version-specific/get_languages.html Get languages [V4]
+@demo examples/non-version-specific/get_languages_programmatic.html Get languages programmatically [V4]
 -->
 <dom-module id="myscript-languages-element">
     <template>
@@ -78,6 +79,14 @@
                         type: String,
                         reflectToAttribute: true,
                         value: 'cloud.myscript.com'
+                    },
+                    /**
+                     * Cloud API version to use.
+                     */
+                    apiversion: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'V4'
                     },
                     /**
                      * Application key to use for recognition on MyScript handwriting recognition server.<br />

@@ -22,17 +22,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 |`--myscript-math-web-button-disabled-background`  | #F5F6F7|
 |`--myscript-math-web-exports-color` | #1580CD|
 
-@demo examples/v4/get_started.html Get started [V4]
-@demo examples/v4/styling.html Customization of style [V4]
-@demo examples/v4/v4_custom_controls.html Redefining the controls [V4]
-@demo examples/v4/v4_interact_with_your_app.html Answering a math question[V4]
-@demo examples/v4/v4_solver_disable.html Disable solver [V4]
-@demo examples/v4/v4_solver_tuned.html Tuning the solver [V4]
-@demo examples/v3/get_started.html Get started [V3]
-@demo examples/v3/styling.html Customization of style [V3]
-@demo examples/v3/handle_exports.html Handle exports [V3]
+@demo examples/non-version-specific/get_started.html Get started [V4]
+@demo examples/non-version-specific/customize_style.html Customize style [V4]
+@demo examples/non-version-specific/custom_controls.html Redefining the controls [V4]
+@demo examples/non-version-specific/interact_with_your_app.html Answering a math question [V4]
+@demo examples/v4/import_content.html Import content [V4]
+@demo examples/v4/solver_tuned.html Tuning the solver [V4]
+@demo examples/v3/get_started_legacy.html Get started legacy [V3]
 @demo examples/index.html Other examples
-
 -->
 <dom-module id="myscript-math-web">
     <template>
@@ -40,7 +37,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             :host {
                 --myscript-math-web-background: var(--myscript-editor-background);
                 --myscript-math-web-color: var(--myscript-editor-color);
-                --myscript-math-web-line-pattern: repeating-linear-gradient(to bottom, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px), repeating-linear-gradient(to right, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px);
+                --myscript-math-web-line-pattern: var(--myscript-editor-line-pattern);
                 --myscript-math-web-capture-background: var(--myscript-editor-capture-background);
                 --myscript-math-web-button-background: var(--myscript-editor-button-background);
                 --myscript-math-web-button-focus-background: var(--myscript-editor-button-focus-background);
@@ -228,12 +225,12 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         value: 'cloud.myscript.com'
                     },
                     /**
-                     * Cloud API version to use (eg V3 or V4)
+                     * Cloud API version to use.
                      */
                     apiversion: {
                         type: String,
                         reflectToAttribute: true,
-                        value: 'V3'
+                        value: 'V4'
                     },
                     /**
                      * Delay without any user input before asking for recognition, only use in REST mode.
