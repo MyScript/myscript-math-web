@@ -19,6 +19,11 @@
 
         nav span {
             display: flex;
+            width: 100%;
+        }
+
+        input {
+            width: 100%;
         }
 
         myscript-math-web {
@@ -47,10 +52,10 @@
 </myscript-math-web>
 <script>
     const component = document.querySelector('myscript-math-web');
-    const latexInput = document.getElementById('importContentField');
+    const importContent = document.getElementById('importContentField');
 
     document.getElementById('importContent').addEventListener('click', function () {
-        component.importContent({ x: 0, y: 0 }, new Blob([latexInput.value], { type: latexInput.dataset.type }));
+        component.importContent({ x: 0, y: 0 }, importContent.value, importContent.dataset.type);
     });
 </script>
 </body>

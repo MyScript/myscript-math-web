@@ -698,11 +698,12 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             /**
              * Import content
              * @param {{x: Number, y: Number}} point Insert point coordinates
-             * @param {Blob} data
+             * @param {Blob|*} data Data to import
+             * @param {String} [mimetype] Mimetype of the data, needed if data is not a Blob
              */
-            importContent(point, data) {
+            importContent(point, data, mimetype) {
                 if (this.editor) {
-                    this.editor.importContent(point, data);
+                    this.editor.importContent(point, data, mimetype);
                 }
             }
 
