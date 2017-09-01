@@ -50,7 +50,7 @@ for two-way data binding. `bind-value` will notify if it is changed either by us
 
 ```html
 <iron-input bind-value="{{bindValue}}">
-  <input value="{{value::input}}"></iron-input>
+  <input value="{{value::input}}">
 </iron-input>
 ```
 

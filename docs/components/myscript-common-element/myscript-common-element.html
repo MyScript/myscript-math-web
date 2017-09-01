@@ -1,6 +1,6 @@
 <link rel="import" href="./pepjs-import.html">
 <link rel="import" href="./myscriptjs-import.html">
-<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="./myscript-stylesheet.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
@@ -67,6 +67,10 @@ CSS variable | Default
                 color: var(--myscript-common-element-color);
                 z-index: 0;
                 font-family: sans-serif;
+            }
+
+            :host * {
+                box-sizing: border-box;
             }
 
             [hidden] {
@@ -662,6 +666,7 @@ CSS variable | Default
                     });
                 this.addEventListener('iron-resize', this._resizeListener);
                 this.editorDomElement = this.shadowRoot.querySelector('#editorDomElement');
+                this.scopeSubtree(this.editorDomElement.querySelector('svg'), true);
                 this.paperToast = this.shadowRoot.querySelector('paper-toast');
                 this._unloadedChanged(this.unloaded);
                 this.logger.info('common-element connected');
@@ -669,6 +674,7 @@ CSS variable | Default
 
             disconnectedCallback() {
                 super.disconnectedCallback();
+                this.editor.grabber.detach(this, this.editor.grabberContext);
                 this.removeEventListener('iron-resize', this._resizeListener);
                 this.logger.info('common-element disconnected');
             }
@@ -782,6 +788,9 @@ CSS variable | Default
                                 this._buildConfiguration(),
                                 MyScriptCommonElement._generatePenStyle(this.penstyle, this.pencolor, this.penwidth),
                                 MyScriptCommonElement._generateTheme(this.theme, this.themecolor, this.themewidth));
+
+                            this.editor.grabber.detach(this.editor.domElement, this.editor.grabberContext);
+                            this.editor.grabberContext = this.editor.grabber.attach(this, this.editor);
                         });
                     }
                 }

@@ -47,6 +47,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="GloballyMirroredIconsetSVG">
+    <template>
+      <iron-iconset-svg name="globally-mirrored-icons" rtl-mirroring use-global-rtl-attribute>
+        <circle id="circle" cx="20" cy="20" r="10"></circle>
+        <symbol id="rect" viewBox="0 0 50 25" mirror-in-rtl>
+          <rect x="0" y="0" width="50" height="25"></rect>
+        </symbol>
+      </iron-iconset-svg>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="DefaultContainer">
+    <template>
+      <dir></div>
+    </template>
+  </test-fixture>
+
   <test-fixture id="RtlContainer">
     <template>
       <div dir="rtl"></div>
@@ -73,9 +90,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
 
-    suite('<iron-iconset>', function () {
 
-      suite('basic behavior', function () {
+    suite('<iron-iconset>', function() {
+
+      suite('basic behavior', function() {
         var iconset;
         var meta;
         var loadedPromise;
@@ -109,39 +127,71 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       suite('when stamping in an RTL context', function() {
-        var iconset;
-        var rtlContainer;
 
-        setup(function() {
-          iconset = fixture('MirroredIconsetSvg');
-          rtlContainer = fixture('RtlContainer');
-        });
+        var rtlSuite = function(iconsetFixture, iconContainerFixture) {
+          var iconset;
+          var iconContainer;
 
-        test('icons marked as mirror-in-rtl are mirrored', function() {
-          iconset.applyIcon(rtlContainer, 'rect');
-          var svg = rtlContainer.firstElementChild;
-          var computedStyle = window.getComputedStyle(svg);
-          var transform = computedStyle.transform || computedStyle.webkitTransform;
-          expect(transform).to.be.eql('matrix(-1, 0, 0, 1, 0, 0)');
-        });
+          setup(function() {
+            iconset = fixture(iconsetFixture);
+            iconContainer = fixture(iconContainerFixture);
+          });
 
-        test('icons not marked as mirror-in-rtl are not mirrored', function() {
-          iconset.applyIcon(rtlContainer, 'circle');
-          var svg = rtlContainer.firstElementChild;
-          var computedStyle = window.getComputedStyle(svg);
-          var transform = computedStyle.transform || computedStyle.webkitTransform;
-          expect(transform).to.be.eql('none');
-        });
+          test('icons marked as mirror-in-rtl are mirrored', function() {
+            iconset.applyIcon(iconContainer, 'rect');
+            var svg = iconContainer.firstElementChild;
+            var computedStyle = window.getComputedStyle(svg);
+            var transform = computedStyle.transform || computedStyle.webkitTransform;
+            expect(transform).to.be.eql('matrix(-1, 0, 0, 1, 0, 0)');
+          });
 
-        test('many mirrored icons only call getComputedStyle once', function() {
-          sinon.spy(window, 'getComputedStyle');
+          test('icons not marked as mirror-in-rtl are not mirrored', function() {
+            iconset.applyIcon(iconContainer, 'circle');
+            var svg = iconContainer.firstElementChild;
+            var computedStyle = window.getComputedStyle(svg);
+            var transform = computedStyle.transform || computedStyle.webkitTransform;
+            expect(transform).to.be.eql('none');
+          });
 
-          for (var i = 0; i < 3; ++i) {
-            iconset.applyIcon(rtlContainer, 'rect');
-          }
+          test('getComputedStyle is called no more once for all icons', function() {
+            sinon.spy(window, 'getComputedStyle');
 
-          expect(window.getComputedStyle.callCount).to.be.eql(1);
-          window.getComputedStyle.restore();
+            for (var i = 0; i < 3; ++i) {
+              iconset.applyIcon(iconContainer, 'rect');
+            }
+
+            expect(window.getComputedStyle.callCount).to.be.lessThan(2);
+            window.getComputedStyle.restore();
+          });
+        };
+
+        rtlSuite('MirroredIconsetSvg', 'RtlContainer');
+
+        suite('when preferring the global RTL attribute', function() {
+
+          suite('and dir="rtl" on <body>', function() {
+            setup(function() {
+              document.body.setAttribute('dir', 'rtl');
+            });
+
+            teardown(function() {
+              document.body.removeAttribute('dir');
+            });
+
+            rtlSuite('GloballyMirroredIconsetSVG', 'DefaultContainer');
+          });
+
+          suite('and dir="rtl" on <html>', function() {
+            setup(function() {
+              document.documentElement.setAttribute('dir', 'rtl');
+            });
+
+            teardown(function() {
+              document.documentElement.removeAttribute('dir');
+            });
+
+            rtlSuite('GloballyMirroredIconsetSVG', 'DefaultContainer');
+          });
         });
       });
 

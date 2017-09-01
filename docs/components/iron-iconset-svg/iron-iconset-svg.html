@@ -80,6 +80,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       rtlMirroring: {
         type: Boolean,
         value: false
+      },
+
+      /**
+       * Set to true to measure RTL based on the dir attribute on the body or
+       * html elements (measured on document.body or document.documentElement as
+       * available).
+       */
+      useGlobalRtlAttribute: {
+        type: Boolean,
+        value: false
       }
     },
 
@@ -156,12 +166,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      */
     _targetIsRTL: function(target) {
       if (this.__targetIsRTL == null) {
-        if (target && target.nodeType !== Node.ELEMENT_NODE) {
-          target = target.host;
-        }
+        if (this.useGlobalRtlAttribute) {
+          var globalElement =
+              (document.body && document.body.hasAttribute('dir'))
+                  ? document.body
+                  : document.documentElement;
 
-        this.__targetIsRTL = target &&
-            window.getComputedStyle(target)['direction'] === 'rtl';
+          this.__targetIsRTL = globalElement.getAttribute('dir') === 'rtl';
+        } else {
+          if (target && target.nodeType !== Node.ELEMENT_NODE) {
+            target = target.host;
+          }
+
+          this.__targetIsRTL = target &&
+              window.getComputedStyle(target)['direction'] === 'rtl';
+        }
       }
 
       return this.__targetIsRTL;

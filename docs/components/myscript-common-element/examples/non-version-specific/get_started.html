@@ -1,9 +1,10 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <!-- Those three meta make the capture of handwriting inputs easier on modile devices -->
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 
@@ -11,8 +12,8 @@
 
     <link rel="stylesheet" href="../examples.css">
 
-    <!-- As web components are not fully support -->
-    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+    <!-- As web components are not fully support --><!-- Load Custom Elements es5 adapter -->
+    <script src="../../../webcomponentsjs/webcomponents-lite.js" shadydom></script>
     <!-- myscript-common-element is import to be used later -->
     <link rel="import" href="../../myscript-common-element.html">
     <!-- we use a paper toast for the purpose of this demo -->

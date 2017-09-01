@@ -312,7 +312,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                      */
                     editor: {
                         type: Object,
-                        notify: true
+                        notify: true,
+                        observer: '_editorChanged'
                     },
                     /**
                      * Set the additional configuration used to feed MyScript Editor (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)
@@ -649,11 +650,23 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 }));
             }
 
+            _editorChanged(editor) {
+                if (editor) {
+                    editor.grabber.detach(editor.domElement, editor.grabberContext);
+                    editor.grabberContext = editor.grabber.attach(this, editor, this.shadowRoot.querySelector('myscript-common-element').offsetTop);
+                }
+            }
+
             constructor() {
                 super();
                 this.logger = MyScript.LoggerConfig.getLogger('math-web');
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                 this.configuration = this._buildConfiguration(); // Build default configuration to use in common element
+            }
+
+            disconnectedCallback() {
+                super.disconnectedCallback();
+                this.editor.grabber.detach(this, this.editor.grabberContext);
             }
 
             //-----------------------------------------------------------------------

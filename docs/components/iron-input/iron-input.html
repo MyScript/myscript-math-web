@@ -160,7 +160,12 @@ is separate from validation, and `allowed-pattern` does not affect how the input
         autoValidate: {
           type: Boolean,
           value: false
-        }
+        },
+          
+       /**
+        * The native input element.
+        */
+        _inputElement: Object,
       },
 
       observers: [
