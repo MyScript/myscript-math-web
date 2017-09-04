@@ -1,10 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="true"/>
 
     <title>Interact with your application</title>
 
@@ -59,8 +61,6 @@
 <body>
     <nav>
         <p class="question">What is the formula of mass energy equivalence invented by Albert Einstein ?</p>
-        <input type="text" id="importContentField" data-type="application/x-latex" placeholder="e.g. \sqrt {\dfrac {2} {3}}" value="E="/>
-        <button id="importContent">Import</button>
     </nav>
 <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
     <myscript-math-web disableconvertcontrol
@@ -78,14 +78,11 @@
         window.addEventListener('load', () => {
             const myscriptMathWebElement = document.querySelector('myscript-math-web');
             const checkElement = document.querySelector('paper-fab');
-            const latexInput = document.getElementById('importContentField');
-            myscriptMathWebElement.importContent({ x: 200, y: 200 }, new Blob([latexInput.value], { type: latexInput.dataset.type }));
 
             myscriptMathWebElement.addEventListener('exported', (evt) => {
                 console.log('exported ', evt);
                 if (evt.detail.exports) {
                     const latexExport = evt.detail.exports['application/x-latex'] || '';
-                    latexInput.value = latexExport;
                     console.log('We got: ', latexExport);
                     if ("E=mc^{2}" === latexExport) {
                         checkElement.classList.remove('ko');
@@ -97,11 +94,6 @@
                         myscriptMathWebElement.themecolor = '#FF0000';
                     }
                 }
-            });
-
-
-            document.getElementById('importContent').addEventListener('click', function () {
-                myscriptMathWebElement.importContent({ x: 0, y: 0 }, new Blob([latexInput.value], { type: latexInput.dataset.type }));
             });
 
             checkElement.addEventListener('click', () => {

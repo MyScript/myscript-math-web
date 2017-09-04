@@ -1,17 +1,22 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="true"/>
 
     <title>Custom controls</title>
 
     <link rel="stylesheet" href="../examples.css">
     <style>
+        nav {
+            line-height: 52px;
+        }
         myscript-math-web {
-            height: calc(100% - 2.625rem);
+            height: calc(100% - 52px);
         }
     </style>
 
@@ -20,11 +25,13 @@
     <link rel="import" href="../../myscript-math-web.html">
 </head>
 <body>
-    <button onclick="myscriptMathWeb.undo()">undo</button>
-    <button onclick="myscriptMathWeb.redo()">redo</button>
-    <button onclick="myscriptMathWeb.clear()">clear</button>
-    <button onclick="myscriptMathWeb.exportContent()">export</button>
-    <button onclick="myscriptMathWeb.convert()">convert</button>
+    <nav>
+        <button onclick="myscriptMathWeb.undo()">undo</button>
+        <button onclick="myscriptMathWeb.redo()">redo</button>
+        <button onclick="myscriptMathWeb.clear()">clear</button>
+        <button onclick="myscriptMathWeb.exportContent()">export</button>
+        <button onclick="myscriptMathWeb.convert()">convert</button>
+    </nav>
     <paper-toast class="fit-top"></paper-toast>
     <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
     <myscript-math-web scheme="https"

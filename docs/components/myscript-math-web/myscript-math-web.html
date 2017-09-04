@@ -117,18 +117,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             disablecontrols="[[ disablecontrols ]]"
             disableclearcontrol="[[ disableclearcontrol ]]"
             disableundoredocontrol="[[ disableundoredocontrol ]]"
-            disableconvertcontrol="[[ disableconvertcontrol ]]"
-            on-loaded="_forwardEventListener"
-            on-change="_forwardEventListener"
-            on-exported="_forwardEventListener"
-            on-converted="_forwardEventListener"
-            on-undo="_forwardEventListener"
-            on-redo="_forwardEventListener"
-            on-clear="_forwardEventListener"
-            on-export="_forwardEventListener"
-            on-convert="_forwardEventListener"
-            on-idle="_forwardEventListener"
-            on-error="_forwardEventListener">
+            disableconvertcontrol="[[ disableconvertcontrol ]]">
         </myscript-common-element>
     </template>
     <script>
@@ -312,8 +301,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                      */
                     editor: {
                         type: Object,
-                        notify: true,
-                        observer: '_editorChanged'
+                        notify: true
                     },
                     /**
                      * Set the additional configuration used to feed MyScript Editor (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)
@@ -643,30 +631,15 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     this.scratchoutdetectionsensitivity);
             }
 
-            _forwardEventListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _editorChanged(editor) {
-                if (editor) {
-                    editor.grabber.detach(editor.domElement, editor.grabberContext);
-                    editor.grabberContext = editor.grabber.attach(this, editor, this.shadowRoot.querySelector('myscript-common-element').offsetTop);
-                }
-            }
-
             constructor() {
                 super();
                 this.logger = MyScript.LoggerConfig.getLogger('math-web');
-                this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
-                this.configuration = this._buildConfiguration(); // Build default configuration to use in common element
             }
 
-            disconnectedCallback() {
-                super.disconnectedCallback();
-                this.editor.grabber.detach(this, this.editor.grabberContext);
+            connectedCallback() {
+                super.connectedCallback();
+                this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+                this.configuration = this._buildConfiguration(); // Build default configuration to use in common element
             }
 
             //-----------------------------------------------------------------------
