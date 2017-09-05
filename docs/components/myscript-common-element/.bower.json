@@ -36,8 +36,7 @@
     "iron-icons": "PolymerElements/iron-icons#^2.0.1",
     "paper-fab": "PolymerElements/paper-fab#^2.0.0",
     "paper-toast": "PolymerElements/paper-toast#^2.0.0",
-    "myscript": "2.0.0-alpha1",
-    "pepjs": "^0.4.3"
+    "myscript": "2.0.0-alpha1"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^3.0.0",
@@ -46,11 +45,11 @@
     "paper-toggle-button": "^2.0.0",
     "paper-slider": "^2.0.2"
   },
-  "_release": "29f88e0087",
+  "_release": "28d17eb924",
   "_resolution": {
     "type": "branch",
     "branch": "2.0.0-alpha1",
-    "commit": "29f88e00879970861c73460b572a179265caa327"
+    "commit": "28d17eb924c2b6a2f688e4d02476137f7fe52256"
   },
   "_source": "https://github.com/MyScript/myscript-common-element.git",
   "_target": "2.0.0-alpha1",

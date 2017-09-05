@@ -1,6 +1,6 @@
-<link rel="import" href="./pepjs-import.html">
 <link rel="import" href="./myscriptjs-import.html">
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/lib/mixins/gesture-event-listeners.html">
 <link rel="import" href="./myscript-stylesheet.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
@@ -55,15 +55,11 @@ CSS variable | Default
                 --paper-fab-keyboard-focus-background: var(--myscript-common-element-button-focus-background);
                 --paper-fab-disabled-background: var(--myscript-common-element-button-disabled-background);
 
-                contain: content;
                 box-sizing: border-box;
-                touch-action: none;
                 display: block;
                 position: relative;
                 min-height: 200px;
                 min-width: 200px;
-                background: var(--myscript-common-element-background);
-                background-size: cover;
                 color: var(--myscript-common-element-color);
                 z-index: 0;
                 font-family: sans-serif;
@@ -78,11 +74,10 @@ CSS variable | Default
             }
 
             nav {
-                position: inherit;
-                float: left;
                 display: flex;
                 display: -webkit-flex;
                 z-index: 25;
+                border-top: 1px solid #F5F6F7;
             }
 
             paper-fab {
@@ -90,16 +85,20 @@ CSS variable | Default
             }
 
             .ms-editor {
-                position: absolute;
-                height: 100%;
+                position: relative;
+                height: calc(100% - 53px);
                 width: 100%;
                 z-index: 20;
+                background: var(--myscript-common-element-background);
+            }
+
+            nav[hidden] + .ms-editor {
+                height: calc(100%);
             }
 
             .ms-editor canvas,
             .ms-editor svg {
                 z-index: 15;
-                pointer-events: none;
                 position: absolute;
                 left: 0;
                 top: 0;
@@ -110,6 +109,7 @@ CSS variable | Default
             .ms-editor canvas.ms-rendering-canvas,
             .ms-editor svg {
                 z-index: 10;
+                pointer-events: none;
                 background: var(--myscript-common-element-line-pattern);
             }
 
@@ -153,18 +153,12 @@ CSS variable | Default
              on-loaded="_changeListener"
              on-change="_changeListener"
              on-exported="_exportedListener"
-             on-converted="_convertedListener"
-             on-undo="_forwardListener"
-             on-redo="_forwardListener"
-             on-clear="_forwardListener"
-             on-export="_forwardListener"
-             on-convert="_forwardListener"
              on-error="_errorListener">
         </div>
         <paper-toast class="fit-bottom"></paper-toast>
     </template>
     <script>
-        class MyScriptCommonElement extends Polymer.mixinBehaviors([Polymer.IronResizableBehavior], Polymer.Element) {
+        class MyScriptCommonElement extends Polymer.GestureEventListeners(Polymer.mixinBehaviors([Polymer.IronResizableBehavior], Polymer.Element)) {
 
             static get is() {
                 return 'myscript-common-element';
@@ -575,6 +569,29 @@ CSS variable | Default
                 return conf;
             }
 
+            static _roundFloat(oneFloat, requestedFloatPrecision) {
+                const floatPrecisionArray = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000];
+                if (requestedFloatPrecision || requestedFloatPrecision === 0) {
+                    let floatPrecision;
+                    if (requestedFloatPrecision > 10) {
+                        floatPrecision = floatPrecisionArray[10];
+                    } else {
+                        floatPrecision = floatPrecisionArray[requestedFloatPrecision];
+                    }
+                    return Math.round(oneFloat * floatPrecision) / floatPrecision;
+                }
+                return oneFloat;
+            };
+
+            static _extractPoint(event, configuration) {
+                const rect = event.target.getBoundingClientRect();
+                return {
+                    x: MyScriptCommonElement._roundFloat(event.detail.x - rect.left - event.target.clientLeft, configuration.xyFloatPrecision),
+                    y: MyScriptCommonElement._roundFloat(event.detail.y - rect.top - event.target.clientTop, configuration.xyFloatPrecision),
+                    t: MyScriptCommonElement._roundFloat(event.timeStamp, configuration.timestampFloatPrecision)
+                };
+            };
+
             _buildConfiguration() {
                 return MyScriptCommonElement._generateConfiguration(
                     this.configuration,
@@ -606,47 +623,71 @@ CSS variable | Default
                     this.canexport = event.detail.canExport;
                     this.canconvert = event.detail.canConvert;
                 }
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
             }
 
             _idleListener(event) {
                 if (event.detail) {
                     this.idle = event.detail.idle;
                 }
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
             }
 
             _exportedListener(event) {
                 this.exports = event.detail ? event.detail.exports : {};
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
-            _forwardListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
             }
 
             _errorListener(event) {
                 this.logger.error('error', event);
-                if (event.detail && event.detail.message && (!event.detail.recoverable ||  event.detail.recoverable === true)) {
+                if (event.detail && event.detail.message && (!event.detail.recoverable || event.detail.recoverable === true)) {
                     this.paperToast.text = event.detail.message;
                     this.paperToast.fitIn = this.paperToast.show();
                 }
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
+            }
+
+            _attachGrabber(element, editor) {
+                const handleTrack = (evt) => {
+                    this.logger.debug('event', evt);
+
+                    switch (evt.detail.state) {
+                        case 'start':
+                            editor.pointerDown(MyScriptCommonElement._extractPoint(evt, editor.configuration));
+                            break;
+                        case 'track':
+                            editor.pointerMove(MyScriptCommonElement._extractPoint(evt, editor.configuration));
+                            break;
+                        case 'end':
+                            editor.pointerUp(MyScriptCommonElement._extractPoint(evt, editor.configuration));
+                            break;
+                    }
+                };
+
+                const handleTap = (evt) => {
+                    this.logger.debug('event', evt);
+                    editor.pointerDown(MyScriptCommonElement._extractPoint(evt, editor.configuration));
+                    editor.pointerUp(MyScriptCommonElement._extractPoint(evt, editor.configuration));
+                };
+
+                const context = {
+                    listeners: [{
+                        types: ['track'],
+                        listener: handleTrack
+                    }, {
+                        types: ['tap'],
+                        listener: handleTap
+                    }]
+                };
+
+                this.logger.debug('attaching listeners', context);
+                context.listeners.forEach((item) => {
+                    item.types.forEach(type => Polymer.Gestures.addListener(element, type, item.listener));
+                });
+                return context;
+            }
+
+            _detachGrabber(element, context) {
+                this.logger.debug('detaching listeners', context);
+                context.listeners.forEach((item) => {
+                    item.types.forEach(type => Polymer.Gestures.removeListener(element, type, item.listener));
+                });
             }
 
             constructor() {
@@ -666,7 +707,6 @@ CSS variable | Default
                     });
                 this.addEventListener('iron-resize', this._resizeListener);
                 this.editorDomElement = this.shadowRoot.querySelector('#editorDomElement');
-                this.scopeSubtree(this.editorDomElement.querySelector('svg'), true);
                 this.paperToast = this.shadowRoot.querySelector('paper-toast');
                 this._unloadedChanged(this.unloaded);
                 this.logger.info('common-element connected');
@@ -674,7 +714,6 @@ CSS variable | Default
 
             disconnectedCallback() {
                 super.disconnectedCallback();
-                this.editor.grabber.detach(this, this.editor.grabberContext);
                 this.removeEventListener('iron-resize', this._resizeListener);
                 this.logger.info('common-element disconnected');
             }
@@ -785,12 +824,15 @@ CSS variable | Default
                     } else {
                         Polymer.RenderStatus.beforeNextRender(this, () => {
                             this.editor = MyScript.register(this.editorDomElement,
-                                this._buildConfiguration(),
-                                MyScriptCommonElement._generatePenStyle(this.penstyle, this.pencolor, this.penwidth),
-                                MyScriptCommonElement._generateTheme(this.theme, this.themecolor, this.themewidth));
-
-                            this.editor.grabber.detach(this.editor.domElement, this.editor.grabberContext);
-                            this.editor.grabberContext = this.editor.grabber.attach(this, this.editor);
+                                                            this._buildConfiguration(),
+                                                            MyScriptCommonElement._generatePenStyle(this.penstyle, this.pencolor, this.penwidth),
+                                                            MyScriptCommonElement._generateTheme(this.theme, this.themecolor, this.themewidth),
+                                                            {
+                                                                grabber: {
+                                                                    attach: this._attachGrabber.bind(this),
+                                                                    detach: this._detachGrabber.bind(this)
+                                                                }
+                                                            });
                         });
                     }
                 }
