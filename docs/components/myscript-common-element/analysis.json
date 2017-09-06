@@ -523,9 +523,9 @@
           "defaultValue": "false"
         },
         {
-          "name": "disablecontrols",
+          "name": "disableautoreconnect",
           "type": "boolean",
-          "description": "If set to true, remove the controls (undo/redo, clear...).",
+          "description": "If set to true, disable the autoReconnect.",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -545,9 +545,9 @@
           "defaultValue": "false"
         },
         {
-          "name": "disableundoredocontrol",
+          "name": "disablecontrols",
           "type": "boolean",
-          "description": "If set to true, remove the undo/redo controls.",
+          "description": "If set to true, remove the controls (undo/redo, clear...).",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -555,7 +555,29 @@
               "column": 20
             },
             "end": {
-              "line": 447,
+              "line": 448,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "disableundoredocontrol",
+          "type": "boolean",
+          "description": "If set to true, remove the undo/redo controls.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 452,
+              "column": 20
+            },
+            "end": {
+              "line": 456,
               "column": 21
             }
           },
@@ -571,11 +593,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 451,
+              "line": 460,
               "column": 20
             },
             "end": {
-              "line": 455,
+              "line": 464,
               "column": 21
             }
           },
@@ -591,11 +613,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 459,
+              "line": 468,
               "column": 20
             },
             "end": {
-              "line": 463,
+              "line": 472,
               "column": 21
             }
           },
@@ -611,11 +633,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 468,
+              "line": 477,
               "column": 20
             },
             "end": {
-              "line": 471,
+              "line": 480,
               "column": 21
             }
           },
@@ -632,11 +654,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 475,
+              "line": 484,
               "column": 20
             },
             "end": {
-              "line": 479,
+              "line": 488,
               "column": 21
             }
           },
@@ -654,11 +676,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 483,
+              "line": 492,
               "column": 20
             },
             "end": {
-              "line": 487,
+              "line": 496,
               "column": 21
             }
           },
@@ -675,11 +697,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 594,
+              "line": 609,
               "column": 12
             },
             "end": {
-              "line": 607,
+              "line": 623,
               "column": 13
             }
           },
@@ -692,11 +714,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 609,
+              "line": 625,
               "column": 12
             },
             "end": {
-              "line": 614,
+              "line": 630,
               "column": 13
             }
           },
@@ -713,11 +735,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 616,
+              "line": 632,
               "column": 12
             },
             "end": {
-              "line": 625,
+              "line": 641,
               "column": 13
             }
           },
@@ -734,11 +756,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 627,
+              "line": 643,
               "column": 12
             },
             "end": {
-              "line": 631,
+              "line": 647,
               "column": 13
             }
           },
@@ -755,11 +777,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 633,
+              "line": 649,
               "column": 12
             },
             "end": {
-              "line": 635,
+              "line": 651,
               "column": 13
             }
           },
@@ -776,11 +798,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 637,
+              "line": 653,
               "column": 12
             },
             "end": {
-              "line": 643,
+              "line": 659,
               "column": 13
             }
           },
@@ -797,11 +819,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 645,
+              "line": 661,
               "column": 12
             },
             "end": {
-              "line": 683,
+              "line": 699,
               "column": 13
             }
           },
@@ -821,11 +843,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 685,
+              "line": 701,
               "column": 12
             },
             "end": {
-              "line": 690,
+              "line": 706,
               "column": 13
             }
           },
@@ -845,11 +867,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 697,
+              "line": 713,
               "column": 12
             },
             "end": {
-              "line": 712,
+              "line": 728,
               "column": 13
             }
           },
@@ -862,11 +884,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 714,
+              "line": 730,
               "column": 12
             },
             "end": {
-              "line": 718,
+              "line": 734,
               "column": 13
             }
           },
@@ -879,11 +901,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 723,
+              "line": 739,
               "column": 12
             },
             "end": {
-              "line": 727,
+              "line": 743,
               "column": 13
             }
           },
@@ -896,11 +918,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 732,
+              "line": 748,
               "column": 12
             },
             "end": {
-              "line": 736,
+              "line": 752,
               "column": 13
             }
           },
@@ -913,11 +935,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 741,
+              "line": 757,
               "column": 12
             },
             "end": {
-              "line": 745,
+              "line": 761,
               "column": 13
             }
           },
@@ -930,11 +952,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 750,
+              "line": 766,
               "column": 12
             },
             "end": {
-              "line": 754,
+              "line": 770,
               "column": 13
             }
           },
@@ -947,11 +969,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 762,
+              "line": 778,
               "column": 12
             },
             "end": {
-              "line": 766,
+              "line": 782,
               "column": 13
             }
           },
@@ -978,11 +1000,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 772,
+              "line": 788,
               "column": 12
             },
             "end": {
-              "line": 776,
+              "line": 792,
               "column": 13
             }
           },
@@ -1000,11 +1022,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 781,
+              "line": 797,
               "column": 12
             },
             "end": {
-              "line": 785,
+              "line": 801,
               "column": 13
             }
           },
@@ -1017,11 +1039,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 791,
+              "line": 807,
               "column": 12
             },
             "end": {
-              "line": 795,
+              "line": 811,
               "column": 13
             }
           },
@@ -1034,11 +1056,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 797,
+              "line": 813,
               "column": 12
             },
             "end": {
-              "line": 802,
+              "line": 818,
               "column": 13
             }
           },
@@ -1064,11 +1086,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 804,
+              "line": 820,
               "column": 12
             },
             "end": {
-              "line": 809,
+              "line": 825,
               "column": 13
             }
           },
@@ -1094,11 +1116,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 811,
+              "line": 827,
               "column": 12
             },
             "end": {
-              "line": 815,
+              "line": 831,
               "column": 13
             }
           },
@@ -1115,11 +1137,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 817,
+              "line": 833,
               "column": 12
             },
             "end": {
-              "line": 838,
+              "line": 854,
               "column": 13
             }
           },
@@ -1169,7 +1191,7 @@
           "column": 8
         },
         "end": {
-          "line": 839,
+          "line": 855,
           "column": 9
         }
       },
@@ -1578,8 +1600,8 @@
           "type": "boolean"
         },
         {
-          "name": "disablecontrols",
-          "description": "If set to true, remove the controls (undo/redo, clear...).",
+          "name": "disableautoreconnect",
+          "description": "If set to true, disable the autoReconnect.",
           "sourceRange": {
             "start": {
               "line": 434,
@@ -1594,15 +1616,31 @@
           "type": "boolean"
         },
         {
-          "name": "disableundoredocontrol",
-          "description": "If set to true, remove the undo/redo controls.",
+          "name": "disablecontrols",
+          "description": "If set to true, remove the controls (undo/redo, clear...).",
           "sourceRange": {
             "start": {
               "line": 443,
               "column": 20
             },
             "end": {
-              "line": 447,
+              "line": 448,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "disableundoredocontrol",
+          "description": "If set to true, remove the undo/redo controls.",
+          "sourceRange": {
+            "start": {
+              "line": 452,
+              "column": 20
+            },
+            "end": {
+              "line": 456,
               "column": 21
             }
           },
@@ -1614,11 +1652,11 @@
           "description": "If set to true, remove the clear control.",
           "sourceRange": {
             "start": {
-              "line": 451,
+              "line": 460,
               "column": 20
             },
             "end": {
-              "line": 455,
+              "line": 464,
               "column": 21
             }
           },
@@ -1630,11 +1668,11 @@
           "description": "If set to true, remove the convert control.",
           "sourceRange": {
             "start": {
-              "line": 459,
+              "line": 468,
               "column": 20
             },
             "end": {
-              "line": 463,
+              "line": 472,
               "column": 21
             }
           },
@@ -1646,11 +1684,11 @@
           "description": "Exports.",
           "sourceRange": {
             "start": {
-              "line": 468,
+              "line": 477,
               "column": 20
             },
             "end": {
-              "line": 471,
+              "line": 480,
               "column": 21
             }
           },
@@ -1662,11 +1700,11 @@
           "description": "True if component is idle",
           "sourceRange": {
             "start": {
-              "line": 475,
+              "line": 484,
               "column": 20
             },
             "end": {
-              "line": 479,
+              "line": 488,
               "column": 21
             }
           },
@@ -1678,11 +1716,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 483,
+              "line": 492,
               "column": 20
             },
             "end": {
-              "line": 487,
+              "line": 496,
               "column": 21
             }
           },
@@ -1821,6 +1859,12 @@
           "type": "CustomEvent",
           "name": "canconvert-changed",
           "description": "Fired when the `canconvert` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "disableautoreconnect-changed",
+          "description": "Fired when the `disableautoreconnect` property changes.",
           "metadata": {}
         },
         {

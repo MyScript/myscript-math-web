@@ -430,6 +430,15 @@ CSS variable | Default
                         notify: true
                     },
                     /**
+                     * If set to true, disable the autoReconnect.
+                     */
+                    disableautoreconnect: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false,
+                        notify: true
+                    },
+                    /**
                      * If set to true, remove the controls (undo/redo, clear...).
                      */
                     disablecontrols: {
@@ -523,7 +532,7 @@ CSS variable | Default
                 return inlinestyle;
             }
 
-            static _generateConfiguration(configuration, triggerdelay, processdelay, ondemand, type, protocol, apiversion, scheme, host, applicationkey, hmackey) {
+            static _generateConfiguration(configuration, triggerdelay, processdelay, ondemand, type, protocol, apiversion, scheme, host, applicationkey, hmackey, disableautoreconnect) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
                 if (!conf.triggers) {
@@ -534,6 +543,9 @@ CSS variable | Default
                 }
                 if (!conf.recognitionParams.server) {
                     conf.recognitionParams.server = {};
+                }
+                if (!conf.recognitionParams.server.websocket) {
+                    conf.recognitionParams.server.websocket = {};
                 }
                 if (triggerdelay) {
                     conf.triggerdelay = triggerdelay;
@@ -565,6 +577,9 @@ CSS variable | Default
                 }
                 if (hmackey) {
                     conf.recognitionParams.server.hmacKey = hmackey;
+                }
+                if (disableautoreconnect !== undefined) {
+                    conf.recognitionParams.server.websocket.autoReconnect = !disableautoreconnect;
                 }
                 return conf;
             }
@@ -604,7 +619,8 @@ CSS variable | Default
                     this.scheme,
                     this.host,
                     this.applicationkey,
-                    this.hmackey);
+                    this.hmackey,
+                    this.disableautoreconnect);
             }
 
             _resizeListener(event) {

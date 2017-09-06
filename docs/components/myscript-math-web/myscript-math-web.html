@@ -114,6 +114,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
             idle="[[ idle ]]"
+            disableautoreconnect="[[ disableautoreconnect ]]"
             disablecontrols="[[ disablecontrols ]]"
             disableclearcontrol="[[ disableclearcontrol ]]"
             disableundoredocontrol="[[ disableundoredocontrol ]]"
@@ -407,6 +408,15 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         type: Boolean,
                         value: false,
                         reflectToAttribute: true,
+                        notify: true
+                    },
+                    /**
+                     * If set to true, disable the autoReconnect.
+                     */
+                    disableautoreconnect: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false,
                         notify: true
                     },
                     /**
