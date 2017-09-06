@@ -107,7 +107,7 @@ Custom property | Description | Default
             }
 
             _getSymboltree(exports) {
-                return (exports && exports.SYMBOLTREE)? JSON.stringify(exports.SYMBOLTREE) : '';
+                return exports? JSON.stringify(exports['application/vnd.myscript.jiix'] || exports.SYMBOLTREE || '') : '';
             }
 
             _displaymath(resulttypes, mimetypes) {
@@ -127,7 +127,7 @@ Custom property | Description | Default
             }
 
             _displaysymboltree(resulttypes, mimetypes) {
-                return resulttypes.indexOf('SYMBOLTREE') > -1;
+                return (resulttypes.indexOf('SYMBOLTREE') > -1) || (mimetypes.indexOf('application/vnd.myscript.jiix') > -1);
             }
 
         }
