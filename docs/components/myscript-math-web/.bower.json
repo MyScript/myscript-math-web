@@ -26,19 +26,20 @@
     "!myscript-math-exports.html",
     "!myscript-math-web.html",
     "!katex-import.html",
+    "!katex-component.html",
     "!index.html",
     "!analysis.json",
     "!bower.json",
     "!examples/**/*"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^2.0.1",
+    "polymer": "^2.0.1",
     "myscript-common-element": "2.0.0-alpha1",
     "KaTeX": "katex#^0.7.1"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^3.0.0",
     "webcomponentsjs": "^1.0.1",
+    "iron-component-page": "^3.0.0",
     "paper-swatch-picker": "^2.0.1",
     "paper-toggle-button": "^2.0.0",
     "paper-slider": "^2.0.2"

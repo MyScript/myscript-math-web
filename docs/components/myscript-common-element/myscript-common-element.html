@@ -3,7 +3,7 @@
 <link rel="import" href="../polymer/lib/mixins/gesture-event-listeners.html">
 <link rel="import" href="./myscript-stylesheet.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
 <!--
@@ -51,9 +51,28 @@ CSS variable | Default
                 --myscript-common-element-loader: var(--myscript-editor-loader);
                 --myscript-common-element-error: var(--myscript-editor-error);
 
-                --paper-fab-background: var(--myscript-common-element-button-background);
-                --paper-fab-keyboard-focus-background: var(--myscript-common-element-button-focus-background);
-                --paper-fab-disabled-background: var(--myscript-common-element-button-disabled-background);
+                --paper-fab: {
+                    margin: 6px;
+                    background: var(--myscript-common-element-button-background);
+                    box-sizing: border-box;
+                };
+
+                --paper-fab-disabled: {
+                    background-color: var(--myscript-common-element-button-disabled-background);
+                };
+
+                --paper-fab-focus: {
+                    background-color: var(--myscript-common-element-button-focus-background);
+                };
+
+                --paper-button: {
+                    background: none;
+                    text-transform: none;
+                };
+
+                --paper-button-disabled: {
+                    background: none;
+                };
 
                 box-sizing: border-box;
                 display: block;
@@ -77,16 +96,17 @@ CSS variable | Default
                 display: flex;
                 display: -webkit-flex;
                 z-index: 25;
-                border-top: 1px solid #F5F6F7;
+                border-top: 1px solid #D7DDE3; /*#A9B7C5*/
+                height: 52px;
             }
 
-            paper-fab {
-                margin: 6px;
+            .spacer {
+                flex-grow: 2;
             }
 
             .ms-editor {
                 position: relative;
-                height: calc(100% - 53px);
+                height: calc(100% - 52px);
                 width: 100%;
                 z-index: 20;
                 background: var(--myscript-common-element-background);
@@ -143,9 +163,11 @@ CSS variable | Default
             <paper-fab mini src$="[[importPath]]redo.svg" title="redo" on-tap="redo"
                        disabled="[[ !canredo ]]" hidden="[[ disableundoredocontrol ]]">
             </paper-fab>
-            <paper-fab mini src$="[[importPath]]convert.svg" title="convert" on-tap="convert"
+            <div class="spacer"></div>
+            <paper-button mini title="convert" on-tap="convert"
                        disabled="[[ !canconvert ]]" hidden="[[ disableconvertcontrol ]]">
-            </paper-fab>
+                Convert
+            </paper-button>
         </nav>
         <div id="editorDomElement"
              class="ms-editor"
