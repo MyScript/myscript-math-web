@@ -1,54 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="true"/>
+    <head>
+        <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="true"/>
 
-    <title>Custom controls</title>
+        <title>Custom controls</title>
 
-    <link rel="stylesheet" href="../examples.css">
-    <style>
-        nav {
-            line-height: 52px;
-        }
-        myscript-common-element {
-            height: calc(100% - 52px);
-        }
-    </style>
+        <link rel="stylesheet" href="../examples.css">
+        <style>
+            nav {
+                line-height: 52px;
+            }
 
-    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../../../paper-toast/paper-toast.html">
-    <link rel="import" href="../../myscript-common-element.html">
-</head>
-<body>
-    <nav>
-        <button onclick="myscriptCommonElement.undo()">undo</button>
-        <button onclick="myscriptCommonElement.redo()">redo</button>
-        <button onclick="myscriptCommonElement.clear()">clear</button>
-        <button onclick="myscriptCommonElement.exportContent()">export</button>
-        <button onclick="myscriptCommonElement.convert()">convert</button>
-    </nav>
-    <paper-toast class="fit-top"></paper-toast>
-    <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-    <myscript-common-element scheme="https"
-                       host="newcloud.myscript.com"
-                       applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-                       hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
-                       ondemand
-                       disablecontrols>
-    </myscript-common-element>
-    <script>
-        const myscriptCommonElement = document.querySelector('myscript-common-element');
-        const paperToast = document.querySelector('paper-toast');
-        myscriptCommonElement.addEventListener('exported', (event) => {
-            paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
-            paperToast.fitIn = paperToast.show();
-        });
-    </script>
-</body>
+            myscript-common-element {
+                height: calc(100% - 52px);
+            }
+        </style>
+
+        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+        <link rel="import" href="../../../paper-toast/paper-toast.html">
+        <link rel="import" href="../../myscript-common-element.html">
+    </head>
+
+    <body>
+        <nav>
+            <button onclick="myscriptCommonElement.undo()">undo</button>
+            <button onclick="myscriptCommonElement.redo()">redo</button>
+            <button onclick="myscriptCommonElement.clear()">clear</button>
+            <button onclick="myscriptCommonElement.exportContent()">export</button>
+            <button onclick="myscriptCommonElement.convert()">convert</button>
+        </nav>
+        <paper-toast class="fit-top"></paper-toast>
+        <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+        <myscript-common-element scheme="https"
+                                 host="newcloud.myscript.com"
+                                 applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+                                 hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+                                 ondemand
+                                 disablecontrols>
+        </myscript-common-element>
+        <script>
+            const myscriptCommonElement = document.querySelector('myscript-common-element');
+            const paperToast = document.querySelector('paper-toast');
+            myscriptCommonElement.addEventListener('exported', (event) => {
+                paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
+                paperToast.fitIn = paperToast.show();
+            });
+        </script>
+    </body>
 
 </html>

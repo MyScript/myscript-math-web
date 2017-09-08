@@ -1,66 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <!-- Those three meta make the capture of handwriting inputs easier on modile devices -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="true"/>
+    <head>
+        <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="true"/>
 
-    <title>Import content</title>
+        <title>Import content</title>
 
-    <link rel="stylesheet" href="../examples.css">
-    <style>
-        nav {
-            height: 60px;
-            display: flex;
-            justify-content: space-between;
-        }
+        <link rel="stylesheet" href="../examples.css">
+        <style>
+            nav {
+                height: 60px;
+                display: flex;
+                justify-content: space-between;
+            }
 
-        nav span {
-            display: flex;
-            width: 100%;
-        }
+            nav span {
+                display: flex;
+                width: 100%;
+            }
 
-        input {
-            width: 100%;
-        }
+            input {
+                width: 100%;
+            }
 
-        myscript-common-element {
-            height: calc(100% - 60px);
+            myscript-common-element {
+                height: calc(100% - 60px);
 
-        }
-    </style>
+            }
+        </style>
 
-    <!-- As web components are not fully support -->
-    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-    <!-- myscript-common-element is import to be used later -->
-    <link rel="import" href="../../myscript-common-element.html">
-</head>
+        <!-- As web components are not fully support -->
+        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+        <!-- myscript-common-element is import to be used later -->
+        <link rel="import" href="../../myscript-common-element.html">
+    </head>
 
-<body>
-<nav>
-    <span>
-        <input type="text" id="importContentField" data-type="text/plain" placeholder="e.g. hello world">
-        <button id="importContent">Import</button>
-    </span>
-</nav>
-<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-<myscript-common-element scheme="https"
-                         host="newcloud.myscript.com"
-                         applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-                         hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
-</myscript-common-element>
-<script>
-    const component = document.querySelector('myscript-common-element');
-    const importContent = document.getElementById('importContentField');
+    <body>
+        <nav>
+            <span>
+                <input type="text" id="importContentField" data-type="text/plain" placeholder="e.g. hello world"/>
+                <button id="importContent">Import</button>
+            </span>
+        </nav>
+        <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+        <myscript-common-element scheme="https"
+                                 host="newcloud.myscript.com"
+                                 applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+                                 hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
+        </myscript-common-element>
+        <script>
+            const component = document.querySelector('myscript-common-element');
+            const importContent = document.getElementById('importContentField');
 
-    document.getElementById('importContent').addEventListener('click', function () {
-        component.importContent({ x: 0, y: 0 }, importContent.value, importContent.dataset.type);
-    });
-</script>
-</body>
+            document.getElementById('importContent').addEventListener('click', function () {
+                component.importContent({ x: 0, y: 0 }, importContent.value, importContent.dataset.type);
+            });
+        </script>
+    </body>
 
 </html>

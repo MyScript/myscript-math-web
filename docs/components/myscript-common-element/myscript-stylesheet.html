@@ -20,11 +20,11 @@ CSS variable | Default
             :host {
                 --myscript-editor-background: none;
                 --myscript-editor-color: #1A9FFF;
-                --myscript-editor-line-pattern: repeating-linear-gradient(to bottom, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px), repeating-linear-gradient(to right, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px);
+                --myscript-editor-hover-color: #0177CB;
+                --myscript-editor-focus-color: #0798FF;
+                --myscript-editor-disabled-color: #F5F6F7;
+                --myscript-editor-line-pattern: repeating-linear-gradient(180deg, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px), repeating-linear-gradient(90deg, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px);
                 --myscript-editor-capture-background: none;
-                --myscript-editor-button-background: #1A9FFF;
-                --myscript-editor-button-focus-background: #1A9FFF;
-                --myscript-editor-button-disabled-background: #F5F6F7;
                 --myscript-editor-error-background: url(data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCA3Ni41IDYxMiA0NTkiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiPgogICAgPHBhdGggZmlsbD0iIzFBOUZGRiIgZD0iTTQ5NC43LDIyOS41Yy0xNy44NTEtODYuNy05NC4zNTEtMTUzLTE4OC43LTE1M2MtMzguMjUsMC03My45NSwxMC4yLTEwMiwzMC42bDM4LjI1LDM4LjI1IGMxNy44NS0xMi43NSw0MC44LTE3Ljg1LDYzLjc1LTE3Ljg1Yzc2LjUsMCwxNDAuMjUsNjMuNzUsMTQwLjI1LDE0MC4yNXYxMi43NWgzOC4yNWM0My4zNSwwLDc2LjUsMzMuMTUsNzYuNSw3Ni41IGMwLDI4LjA1LTE1LjMsNTMuNTUtNDAuOCw2Ni4zbDM4LjI1LDM4LjI1QzU5MS42LDQzOC42LDYxMiw0MDAuMzUsNjEyLDM1N0M2MTIsMjkwLjcsNTU4LjQ1LDIzNC42LDQ5NC43LDIyOS41eiBNNzYuNSwxMDkuNjUgbDcxLjQsNjguODVDNjYuMywxODMuNiwwLDI0OS45LDAsMzMxLjVjMCw4NC4xNSw2OC44NSwxNTMsMTUzLDE1M2gyOTguMzVsNTEsNTFsMzMuMTUtMzMuMTVMMTA5LjY1LDc2LjVMNzYuNSwxMDkuNjV6IE0xOTYuMzUsMjI5LjVsMjA0LDIwNEgxNTNjLTU2LjEsMC0xMDItNDUuOS0xMDItMTAyYzAtNTYuMSw0NS45LTEwMiwxMDItMTAySDE5Ni4zNXoiIC8+Cjwvc3ZnPgo=);
 
                 --myscript-editor-loader: {
@@ -48,6 +48,74 @@ CSS variable | Default
                     text-align: center;
                     word-wrap: break-word;
                 };
+
+                --myscript-button: {
+                    cursor: pointer;
+                    box-sizing: border-box;
+                    border: none;
+                    padding: 8px;
+                    margin: 6px;
+                    height: 40px;
+                    outline: none;
+                };
+
+                --myscript-icon-button: {
+                    @apply  --myscript-button;
+                    border-radius: 50%;
+                    width: 40px;
+                };
+
+            }
+
+            .spacer {
+                flex-grow: 2;
+            }
+
+            [hidden] {
+                display: none !important;
+            }
+
+            nav {
+                display: flex;
+                display: -webkit-flex;
+                height: 52px;
+            }
+
+            nav[hidden] + .ms-editor {
+                height: 100%;
+            }
+
+            .ms-editor {
+                position: relative;
+                z-index: 20;
+                height: calc(100% - 52px);
+                width: 100%;
+            }
+
+            .ms-editor canvas,
+            .ms-editor svg {
+                z-index: 15;
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 100%;
+            }
+
+            .ms-editor canvas.ms-rendering-canvas,
+            .ms-editor svg {
+                z-index: 10;
+                pointer-events: none;
+            }
+
+            .error-msg {
+                z-index: 30;
+                position: absolute;
+            }
+
+            .loader {
+                z-index: 35;
+                position: absolute;
             }
 
             @keyframes spin {

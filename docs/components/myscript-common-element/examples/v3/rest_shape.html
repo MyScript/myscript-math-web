@@ -1,39 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="true"/>
+    <head>
+        <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="true"/>
 
-    <title>REST Shape v3</title>
+        <title>REST Shape v3</title>
 
-    <link rel="stylesheet" href="../examples.css">
+        <link rel="stylesheet" href="../examples.css">
 
-    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../../myscript-common-element.html">
-    <link rel="import" href="../../../paper-toast/paper-toast.html">
-</head>
+        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+        <link rel="import" href="../../myscript-common-element.html">
+        <link rel="import" href="../../../paper-toast/paper-toast.html">
+    </head>
 
-<body>
-    <paper-toast class="fit-top"></paper-toast>
-    <myscript-common-element type="SHAPE"
-                             protocol="REST"
-                             apiversion="V3"
-                             scheme="https"
-                             host="webdemoapi.myscript.com"
-                             applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-                             hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
-    </myscript-common-element>
-    <script>
-        const paperToast = document.querySelector('paper-toast');
-        document.querySelector('myscript-common-element').addEventListener('exported', (event) => {
-            paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
-            paperToast.fitIn = paperToast.show();
-        });
-    </script>
-</body>
+    <body>
+        <paper-toast class="fit-top"></paper-toast>
+        <myscript-common-element type="SHAPE"
+                                 protocol="REST"
+                                 apiversion="V3"
+                                 scheme="https"
+                                 host="webdemoapi.myscript.com"
+                                 applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+                                 hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
+        </myscript-common-element>
+        <script>
+            const paperToast = document.querySelector('paper-toast');
+            document.querySelector('myscript-common-element').addEventListener('exported', (event) => {
+                paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
+                paperToast.fitIn = paperToast.show();
+            });
+        </script>
+    </body>
 
 </html>

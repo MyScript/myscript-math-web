@@ -1,55 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="true"/>
+    <head>
+        <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="true"/>
 
-    <title>Programmatic initialization</title>
+        <title>Programmatic initialization</title>
 
-    <link rel="stylesheet" href="../examples.css">
+        <link rel="stylesheet" href="../examples.css">
 
-    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../../myscript-common-element.html">
-</head>
+        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+        <link rel="import" href="../../myscript-common-element.html">
+    </head>
 
-<body>
-    <myscript-common-element unloaded />
-</body>
-<script>
-    window.addEventListener('load', () => {
-        const commonElement = document.querySelector('myscript-common-element');
-        console.log('All resources finished loading! Starting to init myscript-common-element');
-        // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-        const configuration = {
-            type: 'TEXT',
-            scheme: 'https',
-            host: 'newcloud.myscript.com',
-            applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
-            hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad'
-        };
-        // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-        commonElement.setAttribute('type', configuration.type);
-        commonElement.setAttribute('scheme', configuration.scheme);
-        commonElement.setAttribute('host', configuration.host);
-        commonElement.applicationkey = configuration.applicationKey;
-        commonElement.hmackey = configuration.hmacKey;
-        // Testing if custom configuration is taken into account
-        commonElement.configuration = {
-            recognitionParams: {
-                v4: {
-                    text: {
-                        mimeTypes: ['text/plain']
+    <body>
+        <myscript-common-element unloaded>
+        </myscript-common-element>
+        <script>
+            window.addEventListener('load', () => {
+                const commonElement = document.querySelector('myscript-common-element');
+                console.log('All resources finished loading! Starting to init myscript-common-element');
+                // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
+                const configuration = {
+                    type: 'TEXT',
+                    scheme: 'https',
+                    host: 'newcloud.myscript.com',
+                    applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
+                    hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad'
+                };
+                // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
+                commonElement.setAttribute('type', configuration.type);
+                commonElement.setAttribute('scheme', configuration.scheme);
+                commonElement.setAttribute('host', configuration.host);
+                commonElement.applicationkey = configuration.applicationKey;
+                commonElement.hmackey = configuration.hmacKey;
+                // Testing if custom configuration is taken into account
+                commonElement.configuration = {
+                    recognitionParams: {
+                        v4: {
+                            text: {
+                                mimeTypes: ['text/plain']
+                            }
+                        }
                     }
-                }
-            }
-        };
-        // Force the component to reload with the new configuration
-        commonElement.unloaded = false;
-    });
-</script>
+                };
+                // Force the component to reload with the new configuration
+                commonElement.unloaded = false;
+            });
+        </script>
+    </body>
 
 </html>

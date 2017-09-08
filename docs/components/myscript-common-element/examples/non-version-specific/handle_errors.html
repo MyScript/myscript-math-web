@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="true"/>
+    <head>
+        <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="true"/>
 
-    <title>Handle error</title>
+        <title>Handle error</title>
 
-    <link rel="stylesheet" href="../examples.css">
+        <link rel="stylesheet" href="../examples.css">
 
-    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../../../paper-toast/paper-toast.html">
-    <link rel="import" href="../../myscript-common-element.html">
-</head>
+        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+        <link rel="import" href="../../../paper-toast/paper-toast.html">
+        <link rel="import" href="../../myscript-common-element.html">
+    </head>
 
-<body>
-    <paper-toast class="fit-top"></paper-toast>
-    <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-    <myscript-common-element host="thisisnotanhost" applicationkey="WRONG">
-    </myscript-common-element>
-</body>
-<script>
-    const paperToast = document.querySelector('paper-toast');
-    document.querySelector('myscript-common-element').addEventListener('error', (event) => {
-        paperToast.text = `Error : ${JSON.stringify(event.detail)}`;
-        paperToast.fitIn = paperToast.show();
-    });
-</script>
+    <body>
+        <paper-toast class="fit-top"></paper-toast>
+        <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+        <myscript-common-element host="thisisnotanhost" applicationkey="WRONG">
+        </myscript-common-element>
+        <script>
+            const paperToast = document.querySelector('paper-toast');
+            document.querySelector('myscript-common-element').addEventListener('error', (event) => {
+                paperToast.text = `Error : ${JSON.stringify(event.detail)}`;
+                paperToast.fitIn = paperToast.show();
+            });
+        </script>
+    </body>
 
 </html>

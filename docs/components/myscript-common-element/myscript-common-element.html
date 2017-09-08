@@ -42,27 +42,21 @@ CSS variable | Default
             :host {
                 --myscript-common-element-background: var(--myscript-editor-background);
                 --myscript-common-element-color: var(--myscript-editor-color);
+                --myscript-common-element-hover-color: var(--myscript-editor-hover-color);
+                --myscript-common-element-focus-color: var(--myscript-editor-focus-color);
+                --myscript-common-element-disabled-color: var(--myscript-editor-disabled-color);
                 --myscript-common-element-line-pattern: var(--myscript-editor-line-pattern);
                 --myscript-common-element-capture-background: var(--myscript-editor-capture-background);
-                --myscript-common-element-button-background: var(--myscript-editor-button-background);
-                --myscript-common-element-button-focus-background: var(--myscript-editor-button-focus-background);
-                --myscript-common-element-button-disabled-background: var(--myscript-editor-button-disabled-background);
                 --myscript-common-element-error-background: var(--myscript-editor-error-background);
                 --myscript-common-element-loader: var(--myscript-editor-loader);
                 --myscript-common-element-error: var(--myscript-editor-error);
 
                 --paper-fab: {
                     margin: 6px;
-                    background: var(--myscript-common-element-button-background);
                     box-sizing: border-box;
-                };
-
-                --paper-fab-disabled: {
-                    background-color: var(--myscript-common-element-button-disabled-background);
-                };
-
-                --paper-fab-focus: {
-                    background-color: var(--myscript-common-element-button-focus-background);
+                    --paper-fab-background: var(--myscript-common-element-color);
+                    --paper-fab-disabled-background: var(--myscript-common-element-disabled-color);
+                    --paper-fab-keyboard-focus-background: var(--myscript-common-element-focus-color);
                 };
 
                 --paper-button: {
@@ -82,54 +76,19 @@ CSS variable | Default
                 color: var(--myscript-common-element-color);
                 z-index: 0;
                 font-family: sans-serif;
+                border-top: 1px solid #D7DDE3; /*#A9B7C5*/
             }
 
             :host * {
                 box-sizing: border-box;
             }
 
-            [hidden] {
-                display: none !important;
-            }
-
-            nav {
-                display: flex;
-                display: -webkit-flex;
-                z-index: 25;
-                border-top: 1px solid #D7DDE3; /*#A9B7C5*/
-                height: 52px;
-            }
-
-            .spacer {
-                flex-grow: 2;
-            }
-
             .ms-editor {
-                position: relative;
-                height: calc(100% - 52px);
-                width: 100%;
-                z-index: 20;
                 background: var(--myscript-common-element-background);
-            }
-
-            nav[hidden] + .ms-editor {
-                height: calc(100%);
-            }
-
-            .ms-editor canvas,
-            .ms-editor svg {
-                z-index: 15;
-                position: absolute;
-                left: 0;
-                top: 0;
-                height: 100%;
-                width: 100%;
             }
 
             .ms-editor canvas.ms-rendering-canvas,
             .ms-editor svg {
-                z-index: 10;
-                pointer-events: none;
                 background: var(--myscript-common-element-line-pattern);
             }
 
@@ -137,20 +96,16 @@ CSS variable | Default
                 background: var(--myscript-common-element-capture-background);
             }
 
+            .loader {
+                @apply --myscript-common-element-loader;
+            }
+
             .error-msg {
-                z-index: 30;
-                position: absolute;
                 @apply --myscript-common-element-error;
             }
 
             .error-msg::before {
                 content: var(--myscript-common-element-error-background);
-            }
-
-            .loader {
-                z-index: 35;
-                position: absolute;
-                @apply --myscript-common-element-loader;
             }
         </style>
         <nav hidden="[[ disablecontrols ]]">
@@ -165,7 +120,7 @@ CSS variable | Default
             </paper-fab>
             <div class="spacer"></div>
             <paper-button mini title="convert" on-tap="convert"
-                       disabled="[[ !canconvert ]]" hidden="[[ disableconvertcontrol ]]">
+                          disabled="[[ !canconvert ]]" hidden="[[ disableconvertcontrol ]]">
                 Convert
             </paper-button>
         </nav>

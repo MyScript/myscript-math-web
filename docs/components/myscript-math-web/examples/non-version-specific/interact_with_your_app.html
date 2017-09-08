@@ -1,108 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="true"/>
+    <head>
+        <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="true"/>
 
-    <title>Interact with your application</title>
+        <title>Interact with your application</title>
 
-    <link rel="stylesheet" href="../examples.css">
-    <style>
-        nav {
-            background-color: lightgrey;
-            height: 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: stretch;
-        }
-
-        myscript-math-web {
-            height: calc(100% - 60px);
-        }
-
-        .question {
-            color: #1A9FFF;
-            font-size: 20px;
-            padding-left: 10px;
-        }
-
-        .ok {
-            --paper-fab-background: #008000 !important;
-        }
-
-        .ko {
-            --paper-fab-background: #FF0000 !important;
-        }
-
-        .check {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            color: white !important;
-        }
-    </style>
-
-    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../../myscript-math-web.html">
-    <custom-style>
+        <link rel="stylesheet" href="../examples.css">
         <style>
-            paper-fab {
-                --paper-button-ink-color: white;
-                --paper-fab-background: #1A9FFF;
+            nav {
+                background-color: lightgrey;
+                height: 60px;
+                display: flex;
+                justify-content: space-between;
+                align-items: stretch;
+            }
+
+            myscript-math-web {
+                height: calc(100% - 60px);
+            }
+
+            .question {
+                color: #1A9FFF;
+                font-size: 20px;
+                padding-left: 10px;
+            }
+
+            .ok {
+                --paper-fab-background: #008000 !important;
+            }
+
+            .ko {
+                --paper-fab-background: #FF0000 !important;
+            }
+
+            .check {
+                position: absolute;
+                bottom: 20px;
+                right: 20px;
+                color: white !important;
             }
         </style>
-    </custom-style>
-</head>
 
-<body>
-    <nav>
-        <p class="question">What is the formula of mass energy equivalence invented by Albert Einstein ?</p>
-    </nav>
-<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-    <myscript-math-web disableconvertcontrol
-                       disablesolver
-                       hideexportzone
-                       ondemand
-                       scheme="https"
-                       host="newcloud.myscript.com"
-                       applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-                       hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
-                       mimetypes='["application/x-latex"]'>
-    </myscript-math-web>
-    <paper-fab icon="check" title="check" class="check"></paper-fab>
-    <script>
-        window.addEventListener('load', () => {
-            const myscriptMathWebElement = document.querySelector('myscript-math-web');
-            const checkElement = document.querySelector('paper-fab');
-
-            myscriptMathWebElement.addEventListener('exported', (evt) => {
-                console.log('exported ', evt);
-                if (evt.detail.exports) {
-                    const latexExport = evt.detail.exports['application/x-latex'] || '';
-                    console.log('We got: ', latexExport);
-                    if ("E=mc^{2}" === latexExport) {
-                        checkElement.classList.remove('ko');
-                        checkElement.classList.add('ok');
-                        myscriptMathWebElement.themecolor = '#008000';
-                    } else {
-                        checkElement.classList.remove('ok');
-                        checkElement.classList.add('ko');
-                        myscriptMathWebElement.themecolor = '#FF0000';
-                    }
+        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+        <link rel="import" href="../../myscript-math-web.html">
+        <custom-style>
+            <style>
+                paper-fab {
+                    --paper-button-ink-color: white;
+                    --paper-fab-background: #1A9FFF;
                 }
-            });
+            </style>
+        </custom-style>
+    </head>
 
-            checkElement.addEventListener('click', () => {
-                myscriptMathWebElement.convert();
-                const functionOutput = myscriptMathWebElement.exportContent();
-                console.log('Output :' + functionOutput);
-            });
-        })
-    </script>
-</body>
+    <body>
+        <nav>
+            <p class="question">What is the formula of mass energy equivalence invented by Albert Einstein ?</p>
+        </nav>
+        <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+        <myscript-math-web disableconvertcontrol
+                           disablesolver
+                           hideexportzone
+                           ondemand
+                           scheme="https"
+                           host="newcloud.myscript.com"
+                           applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+                           hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+                           mimetypes='["application/x-latex"]'>
+        </myscript-math-web>
+        <paper-fab icon="check" title="check" class="check"></paper-fab>
+        <script>
+            window.addEventListener('load', () => {
+                const myscriptMathWebElement = document.querySelector('myscript-math-web');
+                const checkElement = document.querySelector('paper-fab');
+
+                myscriptMathWebElement.addEventListener('exported', (evt) => {
+                    console.log('exported ', evt);
+                    if (evt.detail.exports) {
+                        const latexExport = evt.detail.exports['application/x-latex'] || '';
+                        console.log('We got: ', latexExport);
+                        if ("E=mc^{2}" === latexExport) {
+                            checkElement.classList.remove('ko');
+                            checkElement.classList.add('ok');
+                            myscriptMathWebElement.themecolor = '#008000';
+                        } else {
+                            checkElement.classList.remove('ok');
+                            checkElement.classList.add('ko');
+                            myscriptMathWebElement.themecolor = '#FF0000';
+                        }
+                    }
+                });
+
+                checkElement.addEventListener('click', () => {
+                    myscriptMathWebElement.convert();
+                    const functionOutput = myscriptMathWebElement.exportContent();
+                    console.log('Output :' + functionOutput);
+                });
+            })
+        </script>
+    </body>
 
 </html>

@@ -1,51 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="true"/>
 
-    <title>Change language</title>
+    <head>
+        <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="true"/>
 
-    <link rel="stylesheet" href="../examples.css">
-    <style>
-        myscript-common-element {
-            height: calc(100% - 2.625rem);
-        }
-    </style>
+        <title>Change language</title>
 
-    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../../myscript-languages-element.html">
-    <link rel="import" href="../../myscript-common-element.html">
-</head>
-<body>
-    <myscript-languages-element scheme="https"
-                                host="webdemoapi.myscript.com"
-                                applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-                                hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
-                                select>
-    </myscript-languages-element>
-    <myscript-common-element
-        type="TEXT"
-        scheme="https"
-        host="newcloud.myscript.com"
-        applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
-    </myscript-common-element>
-</body>
-<script>
-    window.addEventListener('load', () => {
-        const commonElement = document.querySelector('myscript-common-element');
-        const langElement = document.querySelector('myscript-languages-element');
-        langElement.addEventListener('change', (evt) => {
-            if (commonElement.configuration) {
-                commonElement.unloaded = true;
-                commonElement.configuration.recognitionParams.v4.lang = evt.detail.find(language => language.selected === true).value;
-                commonElement.unloaded = false;
+        <link rel="stylesheet" href="../examples.css">
+        <style>
+            myscript-common-element {
+                height: calc(100% - 2.625rem);
             }
-        })
-    });
-</script>
+        </style>
+
+        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+        <link rel="import" href="../../myscript-languages-element.html">
+        <link rel="import" href="../../myscript-common-element.html">
+    </head>
+
+    <body>
+        <myscript-languages-element scheme="https"
+                                    host="webdemoapi.myscript.com"
+                                    applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+                                    hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+                                    select>
+        </myscript-languages-element>
+        <myscript-common-element
+            type="TEXT"
+            scheme="https"
+            host="newcloud.myscript.com"
+            applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+            hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
+        </myscript-common-element>
+        <script>
+            const commonElement = document.querySelector('myscript-common-element');
+            const langElement = document.querySelector('myscript-languages-element');
+            langElement.addEventListener('change', (evt) => {
+                if (commonElement.configuration) {
+                    commonElement.unloaded = true;
+                    commonElement.configuration.recognitionParams.v4.lang = evt.detail.find(language => language.selected === true).value;
+                    commonElement.unloaded = false;
+                }
+            });
+        </script>
+    </body>
+
 </html>

@@ -13,11 +13,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 248,
+              "line": 203,
               "column": 20
             },
             "end": {
-              "line": 252,
+              "line": 207,
               "column": 21
             }
           },
@@ -33,11 +33,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 256,
+              "line": 211,
               "column": 20
             },
             "end": {
-              "line": 260,
+              "line": 215,
               "column": 21
             }
           },
@@ -53,11 +53,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 264,
+              "line": 219,
               "column": 20
             },
             "end": {
-              "line": 268,
+              "line": 223,
               "column": 21
             }
           },
@@ -73,11 +73,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 272,
+              "line": 227,
               "column": 20
             },
             "end": {
-              "line": 276,
+              "line": 231,
               "column": 21
             }
           },
@@ -93,11 +93,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 280,
+              "line": 235,
               "column": 20
             },
             "end": {
-              "line": 284,
+              "line": 239,
               "column": 21
             }
           },
@@ -113,11 +113,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 288,
+              "line": 243,
               "column": 20
             },
             "end": {
-              "line": 292,
+              "line": 247,
               "column": 21
             }
           },
@@ -133,11 +133,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 296,
+              "line": 251,
               "column": 20
             },
             "end": {
-              "line": 300,
+              "line": 255,
               "column": 21
             }
           },
@@ -153,11 +153,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 304,
+              "line": 259,
               "column": 20
             },
             "end": {
-              "line": 308,
+              "line": 263,
               "column": 21
             }
           },
@@ -173,11 +173,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 314,
+              "line": 269,
               "column": 20
             },
             "end": {
-              "line": 317,
+              "line": 272,
               "column": 21
             }
           },
@@ -192,11 +192,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 323,
+              "line": 278,
               "column": 20
             },
             "end": {
-              "line": 326,
+              "line": 281,
               "column": 21
             }
           },
@@ -211,11 +211,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 331,
+              "line": 286,
               "column": 20
             },
             "end": {
-              "line": 337,
+              "line": 292,
               "column": 21
             }
           },
@@ -234,11 +234,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 341,
+              "line": 296,
               "column": 20
             },
             "end": {
-              "line": 347,
+              "line": 302,
               "column": 21
             }
           },
@@ -257,11 +257,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 351,
+              "line": 306,
               "column": 20
             },
             "end": {
-              "line": 354,
+              "line": 309,
               "column": 21
             }
           },
@@ -278,11 +278,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 360,
+              "line": 315,
               "column": 20
             },
             "end": {
-              "line": 363,
+              "line": 318,
               "column": 21
             }
           },
@@ -299,11 +299,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 367,
+              "line": 322,
               "column": 20
             },
             "end": {
-              "line": 370,
+              "line": 325,
               "column": 21
             }
           },
@@ -318,11 +318,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 374,
+              "line": 329,
               "column": 20
             },
             "end": {
-              "line": 377,
+              "line": 332,
               "column": 21
             }
           },
@@ -337,11 +337,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 381,
+              "line": 336,
               "column": 20
             },
             "end": {
-              "line": 384,
+              "line": 339,
               "column": 21
             }
           },
@@ -358,11 +358,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 388,
+              "line": 343,
               "column": 20
             },
             "end": {
-              "line": 392,
+              "line": 347,
               "column": 21
             }
           },
@@ -378,11 +378,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 396,
+              "line": 351,
               "column": 20
             },
             "end": {
-              "line": 400,
+              "line": 355,
               "column": 21
             }
           },
@@ -398,11 +398,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 404,
+              "line": 359,
               "column": 20
             },
             "end": {
-              "line": 407,
+              "line": 362,
               "column": 21
             }
           },
@@ -416,6 +416,116 @@
           "name": "canundo",
           "type": "boolean",
           "description": "True if undo is available",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 366,
+              "column": 20
+            },
+            "end": {
+              "line": 371,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "canredo",
+          "type": "boolean",
+          "description": "True if redo is available",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 375,
+              "column": 20
+            },
+            "end": {
+              "line": 380,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "canclear",
+          "type": "boolean",
+          "description": "True if there is something to clear",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 384,
+              "column": 20
+            },
+            "end": {
+              "line": 389,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "canexport",
+          "type": "boolean",
+          "description": "True if export button could be displayed.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 393,
+              "column": 20
+            },
+            "end": {
+              "line": 398,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "canconvert",
+          "type": "boolean",
+          "description": "True if convert button could be displayed.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 402,
+              "column": 20
+            },
+            "end": {
+              "line": 407,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "disableautoreconnect",
+          "type": "boolean",
+          "description": "If set to true, disable the autoReconnect.",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -435,9 +545,9 @@
           "defaultValue": "false"
         },
         {
-          "name": "canredo",
+          "name": "disablecontrols",
           "type": "boolean",
-          "description": "True if redo is available",
+          "description": "If set to true, remove the controls (undo/redo, clear...).",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -457,9 +567,9 @@
           "defaultValue": "false"
         },
         {
-          "name": "canclear",
+          "name": "disableundoredocontrol",
           "type": "boolean",
-          "description": "True if there is something to clear",
+          "description": "If set to true, remove the undo/redo controls.",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -467,117 +577,7 @@
               "column": 20
             },
             "end": {
-              "line": 434,
-              "column": 21
-            }
-          },
-          "metadata": {
-            "polymer": {
-              "notify": true
-            }
-          },
-          "defaultValue": "false"
-        },
-        {
-          "name": "canexport",
-          "type": "boolean",
-          "description": "True if export button could be displayed.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 438,
-              "column": 20
-            },
-            "end": {
-              "line": 443,
-              "column": 21
-            }
-          },
-          "metadata": {
-            "polymer": {
-              "notify": true
-            }
-          },
-          "defaultValue": "false"
-        },
-        {
-          "name": "canconvert",
-          "type": "boolean",
-          "description": "True if convert button could be displayed.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 447,
-              "column": 20
-            },
-            "end": {
-              "line": 452,
-              "column": 21
-            }
-          },
-          "metadata": {
-            "polymer": {
-              "notify": true
-            }
-          },
-          "defaultValue": "false"
-        },
-        {
-          "name": "disableautoreconnect",
-          "type": "boolean",
-          "description": "If set to true, disable the autoReconnect.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 456,
-              "column": 20
-            },
-            "end": {
-              "line": 461,
-              "column": 21
-            }
-          },
-          "metadata": {
-            "polymer": {
-              "notify": true
-            }
-          },
-          "defaultValue": "false"
-        },
-        {
-          "name": "disablecontrols",
-          "type": "boolean",
-          "description": "If set to true, remove the controls (undo/redo, clear...).",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 465,
-              "column": 20
-            },
-            "end": {
-              "line": 470,
-              "column": 21
-            }
-          },
-          "metadata": {
-            "polymer": {
-              "notify": true
-            }
-          },
-          "defaultValue": "false"
-        },
-        {
-          "name": "disableundoredocontrol",
-          "type": "boolean",
-          "description": "If set to true, remove the undo/redo controls.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 474,
-              "column": 20
-            },
-            "end": {
-              "line": 478,
+              "line": 433,
               "column": 21
             }
           },
@@ -593,11 +593,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 482,
+              "line": 437,
               "column": 20
             },
             "end": {
-              "line": 486,
+              "line": 441,
               "column": 21
             }
           },
@@ -613,11 +613,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 490,
+              "line": 445,
               "column": 20
             },
             "end": {
-              "line": 494,
+              "line": 449,
               "column": 21
             }
           },
@@ -633,11 +633,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 499,
+              "line": 454,
               "column": 20
             },
             "end": {
-              "line": 502,
+              "line": 457,
               "column": 21
             }
           },
@@ -654,11 +654,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 506,
+              "line": 461,
               "column": 20
             },
             "end": {
-              "line": 510,
+              "line": 465,
               "column": 21
             }
           },
@@ -676,11 +676,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 514,
+              "line": 469,
               "column": 20
             },
             "end": {
-              "line": 518,
+              "line": 473,
               "column": 21
             }
           },
@@ -697,11 +697,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 631,
+              "line": 586,
               "column": 12
             },
             "end": {
-              "line": 645,
+              "line": 600,
               "column": 13
             }
           },
@@ -714,11 +714,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 647,
+              "line": 602,
               "column": 12
             },
             "end": {
-              "line": 652,
+              "line": 607,
               "column": 13
             }
           },
@@ -735,11 +735,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 654,
+              "line": 609,
               "column": 12
             },
             "end": {
-              "line": 663,
+              "line": 618,
               "column": 13
             }
           },
@@ -756,11 +756,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 665,
+              "line": 620,
               "column": 12
             },
             "end": {
-              "line": 669,
+              "line": 624,
               "column": 13
             }
           },
@@ -777,11 +777,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 671,
+              "line": 626,
               "column": 12
             },
             "end": {
-              "line": 673,
+              "line": 628,
               "column": 13
             }
           },
@@ -798,11 +798,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 675,
+              "line": 630,
               "column": 12
             },
             "end": {
-              "line": 681,
+              "line": 636,
               "column": 13
             }
           },
@@ -819,11 +819,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 683,
+              "line": 638,
               "column": 12
             },
             "end": {
-              "line": 721,
+              "line": 676,
               "column": 13
             }
           },
@@ -843,11 +843,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 723,
+              "line": 678,
               "column": 12
             },
             "end": {
-              "line": 728,
+              "line": 683,
               "column": 13
             }
           },
@@ -867,11 +867,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 735,
+              "line": 690,
               "column": 12
             },
             "end": {
-              "line": 750,
+              "line": 705,
               "column": 13
             }
           },
@@ -884,11 +884,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 752,
+              "line": 707,
               "column": 12
             },
             "end": {
-              "line": 756,
+              "line": 711,
               "column": 13
             }
           },
@@ -901,11 +901,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 761,
+              "line": 716,
               "column": 12
             },
             "end": {
-              "line": 765,
+              "line": 720,
               "column": 13
             }
           },
@@ -918,11 +918,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 770,
+              "line": 725,
               "column": 12
             },
             "end": {
-              "line": 774,
+              "line": 729,
               "column": 13
             }
           },
@@ -935,11 +935,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 779,
+              "line": 734,
               "column": 12
             },
             "end": {
-              "line": 783,
+              "line": 738,
               "column": 13
             }
           },
@@ -952,11 +952,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 788,
+              "line": 743,
               "column": 12
             },
             "end": {
-              "line": 792,
+              "line": 747,
               "column": 13
             }
           },
@@ -969,11 +969,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 800,
+              "line": 755,
               "column": 12
             },
             "end": {
-              "line": 804,
+              "line": 759,
               "column": 13
             }
           },
@@ -1000,11 +1000,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 810,
+              "line": 765,
               "column": 12
             },
             "end": {
-              "line": 814,
+              "line": 769,
               "column": 13
             }
           },
@@ -1022,11 +1022,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 819,
+              "line": 774,
               "column": 12
             },
             "end": {
-              "line": 823,
+              "line": 778,
               "column": 13
             }
           },
@@ -1039,11 +1039,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 829,
+              "line": 784,
               "column": 12
             },
             "end": {
-              "line": 833,
+              "line": 788,
               "column": 13
             }
           },
@@ -1056,11 +1056,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 835,
+              "line": 790,
               "column": 12
             },
             "end": {
-              "line": 840,
+              "line": 795,
               "column": 13
             }
           },
@@ -1086,11 +1086,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 842,
+              "line": 797,
               "column": 12
             },
             "end": {
-              "line": 847,
+              "line": 802,
               "column": 13
             }
           },
@@ -1116,11 +1116,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 849,
+              "line": 804,
               "column": 12
             },
             "end": {
-              "line": 853,
+              "line": 808,
               "column": 13
             }
           },
@@ -1137,11 +1137,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 855,
+              "line": 810,
               "column": 12
             },
             "end": {
-              "line": 876,
+              "line": 831,
               "column": 13
             }
           },
@@ -1187,11 +1187,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 182,
+          "line": 137,
           "column": 8
         },
         "end": {
-          "line": 877,
+          "line": 832,
           "column": 9
         }
       },
@@ -1204,11 +1204,11 @@
           "description": "The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)",
           "sourceRange": {
             "start": {
-              "line": 248,
+              "line": 203,
               "column": 20
             },
             "end": {
-              "line": 252,
+              "line": 207,
               "column": 21
             }
           },
@@ -1220,11 +1220,11 @@
           "description": "The current recognition protocol (WEBSOCKET or REST). We strongly recommend using WebSocket.",
           "sourceRange": {
             "start": {
-              "line": 256,
+              "line": 211,
               "column": 20
             },
             "end": {
-              "line": 260,
+              "line": 215,
               "column": 21
             }
           },
@@ -1236,11 +1236,11 @@
           "description": "Scheme to use to connect to MyScript Cloud or Server. (https or http)",
           "sourceRange": {
             "start": {
-              "line": 264,
+              "line": 219,
               "column": 20
             },
             "end": {
-              "line": 268,
+              "line": 223,
               "column": 21
             }
           },
@@ -1252,11 +1252,11 @@
           "description": "The current recognition service host.",
           "sourceRange": {
             "start": {
-              "line": 272,
+              "line": 227,
               "column": 20
             },
             "end": {
-              "line": 276,
+              "line": 231,
               "column": 21
             }
           },
@@ -1268,11 +1268,11 @@
           "description": "Cloud API version to use.",
           "sourceRange": {
             "start": {
-              "line": 280,
+              "line": 235,
               "column": 20
             },
             "end": {
-              "line": 284,
+              "line": 239,
               "column": 21
             }
           },
@@ -1284,11 +1284,11 @@
           "description": "Delay without any user input before asking for recognition, only use with REST protocol if not on-demand.",
           "sourceRange": {
             "start": {
-              "line": 288,
+              "line": 243,
               "column": 20
             },
             "end": {
-              "line": 292,
+              "line": 247,
               "column": 21
             }
           },
@@ -1300,11 +1300,11 @@
           "description": "Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol if not on-demand.",
           "sourceRange": {
             "start": {
-              "line": 296,
+              "line": 251,
               "column": 20
             },
             "end": {
-              "line": 300,
+              "line": 255,
               "column": 21
             }
           },
@@ -1316,11 +1316,11 @@
           "description": "True if export should be done on-demand, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 304,
+              "line": 259,
               "column": 20
             },
             "end": {
-              "line": 308,
+              "line": 263,
               "column": 21
             }
           },
@@ -1332,11 +1332,11 @@
           "description": "Application key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />\n<b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 314,
+              "line": 269,
               "column": 20
             },
             "end": {
-              "line": 317,
+              "line": 272,
               "column": 21
             }
           },
@@ -1348,11 +1348,11 @@
           "description": "HMAC key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />\n<b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 323,
+              "line": 278,
               "column": 20
             },
             "end": {
-              "line": 326,
+              "line": 281,
               "column": 21
             }
           },
@@ -1364,11 +1364,11 @@
           "description": "Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.\n(see examples/v4/programmatic_init.html for a better understanding)",
           "sourceRange": {
             "start": {
-              "line": 331,
+              "line": 286,
               "column": 20
             },
             "end": {
-              "line": 337,
+              "line": 292,
               "column": 21
             }
           },
@@ -1380,11 +1380,11 @@
           "description": "True if editor is initialized",
           "sourceRange": {
             "start": {
-              "line": 341,
+              "line": 296,
               "column": 20
             },
             "end": {
-              "line": 347,
+              "line": 302,
               "column": 21
             }
           },
@@ -1396,11 +1396,11 @@
           "description": "The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.",
           "sourceRange": {
             "start": {
-              "line": 351,
+              "line": 306,
               "column": 20
             },
             "end": {
-              "line": 354,
+              "line": 309,
               "column": 21
             }
           },
@@ -1412,11 +1412,11 @@
           "description": "Set the additional configuration used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)\nConfiguration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.\nConfiguration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).",
           "sourceRange": {
             "start": {
-              "line": 360,
+              "line": 315,
               "column": 20
             },
             "end": {
-              "line": 363,
+              "line": 318,
               "column": 21
             }
           },
@@ -1428,11 +1428,11 @@
           "description": "Pen color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "sourceRange": {
             "start": {
-              "line": 367,
+              "line": 322,
               "column": 20
             },
             "end": {
-              "line": 370,
+              "line": 325,
               "column": 21
             }
           },
@@ -1444,11 +1444,11 @@
           "description": "Pen width in mm (no other unit is supported yet)",
           "sourceRange": {
             "start": {
-              "line": 374,
+              "line": 329,
               "column": 20
             },
             "end": {
-              "line": 377,
+              "line": 332,
               "column": 21
             }
           },
@@ -1460,11 +1460,11 @@
           "description": "Set the additional penStyle used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultPenStyle.js file)",
           "sourceRange": {
             "start": {
-              "line": 381,
+              "line": 336,
               "column": 20
             },
             "end": {
-              "line": 384,
+              "line": 339,
               "column": 21
             }
           },
@@ -1476,11 +1476,11 @@
           "description": "Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "sourceRange": {
             "start": {
-              "line": 388,
+              "line": 343,
               "column": 20
             },
             "end": {
-              "line": 392,
+              "line": 347,
               "column": 21
             }
           },
@@ -1492,11 +1492,11 @@
           "description": "Width of strokes and primitives in mm (no other unit is supported yet)",
           "sourceRange": {
             "start": {
-              "line": 396,
+              "line": 351,
               "column": 20
             },
             "end": {
-              "line": 400,
+              "line": 355,
               "column": 21
             }
           },
@@ -1508,11 +1508,11 @@
           "description": "Set the additional theme used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultTheme.js file)",
           "sourceRange": {
             "start": {
-              "line": 404,
+              "line": 359,
               "column": 20
             },
             "end": {
-              "line": 407,
+              "line": 362,
               "column": 21
             }
           },
@@ -1522,6 +1522,86 @@
         {
           "name": "canundo",
           "description": "True if undo is available",
+          "sourceRange": {
+            "start": {
+              "line": 366,
+              "column": 20
+            },
+            "end": {
+              "line": 371,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "canredo",
+          "description": "True if redo is available",
+          "sourceRange": {
+            "start": {
+              "line": 375,
+              "column": 20
+            },
+            "end": {
+              "line": 380,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "canclear",
+          "description": "True if there is something to clear",
+          "sourceRange": {
+            "start": {
+              "line": 384,
+              "column": 20
+            },
+            "end": {
+              "line": 389,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "canexport",
+          "description": "True if export button could be displayed.",
+          "sourceRange": {
+            "start": {
+              "line": 393,
+              "column": 20
+            },
+            "end": {
+              "line": 398,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "canconvert",
+          "description": "True if convert button could be displayed.",
+          "sourceRange": {
+            "start": {
+              "line": 402,
+              "column": 20
+            },
+            "end": {
+              "line": 407,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "disableautoreconnect",
+          "description": "If set to true, disable the autoReconnect.",
           "sourceRange": {
             "start": {
               "line": 411,
@@ -1536,8 +1616,8 @@
           "type": "boolean"
         },
         {
-          "name": "canredo",
-          "description": "True if redo is available",
+          "name": "disablecontrols",
+          "description": "If set to true, remove the controls (undo/redo, clear...).",
           "sourceRange": {
             "start": {
               "line": 420,
@@ -1552,95 +1632,15 @@
           "type": "boolean"
         },
         {
-          "name": "canclear",
-          "description": "True if there is something to clear",
+          "name": "disableundoredocontrol",
+          "description": "If set to true, remove the undo/redo controls.",
           "sourceRange": {
             "start": {
               "line": 429,
               "column": 20
             },
             "end": {
-              "line": 434,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        },
-        {
-          "name": "canexport",
-          "description": "True if export button could be displayed.",
-          "sourceRange": {
-            "start": {
-              "line": 438,
-              "column": 20
-            },
-            "end": {
-              "line": 443,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        },
-        {
-          "name": "canconvert",
-          "description": "True if convert button could be displayed.",
-          "sourceRange": {
-            "start": {
-              "line": 447,
-              "column": 20
-            },
-            "end": {
-              "line": 452,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        },
-        {
-          "name": "disableautoreconnect",
-          "description": "If set to true, disable the autoReconnect.",
-          "sourceRange": {
-            "start": {
-              "line": 456,
-              "column": 20
-            },
-            "end": {
-              "line": 461,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        },
-        {
-          "name": "disablecontrols",
-          "description": "If set to true, remove the controls (undo/redo, clear...).",
-          "sourceRange": {
-            "start": {
-              "line": 465,
-              "column": 20
-            },
-            "end": {
-              "line": 470,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        },
-        {
-          "name": "disableundoredocontrol",
-          "description": "If set to true, remove the undo/redo controls.",
-          "sourceRange": {
-            "start": {
-              "line": 474,
-              "column": 20
-            },
-            "end": {
-              "line": 478,
+              "line": 433,
               "column": 21
             }
           },
@@ -1652,11 +1652,11 @@
           "description": "If set to true, remove the clear control.",
           "sourceRange": {
             "start": {
-              "line": 482,
+              "line": 437,
               "column": 20
             },
             "end": {
-              "line": 486,
+              "line": 441,
               "column": 21
             }
           },
@@ -1668,11 +1668,11 @@
           "description": "If set to true, remove the convert control.",
           "sourceRange": {
             "start": {
-              "line": 490,
+              "line": 445,
               "column": 20
             },
             "end": {
-              "line": 494,
+              "line": 449,
               "column": 21
             }
           },
@@ -1684,11 +1684,11 @@
           "description": "Exports.",
           "sourceRange": {
             "start": {
-              "line": 499,
+              "line": 454,
               "column": 20
             },
             "end": {
-              "line": 502,
+              "line": 457,
               "column": 21
             }
           },
@@ -1700,11 +1700,11 @@
           "description": "True if component is idle",
           "sourceRange": {
             "start": {
-              "line": 506,
+              "line": 461,
               "column": 20
             },
             "end": {
-              "line": 510,
+              "line": 465,
               "column": 21
             }
           },
@@ -1716,11 +1716,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 514,
+              "line": 469,
               "column": 20
             },
             "end": {
-              "line": 518,
+              "line": 473,
               "column": 21
             }
           },

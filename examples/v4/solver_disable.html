@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="true"/>
+<html lang="en">
 
-    <title>Disable the solver</title>
+    <head>
+        <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="true"/>
 
-    <link rel="stylesheet" href="../examples.css">
+        <title>Disable the solver</title>
 
-    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../../myscript-math-web.html">
-</head>
-<body>
-    <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-    <myscript-math-web scheme="https"
-                       host="newcloud.myscript.com"
-                       applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-                       hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
-                       disablesolver>
-    </myscript-math-web>
-</body>
+        <link rel="stylesheet" href="../examples.css">
+
+        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+        <link rel="import" href="../../myscript-math-web.html">
+    </head>
+
+    <body>
+        <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+        <myscript-math-web scheme="https"
+                           host="newcloud.myscript.com"
+                           applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+                           hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+                           disablesolver>
+        </myscript-math-web>
+    </body>
+
 </html>
