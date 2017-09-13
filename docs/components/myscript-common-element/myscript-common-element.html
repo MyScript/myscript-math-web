@@ -471,6 +471,10 @@ CSS variable | Default
                         type: Boolean,
                         value: false,
                         reflectToAttribute: true
+                    },
+                    'touch-action': {
+                        type: String,
+                        value: 'initial'
                     }
                 }
             }
@@ -578,9 +582,9 @@ CSS variable | Default
             static _extractPoint(event, configuration) {
                 const rect = event.target.getBoundingClientRect();
                 return {
-                    x: MyScriptCommonElement._roundFloat(event.detail.x - rect.left - event.target.clientLeft, configuration.xyFloatPrecision),
-                    y: MyScriptCommonElement._roundFloat(event.detail.y - rect.top - event.target.clientTop, configuration.xyFloatPrecision),
-                    t: MyScriptCommonElement._roundFloat(event.timeStamp, configuration.timestampFloatPrecision)
+                    x: MyScriptCommonElement._roundFloat((event.detail.x || event.clientX) - rect.left - event.target.clientLeft, configuration.xyFloatPrecision),
+                    y: MyScriptCommonElement._roundFloat((event.detail.y || event.clientY) - rect.top - event.target.clientTop, configuration.xyFloatPrecision),
+                    t: MyScriptCommonElement._roundFloat(event.timeStamp || Date.now(), configuration.timestampFloatPrecision)
                 };
             };
 
@@ -659,19 +663,76 @@ CSS variable | Default
                     editor.pointerUp(MyScriptCommonElement._extractPoint(evt, editor.configuration));
                 };
 
-                const context = {
-                    listeners: [{
-                        types: ['track'],
-                        listener: handleTrack
-                    }, {
-                        types: ['tap'],
-                        listener: handleTap
-                    }]
+                const pointerDownHandler = (evt) => { // Trigger a pointerDown
+                    if (this.activePointerId) {
+                        if (this.activePointerId === evt.pointerId) {
+                            this.logger.warn(`${evt.type} event with the same id without any pointer up`, evt.pointerId);
+                        }
+                    } else if ((evt.button !== 2) && (evt.buttons !== 2)) { // Ignore right click
+                        this.activePointerId = evt.pointerId;
+                        evt.stopPropagation();
+                        editor.pointerDown(MyScriptCommonElement._extractPoint(evt, editor.configuration), evt.pointerType, evt.pointerId);
+                    }
                 };
+
+                const pointerMoveHandler = (evt) => { // Trigger a pointerMove
+                    // Only considering the active pointer
+                    if (this.activePointerId && this.activePointerId === evt.pointerId) {
+                        evt.stopPropagation();
+                        editor.pointerMove(MyScriptCommonElement._extractPoint(evt, editor.configuration));
+                    } else {
+                        this.logger.trace(`${evt.type} event from another pointerid (${evt.pointerId})`, this.activePointerId);
+                    }
+                };
+
+                const pointerUpHandler = (evt) => { // Trigger a pointerUp
+                    // Only considering the active pointer
+                    if (this.activePointerId && this.activePointerId === evt.pointerId) {
+                        this.activePointerId = undefined; // Managing the active pointer
+                        evt.stopPropagation();
+                        editor.pointerUp(MyScriptCommonElement._extractPoint(evt, editor.configuration));
+                    } else {
+                        this.logger.trace(`${evt.type} event from another pointerid (${evt.pointerId})`, this.activePointerId);
+                    }
+                };
+
+                const pointerListeners = [{
+                    types: ['pointerdown'],
+                    listener: pointerDownHandler
+                }, {
+                    types: ['pointermove'],
+                    listener: pointerMoveHandler
+                }, {
+                    types: ['pointerup', 'pointerout', 'pointerleave', 'pointercancel'],
+                    listener: pointerUpHandler
+                }];
+
+                const polymerGestureListeners = [{
+                    types: ['track'],
+                    listener: handleTrack
+                }, {
+                    types: ['tap'],
+                    listener: handleTap
+                }];
+
+                const context = {
+                    options: editor.configuration.listenerOptions,
+                    listeners: this['touch-action'] === 'none' ? pointerListeners : polymerGestureListeners
+                };
+
+                if (this.debug) {
+                    context.listeners.push();
+                }
 
                 this.logger.debug('attaching listeners', context);
                 context.listeners.forEach((item) => {
-                    item.types.forEach(type => Polymer.Gestures.addListener(element, type, item.listener));
+                    item.types.forEach(type => {
+                        if (['track', 'tap'].includes(type)) {
+                            Polymer.Gestures.addListener(element, type, item.listener);
+                        } else {
+                            element.addEventListener(type, item.listener, context.options);
+                        }
+                    });
                 });
                 return context;
             }
@@ -679,7 +740,13 @@ CSS variable | Default
             _detachGrabber(element, context) {
                 this.logger.debug('detaching listeners', context);
                 context.listeners.forEach((item) => {
-                    item.types.forEach(type => Polymer.Gestures.removeListener(element, type, item.listener));
+                    item.types.forEach(type => {
+                        if (['track', 'tap'].includes(type)) {
+                            Polymer.Gestures.removeListener(element, type, item.listener);
+                        } else {
+                            element.removeEventListener(type, item.listener, context.options);
+                        }
+                    });
                 });
             }
 

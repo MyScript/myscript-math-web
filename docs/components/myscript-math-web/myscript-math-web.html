@@ -118,7 +118,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             disablecontrols="[[ disablecontrols ]]"
             disableclearcontrol="[[ disableclearcontrol ]]"
             disableundoredocontrol="[[ disableundoredocontrol ]]"
-            disableconvertcontrol="[[ disableconvertcontrol ]]">
+            disableconvertcontrol="[[ disableconvertcontrol ]]"
+            touch-action="[[ touch-action ]]">
         </myscript-common-element>
     </template>
     <script>
@@ -549,6 +550,10 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         type: Boolean,
                         value: false,
                         reflectToAttribute: true
+                    },
+                    'touch-action': {
+                        type: String,
+                        value: 'initial'
                     }
                 }
             }
