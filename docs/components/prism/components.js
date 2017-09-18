@@ -85,6 +85,11 @@ var components = {
 			"title": "AppleScript",
 			"owner": "Golmote"
 		},
+		"arduino": {
+			"title": "Arduino",
+			"require": "cpp",
+			"owner": "eisbehr-"
+		},
 		"asciidoc": {
 			"title": "AsciiDoc",
 			"owner": "Golmote"
@@ -379,6 +384,11 @@ var components = {
 		"ocaml": {
 			"title": "OCaml",
 			"owner": "Golmote"
+		},
+		"opencl": {
+			"title": "OpenCL",
+			"require": "cpp",
+			"owner": "Milania1"
 		},
 		"oz": {
 			"title": "Oz",
