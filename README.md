@@ -2,9 +2,9 @@
 
 ![myscript-math-web preview](./preview.gif)
 
-<p align="center"> 
-<a href="https://myscript.github.io/myscript-math-web/components/myscript-math-web/examples/"><h2>Test it live</h2></a>
-</p>
+ 
+<a style="text-align:center; font-size:150%;" href="https://myscript.github.io/myscript-math-web/components/myscript-math-web/examples/">Test it live</a>
+
 
 ## What is it about?
 
@@ -21,9 +21,6 @@ myscript-math-web is a web component that can be used in every web application t
 
 1. Have [bower](https://bower.io/#install-bower) installed.
 2. Get your keys and the free monthly quota to access MyScript Cloud at [developer.myscript.com](https://developer.myscript.com)
-
-
-```
  
 ## Installation
 
@@ -55,13 +52,15 @@ bower install myscript-math-web
 
 ## Examples
 
+Browse [the examples hosted on github.io](https://myscript.github.io/myscript-math-web/examples/).
+
+The [directory examples/](/examples) of this git repository contains all the example source code. 
+
+## Documentation
+
 A complete guide is available on [MyScript Developer website](https://developer.myscript.com/docs/interactive-ink/1.0/web/web-components/math-element/).
 
-The API Reference is available in the `docs` directory or on [myscript.github.io/MyScriptJS/ website](https://myscript.github.io/myscript-math-web/).
-
-## Documentation 
-
-The API Reference is available here: [https://myscript.github.io/myscript-math-web/](https://myscript.github.io/myscript-math-web/) 
+The API Reference is available in the `docs` directory or on [myscript.github.io/myscript-math-web/ website](https://myscript.github.io/myscript-math-web/).
 
 ## Contribute
 
