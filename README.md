@@ -13,7 +13,7 @@ myscript-math-web is a web component that can be used in every web application t
 * Nice digital ink rendering,
 * Rich editing gestures,
 * Conversion,
-* Exports.
+* Exports (LaTex and MathML).
 
 ## Getting started
 
