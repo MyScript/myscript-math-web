@@ -44,7 +44,7 @@
     "paper-toggle-button": "^2.0.0",
     "paper-slider": "^2.0.2"
   },
-  "_source": "/home/fxg/projects/webcomponents/myscript-math-web",
+  "_source": "/DEV/projets/webcomponents/myscript-math-web",
   "_target": "*",
   "_originalSource": "../../myscript-math-web",
   "_direct": true

@@ -1,56 +1,63 @@
-# myscript-math-web
-
-The easy way to integrate mathematical expressions handwriting recognition in your web app.
+:pencil: The easy way to integrate mathematical expressions handwriting recognition in your web app.
 
 ![myscript-math-web preview](./preview.gif)
 
+<p align="center"> 
+<a href="https://myscript.github.io/myscript-math-web/components/myscript-math-web/examples/"><h2>Test it live</h2></a>
+</p>
+
 ## What is it about?
 
-myscript-math-web is a web component that can be used in every web application (whatever javascript framework you are using) to bring handwriting recognition. It integrates all you need:  
+myscript-math-web is a web component that can be used in every web application to bring handwriting recognition and conversion. It integrates all you need:  
 * Signal capture,
 * Nice digital ink rendering,
-* Plug with MyScript CDK to bring handwriting recognition.
+* Rich editing gestures,
+* Conversion,
+* Exports.
 
-## Prerequisites
+## Getting started
 
-1. Have a MyScript developer account. You can create one [here](https://dev.myscript.com/).
-2. Get an application key and HMAC key for your application.
-3. Import webcomponents polyfill on your webapp.
+### Prerequisites
 
-```html
-    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+1. Have [bower](https://bower.io/#install-bower) installed.
+2. Get your keys and the free monthly quota to access MyScript Cloud at [developer.myscript.com](https://developer.myscript.com)
+
+
 ```
  
 ## Installation
 
-1. Download it.
-
-       bower install myscript-math-web
-
-2. Import it on your webapp.
+1. Download myscript-math-web.
+```shell
+bower install myscript-math-web
+```
+2. Create and edit `index.html` file in the same directory. Add the following line in the head section to import the library.
 
 ```html
-    <link rel="import" href="bower_components/myscript-math-web/myscript-math-web.html">
+<!-- Load the webcomponent polyfill -->
+<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+<!-- Load myscript-math-web and the related librairies -->
+<link rel="import" href="bower_components/myscript-math-web/myscript-math-web.html">
 ```
 
-3. Configure it.
+3. Use the component in the body section. Use the keys you received by mail.
 
 ```html
-    <myscript-math-web
-        applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
-        hmackey="YOUR MYSCRIPT CDK HMAC KEY">
-    </myscript-math-web>
+<myscript-math-web
+  applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
+  hmackey="YOUR MYSCRIPT CDK HMAC KEY">
+</myscript-math-web>
 ```
    
-4. Use it!
+4. Launch a local web-server and use it!
 
-[Test it live](https://myscript.github.io/myscript-math-web/components/myscript-math-web/examples/)!
+
 
 ## Examples
 
-- [examples/non-version-specific/get_started.html](examples/non-version-specific/get_started.html) Get started with iink
-- [examples/v3/websocket_math.html](examples/v3/websocket_math.html) Get started with legacy api (v3)
-- [examples/index.html](examples/index.html) Other demonstrations
+A complete guide is available on [MyScript Developer website](https://developer.myscript.com/docs/interactive-ink/1.0/web/web-components/math-element/).
+
+The API Reference is available in the `docs` directory or on [myscript.github.io/MyScriptJS/ website](https://myscript.github.io/myscript-math-web/).
 
 ## Documentation 
 
