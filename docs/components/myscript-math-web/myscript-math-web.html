@@ -64,28 +64,27 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 overflow: auto;
             }
 
-            myscript-common-element {
-                --myscript-common-element-background: var(--myscript-math-web-background);
-                --myscript-common-element-color: var(--myscript-math-web-color);
-                --myscript-common-element-line-pattern: var(--myscript-math-web-line-pattern);
-                --myscript-common-element-capture-background: var(--myscript-math-web-capture-background);
-                --myscript-common-element-button-background: var(--myscript-math-web-button-background);
-                --myscript-common-element-button-focus-background: var(--myscript-math-web-button-focus-background);
-                --myscript-common-element-button-disabled-background: var(--myscript-math-web-button-disabled-background);
-                --myscript-common-element-error-background: var(--myscript-math-web-error-background);
-                --myscript-common-element-error: var(--myscript-math-web-error);
-                --myscript-common-element-loader: var(--myscript-math-web-loader);
+        .exports {
+            font-size: larger;
+            overflow: hidden;
+            text-align: center;
+            min-height: 94px;
+            max-height: 94px;
+            padding-top: 5px;
+            position: relative;
+            background-color: #EBEDEE;
+            border-bottom: 1px solid #dddddd;
+            color: #000000;
+        }
 
-                height: calc(100% - 100px);
-            }
-
-            myscript-math-exports[hidden] + myscript-common-element {
-                height: 100%;
-            }
-        </style>
-        <myscript-math-exports hidden="[[ !_displayExports(hideexportzone, unloaded) ]]"
-                               exports="[[ exports ]]"
-                               debug="[[ debug ]]">
+        .exports[hidden] + myscript-common-element {
+            height: 100%;
+        }
+    </style>
+    <template>
+        <myscript-math-exports hidden="[[ !displayExports(hideexports, unloaded) ]]"
+                               exports="{{ exports }}"
+                               debug="{{ debug }}">
         </myscript-math-exports>
         <myscript-common-element
             type="MATH"
