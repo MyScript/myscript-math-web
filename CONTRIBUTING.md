@@ -1,7 +1,7 @@
 # Contributing to MyScript Web
 
 We gladly welcome pull requests to MyScript Web. If you would like to add or modify new or larger features, see the **Adding features** section below.
-If you have any questions, or need help solving a problem, feel free to stop by the [#MyScript forum](https://dev.myscript.com/support/forum/).
+If you have any questions, or need help to solve a problem, feel free to stop by the [#MyScript forum](https://dev.myscript.com/support/forum/).
 
 ## Contributor License Agreement
 

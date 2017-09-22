@@ -10,7 +10,7 @@
 
 myscript-math-web is a web component that can be used in every web application to bring handwriting recognition and conversion. It integrates all you need:  
 * Signal capture,
-* Nice digital ink rendering,
+* Digital ink rendering,
 * Rich editing gestures,
 * Conversion,
 * Exports (LaTex and MathML).
@@ -24,37 +24,32 @@ myscript-math-web is a web component that can be used in every web application t
  
 ## Installation
 
-1. Download myscript-math-web.
+1. Download myscript-math-web.  
 ```shell
 bower install myscript-math-web
 ```
-2. Create and edit `index.html` file in the same directory. Add the following line in the head section to import the library.
-
+2. Create and edit `index.html` file in the same directory. Add the following line in the head section to import the library.  
 ```html
 <!-- Load the webcomponent polyfill -->
 <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 <!-- Load myscript-math-web and the related librairies -->
 <link rel="import" href="bower_components/myscript-math-web/myscript-math-web.html">
-```
-
-3. Use the component in the body section. Use the keys you received by mail.
-
+```  
+3. Use the component in the `body` section. Use the keys you received by mail.  
 ```html
 <myscript-math-web
   applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
   hmackey="YOUR MYSCRIPT CDK HMAC KEY">
 </myscript-math-web>
 ```
-   
 4. Launch a local web-server and use it!
-
 
 
 ## Examples
 
 Browse [the examples hosted on github.io](https://myscript.github.io/myscript-math-web/examples/).
 
-The [directory examples/](/examples) of this git repository contains all the example source code. 
+The [directory examples/](/examples) of this Git repository contains all the example source codes. 
 
 ## Documentation
 
