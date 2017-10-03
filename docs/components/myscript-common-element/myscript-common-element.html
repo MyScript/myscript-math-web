@@ -37,6 +37,32 @@ CSS variable | Default
 @demo examples/index.html Other demonstrations
 -->
 <dom-module id="myscript-common-element">
+    <style>
+        :host {
+            display: block;
+            position: relative;
+            min-height: 100px;
+            min-width: 200px;
+            --paper-fab-background: #1A9FFF;
+            --paper-fab-keyboard-focus-background: #1A9FFF;
+            --paper-fab-disabled-background: #D7DADC;
+            --paper-fab-disabled-text: #dcdee0;
+        }
+        .buttons {
+            position: inherit;
+            float: left;
+            display: flex;
+            display: -webkit-flex;
+            z-index: 2;
+            background-color: transparent;
+            padding: 6px;
+        }
+        paper-fab {
+            z-index: 3;
+            background: #1A9FFF;
+            margin: 6px;
+        }
+    </style>
     <template>
         <style include="myscript-stylesheet">
             :host {
@@ -630,6 +656,8 @@ CSS variable | Default
 
             _exportedListener(event) {
                 this.exports = event.detail ? event.detail.exports : {};
+                if (this.apiversion === 'V4')
+                    this.canclear = this.exports[Object.keys(this.exports)[0]] !== '';
             }
 
             _errorListener(event) {
@@ -641,29 +669,19 @@ CSS variable | Default
             }
 
             _attachGrabber(element, editor) {
-                const handleTrack = (evt) => {
-                    this.logger.debug('event', evt);
 
-                    switch (evt.detail.state) {
-                        case 'start':
-                            editor.pointerDown(MyScriptCommonElement._extractPoint(evt, editor.configuration));
-                            break;
-                        case 'track':
-                            editor.pointerMove(MyScriptCommonElement._extractPoint(evt, editor.configuration));
-                            break;
-                        case 'end':
-                            editor.pointerUp(MyScriptCommonElement._extractPoint(evt, editor.configuration));
-                            break;
+                const patchPointerEvent = (evt) => {
+                    if (!evt.pointerId) {
+                        evt.pointerId = -1;
                     }
-                };
-
-                const handleTap = (evt) => {
-                    this.logger.debug('event', evt);
-                    editor.pointerDown(MyScriptCommonElement._extractPoint(evt, editor.configuration));
-                    editor.pointerUp(MyScriptCommonElement._extractPoint(evt, editor.configuration));
+                    if (!evt.pointerType) {
+                        evt.pointerType = 'pen';
+                    }
+                    return evt;
                 };
 
                 const pointerDownHandler = (evt) => { // Trigger a pointerDown
+                    patchPointerEvent(evt);
                     if (this.activePointerId) {
                         if (this.activePointerId === evt.pointerId) {
                             this.logger.warn(`${evt.type} event with the same id without any pointer up`, evt.pointerId);
@@ -676,6 +694,7 @@ CSS variable | Default
                 };
 
                 const pointerMoveHandler = (evt) => { // Trigger a pointerMove
+                    patchPointerEvent(evt);
                     // Only considering the active pointer
                     if (this.activePointerId && this.activePointerId === evt.pointerId) {
                         evt.stopPropagation();
@@ -686,6 +705,7 @@ CSS variable | Default
                 };
 
                 const pointerUpHandler = (evt) => { // Trigger a pointerUp
+                    patchPointerEvent(evt);
                     // Only considering the active pointer
                     if (this.activePointerId && this.activePointerId === evt.pointerId) {
                         this.activePointerId = undefined; // Managing the active pointer
@@ -708,11 +728,14 @@ CSS variable | Default
                 }];
 
                 const polymerGestureListeners = [{
+                    types: ['down'],
+                    listener: pointerDownHandler
+                },{
                     types: ['track'],
-                    listener: handleTrack
+                    listener: pointerMoveHandler
                 }, {
-                    types: ['tap'],
-                    listener: handleTap
+                    types: ['up'],
+                    listener: pointerUpHandler
                 }];
 
                 const context = {
@@ -727,7 +750,7 @@ CSS variable | Default
                 this.logger.debug('attaching listeners', context);
                 context.listeners.forEach((item) => {
                     item.types.forEach(type => {
-                        if (['track', 'tap'].includes(type)) {
+                        if (['down', 'track', 'up'].includes(type)) {
                             Polymer.Gestures.addListener(element, type, item.listener);
                         } else {
                             element.addEventListener(type, item.listener, context.options);

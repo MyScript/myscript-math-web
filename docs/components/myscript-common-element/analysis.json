@@ -13,11 +13,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 203,
+              "line": 229,
               "column": 20
             },
             "end": {
-              "line": 207,
+              "line": 233,
               "column": 21
             }
           },
@@ -33,11 +33,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 211,
+              "line": 237,
               "column": 20
             },
             "end": {
-              "line": 215,
+              "line": 241,
               "column": 21
             }
           },
@@ -53,11 +53,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 219,
+              "line": 245,
               "column": 20
             },
             "end": {
-              "line": 223,
+              "line": 249,
               "column": 21
             }
           },
@@ -73,11 +73,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 227,
+              "line": 253,
               "column": 20
             },
             "end": {
-              "line": 231,
+              "line": 257,
               "column": 21
             }
           },
@@ -93,11 +93,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 235,
+              "line": 261,
               "column": 20
             },
             "end": {
-              "line": 239,
+              "line": 265,
               "column": 21
             }
           },
@@ -113,11 +113,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 243,
+              "line": 269,
               "column": 20
             },
             "end": {
-              "line": 247,
+              "line": 273,
               "column": 21
             }
           },
@@ -133,11 +133,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 251,
+              "line": 277,
               "column": 20
             },
             "end": {
-              "line": 255,
+              "line": 281,
               "column": 21
             }
           },
@@ -153,11 +153,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 259,
+              "line": 285,
               "column": 20
             },
             "end": {
-              "line": 263,
+              "line": 289,
               "column": 21
             }
           },
@@ -173,11 +173,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 269,
+              "line": 295,
               "column": 20
             },
             "end": {
-              "line": 272,
+              "line": 298,
               "column": 21
             }
           },
@@ -192,11 +192,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 278,
+              "line": 304,
               "column": 20
             },
             "end": {
-              "line": 281,
+              "line": 307,
               "column": 21
             }
           },
@@ -211,11 +211,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 286,
+              "line": 312,
               "column": 20
             },
             "end": {
-              "line": 292,
+              "line": 318,
               "column": 21
             }
           },
@@ -234,11 +234,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 296,
+              "line": 322,
               "column": 20
             },
             "end": {
-              "line": 302,
+              "line": 328,
               "column": 21
             }
           },
@@ -257,11 +257,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 306,
+              "line": 332,
               "column": 20
             },
             "end": {
-              "line": 309,
+              "line": 335,
               "column": 21
             }
           },
@@ -278,11 +278,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 315,
+              "line": 341,
               "column": 20
             },
             "end": {
-              "line": 318,
+              "line": 344,
               "column": 21
             }
           },
@@ -299,11 +299,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 322,
+              "line": 348,
               "column": 20
             },
             "end": {
-              "line": 325,
+              "line": 351,
               "column": 21
             }
           },
@@ -318,11 +318,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 329,
+              "line": 355,
               "column": 20
             },
             "end": {
-              "line": 332,
+              "line": 358,
               "column": 21
             }
           },
@@ -337,11 +337,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 336,
+              "line": 362,
               "column": 20
             },
             "end": {
-              "line": 339,
+              "line": 365,
               "column": 21
             }
           },
@@ -358,11 +358,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 343,
+              "line": 369,
               "column": 20
             },
             "end": {
-              "line": 347,
+              "line": 373,
               "column": 21
             }
           },
@@ -378,11 +378,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 351,
+              "line": 377,
               "column": 20
             },
             "end": {
-              "line": 355,
+              "line": 381,
               "column": 21
             }
           },
@@ -398,11 +398,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 359,
+              "line": 385,
               "column": 20
             },
             "end": {
-              "line": 362,
+              "line": 388,
               "column": 21
             }
           },
@@ -419,11 +419,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 366,
+              "line": 392,
               "column": 20
             },
             "end": {
-              "line": 371,
+              "line": 397,
               "column": 21
             }
           },
@@ -441,11 +441,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 375,
+              "line": 401,
               "column": 20
             },
             "end": {
-              "line": 380,
+              "line": 406,
               "column": 21
             }
           },
@@ -463,11 +463,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 384,
+              "line": 410,
               "column": 20
             },
             "end": {
-              "line": 389,
+              "line": 415,
               "column": 21
             }
           },
@@ -485,11 +485,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 393,
+              "line": 419,
               "column": 20
             },
             "end": {
-              "line": 398,
+              "line": 424,
               "column": 21
             }
           },
@@ -507,11 +507,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 402,
+              "line": 428,
               "column": 20
             },
             "end": {
-              "line": 407,
+              "line": 433,
               "column": 21
             }
           },
@@ -529,11 +529,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 411,
+              "line": 437,
               "column": 20
             },
             "end": {
-              "line": 416,
+              "line": 442,
               "column": 21
             }
           },
@@ -551,11 +551,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 420,
+              "line": 446,
               "column": 20
             },
             "end": {
-              "line": 425,
+              "line": 451,
               "column": 21
             }
           },
@@ -573,11 +573,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 429,
+              "line": 455,
               "column": 20
             },
             "end": {
-              "line": 433,
+              "line": 459,
               "column": 21
             }
           },
@@ -593,11 +593,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 437,
+              "line": 463,
               "column": 20
             },
             "end": {
-              "line": 441,
+              "line": 467,
               "column": 21
             }
           },
@@ -613,11 +613,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 445,
+              "line": 471,
               "column": 20
             },
             "end": {
-              "line": 449,
+              "line": 475,
               "column": 21
             }
           },
@@ -633,11 +633,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 454,
+              "line": 480,
               "column": 20
             },
             "end": {
-              "line": 457,
+              "line": 483,
               "column": 21
             }
           },
@@ -654,11 +654,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 461,
+              "line": 487,
               "column": 20
             },
             "end": {
-              "line": 465,
+              "line": 491,
               "column": 21
             }
           },
@@ -676,11 +676,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 469,
+              "line": 495,
               "column": 20
             },
             "end": {
-              "line": 473,
+              "line": 499,
               "column": 21
             }
           },
@@ -696,11 +696,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 474,
+              "line": 500,
               "column": 20
             },
             "end": {
-              "line": 477,
+              "line": 503,
               "column": 21
             }
           },
@@ -717,11 +717,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 590,
+              "line": 616,
               "column": 12
             },
             "end": {
-              "line": 604,
+              "line": 630,
               "column": 13
             }
           },
@@ -734,11 +734,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 606,
+              "line": 632,
               "column": 12
             },
             "end": {
-              "line": 611,
+              "line": 637,
               "column": 13
             }
           },
@@ -755,11 +755,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 613,
+              "line": 639,
               "column": 12
             },
             "end": {
-              "line": 622,
+              "line": 648,
               "column": 13
             }
           },
@@ -776,11 +776,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 624,
+              "line": 650,
               "column": 12
             },
             "end": {
-              "line": 628,
+              "line": 654,
               "column": 13
             }
           },
@@ -797,11 +797,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 630,
+              "line": 656,
               "column": 12
             },
             "end": {
-              "line": 632,
+              "line": 658,
               "column": 13
             }
           },
@@ -818,11 +818,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 634,
+              "line": 660,
               "column": 12
             },
             "end": {
-              "line": 640,
+              "line": 666,
               "column": 13
             }
           },
@@ -839,11 +839,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 642,
+              "line": 668,
               "column": 12
             },
             "end": {
-              "line": 737,
+              "line": 758,
               "column": 13
             }
           },
@@ -863,11 +863,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 739,
+              "line": 760,
               "column": 12
             },
             "end": {
-              "line": 750,
+              "line": 771,
               "column": 13
             }
           },
@@ -887,11 +887,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 757,
+              "line": 778,
               "column": 12
             },
             "end": {
-              "line": 772,
+              "line": 793,
               "column": 13
             }
           },
@@ -904,11 +904,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 774,
+              "line": 795,
               "column": 12
             },
             "end": {
-              "line": 778,
+              "line": 799,
               "column": 13
             }
           },
@@ -921,11 +921,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 783,
+              "line": 804,
               "column": 12
             },
             "end": {
-              "line": 787,
+              "line": 808,
               "column": 13
             }
           },
@@ -938,11 +938,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 792,
+              "line": 813,
               "column": 12
             },
             "end": {
-              "line": 796,
+              "line": 817,
               "column": 13
             }
           },
@@ -955,11 +955,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 801,
+              "line": 822,
               "column": 12
             },
             "end": {
-              "line": 805,
+              "line": 826,
               "column": 13
             }
           },
@@ -972,11 +972,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 810,
+              "line": 831,
               "column": 12
             },
             "end": {
-              "line": 814,
+              "line": 835,
               "column": 13
             }
           },
@@ -989,11 +989,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 822,
+              "line": 843,
               "column": 12
             },
             "end": {
-              "line": 826,
+              "line": 847,
               "column": 13
             }
           },
@@ -1020,11 +1020,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 832,
+              "line": 853,
               "column": 12
             },
             "end": {
-              "line": 836,
+              "line": 857,
               "column": 13
             }
           },
@@ -1042,11 +1042,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 841,
+              "line": 862,
               "column": 12
             },
             "end": {
-              "line": 845,
+              "line": 866,
               "column": 13
             }
           },
@@ -1059,11 +1059,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 851,
+              "line": 872,
               "column": 12
             },
             "end": {
-              "line": 855,
+              "line": 876,
               "column": 13
             }
           },
@@ -1076,11 +1076,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 857,
+              "line": 878,
               "column": 12
             },
             "end": {
-              "line": 862,
+              "line": 883,
               "column": 13
             }
           },
@@ -1106,11 +1106,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 864,
+              "line": 885,
               "column": 12
             },
             "end": {
-              "line": 869,
+              "line": 890,
               "column": 13
             }
           },
@@ -1136,11 +1136,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 871,
+              "line": 892,
               "column": 12
             },
             "end": {
-              "line": 875,
+              "line": 896,
               "column": 13
             }
           },
@@ -1157,11 +1157,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 877,
+              "line": 898,
               "column": 12
             },
             "end": {
-              "line": 898,
+              "line": 919,
               "column": 13
             }
           },
@@ -1207,11 +1207,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 137,
+          "line": 163,
           "column": 8
         },
         "end": {
-          "line": 899,
+          "line": 920,
           "column": 9
         }
       },
@@ -1224,11 +1224,11 @@
           "description": "The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)",
           "sourceRange": {
             "start": {
-              "line": 203,
+              "line": 229,
               "column": 20
             },
             "end": {
-              "line": 207,
+              "line": 233,
               "column": 21
             }
           },
@@ -1240,11 +1240,11 @@
           "description": "The current recognition protocol (WEBSOCKET or REST). We strongly recommend using WebSocket.",
           "sourceRange": {
             "start": {
-              "line": 211,
+              "line": 237,
               "column": 20
             },
             "end": {
-              "line": 215,
+              "line": 241,
               "column": 21
             }
           },
@@ -1256,11 +1256,11 @@
           "description": "Scheme to use to connect to MyScript Cloud or Server. (https or http)",
           "sourceRange": {
             "start": {
-              "line": 219,
+              "line": 245,
               "column": 20
             },
             "end": {
-              "line": 223,
+              "line": 249,
               "column": 21
             }
           },
@@ -1272,11 +1272,11 @@
           "description": "The current recognition service host.",
           "sourceRange": {
             "start": {
-              "line": 227,
+              "line": 253,
               "column": 20
             },
             "end": {
-              "line": 231,
+              "line": 257,
               "column": 21
             }
           },
@@ -1288,11 +1288,11 @@
           "description": "Cloud API version to use.",
           "sourceRange": {
             "start": {
-              "line": 235,
+              "line": 261,
               "column": 20
             },
             "end": {
-              "line": 239,
+              "line": 265,
               "column": 21
             }
           },
@@ -1304,11 +1304,11 @@
           "description": "Delay without any user input before asking for recognition, only use with REST protocol if not on-demand.",
           "sourceRange": {
             "start": {
-              "line": 243,
+              "line": 269,
               "column": 20
             },
             "end": {
-              "line": 247,
+              "line": 273,
               "column": 21
             }
           },
@@ -1320,11 +1320,11 @@
           "description": "Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol if not on-demand.",
           "sourceRange": {
             "start": {
-              "line": 251,
+              "line": 277,
               "column": 20
             },
             "end": {
-              "line": 255,
+              "line": 281,
               "column": 21
             }
           },
@@ -1336,11 +1336,11 @@
           "description": "True if export should be done on-demand, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 259,
+              "line": 285,
               "column": 20
             },
             "end": {
-              "line": 263,
+              "line": 289,
               "column": 21
             }
           },
@@ -1352,11 +1352,11 @@
           "description": "Application key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />\n<b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 269,
+              "line": 295,
               "column": 20
             },
             "end": {
-              "line": 272,
+              "line": 298,
               "column": 21
             }
           },
@@ -1368,11 +1368,11 @@
           "description": "HMAC key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />\n<b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 278,
+              "line": 304,
               "column": 20
             },
             "end": {
-              "line": 281,
+              "line": 307,
               "column": 21
             }
           },
@@ -1384,11 +1384,11 @@
           "description": "Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.\n(see examples/v4/programmatic_init.html for a better understanding)",
           "sourceRange": {
             "start": {
-              "line": 286,
+              "line": 312,
               "column": 20
             },
             "end": {
-              "line": 292,
+              "line": 318,
               "column": 21
             }
           },
@@ -1400,11 +1400,11 @@
           "description": "True if editor is initialized",
           "sourceRange": {
             "start": {
-              "line": 296,
+              "line": 322,
               "column": 20
             },
             "end": {
-              "line": 302,
+              "line": 328,
               "column": 21
             }
           },
@@ -1416,11 +1416,11 @@
           "description": "The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.",
           "sourceRange": {
             "start": {
-              "line": 306,
+              "line": 332,
               "column": 20
             },
             "end": {
-              "line": 309,
+              "line": 335,
               "column": 21
             }
           },
@@ -1432,11 +1432,11 @@
           "description": "Set the additional configuration used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)\nConfiguration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.\nConfiguration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).",
           "sourceRange": {
             "start": {
-              "line": 315,
+              "line": 341,
               "column": 20
             },
             "end": {
-              "line": 318,
+              "line": 344,
               "column": 21
             }
           },
@@ -1448,11 +1448,11 @@
           "description": "Pen color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "sourceRange": {
             "start": {
-              "line": 322,
+              "line": 348,
               "column": 20
             },
             "end": {
-              "line": 325,
+              "line": 351,
               "column": 21
             }
           },
@@ -1464,11 +1464,11 @@
           "description": "Pen width in mm (no other unit is supported yet)",
           "sourceRange": {
             "start": {
-              "line": 329,
+              "line": 355,
               "column": 20
             },
             "end": {
-              "line": 332,
+              "line": 358,
               "column": 21
             }
           },
@@ -1480,11 +1480,11 @@
           "description": "Set the additional penStyle used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultPenStyle.js file)",
           "sourceRange": {
             "start": {
-              "line": 336,
+              "line": 362,
               "column": 20
             },
             "end": {
-              "line": 339,
+              "line": 365,
               "column": 21
             }
           },
@@ -1496,11 +1496,11 @@
           "description": "Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "sourceRange": {
             "start": {
-              "line": 343,
+              "line": 369,
               "column": 20
             },
             "end": {
-              "line": 347,
+              "line": 373,
               "column": 21
             }
           },
@@ -1512,11 +1512,11 @@
           "description": "Width of strokes and primitives in mm (no other unit is supported yet)",
           "sourceRange": {
             "start": {
-              "line": 351,
+              "line": 377,
               "column": 20
             },
             "end": {
-              "line": 355,
+              "line": 381,
               "column": 21
             }
           },
@@ -1528,11 +1528,11 @@
           "description": "Set the additional theme used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultTheme.js file)",
           "sourceRange": {
             "start": {
-              "line": 359,
+              "line": 385,
               "column": 20
             },
             "end": {
-              "line": 362,
+              "line": 388,
               "column": 21
             }
           },
@@ -1544,11 +1544,11 @@
           "description": "True if undo is available",
           "sourceRange": {
             "start": {
-              "line": 366,
+              "line": 392,
               "column": 20
             },
             "end": {
-              "line": 371,
+              "line": 397,
               "column": 21
             }
           },
@@ -1560,11 +1560,11 @@
           "description": "True if redo is available",
           "sourceRange": {
             "start": {
-              "line": 375,
+              "line": 401,
               "column": 20
             },
             "end": {
-              "line": 380,
+              "line": 406,
               "column": 21
             }
           },
@@ -1576,11 +1576,11 @@
           "description": "True if there is something to clear",
           "sourceRange": {
             "start": {
-              "line": 384,
+              "line": 410,
               "column": 20
             },
             "end": {
-              "line": 389,
+              "line": 415,
               "column": 21
             }
           },
@@ -1592,11 +1592,11 @@
           "description": "True if export button could be displayed.",
           "sourceRange": {
             "start": {
-              "line": 393,
+              "line": 419,
               "column": 20
             },
             "end": {
-              "line": 398,
+              "line": 424,
               "column": 21
             }
           },
@@ -1608,55 +1608,7 @@
           "description": "True if convert button could be displayed.",
           "sourceRange": {
             "start": {
-              "line": 402,
-              "column": 20
-            },
-            "end": {
-              "line": 407,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        },
-        {
-          "name": "disableautoreconnect",
-          "description": "If set to true, disable the autoReconnect.",
-          "sourceRange": {
-            "start": {
-              "line": 411,
-              "column": 20
-            },
-            "end": {
-              "line": 416,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        },
-        {
-          "name": "disablecontrols",
-          "description": "If set to true, remove the controls (undo/redo, clear...).",
-          "sourceRange": {
-            "start": {
-              "line": 420,
-              "column": 20
-            },
-            "end": {
-              "line": 425,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
-        },
-        {
-          "name": "disableundoredocontrol",
-          "description": "If set to true, remove the undo/redo controls.",
-          "sourceRange": {
-            "start": {
-              "line": 429,
+              "line": 428,
               "column": 20
             },
             "end": {
@@ -1668,15 +1620,63 @@
           "type": "boolean"
         },
         {
-          "name": "disableclearcontrol",
-          "description": "If set to true, remove the clear control.",
+          "name": "disableautoreconnect",
+          "description": "If set to true, disable the autoReconnect.",
           "sourceRange": {
             "start": {
               "line": 437,
               "column": 20
             },
             "end": {
-              "line": 441,
+              "line": 442,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "disablecontrols",
+          "description": "If set to true, remove the controls (undo/redo, clear...).",
+          "sourceRange": {
+            "start": {
+              "line": 446,
+              "column": 20
+            },
+            "end": {
+              "line": 451,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "disableundoredocontrol",
+          "description": "If set to true, remove the undo/redo controls.",
+          "sourceRange": {
+            "start": {
+              "line": 455,
+              "column": 20
+            },
+            "end": {
+              "line": 459,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "disableclearcontrol",
+          "description": "If set to true, remove the clear control.",
+          "sourceRange": {
+            "start": {
+              "line": 463,
+              "column": 20
+            },
+            "end": {
+              "line": 467,
               "column": 21
             }
           },
@@ -1688,11 +1688,11 @@
           "description": "If set to true, remove the convert control.",
           "sourceRange": {
             "start": {
-              "line": 445,
+              "line": 471,
               "column": 20
             },
             "end": {
-              "line": 449,
+              "line": 475,
               "column": 21
             }
           },
@@ -1704,11 +1704,11 @@
           "description": "Exports.",
           "sourceRange": {
             "start": {
-              "line": 454,
+              "line": 480,
               "column": 20
             },
             "end": {
-              "line": 457,
+              "line": 483,
               "column": 21
             }
           },
@@ -1720,11 +1720,11 @@
           "description": "True if component is idle",
           "sourceRange": {
             "start": {
-              "line": 461,
+              "line": 487,
               "column": 20
             },
             "end": {
-              "line": 465,
+              "line": 491,
               "column": 21
             }
           },
@@ -1736,11 +1736,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 469,
+              "line": 495,
               "column": 20
             },
             "end": {
-              "line": 473,
+              "line": 499,
               "column": 21
             }
           },
@@ -1752,11 +1752,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 474,
+              "line": 500,
               "column": 20
             },
             "end": {
-              "line": 477,
+              "line": 503,
               "column": 21
             }
           },
@@ -2221,11 +2221,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 447,
+              "line": 448,
               "column": 6
             },
             "end": {
-              "line": 452,
+              "line": 453,
               "column": 7
             }
           },
@@ -2265,11 +2265,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 461,
+              "line": 462,
               "column": 6
             },
             "end": {
-              "line": 463,
+              "line": 464,
               "column": 7
             }
           },
@@ -2300,11 +2300,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 472,
+              "line": 473,
               "column": 6
             },
             "end": {
-              "line": 474,
+              "line": 475,
               "column": 7
             }
           },
@@ -2330,16 +2330,16 @@
         },
         {
           "name": "attributeChangedCallback",
-          "description": "Provides a default implementation of the standard Custom Elements\n`attributeChangedCallback`.\n\nBy default, attributes declared in `properties` metadata are\ndeserialized using their `type` information to properties of the\nsame name.  \"Dash-cased\" attributes are deserialzed to \"camelCase\"\nproperties.",
+          "description": "Provides a default implementation of the standard Custom Elements\n`attributeChangedCallback`.\n\nBy default, attributes declared in `properties` metadata are\ndeserialized using their `type` information to properties of the\nsame name.  \"Dash-cased\" attributes are deserialized to \"camelCase\"\nproperties.",
           "privacy": "public",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 699,
+              "line": 715,
               "column": 6
             },
             "end": {
-              "line": 707,
+              "line": 723,
               "column": 7
             }
           },
@@ -2370,11 +2370,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 557,
+              "line": 573,
               "column": 6
             },
             "end": {
-              "line": 597,
+              "line": 613,
               "column": 7
             }
           },
@@ -2717,7 +2717,7 @@
         },
         {
           "name": "_setPendingProperty",
-          "description": "Overrides the `PropertyAccessors` implementation to introduce special\ndirty check logic depending on the property & value being set:\n\n1. Any value set to a path (e.g. 'obj.prop': 42 or 'obj.prop': {...})\n   Stored in `__dataTemp`, dirty checked against `__dataTemp`\n2. Object set to simple property (e.g. 'prop': {...})\n   Stored in `__dataTemp` and `__data`, dirty checked against\n   `__dataTemp` by default implementation of `_shouldPropertyChange`\n3. Primitive value set to simple property (e.g. 'prop': 42)\n   Stored in `__data`, dirty checked against `__data`\n\nThe dirty-check is important to prevent cycles due to two-way\nnotification, but paths and objects are only dirty checked against any\nprevious value set during this turn via a \"temporary cache\" that is\ncleared when the last `_propertiesChaged` exits. This is so:\na. any cached array paths (e.g. 'array.3.prop') may be invalidated\n   due to array mutations like shift/unshift/splice; this is fine\n   since path changes are dirty-checked at user entry points like `set`\nb. dirty-checking for objects only lasts one turn to allow the user\n   to mutate the object in-place and re-set it with the same identity\n   and have all sub-properties re-propagated in a subsequent turn.\n\nThe temp cache is not necessarily sufficient to prevent invalid array\npaths, since a splice can happen during the same turn (with pathological\nuser code); we could introduce a \"fixup\" for temporarily cached array\npaths if needed: https://github.com/Polymer/polymer/issues/4227",
+          "description": "Overrides the `PropertyAccessors` implementation to introduce special\ndirty check logic depending on the property & value being set:\n\n1. Any value set to a path (e.g. 'obj.prop': 42 or 'obj.prop': {...})\n   Stored in `__dataTemp`, dirty checked against `__dataTemp`\n2. Object set to simple property (e.g. 'prop': {...})\n   Stored in `__dataTemp` and `__data`, dirty checked against\n   `__dataTemp` by default implementation of `_shouldPropertyChange`\n3. Primitive value set to simple property (e.g. 'prop': 42)\n   Stored in `__data`, dirty checked against `__data`\n\nThe dirty-check is important to prevent cycles due to two-way\nnotification, but paths and objects are only dirty checked against any\nprevious value set during this turn via a \"temporary cache\" that is\ncleared when the last `_propertiesChanged` exits. This is so:\na. any cached array paths (e.g. 'array.3.prop') may be invalidated\n   due to array mutations like shift/unshift/splice; this is fine\n   since path changes are dirty-checked at user entry points like `set`\nb. dirty-checking for objects only lasts one turn to allow the user\n   to mutate the object in-place and re-set it with the same identity\n   and have all sub-properties re-propagated in a subsequent turn.\n\nThe temp cache is not necessarily sufficient to prevent invalid array\npaths, since a splice can happen during the same turn (with pathological\nuser code); we could introduce a \"fixup\" for temporarily cached array\npaths if needed: https://github.com/Polymer/polymer/issues/4227",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
@@ -2847,11 +2847,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 627,
+              "line": 643,
               "column": 6
             },
             "end": {
-              "line": 633,
+              "line": 649,
               "column": 7
             }
           },
@@ -2899,7 +2899,7 @@
               "column": 6
             },
             "end": {
-              "line": 613,
+              "line": 609,
               "column": 7
             }
           },
@@ -2923,7 +2923,7 @@
           ],
           "return": {
             "type": "boolean",
-            "desc": "Whether the property should be considered a change\n  and enqueue a `_proeprtiesChanged` callback"
+            "desc": "Whether the property should be considered a change\n  and enqueue a `_propertiesChanged` callback"
           },
           "inheritedFrom": "Polymer.PropertyAccessors"
         },
@@ -3296,11 +3296,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 644,
+              "line": 660,
               "column": 6
             },
             "end": {
-              "line": 653,
+              "line": 669,
               "column": 7
             }
           },
@@ -3546,7 +3546,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             },
             {
@@ -3578,7 +3578,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             }
           ],
@@ -3607,7 +3607,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             },
             {
@@ -3649,7 +3649,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             }
           ],
@@ -3678,7 +3678,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             },
             {
@@ -4001,11 +4001,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 667,
+              "line": 683,
               "column": 6
             },
             "end": {
-              "line": 683,
+              "line": 699,
               "column": 7
             }
           },
@@ -4013,12 +4013,12 @@
           "params": [
             {
               "name": "dom",
-              "type": "NodeList",
+              "type": "StampedTemplate",
               "description": "to attach to the element."
             }
           ],
           "return": {
-            "type": "Node",
+            "type": "ShadowRoot",
             "desc": "node to which the dom has been attached."
           },
           "inheritedFrom": "Polymer.ElementMixin"
@@ -4030,11 +4030,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 726,
+              "line": 742,
               "column": 6
             },
             "end": {
-              "line": 730,
+              "line": 746,
               "column": 7
             }
           },
@@ -4055,11 +4055,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 743,
+              "line": 759,
               "column": 6
             },
             "end": {
-              "line": 748,
+              "line": 764,
               "column": 7
             }
           },
@@ -4201,11 +4201,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 759,
+              "line": 775,
               "column": 6
             },
             "end": {
-              "line": 762,
+              "line": 778,
               "column": 7
             }
           },
@@ -4470,7 +4470,7 @@
         },
         {
           "name": "addPropertyEffect",
-          "description": "Ensures an accessor exists for the specified property, and adds\nto a list of \"property effects\" that will run when the accessor for\nthe specified property is set.  Effects are grouped by \"type\", which\nroughly corresponds to a phase in effect processing.  The effect\nmetadata should be in the following form:\n\n  {\n    fn: effectFunction, // Reference to function to call to perform effect\n    info: { ... }       // Effect metadata passed to function\n    trigger: {          // Optional triggering metadata; if not provided\n      name: string      // the property is treated as a wildcard\n      structured: boolean\n      wildcard: boolean\n    }\n  }\n\nEffects are called from `_propertiesChanged` in the following order by\ntype:\n\n1. COMPUTE\n2. PROPAGATE\n3. REFLECT\n4. OBSERVE\n5. NOTIFY\n\nEffect functions are called with the following signature:\n\n  effectFunction(inst, path, props, oldProps, info, hasPaths)",
+          "description": "Ensures an accessor exists for the specified property, and adds\nto a list of \"property effects\" that will run when the accessor for\nthe specified property is set.  Effects are grouped by \"type\", which\nroughly corresponds to a phase in effect processing.  The effect\nmetadata should be in the following form:\n\n    {\n      fn: effectFunction, // Reference to function to call to perform effect\n      info: { ... }       // Effect metadata passed to function\n      trigger: {          // Optional triggering metadata; if not provided\n        name: string      // the property is treated as a wildcard\n        structured: boolean\n        wildcard: boolean\n      }\n    }\n\nEffects are called from `_propertiesChanged` in the following order by\ntype:\n\n1. COMPUTE\n2. PROPAGATE\n3. REFLECT\n4. OBSERVE\n5. NOTIFY\n\nEffect functions are called with the following signature:\n\n    effectFunction(inst, path, props, oldProps, info, hasPaths)",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
@@ -4540,7 +4540,7 @@
         },
         {
           "name": "createMethodObserver",
-          "description": "Creates a multi-property \"method observer\" based on the provided\nexpression, which should be a string in the form of a normal Javascript\nfunction signature: `'methodName(arg1, [..., argn])'`.  Each argument\nshould correspond to a property or path in the context of this\nprototype (or instance), or may be a literal string or number.",
+          "description": "Creates a multi-property \"method observer\" based on the provided\nexpression, which should be a string in the form of a normal JavaScript\nfunction signature: `'methodName(arg1, [..., argn])'`.  Each argument\nshould correspond to a property or path in the context of this\nprototype (or instance), or may be a literal string or number.",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
@@ -4650,7 +4650,7 @@
         },
         {
           "name": "createComputedProperty",
-          "description": "Creates a computed property whose value is set to the result of the\nmethod described by the given `expression` each time one or more\narguments to the method changes.  The expression should be a string\nin the form of a normal Javascript function signature:\n`'methodName(arg1, [..., argn])'`",
+          "description": "Creates a computed property whose value is set to the result of the\nmethod described by the given `expression` each time one or more\narguments to the method changes.  The expression should be a string\nin the form of a normal JavaScript function signature:\n`'methodName(arg1, [..., argn])'`",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",

@@ -772,11 +772,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 1024,
+              "line": 987,
               "column": 20
             },
             "end": {
-              "line": 1029,
+              "line": 992,
               "column": 21
             }
           },
@@ -2570,11 +2570,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 1033,
+              "line": 996,
               "column": 12
             },
             "end": {
-              "line": 1036,
+              "line": 999,
               "column": 13
             }
           },
@@ -2694,11 +2694,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 1038,
+              "line": 1001,
               "column": 12
             },
             "end": {
-              "line": 1048,
+              "line": 1011,
               "column": 13
             }
           },
@@ -3410,11 +3410,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 1016,
+          "line": 979,
           "column": 8
         },
         "end": {
-          "line": 1050,
+          "line": 1013,
           "column": 9
         }
       },
@@ -3427,11 +3427,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 1024,
+              "line": 987,
               "column": 20
             },
             "end": {
-              "line": 1029,
+              "line": 992,
               "column": 21
             }
           },
@@ -8727,15 +8727,15 @@
         {
           "name": "solverroundingmode",
           "type": "string",
-          "description": "",
+          "description": "'truncate' or 'half up'. By default 'half up' *",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 502,
+              "line": 503,
               "column": 20
             },
             "end": {
-              "line": 505,
+              "line": 506,
               "column": 21
             }
           },
@@ -8751,11 +8751,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 506,
+              "line": 507,
               "column": 20
             },
             "end": {
-              "line": 509,
+              "line": 510,
               "column": 21
             }
           },
@@ -8771,11 +8771,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 513,
+              "line": 514,
               "column": 20
             },
             "end": {
-              "line": 516,
+              "line": 517,
               "column": 21
             }
           },
@@ -8791,11 +8791,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 520,
+              "line": 521,
               "column": 20
             },
             "end": {
-              "line": 522,
+              "line": 523,
               "column": 21
             }
           },
@@ -8810,11 +8810,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 524,
+              "line": 525,
               "column": 20
             },
             "end": {
-              "line": 527,
+              "line": 528,
               "column": 21
             }
           },
@@ -8830,11 +8830,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 533,
+              "line": 534,
               "column": 20
             },
             "end": {
-              "line": 536,
+              "line": 537,
               "column": 21
             }
           },
@@ -8851,11 +8851,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 540,
+              "line": 541,
               "column": 20
             },
             "end": {
-              "line": 544,
+              "line": 545,
               "column": 21
             }
           },
@@ -8873,11 +8873,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 548,
+              "line": 549,
               "column": 20
             },
             "end": {
-              "line": 552,
+              "line": 553,
               "column": 21
             }
           },
@@ -8893,11 +8893,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 553,
+              "line": 554,
               "column": 20
             },
             "end": {
-              "line": 556,
+              "line": 557,
               "column": 21
             }
           },
@@ -10689,11 +10689,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 754,
+              "line": 755,
               "column": 12
             },
             "end": {
-              "line": 757,
+              "line": 758,
               "column": 13
             }
           },
@@ -10706,11 +10706,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 759,
+              "line": 760,
               "column": 12
             },
             "end": {
-              "line": 762,
+              "line": 763,
               "column": 13
             }
           },
@@ -10811,11 +10811,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 633,
+              "line": 634,
               "column": 12
             },
             "end": {
-              "line": 646,
+              "line": 647,
               "column": 13
             }
           },
@@ -10828,11 +10828,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 665,
+              "line": 666,
               "column": 12
             },
             "end": {
-              "line": 669,
+              "line": 670,
               "column": 13
             }
           },
@@ -10845,11 +10845,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 674,
+              "line": 675,
               "column": 12
             },
             "end": {
-              "line": 678,
+              "line": 679,
               "column": 13
             }
           },
@@ -10862,11 +10862,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 683,
+              "line": 684,
               "column": 12
             },
             "end": {
-              "line": 687,
+              "line": 688,
               "column": 13
             }
           },
@@ -10879,11 +10879,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 692,
+              "line": 693,
               "column": 12
             },
             "end": {
-              "line": 696,
+              "line": 697,
               "column": 13
             }
           },
@@ -10896,11 +10896,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 704,
+              "line": 705,
               "column": 12
             },
             "end": {
-              "line": 708,
+              "line": 709,
               "column": 13
             }
           },
@@ -10927,11 +10927,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 714,
+              "line": 715,
               "column": 12
             },
             "end": {
-              "line": 718,
+              "line": 719,
               "column": 13
             }
           },
@@ -10949,11 +10949,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 723,
+              "line": 724,
               "column": 12
             },
             "end": {
-              "line": 727,
+              "line": 728,
               "column": 13
             }
           },
@@ -10966,11 +10966,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 733,
+              "line": 734,
               "column": 12
             },
             "end": {
-              "line": 737,
+              "line": 738,
               "column": 13
             }
           },
@@ -10983,11 +10983,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 742,
+              "line": 743,
               "column": 12
             },
             "end": {
-              "line": 748,
+              "line": 749,
               "column": 13
             }
           },
@@ -11004,11 +11004,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 750,
+              "line": 751,
               "column": 12
             },
             "end": {
-              "line": 752,
+              "line": 753,
               "column": 13
             }
           },
@@ -11031,11 +11031,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 764,
+              "line": 765,
               "column": 12
             },
             "end": {
-              "line": 767,
+              "line": 768,
               "column": 13
             }
           },
@@ -11787,7 +11787,7 @@
           "column": 8
         },
         "end": {
-          "line": 769,
+          "line": 770,
           "column": 9
         }
       },
@@ -12325,14 +12325,14 @@
         },
         {
           "name": "solverroundingmode",
-          "description": "",
+          "description": "'truncate' or 'half up'. By default 'half up' *",
           "sourceRange": {
             "start": {
-              "line": 502,
+              "line": 503,
               "column": 20
             },
             "end": {
-              "line": 505,
+              "line": 506,
               "column": 21
             }
           },
@@ -12344,11 +12344,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 506,
+              "line": 507,
               "column": 20
             },
             "end": {
-              "line": 509,
+              "line": 510,
               "column": 21
             }
           },
@@ -12360,11 +12360,11 @@
           "description": "If attribute is set activate the recognition of columnar operations. V3 only.",
           "sourceRange": {
             "start": {
-              "line": 513,
+              "line": 514,
               "column": 20
             },
             "end": {
-              "line": 516,
+              "line": 517,
               "column": 21
             }
           },
@@ -12376,11 +12376,11 @@
           "description": "List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare. V3 only.",
           "sourceRange": {
             "start": {
-              "line": 520,
+              "line": 521,
               "column": 20
             },
             "end": {
-              "line": 522,
+              "line": 523,
               "column": 21
             }
           },
@@ -12392,11 +12392,11 @@
           "description": "V3 only.",
           "sourceRange": {
             "start": {
-              "line": 524,
+              "line": 525,
               "column": 20
             },
             "end": {
-              "line": 527,
+              "line": 528,
               "column": 21
             }
           },
@@ -12408,11 +12408,11 @@
           "description": "Exports.",
           "sourceRange": {
             "start": {
-              "line": 533,
+              "line": 534,
               "column": 20
             },
             "end": {
-              "line": 536,
+              "line": 537,
               "column": 21
             }
           },
@@ -12424,11 +12424,11 @@
           "description": "True if component is idle",
           "sourceRange": {
             "start": {
-              "line": 540,
+              "line": 541,
               "column": 20
             },
             "end": {
-              "line": 544,
+              "line": 545,
               "column": 21
             }
           },
@@ -12440,11 +12440,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 548,
+              "line": 549,
               "column": 20
             },
             "end": {
-              "line": 552,
+              "line": 553,
               "column": 21
             }
           },
@@ -12456,11 +12456,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 553,
+              "line": 554,
               "column": 20
             },
             "end": {
-              "line": 556,
+              "line": 557,
               "column": 21
             }
           },

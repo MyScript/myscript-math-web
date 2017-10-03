@@ -34,8 +34,8 @@
   ],
   "dependencies": {
     "polymer": "^2.0.1",
-    "myscript-common-element": "2.0.0-alpha1",
-    "KaTeX": "katex#^0.7.1"
+    "myscript-common-element": "master",
+    "KaTeX": "katex#^0.8.3"
   },
   "devDependencies": {
     "webcomponentsjs": "^1.0.1",
