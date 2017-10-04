@@ -12471,8 +12471,8 @@
       "events": [
         {
           "type": "CustomEvent",
-          "name": "change",
-          "description": "change",
+          "name": "changed",
+          "description": "changed",
           "metadata": {}
         },
         {

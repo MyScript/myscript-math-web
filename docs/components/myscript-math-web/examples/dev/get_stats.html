@@ -28,7 +28,7 @@
         </myscript-math-web>
         <script>
             const paperToast = document.querySelector('paper-toast');
-            document.querySelector('myscript-math-web').addEventListener('change', (event) => {
+            document.querySelector('myscript-math-web').addEventListener('changed', (event) => {
                 paperToast.text = `Stats for this input are : ${JSON.stringify(event.target.getStats())}`;
                 paperToast.fitIn = paperToast.show();
             });
