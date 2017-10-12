@@ -847,6 +847,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       });
 
+      test('avoids restoring focus if focus changed', function(done) {
+        var button0 = document.getElementById('buttons').$.button0;
+        var button1 = document.getElementById('buttons').$.button1;
+        button0.focus();
+        runAfterOpen(overlay, function() {
+          button1.focus();
+          runAfterClose(overlay, function() {
+            assert.equal(Polymer.IronOverlayManager.deepActiveElement, button1,
+              'focus was not modified');
+            done();
+          });
+        });
+      });
+
+      test('focus restored if overlay detached before closing is done', function(done) {
+        var focusable = document.getElementById('focusInput');
+        focusable.focus();
+        runAfterOpen(overlay, function() {
+          // Close overlay and remove it from the DOM.
+          runAfterClose(overlay, function() {
+            assert.equal(Polymer.IronOverlayManager.deepActiveElement, focusable,
+              'focus restored to focusable');
+            done();
+          });
+          overlay.parentNode.removeChild(overlay);
+        });
+      });
+
     });
 
     suite('overlay with backdrop', function() {
@@ -888,7 +916,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('backdrop is removed when the element is removed from DOM', function(done) {
         runAfterOpen(overlay, function() {
-          Polymer.dom(overlay).parentNode.removeChild(overlay);
+          overlay.parentNode.removeChild(overlay);
           // Ensure detached is executed.
           Polymer.dom.flush();
           assert.isFalse(overlay.backdropElement.opened, 'backdrop is closed');
@@ -986,6 +1014,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         runAfterClose(overlay2, function() {
           done();
         })
+      });
+
+      test('allow-click-through allows overlay below to handle click', function(done) {
+        overlay2.allowClickThrough = true;
+        runAfterOpen(overlay1, function() {
+          runAfterOpen(overlay2, function() {
+            MockInteractions.tap(document.body);
+            assert.isFalse(overlay1.opened, 'overlay1 was closed');
+            assert.isFalse(overlay2.opened, 'overlay2 was closed');
+            done();
+          });
+        });
+      });
+
+      test('allow-click-through and no-cancel-on-outside-click combo', function(done) {
+        overlay2.allowClickThrough = true;
+        overlay2.noCancelOnOutsideClick = true;
+        runAfterOpen(overlay1, function() {
+          runAfterOpen(overlay2, function() {
+            MockInteractions.tap(document.body);
+            assert.isTrue(overlay2.opened, 'overlay2 still open');
+            assert.isFalse(overlay1.opened, 'overlay1 was closed');
+            done();
+          });
+        });
       });
 
     });
@@ -1302,16 +1355,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     suite('animations', function() {
 
-      test('overlay animations correctly triggered', function(done) {
-        var overlay = fixture('basic');
+      var overlay;
+      setup(function() {
+        overlay = fixture('basic');
         overlay.animated = true;
-        overlay.open();
+      });
+
+      test('overlay animations correctly triggered', function(done) {
         overlay.addEventListener('simple-overlay-open-animation-start', function() {
           // Since animated overlay will transition center + 300px to center,
           // we should not find the element at the center when the open animation starts.
           var centerElement = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
           assert.notEqual(centerElement, overlay, 'overlay should not be centered already');
           done();
+        });
+        overlay.open();
+      });
+
+      test('overlay detached before opening animation is done', function(done) {
+        // Test will fail if `done` is called more than once.
+        runAfterOpen(overlay, function() {
+          assert.equal(overlay.style.display, '', 'overlay displayed');
+          assert.notEqual(overlay.style.zIndex, '', 'z-index ok');
+          done();
+        });
+        // After some time, but before the animation is completed...
+        setTimeout(function() {
+          // Animation is not done yet, but we remove the overlay already.
+          overlay.parentNode.removeChild(overlay);
+        }, 50);
+      });
+
+      test('overlay detached before closing animation is done', function(done) {
+        runAfterOpen(overlay, function() {
+          // Test will fail if `done` is called more than once.
+          runAfterClose(overlay, function() {
+            assert.equal(overlay.style.display, 'none', 'overlay hidden');
+            assert.equal(overlay.style.zIndex, '', 'z-index reset');
+            done();
+          });
+          // After some time, but before the animation is completed...
+          setTimeout(function() {
+            // Animation is not done yet, but we remove the overlay already.
+            overlay.parentNode.removeChild(overlay);
+          }, 50);
         });
       });
 

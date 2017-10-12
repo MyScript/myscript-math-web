@@ -512,10 +512,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       };
     }
 
-    suite('without a base URI', function() {
-      ironLocationTests();
-
+    suite('with a base URI', function() {
+      var baseElem;
+      setup(function() {
+        expect(document.baseURI).to.be.equal(window.location.href);
+        baseElem = document.createElement('base');
+        var href = 'https://example.com/i/dont/exist/obviously'
+        baseElem.href = href;
+        document.head.appendChild(baseElem);
+        expect(document.baseURI).to.be.equal(href);
+      });
+      teardown(function() {
+        document.head.removeChild(baseElem);
+      });
       suiteTeardown(cooldownFunction);
+      ironLocationTests();
     });
   });
 

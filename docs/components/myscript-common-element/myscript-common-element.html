@@ -37,32 +37,6 @@ CSS variable | Default
 @demo examples/index.html Other demonstrations
 -->
 <dom-module id="myscript-common-element">
-    <style>
-        :host {
-            display: block;
-            position: relative;
-            min-height: 100px;
-            min-width: 200px;
-            --paper-fab-background: #1A9FFF;
-            --paper-fab-keyboard-focus-background: #1A9FFF;
-            --paper-fab-disabled-background: #D7DADC;
-            --paper-fab-disabled-text: #dcdee0;
-        }
-        .buttons {
-            position: inherit;
-            float: left;
-            display: flex;
-            display: -webkit-flex;
-            z-index: 2;
-            background-color: transparent;
-            padding: 6px;
-        }
-        paper-fab {
-            z-index: 3;
-            background: #1A9FFF;
-            margin: 6px;
-        }
-    </style>
     <template>
         <style include="myscript-stylesheet">
             :host {
@@ -109,13 +83,17 @@ CSS variable | Default
                 box-sizing: border-box;
             }
 
+            :host::after {
+                @apply --myscript-common-element-icon;
+            }
+
             .ms-editor {
                 background: var(--myscript-common-element-background);
             }
 
             .ms-editor canvas.ms-rendering-canvas,
             .ms-editor svg {
-                background: var(--myscript-common-element-line-pattern);
+                @apply --myscript-common-element-line-pattern;
             }
 
             .ms-editor canvas.ms-capture-canvas {
@@ -153,8 +131,8 @@ CSS variable | Default
         <div id="editorDomElement"
              class="ms-editor"
              on-idle="_idleListener"
-             on-loaded="_changeListener"
-             on-change="_changeListener"
+             on-loaded="_changedListener"
+             on-changed="_changedListener"
              on-exported="_exportedListener"
              on-error="_errorListener">
         </div>
@@ -204,7 +182,7 @@ CSS variable | Default
 
             /**
              * Fired when editor state changed.
-             * @event change
+             * @event changed
              */
 
             /**
@@ -637,7 +615,7 @@ CSS variable | Default
                 }
             }
 
-            _changeListener(event) {
+            _changedListener(event) {
                 if (event.detail) {
                     this.initialized = event.detail.initialized;
                     this.canclear = event.detail.canClear;
@@ -670,6 +648,14 @@ CSS variable | Default
 
             _attachGrabber(element, editor) {
 
+                const unFocus = () => {
+                    if (document.selection) {
+                        document.selection.empty();
+                    } else {
+                        window.getSelection().removeAllRanges();
+                    }
+                };
+
                 const patchPointerEvent = (evt) => {
                     if (!evt.pointerId) {
                         evt.pointerId = -1;
@@ -680,6 +666,13 @@ CSS variable | Default
                     return evt;
                 };
 
+                const checkHover = (evt) => {
+                    if (evt.detail.hover()) {
+                        return evt.detail.hover().id === 'editorDomElement' || evt.detail.hover().className.includes('ms-canvas');
+                    } else
+                        return false;
+                };
+
                 const pointerDownHandler = (evt) => { // Trigger a pointerDown
                     patchPointerEvent(evt);
                     if (this.activePointerId) {
@@ -688,6 +681,7 @@ CSS variable | Default
                         }
                     } else if ((evt.button !== 2) && (evt.buttons !== 2)) { // Ignore right click
                         this.activePointerId = evt.pointerId;
+                        unFocus();
                         evt.stopPropagation();
                         editor.pointerDown(MyScriptCommonElement._extractPoint(evt, editor.configuration), evt.pointerType, evt.pointerId);
                     }
@@ -696,11 +690,13 @@ CSS variable | Default
                 const pointerMoveHandler = (evt) => { // Trigger a pointerMove
                     patchPointerEvent(evt);
                     // Only considering the active pointer
-                    if (this.activePointerId && this.activePointerId === evt.pointerId) {
+                    if (checkHover(evt) && this.activePointerId && this.activePointerId === evt.pointerId) {
                         evt.stopPropagation();
                         editor.pointerMove(MyScriptCommonElement._extractPoint(evt, editor.configuration));
                     } else {
-                        this.logger.trace(`${evt.type} event from another pointerid (${evt.pointerId})`, this.activePointerId);
+                        evt.stopPropagation();
+                        this.activePointerId = undefined; // Managing the active pointer
+                        editor.pointerUp(MyScriptCommonElement._extractPoint(evt, editor.configuration));
                     }
                 };
 
@@ -730,7 +726,7 @@ CSS variable | Default
                 const polymerGestureListeners = [{
                     types: ['down'],
                     listener: pointerDownHandler
-                },{
+                }, {
                     types: ['track'],
                     listener: pointerMoveHandler
                 }, {

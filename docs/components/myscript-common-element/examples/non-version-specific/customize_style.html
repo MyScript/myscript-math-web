@@ -64,7 +64,7 @@
             <span>
                 <paper-toggle-button id="penenabled">Enable pen color/width</paper-toggle-button>
                 <span id="pensettings" class="hidden">
-                    <paper-swatch-picker id="pencolor" color="#ff7314"></paper-swatch-picker>
+                    <paper-swatch-picker id="pencolor"></paper-swatch-picker>
                     <paper-slider id="penwidth" snaps min="1" max="5" value="2"></paper-slider>
                 </span>
             </span>
@@ -101,6 +101,9 @@
             const penSettings = document.querySelector('#pensettings');
             const penColor = document.querySelector('#pencolor');
             const penWidth = document.querySelector('#penwidth');
+
+            // Set penColor after to prevent taken into account too early
+            penColor.color = '#ff7314';
 
             document.querySelector('#theme').addEventListener('change', (event) => {
                 const selectedTheme = themes.find(theme => theme.name === event.target.value);

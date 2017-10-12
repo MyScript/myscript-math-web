@@ -13,7 +13,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="iron-overlay-backdrop.html">
 
 <script>
-
   /**
    * @struct
    * @constructor
@@ -44,7 +43,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // of an overlay via event.stopPropagation(). The only way to prevent
     // closing of an overlay should be through its APIs.
     // NOTE: enable tap on <html> to workaround Polymer/polymer#4459
-    Polymer.Gestures.add(document.documentElement, 'tap', null);
+    // Pass no-op function because MSEdge 15 doesn't handle null as 2nd argument
+    // https://github.com/Microsoft/ChakraCore/issues/3863
+    Polymer.Gestures.add(document.documentElement, 'tap', function() {});
     document.addEventListener('tap', this._onCaptureClick.bind(this), true);
     document.addEventListener('focus', this._onCaptureFocus.bind(this), true);
     document.addEventListener('keydown', this._onCaptureKeyDown.bind(this), true);
@@ -70,10 +71,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * @type {!Element} activeElement the active element
      */
     get deepActiveElement() {
+      var active = document.activeElement;
       // document.activeElement can be null
       // https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement
-      // In case of null, default it to document.body.
-      var active = document.activeElement || document.body;
+      // In IE 11, it can also be an object when operating in iframes.
+      // In these cases, default it to document.body.
+      if (!active || active instanceof Element === false) {
+        active = document.body;
+      }
       while (active.root && Polymer.dom(active.root).activeElement) {
         active = Polymer.dom(active.root).activeElement;
       }
@@ -318,10 +323,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * @private
      */
     _onCaptureClick: function(event) {
-      var overlay = /** @type {?} */ (this.currentOverlay());
-      // Check if clicked outside of top overlay.
-      if (overlay && this._overlayInPath(Polymer.dom(event).path) !== overlay) {
+      var i = this._overlays.length - 1;
+      if (i === -1) return;
+      var path = Polymer.dom(event).path;
+      var overlay;
+      // Check if clicked outside of overlay.
+      while ((overlay = /** @type {?} */ (this._overlays[i])) && this._overlayInPath(path) !== overlay) {
         overlay._onCaptureClick(event);
+        if (overlay.allowClickThrough) {
+          i--;
+        } else {
+          break;
+        }
       }
     },
 

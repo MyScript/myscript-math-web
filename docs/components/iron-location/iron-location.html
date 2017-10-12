@@ -181,6 +181,10 @@ milliseconds.
         '_updateUrl(path, query, hash)'
       ],
 
+      created: function() {
+        this.__location = window.location;
+      },
+
       attached: function() {
         this.listen(window, 'hashchange', '_hashChanged');
         this.listen(window, 'location-changed', '_urlChanged');
@@ -203,7 +207,7 @@ milliseconds.
       },
 
       _hashChanged: function() {
-        this.hash = window.decodeURIComponent(window.location.hash.substring(1));
+        this.hash = window.decodeURIComponent(this.__location.hash.substring(1));
       },
 
       _urlChanged: function() {
@@ -214,8 +218,8 @@ milliseconds.
         // one when we set this.hash. Likewise for query.
         this._dontUpdateUrl = true;
         this._hashChanged();
-        this.path = window.decodeURIComponent(window.location.pathname);
-        this.query = window.location.search.substring(1);
+        this.path = window.decodeURIComponent(this.__location.pathname);
+        this.query = this.__location.search.substring(1);
         this._dontUpdateUrl = false;
         this._updateUrl();
       },
@@ -240,17 +244,17 @@ milliseconds.
           return;
         }
 
-        if (this.path === window.decodeURIComponent(window.location.pathname) &&
-            this.query === window.location.search.substring(1) &&
+        if (this.path === window.decodeURIComponent(this.__location.pathname) &&
+            this.query === this.__location.search.substring(1) &&
             this.hash === window.decodeURIComponent(
-                window.location.hash.substring(1))) {
+                this.__location.hash.substring(1))) {
           // Nothing to do, the current URL is a representation of our properties.
           return;
         }
 
         var newUrl = this._getUrl();
         // Need to use a full URL in case the containing page has a base URI.
-        var fullNewUrl = resolveURL(newUrl, window.location.protocol + '//' + window.location.host).href;
+        var fullNewUrl = resolveURL(newUrl, this.__location.protocol + '//' + this.__location.host).href;
         var now = window.performance.now();
         var shouldReplace = this._lastChangedAt + this.dwellTime > now;
         this._lastChangedAt = now;
@@ -288,7 +292,7 @@ milliseconds.
 
         // If the navigation is to the current page we shouldn't add a history
         // entry or fire a change event.
-        if (href === window.location.href) {
+        if (href === this.__location.href) {
           return;
         }
 
@@ -360,10 +364,10 @@ milliseconds.
         var origin;
 
         // IE Polyfill
-        if (window.location.origin) {
-          origin = window.location.origin;
+        if (this.__location.origin) {
+          origin = this.__location.origin;
         } else {
-          origin = window.location.protocol + '//' + window.location.host;
+          origin = this.__location.protocol + '//' + this.__location.host;
         }
 
         var urlOrigin;
@@ -371,7 +375,18 @@ milliseconds.
         if (url.origin) {
           urlOrigin = url.origin;
         } else {
-          urlOrigin = url.protocol + '//' + url.host;
+          // IE always adds port number on HTTP and HTTPS on <a>.host but not on
+          // window.location.host
+          var urlHost = url.host;
+          var urlPort = url.port;
+          var urlProtocol = url.protocol;
+          var isExtraneousHTTPS = urlProtocol === 'https:' && urlPort === '443';
+          var isExtraneousHTTP = urlProtocol === 'http:' && urlPort === '80';
+
+          if (isExtraneousHTTPS || isExtraneousHTTP) {
+            urlHost = url.hostname;
+          }
+          urlOrigin = urlProtocol + '//' + urlHost;
         }
 
         if (urlOrigin !== origin) {
@@ -393,7 +408,7 @@ milliseconds.
 
         // Need to use a full URL in case the containing page has a base URI.
         var fullNormalizedHref = resolveURL(
-            normalizedHref, window.location.href).href;
+            normalizedHref, this.__location.href).href;
         return fullNormalizedHref;
       },
 

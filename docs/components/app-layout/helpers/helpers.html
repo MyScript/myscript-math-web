@@ -11,9 +11,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../polymer/polymer.html">
 
 <script>
+  /** @namespace */
   Polymer.AppLayout = Polymer.AppLayout || {};
 
-  Polymer.AppLayout._scrollEffects = Polymer.AppLayout._scrollEffects || {};
+  Polymer.AppLayout._scrollEffects = {};
+  Polymer.AppLayout._scrollTimer = null;
 
   Polymer.AppLayout.scrollTimingFunction = function easeOutQuad(t, b, c, d) {
     t /= d;
@@ -42,7 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     while (queue.length > 0) {
       var node = queue.shift();
       matches.push.apply(matches, node.querySelectorAll(selector));
-      for (i = 0; node.children[i]; i++) {
+      for (var i = 0; node.children[i]; i++) {
         if (node.children[i].shadowRoot) {
           queue.push(node.children[i].shadowRoot);
         }
@@ -131,7 +133,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // This seems to only apply when using document scrolling.
       // Therefore, when should we remove the class from the document element?
 
-      window.cancelAnimationFrame(Polymer.AppLayout._scrollTimer);
+      if (Polymer.AppLayout._scrollTimer) {
+        window.cancelAnimationFrame(Polymer.AppLayout._scrollTimer);
+      }
 
       Polymer.AppLayout._scrollTimer = window.requestAnimationFrame(function() {
         headers.forEach(function(header) {

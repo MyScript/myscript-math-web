@@ -275,6 +275,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </demo-snippet>
 
+  <h3>Use <code>allow-click-through</code> to allow click events to be handled by overlays below the top overlay.</h3>
+  <demo-snippet>
+    <template>
+      <button onclick="plain.open();toast.open()">Overlay that allows click through</button>
+      <simple-overlay id="toast" allow-click-through no-cancel-on-outside-click horizontal-align="left" vertical-align="bottom" no-auto-focus>
+        <span>This overlay allows click-through which can close overlays below it.</span>
+        <button onclick="toast.close()">Close</button>
+      </simple-overlay>
+    </template>
+  </demo-snippet>
+
 </body>
 
 </html>
