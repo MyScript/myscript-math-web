@@ -1,7 +1,8 @@
 :pencil: The easy way to integrate mathematical expressions handwriting recognition in your web app.
 
-![myscript-math-web preview](./preview.gif)
-
+<p align="center">
+  <img src="preview.gif">
+</p>
  
 <a style="text-align:center; font-size:150%;" href="https://myscript.github.io/myscript-math-web/components/myscript-math-web/examples/">Test it live</a>
 
