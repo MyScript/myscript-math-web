@@ -48,7 +48,7 @@ bower install myscript-math-web
 
 ## Examples
 
-Browse [the examples hosted on github.io](https://myscript.github.io/myscript-math-web/examples/).
+Browse [the examples hosted on github.io](https://myscript.github.io/myscript-math-web/components/myscript-math-web/).
 
 The [directory examples/](/examples) of this Git repository contains all the example source codes. 
 
