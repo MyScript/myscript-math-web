@@ -1,79 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="HandheldFriendly" content="true"/>
+<head>
+    <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="true"/>
 
-        <title>myscript-common-element : Examples</title>
+    <title>myscript-common-element : Examples</title>
 
-        <link rel="stylesheet" href="examples.css">
-    </head>
+    <link rel="stylesheet" href="examples.css">
+</head>
 
-    <body>
+<body>
+<svg class="svg-icn">
+    <symbol id="icn-info" viewBox="0 0 16 16">
+        <g stroke="currentColor" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 7.5l1.526-.366c.538-.13.823.198.646.704L6.93 11.386c-.293.836.181 1.42 1.058 1.302L9.4 12.5"
+                  stroke-width="1.8" vector-effect="non-scaling-stroke" class="path">
+            </path>
+            <path d="M8.9 3.25l-.02.1" stroke-width="2.6" vector-effect="non-scaling-stroke" class="path">
+            </path>
+        </g>
+    </symbol>
+    <symbol id="icn-github" viewBox="0 0 16 16">
+        <path
+            d="M8 1a7 7 0 0 0-2.213 13.642c.35.064.478-.152.478-.337 0-.166-.006-.607-.01-1.19-1.947.422-2.357-.94-2.357-.94-.319-.808-.778-1.023-.778-1.023-.635-.434.048-.426.048-.426.703.05 1.073.722 1.073.722.624 1.07 1.638.76 2.037.581.063-.452.244-.76.444-.935-1.554-.177-3.188-.778-3.188-3.46 0-.764.273-1.39.72-1.878-.072-.177-.312-.89.07-1.853 0 0 .586-.188 1.924.718A6.705 6.705 0 0 1 8 4.385c.595.003 1.194.08 1.753.236 1.336-.906 1.923-.718 1.923-.718.382.964.141 1.676.07 1.853a2.7 2.7 0 0 1 .72 1.878c0 2.69-1.638 3.281-3.197 3.454.251.216.475.644.475 1.297 0 .935-.009 1.69-.009 1.92 0 .187.127.405.482.337A7 7 0 0 0 8 1"
+            fill="currentColor" fill-rule="evenodd"></path>
+    </symbol>
+    <symbol id="icn-play" viewBox="0 0 16 16">
+        <path
+            d="M13.153 8.589c.606-.325.603-.854 0-1.178L4.873 2.97C4.392 2.709 4 2.945 4 3.496v9.008c0 .55.39.787.874.527l8.28-4.442z"
+            fill="currentColor" fill-rule="evenodd"></path>
+    </symbol>
+</svg>
+<div class="index-background">
+    <section class="example-section">
         <h1>Examples</h1>
-        <h2>Non version specific features</h2>
-        <div>Demonstration of features not depending of API version configured.</div>
-        <ul>
-            <li>
-                <a href="non-version-specific/get_started.html">Get started</a>
-            </li>
-            <li>
-                <a href="non-version-specific/handle_errors.html">Handle errors</a>
-            </li>
-            <li>
-                <a href="non-version-specific/handle_exports.html">Handle exports</a>
-            </li>
-            <li>
-                <a href="non-version-specific/customize_style.html">Customize the style</a>
-            </li>
-            <li>
-                <a href="non-version-specific/custom_controls.html">Redefine the controls</a>
-            </li>
-            <li>
-                <a href="non-version-specific/programmatic_init.html">Settings the attributes programmatically</a>
-            </li>
-            <li>
-                <a href="non-version-specific/get_languages.html">Select input populate with the list of supported
-                    languages.</a>
-            </li>
-            <li>
-                <a href="non-version-specific/get_languages_programmatic.html">
-                    Select input populate with the list of supported languages configured in Javascript.
-                </a>
-            </li>
-            <li>
-                <a href="non-version-specific/change_language.html">Dynamically change the language</a>
-            </li>
-        </ul>
-        <h2>V4 - iink SDK web</h2>
-        <ul>
-            <li>
-                <a href="v4/import_content.html">Import content</a>
-            </li>
-        </ul>
-        <h2>V3 - CDK v3.2</h2>
-        <ul>
-            <li>
-                <a href="v3/rest_text.html">TEXT with v3.2 REST/HTTP</a>
-            </li>
-            <li>
-                <a href="v3/rest_shape.html">SHAPE with CDK 3.2 REST/HTTP</a>
-            </li>
-        </ul>
-        <h2>Development</h2>
-        <ul>
-            <li>
-                <a href="dev/debug.html">Activate debug mode</a>
-            </li>
-            <li>
-                <a href="dev/get_stats.html">Grab the statistics of input</a>
-            </li>
-        </ul>
-    </body>
+        <div class="grid-wrapper">
+            <div class="grid-column-one">
+                <h2>Non version specific features</h2>
+                <div class="notice notice-info">
+                    <svg class="icn icn-info">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-info"></use>
+                    </svg>
+                    <div class="notice-txt">
+                        Demonstration of features not depending of API version configured.
+                    </div>
+                </div>
+                <p><strong>Get started</strong></p>
+                <div class="center">
+                    <a href="non-version-specific/get_started.html" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use>
+                        </svg>
+                        View example</a>
+                    <a href="https://github.com/MyScript/myscript-common-element/blob/master/examples/non-version-specific/get_started.html"
+                       class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-github"></use>
+                        </svg>
+                        Get source code</a>
+                </div>
+                <p><strong>Handle errors</strong></p>
+                <div class="center">
+                    <a href="non-version-specific/handle_errors.html" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use>
+                        </svg>
+                        View example</a>
+                    <a href="https://github.com/MyScript/myscript-common-element/blob/master/examples/non-version-specific/handle_errors.html"
+                       target="_blank" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-github"></use>
+                        </svg>
+                        Get source code</a>
+                </div>
+                <p><strong>Handle exports</strong></p>
+                <div class="center">
+                    <a href="non-version-specific/handle_exports.html" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use>
+                        </svg>
+                        View example</a>
+                    <a href="https://github.com/MyScript/myscript-common-element/blob/master/examples/non-version-specific/handle_exports.html"
+                       target="_blank" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-github"></use>
+                        </svg>
+                        Get source code</a>
+                </div>
+                <p><strong>Customize the style</strong></p>
+                <div class="center">
+                    <a href="non-version-specific/customize_style.html" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use>
+                        </svg>
+                        View example</a>
+                    <a href="https://github.com/MyScript/myscript-common-element/blob/master/examples/non-version-specific/customize_style.html"
+                       target="_blank" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-github"></use>
+                        </svg>
+                        Get source code</a>
+                </div>
+                <p><strong>Redefine the controls</strong></p>
+                <div class="center">
+                    <a href="non-version-specific/custom_controls.html" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use>
+                        </svg>
+                        View example</a>
+                    <a href="https://github.com/MyScript/myscript-common-element/blob/master/examples/non-version-specific/custom_controls.html"
+                       target="_blank" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-github"></use>
+                        </svg>
+                        Get source code</a>
+                </div>
+                <p><strong>Settings the attributes programmatically</strong></p>
+                <div class="center">
+                    <a href="non-version-specific/programmatic_init.html" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use>
+                        </svg>
+                        View example</a>
+                    <a href="https://github.com/MyScript/myscript-common-element/blob/master/examples/non-version-specific/programmatic_init.html"
+                       target="_blank" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-github"></use>
+                        </svg>
+                        Get source code</a>
+                </div>
+                <p><strong>Select input populate with the list of supported languages</strong></p>
+                <div class="center">
+                    <a href="non-version-specific/get_languages.html" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use>
+                        </svg>
+                        View example</a>
+                    <a href="https://github.com/MyScript/myscript-common-element/blob/master/examples/non-version-specific/get_languages.html"
+                       target="_blank" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-github"></use>
+                        </svg>
+                        Get source code</a>
+                </div>
+                <p><strong>Select input populate with the list of supported languages configured in Javascript</strong>
+                </p>
+                <div class="center">
+                    <a href="non-version-specific/get_languages_programmatic.html" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use>
+                        </svg>
+                        View example</a>
+                    <a href="https://github.com/MyScript/myscript-common-element/blob/master/examples/non-version-specific/get_languages_programmatic.html"
+                       target="_blank" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-github"></use>
+                        </svg>
+                        Get source code</a>
+                </div>
+                <p><strong>Dynamically change the language</strong></p>
+                <div class="center">
+                    <a href="non-version-specific/change_language.html" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use>
+                        </svg>
+                        View example</a>
+                    <a href="https://github.com/MyScript/myscript-common-element/blob/master/examples/non-version-specific/change_language.html"
+                       target="_blank" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-github"></use>
+                        </svg>
+                        Get source code</a>
+                </div>
+            </div>
+            <div class="grid-column-two">
+                <h2>V4 - iink SDK web</h2>
+                <p><strong>Import content</strong></p>
+                <div class="center">
+                    <a href="v4/import_content.html" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use>
+                        </svg>
+                        View example</a>
+                    <a href="https://github.com/MyScript/myscript-common-element/blob/master/examples/v4/import_content.html"
+                       target="_blank" class="btn">
+                        <svg class="icn">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-github"></use>
+                        </svg>
+                        Get source code</a>
+                </div>
+                <div style="margin-top: 72px">
+                    <h2>V3 - CDK v3.2</h2>
+                    <p><strong>TEXT with v3.2 REST/HTTP</strong></p>
+                    <div class="center">
+                        <a href="v3/rest_text.html" class="btn">
+                            <svg class="icn">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use>
+                            </svg>
+                            View example</a>
+                        <a href="https://github.com/MyScript/myscript-common-element/blob/master/examples/v3/rest_text.html"
+                           target="_blank" class="btn">
+                            <svg class="icn">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-github"></use>
+                            </svg>
+                            Get source code</a>
+                    </div>
+                    <p><strong>SHAPE with CDK 3.2 REST/HTTP</strong></p>
+                    <div class="center">
+                        <a href="v3/rest_shape.html" class="btn">
+                            <svg class="icn">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use>
+                            </svg>
+                            View example</a>
+                        <a href="https://github.com/MyScript/myscript-common-element/blob/master/examples/v3/rest_shape.html"
+                           target="_blank" class="btn">
+                            <svg class="icn">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-github"></use>
+                            </svg>
+                            Get source code</a>
+                    </div>
+                </div>
+                <div style="margin-top: 76px;">
+                    <h2>Development</h2>
+                    <p><strong>Activate debug mode</strong></p>
+                    <div class="center">
+                        <a href="dev/debug.html" class="btn">
+                            <svg class="icn">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use>
+                            </svg>
+                            View example</a>
+                        <a href="https://github.com/MyScript/myscript-common-element/blob/master/examples/dev/debug.html"
+                           target="_blank" class="btn">
+                            <svg class="icn">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-github"></use>
+                            </svg>
+                            Get source code</a>
+                    </div>
+                    <p><strong>Grab the statistics of inpu</strong></p>
+                    <div class="center">
+                        <a href="dev/get_stats.html" class="btn">
+                            <svg class="icn">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use>
+                            </svg>
+                            View example</a>
+                        <a href="https://github.com/MyScript/myscript-common-element/blob/master/examples/dev/get_stats.html"
+                           target="_blank" class="btn">
+                            <svg class="icn">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-github"></use>
+                            </svg>
+                            Get source code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
 
 </html>

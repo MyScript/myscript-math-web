@@ -23,16 +23,14 @@
     "!bower.json",
     "!dist/**/*"
   ],
-  "dependencies": {
-    "pepjs": "^0.4.3"
-  },
-  "_release": "852998e23e",
+  "version": "4.0.0",
+  "_release": "4.0.0",
   "_resolution": {
-    "type": "branch",
-    "branch": "master",
-    "commit": "852998e23edd257886480d88255d1ee91b00fda6"
+    "type": "version",
+    "tag": "v4.0.0",
+    "commit": "cdf6a22ef8aa8f93db4bdece35bda3c5a7983132"
   },
   "_source": "https://github.com/MyScript/MyScriptJS.git",
-  "_target": "master",
+  "_target": "^4.0.0",
   "_originalSource": "myscript"
 }
