@@ -36,7 +36,8 @@
     "iron-resizable-behavior": "^2.0.1",
     "paper-fab": "^2.0.0",
     "paper-toast": "^2.0.0",
-    "paper-button": "^2.0.0"
+    "paper-button": "^2.0.0",
+    "pepjs": "^0.4.3"
   },
   "devDependencies": {
     "webcomponentsjs": "^1.0.1",
@@ -45,12 +46,12 @@
     "paper-toggle-button": "^2.0.0",
     "paper-slider": "^2.0.2"
   },
-  "version": "4.0.0",
-  "_release": "4.0.0",
+  "version": "4.0.1",
+  "_release": "4.0.1",
   "_resolution": {
     "type": "version",
-    "tag": "v4.0.0",
-    "commit": "2735b764a22bff49af9227b80943883bb04ae5e2"
+    "tag": "v4.0.1",
+    "commit": "17944870cd4e17f335de75060f95272edadaa8b0"
   },
   "_source": "https://github.com/MyScript/myscript-common-element.git",
   "_target": "^4.0.0",

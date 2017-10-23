@@ -635,11 +635,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 549,
+              "line": 519,
               "column": 8
             },
             "end": {
-              "line": 549,
+              "line": 519,
               "column": 23
             }
           },
@@ -658,11 +658,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 551,
+              "line": 521,
               "column": 8
             },
             "end": {
-              "line": 551,
+              "line": 521,
               "column": 25
             }
           },
@@ -681,11 +681,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 553,
+              "line": 523,
               "column": 8
             },
             "end": {
-              "line": 553,
+              "line": 523,
               "column": 22
             }
           },
@@ -704,11 +704,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 555,
+              "line": 525,
               "column": 8
             },
             "end": {
-              "line": 555,
+              "line": 525,
               "column": 24
             }
           },
@@ -727,11 +727,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 557,
+              "line": 527,
               "column": 8
             },
             "end": {
-              "line": 557,
+              "line": 527,
               "column": 18
             }
           },
@@ -750,11 +750,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 559,
+              "line": 529,
               "column": 8
             },
             "end": {
-              "line": 559,
+              "line": 529,
               "column": 15
             }
           },
@@ -939,11 +939,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 715,
+              "line": 723,
               "column": 6
             },
             "end": {
-              "line": 723,
+              "line": 731,
               "column": 7
             }
           },
@@ -974,11 +974,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 573,
+              "line": 543,
               "column": 6
             },
             "end": {
-              "line": 613,
+              "line": 577,
               "column": 7
             }
           },
@@ -1451,11 +1451,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 643,
+              "line": 651,
               "column": 6
             },
             "end": {
-              "line": 649,
+              "line": 657,
               "column": 7
             }
           },
@@ -1900,11 +1900,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 660,
+              "line": 668,
               "column": 6
             },
             "end": {
-              "line": 669,
+              "line": 677,
               "column": 7
             }
           },
@@ -2588,11 +2588,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 636,
+              "line": 644,
               "column": 6
             },
             "end": {
-              "line": 636,
+              "line": 644,
               "column": 31
             }
           },
@@ -2607,11 +2607,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 683,
+              "line": 691,
               "column": 6
             },
             "end": {
-              "line": 699,
+              "line": 707,
               "column": 7
             }
           },
@@ -2636,11 +2636,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 742,
+              "line": 750,
               "column": 6
             },
             "end": {
-              "line": 746,
+              "line": 754,
               "column": 7
             }
           },
@@ -2661,11 +2661,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 759,
+              "line": 767,
               "column": 6
             },
             "end": {
-              "line": 764,
+              "line": 772,
               "column": 7
             }
           },
@@ -2752,11 +2752,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 775,
+              "line": 783,
               "column": 6
             },
             "end": {
-              "line": 778,
+              "line": 786,
               "column": 7
             }
           },
@@ -3397,16 +3397,85 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 471,
+              "line": 441,
               "column": 6
             },
             "end": {
-              "line": 475,
+              "line": 445,
               "column": 7
             }
           },
           "metadata": {},
           "params": [],
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "_processStyleText",
+          "description": "Gather style text for the template",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 588,
+              "column": 6
+            },
+            "end": {
+              "line": 591,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "is",
+              "type": "string",
+              "description": "Tag name for this element"
+            },
+            {
+              "name": "template",
+              "type": "!HTMLTemplateElement",
+              "description": "Template to process"
+            },
+            {
+              "name": "baseURI",
+              "type": "string",
+              "description": "Base URI to rebase CSS paths against"
+            }
+          ],
+          "return": {
+            "type": "string",
+            "desc": "The combined CSS text"
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "_finalizeTemplate",
+          "description": "Configures an element `proto` to function with a given `template`.\nThe element name `is` and extends `ext` must be specified for ShadyCSS\nstyle scoping.",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 602,
+              "column": 6
+            },
+            "end": {
+              "line": 621,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "is",
+              "type": "string",
+              "description": "Tag name (or type extension name) for this element"
+            },
+            {
+              "name": "ext",
+              "type": "string=",
+              "description": "For type extensions, the tag name that was extended"
+            }
+          ],
           "inheritedFrom": "Polymer.ElementMixin"
         }
       ],
@@ -4092,11 +4161,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 549,
+              "line": 519,
               "column": 8
             },
             "end": {
-              "line": 549,
+              "line": 519,
               "column": 23
             }
           },
@@ -4115,11 +4184,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 551,
+              "line": 521,
               "column": 8
             },
             "end": {
-              "line": 551,
+              "line": 521,
               "column": 25
             }
           },
@@ -4138,11 +4207,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 553,
+              "line": 523,
               "column": 8
             },
             "end": {
-              "line": 553,
+              "line": 523,
               "column": 22
             }
           },
@@ -4161,11 +4230,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 555,
+              "line": 525,
               "column": 8
             },
             "end": {
-              "line": 555,
+              "line": 525,
               "column": 24
             }
           },
@@ -4184,11 +4253,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 557,
+              "line": 527,
               "column": 8
             },
             "end": {
-              "line": 557,
+              "line": 527,
               "column": 18
             }
           },
@@ -4207,11 +4276,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 559,
+              "line": 529,
               "column": 8
             },
             "end": {
-              "line": 559,
+              "line": 529,
               "column": 15
             }
           },
@@ -4435,11 +4504,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 715,
+              "line": 723,
               "column": 6
             },
             "end": {
-              "line": 723,
+              "line": 731,
               "column": 7
             }
           },
@@ -4470,11 +4539,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 573,
+              "line": 543,
               "column": 6
             },
             "end": {
-              "line": 613,
+              "line": 577,
               "column": 7
             }
           },
@@ -4947,11 +5016,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 643,
+              "line": 651,
               "column": 6
             },
             "end": {
-              "line": 649,
+              "line": 657,
               "column": 7
             }
           },
@@ -5396,11 +5465,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 660,
+              "line": 668,
               "column": 6
             },
             "end": {
-              "line": 669,
+              "line": 677,
               "column": 7
             }
           },
@@ -6067,11 +6136,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 625,
+              "line": 633,
               "column": 6
             },
             "end": {
-              "line": 630,
+              "line": 638,
               "column": 7
             }
           },
@@ -6086,11 +6155,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 636,
+              "line": 644,
               "column": 6
             },
             "end": {
-              "line": 636,
+              "line": 644,
               "column": 31
             }
           },
@@ -6105,11 +6174,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 683,
+              "line": 691,
               "column": 6
             },
             "end": {
-              "line": 699,
+              "line": 707,
               "column": 7
             }
           },
@@ -6134,11 +6203,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 742,
+              "line": 750,
               "column": 6
             },
             "end": {
-              "line": 746,
+              "line": 754,
               "column": 7
             }
           },
@@ -6159,11 +6228,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 759,
+              "line": 767,
               "column": 6
             },
             "end": {
-              "line": 764,
+              "line": 772,
               "column": 7
             }
           },
@@ -6454,11 +6523,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 775,
+              "line": 783,
               "column": 6
             },
             "end": {
-              "line": 778,
+              "line": 786,
               "column": 7
             }
           },
@@ -7099,16 +7168,85 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 471,
+              "line": 441,
               "column": 6
             },
             "end": {
-              "line": 475,
+              "line": 445,
               "column": 7
             }
           },
           "metadata": {},
           "params": [],
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "_processStyleText",
+          "description": "Gather style text for the template",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 588,
+              "column": 6
+            },
+            "end": {
+              "line": 591,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "is",
+              "type": "string",
+              "description": "Tag name for this element"
+            },
+            {
+              "name": "template",
+              "type": "!HTMLTemplateElement",
+              "description": "Template to process"
+            },
+            {
+              "name": "baseURI",
+              "type": "string",
+              "description": "Base URI to rebase CSS paths against"
+            }
+          ],
+          "return": {
+            "type": "string",
+            "desc": "The combined CSS text"
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "_finalizeTemplate",
+          "description": "Configures an element `proto` to function with a given `template`.\nThe element name `is` and extends `ext` must be specified for ShadyCSS\nstyle scoping.",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 602,
+              "column": 6
+            },
+            "end": {
+              "line": 621,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "is",
+              "type": "string",
+              "description": "Tag name (or type extension name) for this element"
+            },
+            {
+              "name": "ext",
+              "type": "string=",
+              "description": "For type extensions, the tag name that was extended"
+            }
+          ],
           "inheritedFrom": "Polymer.ElementMixin"
         }
       ],
@@ -7826,11 +7964,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 549,
+              "line": 519,
               "column": 8
             },
             "end": {
-              "line": 549,
+              "line": 519,
               "column": 23
             }
           },
@@ -7849,11 +7987,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 551,
+              "line": 521,
               "column": 8
             },
             "end": {
-              "line": 551,
+              "line": 521,
               "column": 25
             }
           },
@@ -7872,11 +8010,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 553,
+              "line": 523,
               "column": 8
             },
             "end": {
-              "line": 553,
+              "line": 523,
               "column": 22
             }
           },
@@ -7895,11 +8033,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 555,
+              "line": 525,
               "column": 8
             },
             "end": {
-              "line": 555,
+              "line": 525,
               "column": 24
             }
           },
@@ -7918,11 +8056,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 557,
+              "line": 527,
               "column": 8
             },
             "end": {
-              "line": 557,
+              "line": 527,
               "column": 18
             }
           },
@@ -7941,11 +8079,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 559,
+              "line": 529,
               "column": 8
             },
             "end": {
-              "line": 559,
+              "line": 529,
               "column": 15
             }
           },
@@ -9066,11 +9204,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 715,
+              "line": 723,
               "column": 6
             },
             "end": {
-              "line": 723,
+              "line": 731,
               "column": 7
             }
           },
@@ -9101,11 +9239,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 573,
+              "line": 543,
               "column": 6
             },
             "end": {
-              "line": 613,
+              "line": 577,
               "column": 7
             }
           },
@@ -9578,11 +9716,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 643,
+              "line": 651,
               "column": 6
             },
             "end": {
-              "line": 649,
+              "line": 657,
               "column": 7
             }
           },
@@ -10027,11 +10165,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 660,
+              "line": 668,
               "column": 6
             },
             "end": {
-              "line": 669,
+              "line": 677,
               "column": 7
             }
           },
@@ -10732,11 +10870,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 683,
+              "line": 691,
               "column": 6
             },
             "end": {
-              "line": 699,
+              "line": 707,
               "column": 7
             }
           },
@@ -10761,11 +10899,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 742,
+              "line": 750,
               "column": 6
             },
             "end": {
-              "line": 746,
+              "line": 754,
               "column": 7
             }
           },
@@ -10786,11 +10924,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 759,
+              "line": 767,
               "column": 6
             },
             "end": {
-              "line": 764,
+              "line": 772,
               "column": 7
             }
           },
@@ -11100,11 +11238,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 775,
+              "line": 783,
               "column": 6
             },
             "end": {
-              "line": 778,
+              "line": 786,
               "column": 7
             }
           },
@@ -11745,16 +11883,85 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 471,
+              "line": 441,
               "column": 6
             },
             "end": {
-              "line": 475,
+              "line": 445,
               "column": 7
             }
           },
           "metadata": {},
           "params": [],
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "_processStyleText",
+          "description": "Gather style text for the template",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 588,
+              "column": 6
+            },
+            "end": {
+              "line": 591,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "is",
+              "type": "string",
+              "description": "Tag name for this element"
+            },
+            {
+              "name": "template",
+              "type": "!HTMLTemplateElement",
+              "description": "Template to process"
+            },
+            {
+              "name": "baseURI",
+              "type": "string",
+              "description": "Base URI to rebase CSS paths against"
+            }
+          ],
+          "return": {
+            "type": "string",
+            "desc": "The combined CSS text"
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "_finalizeTemplate",
+          "description": "Configures an element `proto` to function with a given `template`.\nThe element name `is` and extends `ext` must be specified for ShadyCSS\nstyle scoping.",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 602,
+              "column": 6
+            },
+            "end": {
+              "line": 621,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "is",
+              "type": "string",
+              "description": "Tag name (or type extension name) for this element"
+            },
+            {
+              "name": "ext",
+              "type": "string=",
+              "description": "For type extensions, the tag name that was extended"
+            }
+          ],
           "inheritedFrom": "Polymer.ElementMixin"
         }
       ],

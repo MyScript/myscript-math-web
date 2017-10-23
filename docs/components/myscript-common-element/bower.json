@@ -36,7 +36,8 @@
     "iron-resizable-behavior": "^2.0.1",
     "paper-fab": "^2.0.0",
     "paper-toast": "^2.0.0",
-    "paper-button": "^2.0.0"
+    "paper-button": "^2.0.0",
+    "pepjs": "^0.4.3"
   },
   "devDependencies": {
     "webcomponentsjs": "^1.0.1",
