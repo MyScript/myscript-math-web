@@ -6286,48 +6286,6 @@
               "column": 12
             },
             "end": {
-              "line": 98,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "exports"
-            }
-          ]
-        },
-        {
-          "name": "_getMathml",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 100,
-              "column": 12
-            },
-            "end": {
-              "line": 102,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "exports"
-            }
-          ]
-        },
-        {
-          "name": "_getOfficeopenxml",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 104,
-              "column": 12
-            },
-            "end": {
               "line": 106,
               "column": 13
             }
@@ -6340,7 +6298,7 @@
           ]
         },
         {
-          "name": "_getSymboltree",
+          "name": "_getMathml",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
@@ -6361,7 +6319,7 @@
           ]
         },
         {
-          "name": "_displaymath",
+          "name": "_getOfficeopenxml",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
@@ -6377,15 +6335,12 @@
           "metadata": {},
           "params": [
             {
-              "name": "resulttypes"
-            },
-            {
-              "name": "mimetypes"
+              "name": "exports"
             }
           ]
         },
         {
-          "name": "_displaylatex",
+          "name": "_getSymboltree",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
@@ -6401,15 +6356,12 @@
           "metadata": {},
           "params": [
             {
-              "name": "resulttypes"
-            },
-            {
-              "name": "mimetypes"
+              "name": "exports"
             }
           ]
         },
         {
-          "name": "_displaymathml",
+          "name": "_displaymath",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
@@ -6433,7 +6385,7 @@
           ]
         },
         {
-          "name": "_displayofficeopenxml",
+          "name": "_displaylatex",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
@@ -6457,7 +6409,7 @@
           ]
         },
         {
-          "name": "_displaysymboltree",
+          "name": "_displaymathml",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
@@ -6467,6 +6419,54 @@
             },
             "end": {
               "line": 130,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "resulttypes"
+            },
+            {
+              "name": "mimetypes"
+            }
+          ]
+        },
+        {
+          "name": "_displayofficeopenxml",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 132,
+              "column": 12
+            },
+            "end": {
+              "line": 134,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "resulttypes"
+            },
+            {
+              "name": "mimetypes"
+            }
+          ]
+        },
+        {
+          "name": "_displaysymboltree",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 136,
+              "column": 12
+            },
+            "end": {
+              "line": 138,
               "column": 13
             }
           },
@@ -7258,7 +7258,7 @@
           "column": 8
         },
         "end": {
-          "line": 132,
+          "line": 140,
           "column": 9
         }
       },

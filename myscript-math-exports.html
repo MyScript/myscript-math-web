@@ -90,6 +90,14 @@ Custom property | Description | Default
             }
 
             _getLatexCleaned(exports) {
+                if (this._getLatex(exports).includes('\\\\')) {
+                    const steps = '\\begin{align*}' + this._getLatex(exports) + '\\end{align*}';
+                    return steps.replace("\\overrightarrow", "\\vec")
+                        .replace("\\llbracket", "\\lbracket")
+                        .replace("\\rrbracket", "\\rbracket")
+                        .replace("\\widehat", "\\hat")
+                        .replace(new RegExp("(align.{1})", "g"), "aligned");
+                }
                 return this._getLatex(exports)
                     .replace("\\overrightarrow", "\\vec")
                     .replace("\\llbracket", "\\lbracket")
