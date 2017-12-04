@@ -1,4 +1,16 @@
-# [v4.0.0](https://github.com/MyScript/myscript-text-web/tree/v4.0.0)
+# [v4.0.2](https://github.com/MyScript/myscript-math-web/tree/v4.0.2)
+
+## Bug fixed
+
+- Math exports rendering for breaking line was printing \\\\ and not breaking line.
+
+# [v4.0.1](https://github.com/MyScript/myscript-math-web/tree/v4.0.1)
+
+## Bug fixed
+
+- Editor on iOS wasn't working properly due to touch-action: none in CSS not supported in Safari.
+
+# [v4.0.0](https://github.com/MyScript/myscript-math-web/tree/v4.0.0)
 
 ## Features
 - New events to be notified of editor changes. 
