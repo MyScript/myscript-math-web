@@ -119,6 +119,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             disableclearcontrol="[[ disableclearcontrol ]]"
             disableundoredocontrol="[[ disableundoredocontrol ]]"
             disableconvertcontrol="[[ disableconvertcontrol ]]"
+            usepointerlisteners="[[ usepointerlisteners ]]"
             touch-action="[[ touch-action ]]">
         </myscript-common-element>
     </template>
@@ -454,7 +455,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         reflectToAttribute: true,
                         value: false
                     },
-
+                    /**
+                     * True if pointer events listeners is used, false otherwise
+                     */
+                    usepointerlisteners: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
                     //------------------------------------------------------------------------------
                     //                 End of recopy
                     // -----------------------------------------------------------------------------
