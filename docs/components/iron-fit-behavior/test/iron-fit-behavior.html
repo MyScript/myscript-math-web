@@ -691,6 +691,102 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           });
         });
 
+        suite('when verticalAlign is middle', function() {
+          test('element is aligned to the positionTarget middle', function() {
+            el.verticalAlign = 'middle';
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.top, parentRect.top + (parentRect.height - rect.height) / 2, 'top ok');
+            assert.equal(rect.height, elRect.height, 'no cropping');
+          });
+
+          test('element is aligned to the positionTarget top without overlapping it', function() {
+            // Allow enough space on the parent's bottom & right.
+            el.verticalAlign = 'middle';
+            el.noOverlap = true;
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.isFalse(intersects(rect, parentRect), 'no overlap');
+            assert.equal(rect.height, elRect.height, 'no cropping');
+          });
+
+          test('element margin is considered as offset', function() {
+            el.verticalAlign = 'middle';
+            el.style.marginTop = '10px';
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.top, parentRect.top + (parentRect.height - rect.height) / 2 + 10, 'top ok');
+            assert.equal(rect.height, elRect.height, 'no cropping');
+
+            el.style.marginTop = '-10px';
+            el.refit();
+            rect = el.getBoundingClientRect();
+            assert.equal(rect.top, parentRect.top + (parentRect.height - rect.height) / 2 - 10, 'top ok');
+            assert.equal(rect.height, elRect.height, 'no cropping');
+          });
+
+          test('verticalOffset is applied', function() {
+            el.verticalAlign = 'middle';
+            el.verticalOffset = 10;
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.top, parentRect.top + (parentRect.height - rect.height) / 2 + 10, 'top ok');
+            assert.equal(rect.height, elRect.height, 'no cropping');
+          });
+
+          test('element is kept in viewport', function() {
+            el.verticalAlign = 'middle';
+            // Make it go out of screen
+            el.verticalOffset = -1000;
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.top, 0, 'top in viewport');
+            assert.isTrue(rect.height < elRect.height, 'reduced size');
+          });
+
+          test('negative verticalOffset does not crop element', function() {
+            // Push to the bottom of the screen.
+            parent.style.top = (window.innerHeight - 50) +'px';
+            el.verticalAlign = 'middle';
+            el.verticalOffset = -10;
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.top, window.innerHeight - 35, 'top ok');
+            assert.equal(rect.bottom, window.innerHeight, 'bottom ok');
+          });
+
+          test('max-height is updated', function() {
+            parent.style.top = '-50px';
+            el.verticalAlign = 'middle';
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.top, 0, 'top ok');
+            assert.isBelow(rect.height, elRect.height, 'height ok');
+          });
+
+          test('min-height is preserved: element is displayed even if partially', function() {
+            parent.style.top = '-50px';
+            el.verticalAlign = 'middle';
+            el.style.minHeight = elRect.height + 'px';
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.top, 0, 'top ok');
+            assert.equal(rect.height, elRect.height, 'min-height ok');
+            assert.isTrue(intersects(rect, fitRect), 'partially visible');
+          });
+
+          test('dynamicAlign will prefer bottom align if it minimizes the cropping', function() {
+            parent.style.top = '-50px';
+            parentRect = parent.getBoundingClientRect();
+            el.verticalAlign = 'middle';
+            el.dynamicAlign = true;
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.bottom, parentRect.bottom, 'bottom ok');
+            assert.equal(rect.height, elRect.height, 'no cropping');
+          });
+        });
+
         suite('when verticalAlign is auto', function() {
           test('element is aligned to the positionTarget top', function() {
             el.verticalAlign = 'auto';
@@ -921,6 +1017,102 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             el.refit();
             var rect = el.getBoundingClientRect();
             assert.equal(rect.left, parentRect.left, 'left ok');
+            assert.equal(rect.height, elRect.height, 'no cropping');
+          });
+
+        });
+
+        suite('when horizontalAlign is center', function() {
+          test('element is aligned to the positionTarget center', function() {
+            el.horizontalAlign = 'center';
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.left, parentRect.left + (parentRect.width - rect.width) / 2, 'left ok');
+            assert.equal(rect.width, elRect.width, 'no cropping');
+          });
+
+          test('element is aligned to the positionTarget left without overlapping it', function() {
+            el.horizontalAlign = 'center';
+            el.noOverlap = true;
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.isFalse(intersects(rect, parentRect), 'no overlap');
+            assert.equal(rect.width, elRect.width, 'no cropping');
+          });
+
+          test('element margin is considered as offset', function() {
+            el.horizontalAlign = 'center';
+            el.style.marginLeft = '10px';
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.left, parentRect.left + (parentRect.width - rect.width) / 2 + 10, 'left ok');
+            assert.equal(rect.width, elRect.width, 'no cropping');
+
+            el.style.marginLeft = '-10px';
+            el.refit();
+            rect = el.getBoundingClientRect();
+            assert.equal(rect.left, parentRect.left + (parentRect.width - rect.width) / 2 - 10, 'left ok');
+            assert.equal(rect.width, elRect.width, 'no cropping');
+          });
+
+          test('horizontalOffset is applied', function() {
+            el.horizontalAlign = 'center';
+            el.horizontalOffset = 10;
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.left, parentRect.left + (parentRect.width - rect.width) / 2 + 10, 'left ok');
+            assert.equal(rect.width, elRect.width, 'no cropping');
+          });
+
+          test('element is kept in viewport', function() {
+            el.horizontalAlign = 'center';
+            // Make it go out of screen.
+            el.horizontalOffset = -1000;
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.left, 0, 'left in viewport');
+            assert.isTrue(rect.width < elRect.width, 'reduced size');
+          });
+
+          test('negative horizontalOffset does not crop element', function() {
+            // Push to the bottom of the screen.
+            parent.style.left = (window.innerWidth - 50) +'px';
+            el.horizontalAlign = 'center';
+            el.horizontalOffset = -10;
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.left, window.innerWidth - 35, 'left ok');
+            assert.equal(rect.right, window.innerWidth, 'right ok');
+          });
+
+          test('element max-width is updated', function() {
+            parent.style.left = '-50px';
+            el.horizontalAlign = 'center';
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.left, 0, 'left ok');
+            assert.isBelow(rect.width, elRect.width, 'width ok');
+          });
+
+          test('min-width is preserved: element is displayed even if partially', function() {
+            parent.style.left = '-50px';
+            el.style.minWidth = elRect.width + 'px';
+            el.horizontalAlign = 'center';
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.left, 0, 'left ok');
+            assert.equal(rect.width, elRect.width, 'min-width ok');
+            assert.isTrue(intersects(rect, fitRect), 'partially visible');
+          });
+
+          test('dynamicAlign will prefer right align if it minimizes the cropping', function() {
+            parent.style.left = '-50px';
+            parentRect = parent.getBoundingClientRect();
+            el.horizontalAlign = 'center';
+            el.dynamicAlign = true;
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.right, parentRect.right, 'right ok');
             assert.equal(rect.height, elRect.height, 'no cropping');
           });
 

@@ -16,6 +16,10 @@
             myscript-common-element {
                 height: calc(100% - 2.625rem);
             }
+
+            myscript-languages-element {
+                padding: 12px;
+            }
         </style>
 
         <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
@@ -27,28 +31,32 @@
     <body>
         <myscript-languages-element scheme="https"
                                     host="webdemoapi.myscript.com"
-                                    applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-                                    hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+                                    applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
+                                    hmackey="5ab1935e-529a-4d48-a695-158450e52b13"
                                     select>
         </myscript-languages-element>
         <myscript-common-element
             type="TEXT"
             scheme="https"
             host="webdemoapi.myscript.com"
-            applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-            hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
-            touch-action="none">
+            applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
+            hmackey="5ab1935e-529a-4d48-a695-158450e52b13"
+            touch-action="none"
+            disableclearcontrol
+            disableconvertcontrol>
         </myscript-common-element>
         <script>
             const commonElement = document.querySelector('myscript-common-element');
             const langElement = document.querySelector('myscript-languages-element');
             langElement.addEventListener('change', (evt) => {
-                if (commonElement.configuration) {
+                const lang = evt.detail.find(language => language.selected === true).value;
+                if (commonElement.configuration && (lang !== commonElement.language)) {
                     commonElement.unloaded = true;
-                    commonElement.configuration.recognitionParams.v4.lang = evt.detail.find(language => language.selected === true).value;
+                    commonElement.language = evt.detail.find(language => language.selected === true).value;
                     commonElement.unloaded = false;
+                    console.log(commonElement.language);
                 }
-            });
+            })
         </script>
     </body>
 

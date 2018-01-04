@@ -62,8 +62,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </section>
 
-    <section anchor-id$="[[fragmentPrefix]]methods"
-             hidden$="[[!_anyVisible(descriptor.methods)]]">
+    <section id="methods"
+             anchor-id$="[[fragmentPrefix]]methods"
+             hidden$="[[!_hasMethods]]">
       <h2>
         <a href$="#[[fragmentPrefix]]methods" class="deeplink">Methods</a>
       </h2>
@@ -151,13 +152,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         behaviors: [Polymer.IronDocViewerBehavior],
 
         properties: {
+          descriptor: Object,
+
           _showProtectedProperties: Boolean,
           _showProtectedMethods: Boolean,
           _showProtectedEvents: Boolean,
 
           _staticMethods: {
             computed: '_computeStaticMethods(descriptor)'
-          }
+          },
+
+          _hasMethods: {
+            computed: '_computeHasMethods(descriptor)'
+          },
         },
 
         _anyVisible: function(items) {
@@ -202,6 +209,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         _computeStaticMethods: function(descriptor) {
           return descriptor.staticMethods || [];
+        },
+
+        _computeHasMethods: function(descriptor) {
+          return (descriptor.methods && descriptor.methods.length > 0) ||
+              (descriptor.staticMethods && descriptor.staticMethods.length > 0);
         },
       });
     })();

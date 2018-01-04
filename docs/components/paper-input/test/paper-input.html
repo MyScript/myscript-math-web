@@ -296,11 +296,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // every time a paper-input is focused.
       test('focus events fired on host element', function(done) {
         // Mutation observer is async, so wait one tick.
+        var testThis = this;
         Polymer.Base.async(function() {
           ensureDocumentHasFocus();
           // If the document doesn't have focus, we can't test focus.
           if (!window.top.document.hasFocus()) {
-            this.skip();
+            testThis.skip();
           }
           input.focus();
           assert(input.focused, 'input is focused');

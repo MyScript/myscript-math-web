@@ -119,6 +119,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             disableclearcontrol="[[ disableclearcontrol ]]"
             disableundoredocontrol="[[ disableundoredocontrol ]]"
             disableconvertcontrol="[[ disableconvertcontrol ]]"
+            usepointerlisteners="[[ usepointerlisteners ]]"
             touch-action="[[ touch-action ]]">
         </myscript-common-element>
     </template>
@@ -454,7 +455,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         reflectToAttribute: true,
                         value: false
                     },
-
+                    /**
+                     * True if pointer events listeners is used, false otherwise
+                     */
+                    usepointerlisteners: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
                     //------------------------------------------------------------------------------
                     //                 End of recopy
                     // -----------------------------------------------------------------------------
@@ -710,8 +718,28 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             }
 
             /**
-             * Import ink
-             * @param {Array<Object>} strokes
+             * Import multiple strokes at the same time also call batch mode.
+             * @param {Array<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array<Floats>, y: Array<Floats>, t: Array<Floats>}>} strokes
+             * Depending of of your users writes the strokes you may or may not activate the gestures. <code>t</code> attribute is optional in the set of strokes but it is highly recommended to pass it for better accuracy.
+             *
+             * Example of input :
+             * ````
+             *     [{
+             *     "gesture": false,
+             *     "pointerType": "PEN",
+             *     "pointerId": 1,
+             *     "x": [273, 278, 281],
+             *     "y": [121, 128, 133],
+             *     "t": [3185.7900000000004, 3213.8150000000005, 3222.5350000000003]
+             *     },{
+             *     "gesture": false,
+             *     "pointerType": "PEN",
+             *     "pointerId": 1,
+             *     "x": [173, 178, 181],
+             *     "y": [221, 228, 233],
+             *     "t": [6185.7900000000004, 6213.8150000000005,6222.5350000000003]
+             *     }]
+             * ````
              */
             importInk(strokes) {
                 if (this.editor) {

@@ -32,3 +32,4 @@ method is called on the element.
 ### Changes in 2.0
 - Removed the private property `_focusTarget` which was deprecated.
 - `neon-animation 2.0` doesn't import the Web Animations polyfill, so you'll have to import it ([see example](demo/index.html))
+- Distribution moved from the `class="dropdown-content"` to `slot="dropdown-content"`

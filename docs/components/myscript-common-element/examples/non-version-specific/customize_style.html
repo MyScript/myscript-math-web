@@ -17,6 +17,8 @@
                 height: 60px;
                 display: flex;
                 justify-content: space-between;
+                align-items: center;
+                padding: 0 12px;
             }
 
             nav span {
@@ -80,11 +82,13 @@
         <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
         <myscript-common-element scheme="https"
                                  host="webdemoapi.myscript.com"
-                                 applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-                                 hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+                                 applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
+                                 hmackey="5ab1935e-529a-4d48-a695-158450e52b13"
                                  themewidth="2"
                                  themecolor="#FFFFFF"
-                                 touch-action="none">
+                                 touch-action="none"
+                                 disableconvertcontrol
+                                 disableclearcontrol>
         </myscript-common-element>
         <script>
             const themes = [{

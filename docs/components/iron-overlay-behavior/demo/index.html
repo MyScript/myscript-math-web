@@ -55,7 +55,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <demo-snippet>
     <template>
       <button onclick="backdrop.open()">Overlay with backdrop</button>
-      <simple-overlay id="backdrop" with-backdrop>
+      <simple-overlay id="backdrop" with-backdrop scroll-action="lock">
         <p>Hello world!</p>
         <button>Button</button>
         <button onclick="backdrop.close()">Close</button>
@@ -140,7 +140,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </custom-style>
       <button onclick="scrolling.open()">Scrolling overlay</button>
 
-      <simple-overlay id="scrolling" class="with-margin scrollable" tabindex=-1>
+      <simple-overlay id="scrolling" class="with-margin scrollable" tabindex=-1 scroll-action="lock">
         <h2>This overlay scrolls internally.</h2>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -205,7 +205,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <button onclick="scrolling2.open()">Scrolling content</button>
 
-      <simple-overlay id="scrolling2" class="with-margin" tabindex=-1>
+      <simple-overlay id="scrolling2" class="with-margin" tabindex=-1 scroll-action="lock">
         <h2>This overlay has a scrolling child.</h2>
         <p class="scrollable">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -283,6 +283,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <span>This overlay allows click-through which can close overlays below it.</span>
         <button onclick="toast.close()">Close</button>
       </simple-overlay>
+    </template>
+  </demo-snippet>
+  
+  <h3>Use <code>scroll-action</code> to lock, refit or cancel an overlay on scroll.</h3>
+  <demo-snippet>
+    <template>
+      <span>
+        <button onclick="lockOnScroll.open()">locks scroll</button>
+        <simple-overlay id="lockOnScroll" scroll-action="lock" no-overlap
+                        vertical-align="bottom" horizontal-align="left" tabindex=-1>
+          <h2>Prevents scroll outside</h2>
+          <button onclick="lockOnScroll.close()">Close this</button>
+        </simple-overlay>
+      </span>
+      <span>
+        <button onclick="refitOnScroll.open()">refits on scroll</button>
+        <simple-overlay id="refitOnScroll" scroll-action="refit" no-overlap
+                        vertical-align="bottom" horizontal-align="left" tabindex=-1>
+          <h2>Refits on scroll</h2>
+          <button onclick="refitOnScroll.close()">Close this</button>
+        </simple-overlay>
+      </span>
+      <span>
+        <button onclick="cancelOnScroll.open()">cancels on scroll</button>
+        <simple-overlay id="cancelOnScroll" scroll-action="cancel" no-overlap
+                        vertical-align="bottom" horizontal-align="left" tabindex=-1>
+          <h2>Cancels on scroll</h2>
+          <button onclick="cancelOnScroll.close()">Close this</button>
+        </simple-overlay>
+      </span>
     </template>
   </demo-snippet>
 

@@ -60,10 +60,17 @@ paper input has a tab index. Similarly, `blur()` will blur the element.
 See `Polymer.PaperInputContainer` for a list of custom properties used to
 style this element.
 
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--paper-input-container-ms-clear` | Mixin applied to the Internet Explorer reveal button (the eyeball) | {}
+
 @group Paper Elements
 @element paper-input
 @hero hero.svg
 @demo demo/index.html
+
 -->
 
 <dom-module id="paper-input">
@@ -85,6 +92,7 @@ style this element.
         position: relative; /* to make a stacking context */
         outline: none;
         box-shadow: none;
+        margin: 0;
         padding: 0;
         width: 100%;
         max-width: 100%;
@@ -100,6 +108,10 @@ style this element.
 
         @apply --paper-font-subhead;
         @apply --paper-input-container-input;
+      }
+
+      input:disabled {
+        @apply --paper-input-container-input-disabled;
       }
 
       input::-webkit-outer-spin-button,
@@ -125,6 +137,10 @@ style this element.
 
       input::-ms-clear {
         @apply --paper-input-container-ms-clear;
+      }
+
+      input::-ms-reveal {
+        @apply --paper-input-container-ms-reveal;
       }
 
       input:-ms-input-placeholder {

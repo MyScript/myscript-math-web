@@ -1,6 +1,5 @@
 {
   "name": "marked",
-  "version": "0.3.6",
   "homepage": "https://github.com/chjj/marked",
   "authors": [
     "Christopher Jeffrey <chjjeffrey@gmail.com>"
@@ -21,11 +20,12 @@
     "test",
     "tests"
   ],
-  "_release": "0.3.6",
+  "version": "0.3.9",
+  "_release": "0.3.9",
   "_resolution": {
     "type": "version",
-    "tag": "v0.3.6",
-    "commit": "eddec20467c2d10c7769061ee9074e268500966f"
+    "tag": "0.3.9",
+    "commit": "3a4f7a5dae661f0844cb7b07e8667b5666ffc83e"
   },
   "_source": "https://github.com/chjj/marked.git",
   "_target": "~0.3.6",

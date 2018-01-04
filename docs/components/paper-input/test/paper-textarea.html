@@ -66,7 +66,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
 
     suite('basic', function() {
-
       test('setting value sets the input value', function() {
         var input = fixture('basic');
         input.value = 'foobar';
@@ -108,7 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           'placeholder': 'bar',
           'readonly': true,
           'required': true,
-          'maxlength': 3
+          'maxlength': 3,
         };
         for (var attr in attrs) {
           input[attr] = attrs[attr];
@@ -141,7 +140,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var container = Polymer.dom(input.root).querySelector('paper-input-container');
         var inputContent = Polymer.dom(container.root).querySelector('.input-content');
         var ironTextarea = Polymer.dom(input.root).querySelector('iron-autogrow-textarea');
-        assert.equal(inputContent.clientHeight,ironTextarea.clientHeight, 'container and textarea are same height');
+        assert.equal(inputContent.clientHeight, ironTextarea.clientHeight, 'container and textarea are same height');
+      });
+    });
+
+    suite('selection', function() {
+      var input;
+
+      setup(function() {
+        input = fixture('basic');
+      });
+
+      test('initial selection should be 0', function() {
+        assert.equal(input.selectionStart, 0);
+        assert.equal(input.selectionEnd, 0);
+      });
+
+      test('selection should update', function() {
+        assert.equal(input.selectionStart, 0);
+        assert.equal(input.selectionEnd, 0);
+        input.value = 'The quick brown fox\n jumps over the lazy dog';
+        input.selectionStart = 16;
+        input.selectionEnd = 26;
+        assert.equal(input.selectionStart, 16);
+        assert.equal(input.selectionEnd, 26);
+        assert.equal(input.$.input.selectionStart, 16);
+        assert.equal(input.$.input.selectionEnd, 26);
       });
     });
 
@@ -158,14 +182,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // its underlying native textarea, which will also fire a `blur`
       // event.
       test('focus events fired on host element', function() {
-        input.addEventListener('focus', function(event) {
+        input.addEventListener('focus', function() {
           assert(input.focused, 'input is focused');
         });
         MockInteractions.focus(input);
       });
 
       test('focus events fired on host element if nested element is focused', function() {
-        input.addEventListener('focus', function(event) {
+        input.addEventListener('focus', function() {
           assert(input.focused, 'input is focused');
         });
         MockInteractions.focus(input.inputElement.textarea);
@@ -244,9 +268,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var ariaDescribedBy = input.inputElement.textarea.getAttribute('aria-describedby');
 
           assert.notEqual(ariaDescribedBy.indexOf(Polymer.dom(input.root).querySelector('paper-input-error').id, -1,
-              'aria-describedby points to the error message'));
+            'aria-describedby points to the error message'));
           assert.notEqual(ariaDescribedBy.indexOf(Polymer.dom(input.root).querySelector('paper-input-char-counter').id, -1,
-              'aria-describedby points to the character counter'));
+            'aria-describedby points to the character counter'));
           done();
         }, 1);
       });

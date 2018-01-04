@@ -58,6 +58,7 @@ Custom property | Description | Default
 `--paper-slider-pin-start-color` | The color of the pin at the far left | `--paper-grey-400`
 `--paper-slider-height` | Height of the progress bar | `2px`
 `--paper-slider-input` | Mixin applied to the input in editable mode | `{}`
+`--paper-slider-input-container-input` | Mixin applied to the paper-input-container-input in editable mode | `{}`
 
 @group Paper Elements
 @element paper-slider
@@ -96,7 +97,7 @@ Custom property | Description | Default
        * still rely on paper-slider being flipped when dir="rtl" is set on body. For full
        * compatability, dir="rtl" must be explicitly set on paper-slider.
        */
-      :host-context([dir="rtl"]) #sliderContainer {
+      :dir(rtl) #sliderContainer {
         -webkit-transform: scaleX(-1);
         transform: scaleX(-1);
       }
@@ -304,6 +305,7 @@ Custom property | Description | Default
         overflow: hidden;
         --paper-input-container-input: {
           text-align: center;
+          @apply --paper-slider-input-container-input;
         };
         @apply --paper-slider-input;
       }
@@ -469,7 +471,8 @@ Custom property | Description | Default
         dragging: {
           type: Boolean,
           value: false,
-          readOnly: true
+          readOnly: true,
+          notify: true
         },
 
         transiting: {

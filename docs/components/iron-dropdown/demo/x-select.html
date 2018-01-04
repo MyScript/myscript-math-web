@@ -27,6 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       vertical-align="[[verticalAlign]]"
       horizontal-align="[[horizontalAlign]]"
       disabled="[[disabled]]"
+      scroll-action="[[scrollAction]]"
       open-animation-config="[[openAnimationConfig]]"
       close-animation-config="[[closeAnimationConfig]]">
       <slot name="dropdown-content" slot="dropdown-content"></slot>
@@ -40,6 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         verticalAlign: String,
         horizontalAlign: String,
         disabled: Boolean,
+        scrollAction: String,
         openAnimationConfig: {
           type: Array,
           value: function() {

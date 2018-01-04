@@ -9,11 +9,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
-<link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
 <link rel="import" href="../iron-behaviors/iron-control-state.html">
 <link rel="import" href="../iron-overlay-behavior/iron-overlay-behavior.html">
 <link rel="import" href="../neon-animation/neon-animation-runner-behavior.html">
+<!--TODO remove this import -->
 <link rel="import" href="iron-dropdown-scroll-manager.html">
 
 <!--
@@ -142,22 +141,13 @@ method is called on the element.
            * to itself when opened.
            * Set to true in order to prevent scroll from being constrained
            * to the dropdown when it opens.
+           * This property is a shortcut to set `scrollAction` to lock or refit.
+           * Prefer directly setting the `scrollAction` property.
            */
           allowOutsideScroll: {
             type: Boolean,
-            value: false
-          },
-
-          /**
-           * Callback for scroll events.
-           * @type {Function}
-           * @private
-           */
-          _boundOnCaptureScroll: {
-            type: Function,
-            value: function() {
-              return this._onCaptureScroll.bind(this);
-            }
+            value: false,
+            observer: '_allowOutsideScrollChanged'
           }
         },
 
@@ -183,11 +173,11 @@ method is called on the element.
         },
 
         ready: function() {
-          // Memoized scrolling position, used to block scrolling outside.
-          this._scrollTop = 0;
-          this._scrollLeft = 0;
-          // Used to perform a non-blocking refit on scroll.
-          this._refitOnScrollRAF = null;
+          // Ensure scrollAction is set.
+          if (!this.scrollAction) {
+            this.scrollAction = this.allowOutsideScroll ? 'refit' : 'lock';
+          }
+          this._readied = true;
         },
 
         attached: function () {
@@ -198,8 +188,6 @@ method is called on the element.
 
         detached: function() {
           this.cancelAnimation();
-          document.removeEventListener('scroll', this._boundOnCaptureScroll);
-          Polymer.IronDropdownScrollManager.removeScrollLock(this);
         },
 
         /**
@@ -212,14 +200,6 @@ method is called on the element.
           } else {
             this.cancelAnimation();
             this._updateAnimationConfig();
-            this._saveScrollPosition();
-            if (this.opened) {
-              document.addEventListener('scroll', this._boundOnCaptureScroll);
-              !this.allowOutsideScroll && Polymer.IronDropdownScrollManager.pushScrollLock(this);
-            } else {
-              document.removeEventListener('scroll', this._boundOnCaptureScroll);
-              Polymer.IronDropdownScrollManager.removeScrollLock(this);
-            }
             Polymer.IronOverlayBehaviorImpl._openedChanged.apply(this, arguments);
           }
         },
@@ -262,48 +242,7 @@ method is called on the element.
             this._finishRenderClosed();
           }
         },
-
-        _onCaptureScroll: function() {
-          if (!this.allowOutsideScroll) {
-            this._restoreScrollPosition();
-          } else {
-            this._refitOnScrollRAF && window.cancelAnimationFrame(this._refitOnScrollRAF);
-            this._refitOnScrollRAF = window.requestAnimationFrame(this.refit.bind(this));
-          }
-        },
-
-        /**
-         * Memoizes the scroll position of the outside scrolling element.
-         * @private
-         */
-        _saveScrollPosition: function() {
-          if (document.scrollingElement) {
-            this._scrollTop = document.scrollingElement.scrollTop;
-            this._scrollLeft = document.scrollingElement.scrollLeft;
-          } else {
-            // Since we don't know if is the body or html, get max.
-            this._scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-            this._scrollLeft = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
-          }
-        },
-
-        /**
-         * Resets the scroll position of the outside scrolling element.
-         * @private
-         */
-        _restoreScrollPosition: function() {
-          if (document.scrollingElement) {
-            document.scrollingElement.scrollTop = this._scrollTop;
-            document.scrollingElement.scrollLeft = this._scrollLeft;
-          } else {
-            // Since we don't know if is the body or html, set both.
-            document.documentElement.scrollTop = this._scrollTop;
-            document.documentElement.scrollLeft = this._scrollLeft;
-            document.body.scrollTop = this._scrollTop;
-            document.body.scrollLeft = this._scrollLeft;
-          }
-        },
-
+        
         /**
          * Constructs the final animation config from different properties used
          * to configure specific parts of the opening and closing animations.
@@ -329,6 +268,22 @@ method is called on the element.
           if (this.isAttached) {
             // This triggers iron-resize, and iron-overlay-behavior will call refit if needed.
             this.notifyResize();
+          }
+        },
+
+        /**
+         * Sets scrollAction according to the value of allowOutsideScroll.
+         * Prefer setting directly scrollAction.
+         */
+        _allowOutsideScrollChanged: function(allowOutsideScroll) {
+          // Wait until initial values are all set.
+          if (!this._readied) {
+            return;
+          }
+          if (!allowOutsideScroll) {
+            this.scrollAction = 'lock';
+          } else if (!this.scrollAction || this.scrollAction === 'lock') {
+            this.scrollAction = 'refit';
           }
         },
 

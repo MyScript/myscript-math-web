@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="../examples.css">
         <style>
             nav {
+                padding: 0 12px;
                 line-height: 52px;
             }
 
@@ -30,11 +31,11 @@
 
     <body>
         <nav>
-            <button onclick="myscriptMathWeb.undo()">undo</button>
-            <button onclick="myscriptMathWeb.redo()">redo</button>
-            <button onclick="myscriptMathWeb.clear()">clear</button>
-            <button onclick="myscriptMathWeb.exportContent()">export</button>
-            <button onclick="myscriptMathWeb.convert()">convert</button>
+            <button class="classic-btn" onclick="myscriptMathWeb.undo()">undo</button>
+            <button class="classic-btn" onclick="myscriptMathWeb.redo()">redo</button>
+            <button class="classic-btn" onclick="myscriptMathWeb.clear()">clear</button>
+            <button class="classic-btn" onclick="myscriptMathWeb.exportContent()">export</button>
+            <button class="classic-btn" onclick="myscriptMathWeb.convert()">convert</button>
         </nav>
         <paper-toast class="fit-top"></paper-toast>
         <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->

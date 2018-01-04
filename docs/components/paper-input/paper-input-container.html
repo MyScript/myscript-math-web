@@ -28,7 +28,7 @@ For example:
       // In Polymer 1.0, you would use `<input is="iron-input" slot="input">` instead of the above.
     </paper-input-container>
 
-You can style the nested <input> however you want; if you want it to look like a
+You can style the nested `<input>` however you want; if you want it to look like a
 Material Design input, you can style it with the --paper-input-container-shared-input-style mixin.
 
 Do not wrap `<paper-input-container>` around elements that already include it, such as `<paper-input>`.
@@ -99,6 +99,7 @@ Custom property | Description | Default
 `--paper-input-container-label-focus` | Mixin applied to the label when the input is focused | `{}`
 `--paper-input-container-label-floating` | Mixin applied to the label when floating | `{}`
 `--paper-input-container-input` | Mixin applied to the input | `{}`
+`--paper-input-container-input-disabled` | Mixin applied to the input when the component is disabled | `{}`
 `--paper-input-container-input-focus` | Mixin applied to the input when focused | `{}`
 `--paper-input-container-input-invalid` | Mixin applied to the input when invalid | `{}`
 `--paper-input-container-input-webkit-spinner` | Mixin applied to the webkit spinner | `{}`
@@ -228,7 +229,6 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content ::slotted(.paper-input-label) {
         position: absolute;
         top: 0;
-        right: 0;
         left: 0;
         width: 100%;
         font: inherit;
@@ -237,6 +237,8 @@ This element is `display:block` by default, but you can set the `inline` attribu
         transition: transform 0.25s, width 0.25s;
         -webkit-transform-origin: left top;
         transform-origin: left top;
+        /* Fix for safari not focusing 0-height date/time inputs with -webkit-apperance: none; */
+        min-height: 1px;
 
         @apply --paper-font-common-nowrap;
         @apply --paper-font-subhead;
@@ -256,12 +258,10 @@ This element is `display:block` by default, but you can set the `inline` attribu
         @apply --paper-input-container-label-floating;
       }
 
-      :host-context([dir="rtl"]) .input-content.label-is-floating ::slotted(label),
-      :host-context([dir="rtl"]) .input-content.label-is-floating ::slotted(.paper-input-label) {
-        /* TODO(noms): Figure out why leaving the width at 133% before the animation
-         * actually makes
-         * it wider on the right side, not left side, as you would expect in RTL */
-        width: 100%;
+      :host(:dir(rtl)) .input-content.label-is-floating ::slotted(label),
+      :host(:dir(rtl)) .input-content.label-is-floating ::slotted(.paper-input-label) {
+        right: 0;
+        left: auto;
         -webkit-transform-origin: right top;
         transform-origin: right top;
       }
@@ -286,7 +286,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content ::slotted(iron-input) {
         @apply --paper-input-container-shared-input-style;
       }
-      
+
       .input-content ::slotted(input),
       .input-content ::slotted(textarea),
       .input-content ::slotted(iron-autogrow-textarea),
@@ -299,7 +299,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content ::slotted(input)::-webkit-inner-spin-button {
         @apply --paper-input-container-input-webkit-spinner;
       }
-      
+
       .input-content.focused ::slotted(input),
       .input-content.focused ::slotted(textarea),
       .input-content.focused ::slotted(iron-autogrow-textarea),
@@ -313,7 +313,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content.is-invalid ::slotted(.paper-input-input) {
         @apply --paper-input-container-input-invalid;
       }
-      
+
       .prefix ::slotted(*) {
         display: inline-block;
         @apply --paper-font-subhead;

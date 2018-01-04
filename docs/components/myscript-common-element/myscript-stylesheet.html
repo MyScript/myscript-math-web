@@ -24,9 +24,8 @@ CSS variable | Default
                 --myscript-editor-focus-color: #0798FF;
                 --myscript-editor-disabled-color: #F5F6F7;
                 --myscript-editor-line-pattern: {
-                    background-image:
-                        linear-gradient(to right, #F5F6F7 1px, transparent 1px),
-                        linear-gradient(to bottom, #F5F6F7 1px, transparent 1px);
+                    background-image: linear-gradient(to right, #F5F6F7 1px, transparent 1px),
+                    linear-gradient(to bottom, #F5F6F7 1px, transparent 1px);
                     background-size: 18px 18px;
                 };
                 --myscript-editor-capture-background: none;
@@ -65,7 +64,7 @@ CSS variable | Default
                 };
 
                 --myscript-icon-button: {
-                    @apply  --myscript-button;
+                    @apply --myscript-button;
                     border-radius: 50%;
                     width: 40px;
                 };
@@ -124,6 +123,293 @@ CSS variable | Default
                 position: absolute;
             }
 
+            #smartguide {
+                position: absolute;
+                z-index: 40;
+                font-size: 16px;
+            }
+
+            .smartguide-in {
+                visibility: visible !important;
+                transition: opacity 0.5s;
+                opacity: 1;
+            }
+
+            .smartguide-out {
+                transition: opacity 1s, visibility 1s;
+                visibility: hidden !important;
+                opacity: 0;
+            }
+
+            .prompter-text-container {
+                background-color: rgba(255, 255, 255, 0.9);
+                height: 48px;
+                line-height: 48px;
+                overflow: hidden;
+                white-space: nowrap;
+                display: block;
+                text-align: left;
+                border-bottom: 1px solid lightgray;
+                position: absolute;
+                z-index: 30;
+                color: #757575;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .prompter-text-container > div > span {
+                cursor: pointer;
+                display: inline-block;
+            }
+
+            #prompter-text {
+                margin-left: 12px;
+            }
+
+            .modified-word {
+                animation: 0.1s linear word-input,
+                2s ease-in-out color-input;
+            }
+
+            @keyframes color-input {
+                0% {
+                    color: black;
+                }
+                100% {
+                    color: #757575;
+                }
+            }
+
+            @keyframes word-input {
+                0% {
+                    transform: translate(0, 5px);
+                }
+                100% {
+                    transform: none;
+                }
+            }
+
+            .candidates {
+                color: black;
+                flex-direction: column;
+                text-align: center;
+                line-height: 30px;
+                border-radius: 3px;
+                position: absolute;
+                box-shadow: 2px 2px 12px #BDBDBD, -2px 2px 12px #BDBDBD;
+                background-color: #F5F5F5;
+                z-index: 100;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .candidates > span {
+                cursor: pointer;
+                padding: 2px 20px;
+            }
+
+            .candidates > span:hover {
+                background-color: #EEEEEE;
+            }
+
+            .candidates > span:active {
+                background-color: #E0E0E0;
+            }
+
+            .selected-word {
+                font-weight: bold;
+                background-color: #E0E0E0;
+            }
+
+            .tag-icon {
+                padding: 0 18px;
+                border: 1px solid lightgrey;
+                font-weight: bold;
+                font-size: large;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                position: absolute;
+                z-index: 31;
+                height: 48px;
+                line-height: 48px;
+                background-color: rgba(255, 255, 255, 0.9);
+                color: #757575;
+            }
+
+            #ellipsis {
+                cursor: pointer;
+                border-bottom: 1px solid lightgray;
+                position: absolute;
+                z-index: 31;
+                height: 48px;
+                line-height: 38px;
+                padding: 0 8px;
+                font-weight: bold;
+                font-size: x-large;
+                background-color: rgba(255, 255, 255, 0.9);
+                color: #757575;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            #more-menu {
+                flex-direction: column;
+                margin-right: 12px;
+                line-height: 30px;
+                border-radius: 3px;
+                position: absolute;
+                z-index: 100;
+                box-shadow: 2px 2px 12px #BDBDBD;
+                background-color: #F5F5F5;
+            }
+
+            .options-label-button {
+                color: black;
+                font-size: 16px;
+                cursor: pointer;
+                box-sizing: border-box;
+                background: transparent;
+                border: none;
+                padding: 0 24px;
+                margin: 0;
+                height: 40px;
+                outline: none;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .options-label-button:hover {
+                background-color: #EEEEEE;
+            }
+
+            .options-label-button:active {
+                background-color: #E0E0E0;
+            }
+
+            .ps__rail-x {
+                top: 32px !important;
+            }
+
+            /*
+ * Container style
+ */
+            .ps {
+                overflow: hidden !important;
+                overflow-anchor: none;
+                -ms-overflow-style: none;
+                touch-action: auto;
+                -ms-touch-action: auto;
+            }
+
+            /*
+             * Scrollbar rail styles
+             */
+            .ps__rail-x {
+                display: none;
+                opacity: 0;
+                transition: background-color .2s linear, opacity .2s linear;
+                -webkit-transition: background-color .2s linear, opacity .2s linear;
+                height: 15px;
+                /* there must be 'bottom' or 'top' for ps__rail-x */
+                bottom: 0px;
+                /* please don't change 'position' */
+                position: absolute;
+            }
+
+            .ps__rail-y {
+                display: none;
+                opacity: 0;
+                transition: background-color .2s linear, opacity .2s linear;
+                -webkit-transition: background-color .2s linear, opacity .2s linear;
+                width: 15px;
+                /* there must be 'right' or 'left' for ps__rail-y */
+                right: 0;
+                /* please don't change 'position' */
+                position: absolute;
+            }
+
+            .ps--active-x > .ps__rail-x,
+            .ps--active-y > .ps__rail-y {
+                display: block;
+                background-color: transparent;
+            }
+
+            .ps:hover > .ps__rail-x,
+            .ps:hover > .ps__rail-y,
+            .ps--focus > .ps__rail-x,
+            .ps--focus > .ps__rail-y,
+            .ps--scrolling-x > .ps__rail-x,
+            .ps--scrolling-y > .ps__rail-y {
+                opacity: 0.6;
+            }
+
+            .ps__rail-x:hover,
+            .ps__rail-y:hover,
+            .ps__rail-x:focus,
+            .ps__rail-y:focus {
+                background-color: #eee;
+                opacity: 0.9;
+            }
+
+            /*
+             * Scrollbar thumb styles
+             */
+            .ps__thumb-x {
+                background-color: #aaa;
+                border-radius: 6px;
+                transition: background-color .2s linear, height .2s ease-in-out;
+                -webkit-transition: background-color .2s linear, height .2s ease-in-out;
+                height: 6px;
+                /* there must be 'bottom' for ps__thumb-x */
+                bottom: 2px;
+                /* please don't change 'position' */
+                position: absolute;
+            }
+
+            .ps__thumb-y {
+                background-color: #aaa;
+                border-radius: 6px;
+                transition: background-color .2s linear, width .2s ease-in-out;
+                -webkit-transition: background-color .2s linear, width .2s ease-in-out;
+                width: 6px;
+                /* there must be 'right' for ps__thumb-y */
+                right: 2px;
+                /* please don't change 'position' */
+                position: absolute;
+            }
+
+            .ps__rail-x:hover > .ps__thumb-x,
+            .ps__rail-x:focus > .ps__thumb-x {
+                background-color: #999;
+                height: 11px;
+            }
+
+            .ps__rail-y:hover > .ps__thumb-y,
+            .ps__rail-y:focus > .ps__thumb-y {
+                background-color: #999;
+                width: 11px;
+            }
+
+            /* MS supports */
+            @supports (-ms-overflow-style: none) {
+                .ps {
+                    overflow: auto !important;
+                }
+            }
+
+            @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+                .ps {
+                    overflow: auto !important;
+                }
+            }
+
+
             @keyframes spin {
                 0% {
                     transform: rotate(0deg);
@@ -177,6 +463,7 @@ CSS variable | Default
                     -webkit-transform: rotate(360deg);
                 }
             }
+
         </style>
     </template>
 </dom-module>

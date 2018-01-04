@@ -13,19 +13,8 @@
 
         <link rel="stylesheet" href="../examples.css">
         <style>
-            nav {
-                height: 60px;
-                display: flex;
-                justify-content: space-between;
-            }
-
-            nav span {
-                display: flex;
-                width: 100%;
-            }
-
             input {
-                width: 100%;
+                margin: 6px;
             }
 
             myscript-math-web {
@@ -43,9 +32,9 @@
     <body>
         <nav>
             <span>
-                <input type="text" id="importContentField" data-type="application/x-latex"
+                <input type="text" class="input-field" id="importContentField" data-type="application/x-latex"
                        placeholder="e.g. \sqrt {\dfrac {2} {3}}"/>
-                <button id="importContent">Import</button>
+                <button class="classic-btn" id="importContent">Import</button>
             </span>
         </nav>
         <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->

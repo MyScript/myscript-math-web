@@ -469,6 +469,14 @@ CSS variable | Default
                         notify: true
                     },
                     /**
+                     * True if pointer events listeners is used, false otherwise
+                     */
+                    usepointerlisteners: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false,
+                    },
+                    /**
                      * True to display console output, false otherwise.
                      */
                     debug: {
@@ -480,14 +488,14 @@ CSS variable | Default
                         type: String,
                         value: 'initial'
                     }
-                }
+                };
             }
 
             static get observers() {
                 return [
                     '_updateTheme(editor, theme, themecolor, themewidth)',
                     '_updatePenStyle(editor, penstyle, pencolor, penwidth)'
-                ]
+                ];
             }
 
             static _generateTheme(theme, themecolor, themewidth) {
@@ -583,8 +591,8 @@ CSS variable | Default
                 return oneFloat;
             };
 
-            static _extractPoint(event, configuration) {
-                const rect = event.target.getBoundingClientRect();
+            static _extractPoint(event, element, configuration) {
+                const rect = element.getBoundingClientRect();
                 return {
                     x: MyScriptCommonElement._roundFloat((event.detail.x || event.clientX) - rect.left - event.target.clientLeft, configuration.xyFloatPrecision),
                     y: MyScriptCommonElement._roundFloat((event.detail.y || event.clientY) - rect.top - event.target.clientTop, configuration.xyFloatPrecision),
@@ -647,6 +655,8 @@ CSS variable | Default
             }
 
             _attachGrabber(element, editor) {
+                let smartGuidePointerDown = false;
+                let downSmartGuidePoint = null;
 
                 const unFocus = () => {
                     if (document.selection) {
@@ -666,47 +676,134 @@ CSS variable | Default
                     return evt;
                 };
 
-                const checkHover = (evt) => {
-                    if (evt.detail.hover()) {
-                        return evt.detail.hover().id === 'editorDomElement' || evt.detail.hover().className.includes('ms-canvas');
-                    } else
-                        return false;
+                const hideMenu = (evt) => {
+                    const moreMenu = ['ellipsis', 'more-menu'];
+                    const moreMenuInDocument = this.shadowRoot.querySelector('#more-menu');
+                    if (!moreMenu.includes(evt.target.id) && !evt.target.classList.contains('options-label-button') && moreMenuInDocument && moreMenuInDocument.style.display !== 'none') {
+                        moreMenuInDocument.style.display = 'none';
+                        return true;
+                    }
+                    return false;
+                };
+
+                const hideCandidates = (evt) => {
+                    const candidatesInDocument = this.shadowRoot.querySelector('.candidates');
+                    if (!evt.target.classList.contains('candidates') && !(evt.target.tagName === 'SPAN') && candidatesInDocument && candidatesInDocument.style.display !== 'none') {
+                        candidatesInDocument.style.display = 'none';
+                        return true;
+                    }
+                    return false;
                 };
 
                 const pointerDownHandler = (evt) => { // Trigger a pointerDown
                     patchPointerEvent(evt);
+                    const pointerDownOnEditor = evt.target.id === editor.domElement.id || evt.target.classList.contains('ms-canvas');
                     if (this.activePointerId) {
                         if (this.activePointerId === evt.pointerId) {
                             this.logger.warn(`${evt.type} event with the same id without any pointer up`, evt.pointerId);
                         }
-                    } else if ((evt.button !== 2) && (evt.buttons !== 2)) { // Ignore right click
-                        this.activePointerId = evt.pointerId;
-                        unFocus();
-                        evt.stopPropagation();
-                        editor.pointerDown(MyScriptCommonElement._extractPoint(evt, editor.configuration), evt.pointerType, evt.pointerId);
+                    } else if ((evt.button !== 2) && (evt.buttons !== 2) && pointerDownOnEditor) { // Ignore right click
+                        if (!hideMenu(evt) && !hideCandidates(evt)) {
+                            this.activePointerId = evt.pointerId;
+                            unFocus();
+                            evt.stopPropagation();
+                            editor.pointerDown(MyScriptCommonElement._extractPoint(evt, element, editor.configuration), evt.pointerType, evt.pointerId);
+                        }
+                    } else { // FIXME add more complete verification to pointer down on smart guide
+                        hideMenu(evt);
+                        hideCandidates(evt);
+                        smartGuidePointerDown = true;
+                        downSmartGuidePoint = MyScriptCommonElement._extractPoint(evt, element, editor.configuration);
                     }
                 };
 
                 const pointerMoveHandler = (evt) => { // Trigger a pointerMove
                     patchPointerEvent(evt);
                     // Only considering the active pointer
+                    if (this.activePointerId && this.activePointerId === evt.pointerId) {
+                        editor.pointerMove(MyScriptCommonElement._extractPoint(evt, element, editor.configuration));
+                    } else if (smartGuidePointerDown) {
+                        const point = MyScriptCommonElement._extractPoint(evt, element, editor.configuration);
+                        if (point.y >= downSmartGuidePoint.y + 5 && (point.x >= downSmartGuidePoint.x - 10 && point.x <= downSmartGuidePoint.x + 10)) {
+                            this.activePointerId = evt.pointerId;
+                            // Hack for iOS 9 Safari : pointerId has to be int so -1 if > max value
+                            const pointerId = evt.pointerId > 2147483647 ? -1 : evt.pointerId;
+                            unFocus();
+                            editor.pointerDown(downSmartGuidePoint, evt.pointerType, pointerId);
+                        }
+                    }
+                };
+
+                const polymerPointerMoveHandler = (evt) => { // Trigger a pointerMove
+
+                    const checkHover = (evt) => {
+                        const smartGuideIds = ['smartguide', 'prompter-text-container', 'prompter-text', 'tag-icon', 'ellipsis'];
+                        const scrollbarClasses = ['ps__rail-x', 'ps__thumb-x'];
+                        if (evt.detail.hover()) {
+                            const evtId = evt.detail.hover().id;
+                            // Check if pointer entered into any smart guide elements or scrollbar
+                            const pointerEnteredSmartGuide = smartGuideIds.includes(evtId) || scrollbarClasses.some((v) => evt.detail.hover().className.indexOf(v) >= 0);
+                            // Check if pointer moved between words in smart guide
+                            const pointerMovedWords = evt.detail.hover().tagName === 'SPAN' || evt.detail.hover().tagName === 'SPAN';
+                            return evt.detail.hover().id === 'editorDomElement'
+                                || evt.detail.hover().className.includes('ms-canvas')
+                                || pointerEnteredSmartGuide
+                                || pointerMovedWords;
+                        }
+                        return false;
+                    };
+
+                    patchPointerEvent(evt);
+                    // Only considering the active pointer
                     if (checkHover(evt) && this.activePointerId && this.activePointerId === evt.pointerId) {
                         evt.stopPropagation();
-                        editor.pointerMove(MyScriptCommonElement._extractPoint(evt, editor.configuration));
-                    } else {
+                        editor.pointerMove(MyScriptCommonElement._extractPoint(evt, element, editor.configuration));
+                    } else if (smartGuidePointerDown) {
+                        const point = MyScriptCommonElement._extractPoint(evt, element, editor.configuration);
+                        if (point.y >= downSmartGuidePoint.y + 5 && (point.x >= downSmartGuidePoint.x - 10 && point.x <= downSmartGuidePoint.x + 10)) {
+                            this.activePointerId = evt.pointerId;
+                            // Hack for iOS 9 Safari : pointerId has to be int so -1 if > max value
+                            const pointerId = evt.pointerId > 2147483647 ? -1 : evt.pointerId;
+                            unFocus();
+                            editor.pointerDown(downSmartGuidePoint, evt.pointerType, pointerId);
+                        }
+                    }
+                    else {
                         evt.stopPropagation();
                         this.activePointerId = undefined; // Managing the active pointer
-                        editor.pointerUp(MyScriptCommonElement._extractPoint(evt, editor.configuration));
+                        editor.pointerUp(MyScriptCommonElement._extractPoint(evt, element, editor.configuration));
                     }
                 };
 
                 const pointerUpHandler = (evt) => { // Trigger a pointerUp
                     patchPointerEvent(evt);
-                    // Only considering the active pointer
-                    if (this.activePointerId && this.activePointerId === evt.pointerId) {
+                    smartGuidePointerDown = false;
+                    const smartGuideIds = ['smartguide', 'prompter-text-container', 'prompter-text', 'tag-icon', 'ellipsis'];
+                    const scrollbarClasses = ['ps__rail-x', 'ps__thumb-x'];
+                    // Check if pointer entered into any smartguide elements or scrollbar
+                    const pointerEnteredSmartGuide = evt.relatedTarget && (smartGuideIds.includes(evt.relatedTarget.id) || scrollbarClasses.includes(evt.relatedTarget.className));
+                    // Check if pointer didn't stay in the smartguide and pointer exited the smartguide or scrollbar
+                    const pointerExitedSmartGuide = evt.relatedTarget && evt.target && (smartGuideIds.includes(evt.target.id) || scrollbarClasses.includes(evt.target.className));
+                    // Check if pointer moved between words in smartguide
+                    const pointerMovedWords = evt.relatedTarget && evt.target && (evt.target.tagName === 'SPAN' || evt.relatedTarget.tagName === 'SPAN');
+                    if (pointerEnteredSmartGuide || pointerExitedSmartGuide || pointerMovedWords) {
+                        evt.stopPropagation();
+                    } else if (this.activePointerId && this.activePointerId === evt.pointerId) { // Only considering the active pointer
                         this.activePointerId = undefined; // Managing the active pointer
                         evt.stopPropagation();
-                        editor.pointerUp(MyScriptCommonElement._extractPoint(evt, editor.configuration));
+                        editor.pointerUp(MyScriptCommonElement._extractPoint(evt, element, editor.configuration));
+                    }else {
+                        this.logger.trace(`${evt.type} event from another pointerid (${evt.pointerId})`, this.activePointerId);
+                    }
+                };
+
+                const polymerPointerUpHandler = (evt) => { // Trigger a pointerUp
+                    patchPointerEvent(evt);
+                    smartGuidePointerDown = false;
+                    if (this.activePointerId && this.activePointerId === evt.pointerId) { // Only considering the active pointer
+                        this.activePointerId = undefined; // Managing the active pointer
+                        evt.stopPropagation();
+                        editor.pointerUp(MyScriptCommonElement._extractPoint(evt, element, editor.configuration));
                     } else {
                         this.logger.trace(`${evt.type} event from another pointerid (${evt.pointerId})`, this.activePointerId);
                     }
@@ -728,15 +825,15 @@ CSS variable | Default
                     listener: pointerDownHandler
                 }, {
                     types: ['track'],
-                    listener: pointerMoveHandler
+                    listener: polymerPointerMoveHandler
                 }, {
                     types: ['up'],
-                    listener: pointerUpHandler
+                    listener: polymerPointerUpHandler
                 }];
 
                 const context = {
                     options: editor.configuration.listenerOptions,
-                    listeners: polymerGestureListeners
+                    listeners: this.usepointerlisteners ? pointerListeners : polymerGestureListeners
                 };
 
                 if (this.debug) {
@@ -846,8 +943,28 @@ CSS variable | Default
             }
 
             /**
-             * Import ink
-             * @param {Array<Object>} strokes
+             * Import multiple strokes at the same time also call batch mode.
+             * @param {Array<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array<Floats>, y: Array<Floats>, t: Array<Floats>}>} strokes
+             * Depending of of your users writes the strokes you may or may not activate the gestures. <code>t</code> attribute is optional in the set of strokes but it is highly recommended to pass it for better accuracy.
+             *
+             * Example of input :
+             * ````
+             *     [{
+             *     "gesture": false,
+             *     "pointerType": "PEN",
+             *     "pointerId": 1,
+             *     "x": [273, 278, 281],
+             *     "y": [121, 128, 133],
+             *     "t": [3185.7900000000004, 3213.8150000000005, 3222.5350000000003]
+             *     },{
+             *     "gesture": false,
+             *     "pointerType": "PEN",
+             *     "pointerId": 1,
+             *     "x": [173, 178, 181],
+             *     "y": [221, 228, 233],
+             *     "t": [6185.7900000000004, 6213.8150000000005,6222.5350000000003]
+             *     }]
+             * ````
              */
             importInk(strokes) {
                 if (this.editor) {

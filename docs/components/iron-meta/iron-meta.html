@@ -97,7 +97,12 @@ Or, in a Polymer element, you can include a meta in your template:
         var type = this.type;
 
         if (type) {
-          return Object.keys(IronMeta.types[this.type]).map(function(key) {
+          const items = IronMeta.types[this.type];
+          if (!items) {
+            return [];
+          }
+
+          return Object.keys(items).map(function(key) {
             return metaDatas[this.type][key];
           }, this);
         }
