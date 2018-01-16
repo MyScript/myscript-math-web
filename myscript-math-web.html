@@ -467,6 +467,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     //                 End of recopy
                     // -----------------------------------------------------------------------------
                     /**
+                     * Use a custom grammar
+                     */
+                    customgrammar: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: ""
+                    },
+                    /**
                      * Hide the export zone when set to true.
                      */
                     hideexportzone: {
@@ -586,7 +594,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 return stylesheet;
             }
 
-            static _generateMathConfiguration(configuration, mimetypes, disablesolver, solverfractionalpartdigit, solverdecimalseparator, solverroundingmode, solverangleunit, resulttypes, columnaroperation, userresources, scratchoutdetectionsensitivity) {
+            static _generateMathConfiguration(configuration, mimetypes, disablesolver, solverfractionalpartdigit, solverdecimalseparator, solverroundingmode, solverangleunit, resulttypes, columnaroperation, userresources, scratchoutdetectionsensitivity, customgrammar) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
                 if (!conf.recognitionParams) {
@@ -637,6 +645,10 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 if (solverangleunit !== undefined) {
                     conf.recognitionParams.v4.math.solver['angle-unit'] = solverangleunit;
                 }
+                if (customgrammar) {
+                    console.log(customgrammar);
+                    conf.recognitionParams.v4.math.customGrammar = customgrammar;
+                }
                 return conf;
             }
 
@@ -652,7 +664,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     this.resulttypes,
                     this.columnaroperation,
                     this.userresources,
-                    this.scratchoutdetectionsensitivity);
+                    this.scratchoutdetectionsensitivity,
+                    this.customgrammar);
             }
 
             constructor() {
