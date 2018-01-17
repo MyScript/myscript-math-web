@@ -8329,11 +8329,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 196,
+              "line": 203,
               "column": 20
             },
             "end": {
-              "line": 200,
+              "line": 207,
               "column": 21
             }
           },
@@ -8349,11 +8349,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 204,
+              "line": 211,
               "column": 20
             },
             "end": {
-              "line": 208,
+              "line": 215,
               "column": 21
             }
           },
@@ -8369,11 +8369,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 212,
+              "line": 219,
               "column": 20
             },
             "end": {
-              "line": 216,
+              "line": 223,
               "column": 21
             }
           },
@@ -8389,11 +8389,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 220,
+              "line": 227,
               "column": 20
             },
             "end": {
-              "line": 224,
+              "line": 231,
               "column": 21
             }
           },
@@ -8409,11 +8409,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 228,
+              "line": 235,
               "column": 20
             },
             "end": {
-              "line": 232,
+              "line": 239,
               "column": 21
             }
           },
@@ -8429,11 +8429,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 236,
+              "line": 243,
               "column": 20
             },
             "end": {
-              "line": 240,
+              "line": 247,
               "column": 21
             }
           },
@@ -8449,11 +8449,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 244,
+              "line": 251,
               "column": 20
             },
             "end": {
-              "line": 248,
+              "line": 255,
               "column": 21
             }
           },
@@ -8469,11 +8469,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 252,
+              "line": 259,
               "column": 20
             },
             "end": {
-              "line": 256,
+              "line": 263,
               "column": 21
             }
           },
@@ -8489,11 +8489,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 262,
+              "line": 269,
               "column": 20
             },
             "end": {
-              "line": 265,
+              "line": 272,
               "column": 21
             }
           },
@@ -8508,11 +8508,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 271,
+              "line": 278,
               "column": 20
             },
             "end": {
-              "line": 274,
+              "line": 281,
               "column": 21
             }
           },
@@ -8527,11 +8527,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 279,
+              "line": 286,
               "column": 20
             },
             "end": {
-              "line": 284,
+              "line": 291,
               "column": 21
             }
           },
@@ -8549,11 +8549,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 288,
+              "line": 295,
               "column": 20
             },
             "end": {
-              "line": 291,
+              "line": 298,
               "column": 21
             }
           },
@@ -8570,11 +8570,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 295,
+              "line": 302,
               "column": 20
             },
             "end": {
-              "line": 300,
+              "line": 307,
               "column": 21
             }
           },
@@ -8592,11 +8592,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 304,
+              "line": 311,
               "column": 20
             },
             "end": {
-              "line": 307,
+              "line": 314,
               "column": 21
             }
           },
@@ -8613,11 +8613,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 313,
+              "line": 320,
               "column": 20
             },
             "end": {
-              "line": 316,
+              "line": 323,
               "column": 21
             }
           },
@@ -8634,11 +8634,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 320,
+              "line": 327,
               "column": 20
             },
             "end": {
-              "line": 323,
+              "line": 330,
               "column": 21
             }
           },
@@ -8653,11 +8653,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 327,
+              "line": 334,
               "column": 20
             },
             "end": {
-              "line": 330,
+              "line": 337,
               "column": 21
             }
           },
@@ -8672,11 +8672,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 334,
+              "line": 341,
               "column": 20
             },
             "end": {
-              "line": 337,
+              "line": 344,
               "column": 21
             }
           },
@@ -8687,17 +8687,39 @@
           }
         },
         {
+          "name": "penstyleclasses",
+          "type": "string",
+          "description": "Pen style classes",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 348,
+              "column": 20
+            },
+            "end": {
+              "line": 352,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "\"\""
+        },
+        {
           "name": "themecolor",
           "type": "string",
           "description": "Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 341,
+              "line": 356,
               "column": 20
             },
             "end": {
-              "line": 345,
+              "line": 360,
               "column": 21
             }
           },
@@ -8713,11 +8735,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 349,
+              "line": 364,
               "column": 20
             },
             "end": {
-              "line": 353,
+              "line": 368,
               "column": 21
             }
           },
@@ -8733,11 +8755,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 357,
+              "line": 372,
               "column": 20
             },
             "end": {
-              "line": 361,
+              "line": 376,
               "column": 21
             }
           },
@@ -8753,11 +8775,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 365,
+              "line": 380,
               "column": 20
             },
             "end": {
-              "line": 369,
+              "line": 384,
               "column": 21
             }
           },
@@ -8773,11 +8795,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 373,
+              "line": 388,
               "column": 20
             },
             "end": {
-              "line": 376,
+              "line": 391,
               "column": 21
             }
           },
@@ -8794,11 +8816,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 380,
+              "line": 395,
               "column": 20
             },
             "end": {
-              "line": 383,
+              "line": 398,
               "column": 21
             }
           },
@@ -8815,11 +8837,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 388,
+              "line": 403,
               "column": 20
             },
             "end": {
-              "line": 393,
+              "line": 408,
               "column": 21
             }
           },
@@ -8837,11 +8859,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 398,
+              "line": 413,
               "column": 20
             },
             "end": {
-              "line": 403,
+              "line": 418,
               "column": 21
             }
           },
@@ -8859,11 +8881,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 408,
+              "line": 423,
               "column": 20
             },
             "end": {
-              "line": 413,
+              "line": 428,
               "column": 21
             }
           },
@@ -8881,11 +8903,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 417,
+              "line": 432,
               "column": 20
             },
             "end": {
-              "line": 422,
+              "line": 437,
               "column": 21
             }
           },
@@ -8903,11 +8925,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 426,
+              "line": 441,
               "column": 20
             },
             "end": {
-              "line": 431,
+              "line": 446,
               "column": 21
             }
           },
@@ -8925,11 +8947,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 436,
+              "line": 451,
               "column": 20
             },
             "end": {
-              "line": 440,
+              "line": 455,
               "column": 21
             }
           },
@@ -8945,11 +8967,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 444,
+              "line": 459,
               "column": 20
             },
             "end": {
-              "line": 448,
+              "line": 463,
               "column": 21
             }
           },
@@ -8965,11 +8987,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 452,
+              "line": 467,
               "column": 20
             },
             "end": {
-              "line": 456,
+              "line": 471,
               "column": 21
             }
           },
@@ -8985,11 +9007,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 460,
+              "line": 475,
               "column": 20
             },
             "end": {
-              "line": 464,
+              "line": 479,
               "column": 21
             }
           },
@@ -9005,11 +9027,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 471,
+              "line": 486,
               "column": 20
             },
             "end": {
-              "line": 475,
+              "line": 490,
               "column": 21
             }
           },
@@ -9025,11 +9047,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 479,
+              "line": 494,
               "column": 20
             },
             "end": {
-              "line": 483,
+              "line": 498,
               "column": 21
             }
           },
@@ -9045,11 +9067,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 488,
+              "line": 503,
               "column": 20
             },
             "end": {
-              "line": 491,
+              "line": 506,
               "column": 21
             }
           },
@@ -9065,11 +9087,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 495,
+              "line": 510,
               "column": 20
             },
             "end": {
-              "line": 498,
+              "line": 513,
               "column": 21
             }
           },
@@ -9085,11 +9107,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 502,
+              "line": 517,
               "column": 20
             },
             "end": {
-              "line": 506,
+              "line": 521,
               "column": 21
             }
           },
@@ -9105,11 +9127,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 510,
+              "line": 525,
               "column": 20
             },
             "end": {
-              "line": 513,
+              "line": 528,
               "column": 21
             }
           },
@@ -9125,11 +9147,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 514,
+              "line": 529,
               "column": 20
             },
             "end": {
-              "line": 517,
+              "line": 532,
               "column": 21
             }
           },
@@ -9145,11 +9167,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 519,
+              "line": 534,
               "column": 20
             },
             "end": {
-              "line": 522,
+              "line": 537,
               "column": 21
             }
           },
@@ -9165,11 +9187,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 523,
+              "line": 538,
               "column": 20
             },
             "end": {
-              "line": 526,
+              "line": 541,
               "column": 21
             }
           },
@@ -9185,11 +9207,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 530,
+              "line": 545,
               "column": 20
             },
             "end": {
-              "line": 533,
+              "line": 548,
               "column": 21
             }
           },
@@ -9205,11 +9227,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 537,
+              "line": 552,
               "column": 20
             },
             "end": {
-              "line": 539,
+              "line": 554,
               "column": 21
             }
           },
@@ -9224,11 +9246,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 541,
+              "line": 556,
               "column": 20
             },
             "end": {
-              "line": 544,
+              "line": 559,
               "column": 21
             }
           },
@@ -9244,11 +9266,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 550,
+              "line": 565,
               "column": 20
             },
             "end": {
-              "line": 553,
+              "line": 568,
               "column": 21
             }
           },
@@ -9265,11 +9287,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 557,
+              "line": 572,
               "column": 20
             },
             "end": {
-              "line": 561,
+              "line": 576,
               "column": 21
             }
           },
@@ -9287,11 +9309,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 565,
+              "line": 580,
               "column": 20
             },
             "end": {
-              "line": 569,
+              "line": 584,
               "column": 21
             }
           },
@@ -9307,11 +9329,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 570,
+              "line": 585,
               "column": 20
             },
             "end": {
-              "line": 573,
+              "line": 588,
               "column": 21
             }
           },
@@ -11187,11 +11209,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 796,
+              "line": 811,
               "column": 12
             },
             "end": {
-              "line": 799,
+              "line": 814,
               "column": 13
             }
           },
@@ -11204,11 +11226,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 801,
+              "line": 816,
               "column": 12
             },
             "end": {
-              "line": 804,
+              "line": 819,
               "column": 13
             }
           },
@@ -11312,11 +11334,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 654,
+              "line": 669,
               "column": 12
             },
             "end": {
-              "line": 668,
+              "line": 683,
               "column": 13
             }
           },
@@ -11329,11 +11351,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 687,
+              "line": 702,
               "column": 12
             },
             "end": {
-              "line": 691,
+              "line": 706,
               "column": 13
             }
           },
@@ -11346,11 +11368,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 696,
+              "line": 711,
               "column": 12
             },
             "end": {
-              "line": 700,
+              "line": 715,
               "column": 13
             }
           },
@@ -11363,11 +11385,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 705,
+              "line": 720,
               "column": 12
             },
             "end": {
-              "line": 709,
+              "line": 724,
               "column": 13
             }
           },
@@ -11380,11 +11402,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 714,
+              "line": 729,
               "column": 12
             },
             "end": {
-              "line": 718,
+              "line": 733,
               "column": 13
             }
           },
@@ -11397,11 +11419,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 726,
+              "line": 741,
               "column": 12
             },
             "end": {
-              "line": 730,
+              "line": 745,
               "column": 13
             }
           },
@@ -11423,25 +11445,25 @@
           ]
         },
         {
-          "name": "importInk",
-          "description": "Import multiple strokes at the same time also call batch mode.",
+          "name": "pointerEvents",
+          "description": "Send multiple strokes at the same time also call batch mode.",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 756,
+              "line": 771,
               "column": 12
             },
             "end": {
-              "line": 760,
+              "line": 775,
               "column": 13
             }
           },
           "metadata": {},
           "params": [
             {
-              "name": "strokes",
-              "type": "Array.<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array.<Floats>, y: Array.<Floats>, t: Array.<Floats>}>",
-              "description": "Depending of of your users writes the strokes you may or may not activate the gestures. <code>t</code> attribute is optional in the set of strokes but it is highly recommended to pass it for better accuracy.\n\nExample of input :\n````\n    [{\n    \"gesture\": false,\n    \"pointerType\": \"PEN\",\n    \"pointerId\": 1,\n    \"x\": [273, 278, 281],\n    \"y\": [121, 128, 133],\n    \"t\": [3185.7900000000004, 3213.8150000000005, 3222.5350000000003]\n    },{\n    \"gesture\": false,\n    \"pointerType\": \"PEN\",\n    \"pointerId\": 1,\n    \"x\": [173, 178, 181],\n    \"y\": [221, 228, 233],\n    \"t\": [6185.7900000000004, 6213.8150000000005,6222.5350000000003]\n    }]\n````"
+              "name": "events",
+              "type": "{processGestures: Boolean, events: Array.<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array.<Floats>, y: Array.<Floats>, t: Array.<Floats>}>}",
+              "description": "to process (strokes)\nDepending of of your users writes the strokes you may or may not activate the gestures. <code>t</code> attribute is optional in the set of strokes but it is highly recommended to pass it for better accuracy.\n\nExample of input :\n````{\n     \"processGestures\": true,\n     \"events\": [{\n     \"pointerType\": \"PEN\",\n     \"pointerId\": 1,\n     \"x\": [273, 278, 281],\n     \"y\": [121, 128, 133],\n     \"t\": [3185.7900000000004, 3213.8150000000005, 3222.5350000000003]\n     },{\n     \"pointerType\": \"PEN\",\n     \"pointerId\": 1,\n     \"x\": [173, 178, 181],\n     \"y\": [221, 228, 233],\n     \"t\": [6185.7900000000004, 6213.8150000000005,6222.5350000000003]\n     }]\n    }\n````"
             }
           ]
         },
@@ -11451,11 +11473,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 765,
+              "line": 780,
               "column": 12
             },
             "end": {
-              "line": 769,
+              "line": 784,
               "column": 13
             }
           },
@@ -11468,11 +11490,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 775,
+              "line": 790,
               "column": 12
             },
             "end": {
-              "line": 779,
+              "line": 794,
               "column": 13
             }
           },
@@ -11485,11 +11507,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 784,
+              "line": 799,
               "column": 12
             },
             "end": {
-              "line": 790,
+              "line": 805,
               "column": 13
             }
           },
@@ -11506,11 +11528,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 792,
+              "line": 807,
               "column": 12
             },
             "end": {
-              "line": 794,
+              "line": 809,
               "column": 13
             }
           },
@@ -11533,11 +11555,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 806,
+              "line": 821,
               "column": 12
             },
             "end": {
-              "line": 809,
+              "line": 824,
               "column": 13
             }
           },
@@ -12385,11 +12407,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 126,
+          "line": 133,
           "column": 8
         },
         "end": {
-          "line": 811,
+          "line": 826,
           "column": 9
         }
       },
@@ -12402,11 +12424,11 @@
           "description": "The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.",
           "sourceRange": {
             "start": {
-              "line": 196,
+              "line": 203,
               "column": 20
             },
             "end": {
-              "line": 200,
+              "line": 207,
               "column": 21
             }
           },
@@ -12418,11 +12440,11 @@
           "description": "Scheme to use to connect to MyScript Cloud or Server. (https or http)",
           "sourceRange": {
             "start": {
-              "line": 204,
+              "line": 211,
               "column": 20
             },
             "end": {
-              "line": 208,
+              "line": 215,
               "column": 21
             }
           },
@@ -12434,11 +12456,11 @@
           "description": "The current recognition service host.",
           "sourceRange": {
             "start": {
-              "line": 212,
+              "line": 219,
               "column": 20
             },
             "end": {
-              "line": 216,
+              "line": 223,
               "column": 21
             }
           },
@@ -12450,11 +12472,11 @@
           "description": "Cloud API version to use.",
           "sourceRange": {
             "start": {
-              "line": 220,
+              "line": 227,
               "column": 20
             },
             "end": {
-              "line": 224,
+              "line": 231,
               "column": 21
             }
           },
@@ -12466,11 +12488,11 @@
           "description": "Delay without any user input before asking for recognition, only use in REST mode.",
           "sourceRange": {
             "start": {
-              "line": 228,
+              "line": 235,
               "column": 20
             },
             "end": {
-              "line": 232,
+              "line": 239,
               "column": 21
             }
           },
@@ -12482,11 +12504,11 @@
           "description": "Delay without any export received before processing the last one received, only use in WEBSOCKET mode.",
           "sourceRange": {
             "start": {
-              "line": 236,
+              "line": 243,
               "column": 20
             },
             "end": {
-              "line": 240,
+              "line": 247,
               "column": 21
             }
           },
@@ -12498,11 +12520,11 @@
           "description": "True if export should be done on-demand, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 244,
+              "line": 251,
               "column": 20
             },
             "end": {
-              "line": 248,
+              "line": 255,
               "column": 21
             }
           },
@@ -12514,11 +12536,11 @@
           "description": "The recognition timeout, only use in REST mode.",
           "sourceRange": {
             "start": {
-              "line": 252,
+              "line": 259,
               "column": 20
             },
             "end": {
-              "line": 256,
+              "line": 263,
               "column": 21
             }
           },
@@ -12530,11 +12552,11 @@
           "description": "Application key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />\n<b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 262,
+              "line": 269,
               "column": 20
             },
             "end": {
-              "line": 265,
+              "line": 272,
               "column": 21
             }
           },
@@ -12546,11 +12568,11 @@
           "description": "HMAC key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />\n<b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 271,
+              "line": 278,
               "column": 20
             },
             "end": {
-              "line": 274,
+              "line": 281,
               "column": 21
             }
           },
@@ -12562,11 +12584,11 @@
           "description": "Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.\n(see demo/programmatic_init.html for a better understanding)",
           "sourceRange": {
             "start": {
-              "line": 279,
+              "line": 286,
               "column": 20
             },
             "end": {
-              "line": 284,
+              "line": 291,
               "column": 21
             }
           },
@@ -12578,11 +12600,11 @@
           "description": "True if editor is initialized",
           "sourceRange": {
             "start": {
-              "line": 295,
+              "line": 302,
               "column": 20
             },
             "end": {
-              "line": 300,
+              "line": 307,
               "column": 21
             }
           },
@@ -12594,11 +12616,11 @@
           "description": "The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.",
           "sourceRange": {
             "start": {
-              "line": 304,
+              "line": 311,
               "column": 20
             },
             "end": {
-              "line": 307,
+              "line": 314,
               "column": 21
             }
           },
@@ -12610,11 +12632,11 @@
           "description": "Set the additional configuration used to feed MyScript Editor (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)\nConfiguration values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.\nConfiguration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).",
           "sourceRange": {
             "start": {
-              "line": 313,
+              "line": 320,
               "column": 20
             },
             "end": {
-              "line": 316,
+              "line": 323,
               "column": 21
             }
           },
@@ -12626,11 +12648,11 @@
           "description": "Pen color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "sourceRange": {
             "start": {
-              "line": 320,
+              "line": 327,
               "column": 20
             },
             "end": {
-              "line": 323,
+              "line": 330,
               "column": 21
             }
           },
@@ -12642,11 +12664,11 @@
           "description": "Pen width in mm (no other unit is supported yet)",
           "sourceRange": {
             "start": {
-              "line": 327,
+              "line": 334,
               "column": 20
             },
             "end": {
-              "line": 330,
+              "line": 337,
               "column": 21
             }
           },
@@ -12658,11 +12680,11 @@
           "description": "Set the additional penStyle used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultPenStyle.js file)",
           "sourceRange": {
             "start": {
-              "line": 334,
+              "line": 341,
               "column": 20
             },
             "end": {
-              "line": 337,
+              "line": 344,
               "column": 21
             }
           },
@@ -12670,15 +12692,31 @@
           "type": "Object"
         },
         {
+          "name": "penstyleclasses",
+          "description": "Pen style classes",
+          "sourceRange": {
+            "start": {
+              "line": 348,
+              "column": 20
+            },
+            "end": {
+              "line": 352,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
           "name": "themecolor",
           "description": "Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "sourceRange": {
             "start": {
-              "line": 341,
+              "line": 356,
               "column": 20
             },
             "end": {
-              "line": 345,
+              "line": 360,
               "column": 21
             }
           },
@@ -12690,11 +12728,11 @@
           "description": "Width of strokes and primitives in mm (no other unit is supported yet)",
           "sourceRange": {
             "start": {
-              "line": 349,
+              "line": 364,
               "column": 20
             },
             "end": {
-              "line": 353,
+              "line": 368,
               "column": 21
             }
           },
@@ -12706,11 +12744,11 @@
           "description": "Generated items color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "sourceRange": {
             "start": {
-              "line": 357,
+              "line": 372,
               "column": 20
             },
             "end": {
-              "line": 361,
+              "line": 376,
               "column": 21
             }
           },
@@ -12722,11 +12760,11 @@
           "description": "font-family used to render text conversion",
           "sourceRange": {
             "start": {
-              "line": 365,
+              "line": 380,
               "column": 20
             },
             "end": {
-              "line": 369,
+              "line": 384,
               "column": 21
             }
           },
@@ -12738,11 +12776,11 @@
           "description": "Set the additional theme used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultTheme.js file)",
           "sourceRange": {
             "start": {
-              "line": 373,
+              "line": 388,
               "column": 20
             },
             "end": {
-              "line": 376,
+              "line": 391,
               "column": 21
             }
           },
@@ -12754,11 +12792,11 @@
           "description": "If set to true, disable the autoReconnect.",
           "sourceRange": {
             "start": {
-              "line": 417,
+              "line": 432,
               "column": 20
             },
             "end": {
-              "line": 422,
+              "line": 437,
               "column": 21
             }
           },
@@ -12770,11 +12808,11 @@
           "description": "If set to true, hide the buttons (Trash, Undo, Redo).",
           "sourceRange": {
             "start": {
-              "line": 426,
+              "line": 441,
               "column": 20
             },
             "end": {
-              "line": 431,
+              "line": 446,
               "column": 21
             }
           },
@@ -12786,11 +12824,11 @@
           "description": "True if the undo/redo feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 436,
+              "line": 451,
               "column": 20
             },
             "end": {
-              "line": 440,
+              "line": 455,
               "column": 21
             }
           },
@@ -12802,11 +12840,11 @@
           "description": "True if the clear feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 444,
+              "line": 459,
               "column": 20
             },
             "end": {
-              "line": 448,
+              "line": 463,
               "column": 21
             }
           },
@@ -12818,11 +12856,11 @@
           "description": "True if the typeset feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 452,
+              "line": 467,
               "column": 20
             },
             "end": {
-              "line": 456,
+              "line": 471,
               "column": 21
             }
           },
@@ -12834,11 +12872,11 @@
           "description": "True if pointer events listeners is used, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 460,
+              "line": 475,
               "column": 20
             },
             "end": {
-              "line": 464,
+              "line": 479,
               "column": 21
             }
           },
@@ -12850,11 +12888,11 @@
           "description": "Use a custom grammar",
           "sourceRange": {
             "start": {
-              "line": 471,
+              "line": 486,
               "column": 20
             },
             "end": {
-              "line": 475,
+              "line": 490,
               "column": 21
             }
           },
@@ -12866,11 +12904,11 @@
           "description": "Hide the export zone when set to true.",
           "sourceRange": {
             "start": {
-              "line": 479,
+              "line": 494,
               "column": 20
             },
             "end": {
-              "line": 483,
+              "line": 498,
               "column": 21
             }
           },
@@ -12882,11 +12920,11 @@
           "description": "Math export types (LATEX, MATHML or SYMBOLTREE).\n<b>Warning</b>: v3 only, for v4, use mimetypes instead",
           "sourceRange": {
             "start": {
-              "line": 488,
+              "line": 503,
               "column": 20
             },
             "end": {
-              "line": 491,
+              "line": 506,
               "column": 21
             }
           },
@@ -12898,11 +12936,11 @@
           "description": "Math export types (application/x-latex, application/mathml+xml, application/mathofficeXML).",
           "sourceRange": {
             "start": {
-              "line": 495,
+              "line": 510,
               "column": 20
             },
             "end": {
-              "line": 498,
+              "line": 513,
               "column": 21
             }
           },
@@ -12914,11 +12952,11 @@
           "description": "True if the solver feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 502,
+              "line": 517,
               "column": 20
             },
             "end": {
-              "line": 506,
+              "line": 521,
               "column": 21
             }
           },
@@ -12930,11 +12968,11 @@
           "description": "Number of digits displayed in the fractional part of the solver. For example 1/3 will be solved with 0.33333... if solverfractionalpartdigit is set to 5. By default set to 3.",
           "sourceRange": {
             "start": {
-              "line": 510,
+              "line": 525,
               "column": 20
             },
             "end": {
-              "line": 513,
+              "line": 528,
               "column": 21
             }
           },
@@ -12946,11 +12984,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 514,
+              "line": 529,
               "column": 20
             },
             "end": {
-              "line": 517,
+              "line": 532,
               "column": 21
             }
           },
@@ -12962,11 +13000,11 @@
           "description": "'truncate' or 'half up'. By default 'half up' *",
           "sourceRange": {
             "start": {
-              "line": 519,
+              "line": 534,
               "column": 20
             },
             "end": {
-              "line": 522,
+              "line": 537,
               "column": 21
             }
           },
@@ -12978,11 +13016,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 523,
+              "line": 538,
               "column": 20
             },
             "end": {
-              "line": 526,
+              "line": 541,
               "column": 21
             }
           },
@@ -12994,11 +13032,11 @@
           "description": "If attribute is set activate the recognition of columnar operations. V3 only.",
           "sourceRange": {
             "start": {
-              "line": 530,
+              "line": 545,
               "column": 20
             },
             "end": {
-              "line": 533,
+              "line": 548,
               "column": 21
             }
           },
@@ -13010,11 +13048,11 @@
           "description": "List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare. V3 only.",
           "sourceRange": {
             "start": {
-              "line": 537,
+              "line": 552,
               "column": 20
             },
             "end": {
-              "line": 539,
+              "line": 554,
               "column": 21
             }
           },
@@ -13026,11 +13064,11 @@
           "description": "V3 only.",
           "sourceRange": {
             "start": {
-              "line": 541,
+              "line": 556,
               "column": 20
             },
             "end": {
-              "line": 544,
+              "line": 559,
               "column": 21
             }
           },
@@ -13042,11 +13080,11 @@
           "description": "Exports.",
           "sourceRange": {
             "start": {
-              "line": 550,
+              "line": 565,
               "column": 20
             },
             "end": {
-              "line": 553,
+              "line": 568,
               "column": 21
             }
           },
@@ -13058,11 +13096,11 @@
           "description": "True if component is idle",
           "sourceRange": {
             "start": {
-              "line": 557,
+              "line": 572,
               "column": 20
             },
             "end": {
-              "line": 561,
+              "line": 576,
               "column": 21
             }
           },
@@ -13074,11 +13112,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 565,
+              "line": 580,
               "column": 20
             },
             "end": {
-              "line": 569,
+              "line": 584,
               "column": 21
             }
           },
@@ -13090,11 +13128,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 570,
+              "line": 585,
               "column": 20
             },
             "end": {
-              "line": 573,
+              "line": 588,
               "column": 21
             }
           },
@@ -13197,6 +13235,12 @@
           "type": "CustomEvent",
           "name": "penstyle-changed",
           "description": "Fired when the `penstyle` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "penstyleclasses-changed",
+          "description": "Fired when the `penstyleclasses` property changes.",
           "metadata": {}
         },
         {

@@ -1193,11 +1193,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('newest overlay appear on top', function(done) {
         runAfterOpen(overlay1, function() {
           runAfterOpen(overlay2, function() {
-            var styleZ = parseInt(window.getComputedStyle(overlay1).zIndex, 10);
-            var style1Z = parseInt(window.getComputedStyle(overlay2).zIndex, 10);
+            var style1Z = parseInt(window.getComputedStyle(overlay1).zIndex, 10);
+            var style2Z = parseInt(window.getComputedStyle(overlay2).zIndex, 10);
             var bgStyleZ = parseInt(window.getComputedStyle(overlay1.backdropElement).zIndex, 10);
-            assert.isTrue(style1Z > styleZ, 'overlay2 has higher z-index than overlay1');
-            assert.isTrue(styleZ > bgStyleZ, 'overlay1 has higher z-index than backdrop');
+            assert.isAbove(style2Z, style1Z, 'overlay2 above overlay1');
+            assert.isAbove(style2Z, bgStyleZ, 'overlay2 above backdrop');
+            assert.isBelow(style1Z, bgStyleZ, 'overlay1 below backdrop');
+            done();
+          });
+        });
+      });
+
+      test('updating with-backdrop updates z-index', function(done) {
+        runAfterOpen(overlay1, function() {
+          runAfterOpen(overlay2, function() {
+            overlay2.withBackdrop = false;
+            var style1Z = parseInt(window.getComputedStyle(overlay1).zIndex, 10);
+            var style2Z = parseInt(window.getComputedStyle(overlay2).zIndex, 10);
+            var bgStyleZ = parseInt(window.getComputedStyle(overlay1.backdropElement).zIndex, 10);
+            assert.isAbove(style2Z, bgStyleZ, 'overlay2 above backdrop');
+            assert.isAbove(style1Z, bgStyleZ, 'overlay1 below backdrop');
             done();
           });
         });
@@ -1231,20 +1246,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               assert.isTrue(overlay1.opened, 'overlay1 still opened');
               done();
             });
-          });
-        });
-      });
-
-      test('updating with-backdrop updates z-index', function(done) {
-        runAfterOpen(overlay1, function() {
-          runAfterOpen(overlay2, function() {
-            overlay1.withBackdrop = false;
-            var styleZ = parseInt(window.getComputedStyle(overlay1).zIndex, 10);
-            var style1Z = parseInt(window.getComputedStyle(overlay2).zIndex, 10);
-            var bgStyleZ = parseInt(window.getComputedStyle(overlay1.backdropElement).zIndex, 10);
-            assert.isTrue(style1Z > bgStyleZ, 'overlay2 has higher z-index than backdrop');
-            assert.isTrue(styleZ < bgStyleZ, 'overlay1 has lower z-index than backdrop');
-            done();
           });
         });
       });

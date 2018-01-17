@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="true"/>
+
+    <title>Pointer events</title>
+
+    <link rel="stylesheet" href="../examples.css">
+    <style>
+        myscript-common-element {
+            height : 50vh;
+        }
+        textarea {
+            width: 100vw;
+            height: calc(50vh - 58px);
+        }
+
+        #pointerEvents {
+            position: absolute;
+            right: 12px;
+            bottom: 12px;
+        }
+    </style>
+
+    <!-- As web components are not fully support -->
+    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../../../pepjs/dist/pep.min.js"></script>
+    <!-- myscript-common-element is import to be used later -->
+    <link rel="import" href="../../myscript-common-element.html">
+</head>
+
+<body>
+<div>
+<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+<myscript-common-element scheme="https"
+                         host="webdemoapi.myscript.com"
+                         applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+                         hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+                         touch-action="none"
+                         disableconvertcontrol
+                         disableclearcontrol>
+</myscript-common-element>
+<textarea id="pointerEventsObject">{ "processGestures": true, "events": [{
+    "pointerType": "PEN",
+    "pointerId": 1,
+    "x": [273, 278, 281],
+    "y": [121, 128, 133],
+    "t": [3185.7900000000004, 3213.8150000000005, 3222.5350000000003],
+    "p": [1.0, 1.0, 1.0]
+  },{
+    "pointerType": "PEN",
+    "pointerId": 1,
+    "x": [173, 178, 181],
+    "y": [221, 228, 233],
+    "t": [6185.7900000000004, 6213.8150000000005,6222.5350000000003],
+    "p": [1.0, 1.0, 1.0]
+  }]}</textarea>
+<button class="classic-btn" id="pointerEvents">Process</button>
+</div>
+<script>
+    const component = document.querySelector('myscript-common-element');
+    const pointerEventsObjectElement = document.getElementById('pointerEventsObject');
+
+    document.getElementById('pointerEvents').addEventListener('click', function () {
+        const pointerEventsObject = JSON.parse(pointerEventsObjectElement.value);
+        console.log('Pointer events beeing processed', pointerEventsObject);
+        component.pointerEvents(pointerEventsObject);
+    });
+</script>
+</body>
+
+</html>

@@ -14,15 +14,33 @@
         <link rel="stylesheet" href="../examples.css">
         <style>
             nav {
-                height: 60px;
                 display: flex;
-                justify-content: space-between;
+                justify-content: baseline;
                 align-items: center;
-                padding: 0 12px;
+                flex-wrap: wrap;
+                padding: 12px;
             }
 
             nav span {
+                align-items: center;
                 display: flex;
+                flex-wrap: wrap;
+            }
+
+            .flex-item {
+                margin: 12px 12px 0 0;
+            }
+
+            #prompter-css {
+                height: 110px;
+                width: 70%;
+                margin-left: 36px;
+                padding: 24px;
+                position: absolute;
+                bottom: 60px;
+                z-index: 30;
+                border-radius: 6px;
+                background: rgba(240, 240, 240, 0.9);
             }
 
             .hidden {
@@ -32,6 +50,17 @@
             myscript-math-web {
                 height: calc(100% - 60px);
             }
+
+            @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+                myscript-math-web {
+                    height: calc(100vh - 200px);
+                }
+
+                #prompter-css {
+                    position: fixed;
+                    bottom: 12px;
+                }
+            }
         </style>
 
         <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
@@ -39,6 +68,7 @@
         <link rel="import" href="../../../paper-toggle-button/paper-toggle-button.html">
         <link rel="import" href="../../../paper-swatch-picker/paper-swatch-picker.html">
         <link rel="import" href="../../../paper-slider/paper-slider.html">
+        <link rel="import" href="../../../neon-animation/web-animations.html">
         <link rel="import" href="../../myscript-math-web.html">
         <custom-style>
             <style>
@@ -46,9 +76,8 @@
                     --myscript-math-web-exports-color: #FF9917;
                     --myscript-math-web-background: url(https://farm6.staticflickr.com/5526/10976824044_aebaebdb12_z_d.jpg) no-repeat center center / cover;
                     --myscript-math-web-color: #ff7314;
-                    --myscript-text-web-hover-color: #A44200;
-                    --myscript-text-web-focus-color: #D05400;
-                    --myscript-text-web-disabled-color: #FFD7BC;
+                    --myscript-math-web-hover-color: #A44200;
+                    --myscript-math-web-disabled-color: #FFD7BC;
                     --myscript-editor-line-pattern_-_background-image: repeating-linear-gradient(to bottom, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 72px);
                 ;
                     --myscript-math-web-line-pattern_-_background-size: none;
@@ -67,18 +96,23 @@
 
     <body>
         <nav>
-            <span>
+            <paper-toggle-button class="flex-item" id="penstyleclasses" checked>Apply pen style classes (greenThickPen)
+            </paper-toggle-button>
+            <span class="flex-item">
                 <paper-toggle-button id="penenabled">Enable pen color/width</paper-toggle-button>
                 <span id="pensettings" class="hidden">
                     <paper-swatch-picker id="pencolor" color="#ff7314"></paper-swatch-picker>
                     <paper-slider id="penwidth" snaps min="1" max="5" value="2"></paper-slider>
                 </span>
             </span>
-            <select id="theme">
-                <option value="normal-white">Normal white theme</option>
-                <option value="thin-green">Thin green theme</option>
-                <option value="bold-red">Bold red theme</option>
-            </select>
+            <span>
+                <label for="theme" class="flex-item">Theme:</label>
+                <select id="theme" class="flex-item">
+                    <option value="normal-white">Normal white theme</option>
+                    <option value="thin-green">Thin green theme</option>
+                    <option value="bold-red">Bold red theme</option>
+                </select>
+            </span>
         </nav>
         <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
         <myscript-math-web scheme="https"
@@ -88,8 +122,15 @@
                            themewidth="2"
                            themecolor="#FFFFFF"
                            solvercolor="#A8A8A8"
-                           touch-action="none">
+                           touch-action="none"
+                           theme='{".green": {"color": "#00FF00", "-myscript-pen-width": "3"}}'
+                           penstyleclasses="green">
         </myscript-math-web>
+        <div id="prompter-css">
+            <div id="prompter-css-text">
+                Theme or pen style applied will be written here (where component is myscript-math-web).
+            </div>
+        </div>
         <script>
             const themes = [{
                 name: 'normal-white',
@@ -112,6 +153,15 @@
             const penSettings = document.querySelector('#pensettings');
             const penColor = document.querySelector('#pencolor');
             const penWidth = document.querySelector('#penwidth');
+            const penStyleClasses = document.querySelector('#penstyleclasses');
+            const prompterText = document.getElementById('prompter-css-text');
+
+            function updatePrompter(values) {
+                prompterText.innerText = '';
+                values.forEach(function(value) {
+                    prompterText.innerText += `${value[0]} = ${JSON.stringify(value[1])} \n`;
+                });
+            }
 
             document.querySelector('#theme').addEventListener('change', (event) => {
                 const selectedTheme = themes.find(theme => theme.name === event.target.value);
@@ -120,24 +170,42 @@
                     component.themewidth = selectedTheme.width;
                     component.fontsize = selectedTheme.fontsize;
                     component.solvercolor = selectedTheme.resultColor;
+                    updatePrompter([['component.themecolor', selectedTheme.color], ['component.themewidth', selectedTheme.width], ['component.fontsize', selectedTheme.fontsize], ['component.solvercolor', selectedTheme.resultColor]]);
                 }
             });
+
             document.querySelector('#penenabled').addEventListener('change', (event) => {
                 if (event.target.checked) {
                     penSettings.classList.remove('hidden');
                     component.pencolor = penColor.color;
                     component.penwidth = penWidth.value;
+                    updatePrompter([['component.pencolor', penColor.color], ['component.penwidth', penWidth.value]]);
                 } else {
                     penSettings.classList.add('hidden');
                     component.pencolor = undefined;
                     component.penwidth = undefined;
+                    updatePrompter([['component.pencolor', undefined], ['component.penwidth', undefined]]);
                 }
             });
+
             penColor.addEventListener('color-changed', (event) => {
                 component.pencolor = event.target.color;
+                updatePrompter([['component.pencolor', event.target.color]])
             });
+
             penWidth.addEventListener('change', (event) => {
                 component.penwidth = event.target.value;
+                updatePrompter([['component.pencolor', event.target.value]])
+            });
+
+            penStyleClasses.addEventListener('change', (event) => {
+                if (event.target.checked) {
+                    component.penstyleclasses = 'green';
+                    updatePrompter([['component.penstyleclasses ', 'green']]);
+                } else {
+                    component.penstyleclasses = '';
+                    updatePrompter([['component.penstyleclasses', '']]);
+                }
             });
         </script>
     </body>

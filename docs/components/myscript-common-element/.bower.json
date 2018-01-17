@@ -37,6 +37,7 @@
     "paper-fab": "^2.0.0",
     "paper-toast": "^2.0.0",
     "paper-button": "^2.0.0",
+    "web-animations-js": "^2.3.1",
     "pepjs": "^0.4.3"
   },
   "devDependencies": {
@@ -46,11 +47,11 @@
     "paper-toggle-button": "^2.0.0",
     "paper-slider": "^2.0.2"
   },
-  "_release": "39adc7c089",
+  "_release": "1c75efa6d7",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "39adc7c08927410ada9e4315a664d6910ec5566b"
+    "commit": "1c75efa6d76fc51696a76c4850eeffa4ff445f0d"
   },
   "_source": "https://github.com/MyScript/myscript-common-element.git",
   "_target": "master",

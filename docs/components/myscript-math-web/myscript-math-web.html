@@ -37,6 +37,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             :host {
                 --myscript-math-web-background: var(--myscript-editor-background);
                 --myscript-math-web-color: var(--myscript-editor-color);
+                --myscript-math-web-hover-color: var(--myscript-editor-hover-color);
+                --myscript-math-web-focus-color: var(--myscript-editor-focus-color);
+                --myscript-math-web-disabled-color: var(--myscript-editor-disabled-color);
                 --myscript-math-web-line-pattern: var(--myscript-editor-line-pattern);
                 --myscript-math-web-capture-background: var(--myscript-editor-capture-background);
                 --myscript-math-web-button-background: var(--myscript-editor-button-background);
@@ -67,6 +70,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             myscript-common-element {
                 --myscript-common-element-background: var(--myscript-math-web-background);
                 --myscript-common-element-color: var(--myscript-math-web-color);
+                --myscript-common-element-hover-color: var(--myscript-math-web-hover-color);
+                --myscript-common-element-focus-color: var(--myscript-math-web-focus-color);
+                --myscript-common-element-disabled-color: var(--myscript-math-web-disabled-color);
                 --myscript-common-element-line-pattern: var(--myscript-math-web-line-pattern);
                 --myscript-common-element-capture-background: var(--myscript-math-web-capture-background);
                 --myscript-common-element-button-background: var(--myscript-math-web-button-background);
@@ -107,6 +113,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             pencolor="[[ pencolor ]]"
             penwidth="[[ penwidth ]]"
             penstyle="[[ penstyle ]]"
+            penstyleclasses="[[ penstyleclasses ]]"
             themecolor="[[ themecolor ]]"
             themewidth="[[ themewidth ]]"
             theme="[[ commontheme ]]"
@@ -334,6 +341,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                      */
                     penstyle: {
                         type: Object,
+                        notify: true
+                    },
+                    /**
+                     * Pen style classes
+                     */
+                    penstyleclasses: {
+                        type: String,
+                        value: '',
                         notify: true
                     },
                     /**
@@ -731,32 +746,32 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             }
 
             /**
-             * Import multiple strokes at the same time also call batch mode.
-             * @param {Array<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array<Floats>, y: Array<Floats>, t: Array<Floats>}>} strokes
+             * Send multiple strokes at the same time also call batch mode.
+             * @param {{processGestures: Boolean, events: Array<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array<Floats>, y: Array<Floats>, t: Array<Floats>}>}} events to process (strokes)
              * Depending of of your users writes the strokes you may or may not activate the gestures. <code>t</code> attribute is optional in the set of strokes but it is highly recommended to pass it for better accuracy.
              *
              * Example of input :
-             * ````
-             *     [{
-             *     "gesture": false,
-             *     "pointerType": "PEN",
-             *     "pointerId": 1,
-             *     "x": [273, 278, 281],
-             *     "y": [121, 128, 133],
-             *     "t": [3185.7900000000004, 3213.8150000000005, 3222.5350000000003]
-             *     },{
-             *     "gesture": false,
-             *     "pointerType": "PEN",
-             *     "pointerId": 1,
-             *     "x": [173, 178, 181],
-             *     "y": [221, 228, 233],
-             *     "t": [6185.7900000000004, 6213.8150000000005,6222.5350000000003]
-             *     }]
+             * ````{
+             *      "processGestures": true,
+             *      "events": [{
+             *      "pointerType": "PEN",
+             *      "pointerId": 1,
+             *      "x": [273, 278, 281],
+             *      "y": [121, 128, 133],
+             *      "t": [3185.7900000000004, 3213.8150000000005, 3222.5350000000003]
+             *      },{
+             *      "pointerType": "PEN",
+             *      "pointerId": 1,
+             *      "x": [173, 178, 181],
+             *      "y": [221, 228, 233],
+             *      "t": [6185.7900000000004, 6213.8150000000005,6222.5350000000003]
+             *      }]
+             *     }
              * ````
              */
-            importInk(strokes) {
+            pointerEvents(events) {
                 if (this.editor) {
-                    this.editor.importInk(strokes);
+                    this.editor.pointerEvents(events);
                 }
             }
 

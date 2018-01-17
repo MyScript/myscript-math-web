@@ -90,14 +90,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <demo-snippet>
     <template>
       <button onclick="multiple.open()">Open first overlay</button>
-      <simple-overlay id="multiple" tabindex=-1>
+      <simple-overlay id="multiple" tabindex=-1 with-backdrop>
         <p>click to open another overlay</p>
         <button onclick="multiple2.open()">Open second overlay</button>
         <button onclick="multiple.close()">Close this</button>
       </simple-overlay>
-      <simple-overlay id="multiple2" tabindex=-1>
-        <h2>Hi!</h2>
+      <simple-overlay id="multiple2" tabindex=-1 with-backdrop>
+        <button onclick="multiple3.open()">Open third overlay</button>
         <button onclick="multiple2.close()">Close</button>
+      </simple-overlay>
+      <simple-overlay id="multiple3" tabindex=-1>
+        <h2>Hello!</h2>
+        <button onclick="multiple3.close()">Close</button>
       </simple-overlay>
     </template>
   </demo-snippet>

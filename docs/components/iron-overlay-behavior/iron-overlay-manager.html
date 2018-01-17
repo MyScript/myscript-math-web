@@ -253,12 +253,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     /**
-     * Returns the first opened overlay that has a backdrop.
+     * Returns the top opened overlay that has a backdrop.
      * @return {Element|undefined}
      * @private
      */
     _overlayWithBackdrop: function() {
-      for (var i = 0; i < this._overlays.length; i++) {
+      for (var i = this._overlays.length - 1; i >= 0; i--) {
         if (this._overlays[i].withBackdrop) {
           return this._overlays[i];
         }
