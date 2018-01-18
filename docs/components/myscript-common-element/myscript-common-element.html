@@ -952,13 +952,12 @@ CSS variable | Default
 
             /**
              * Import content
-             * @param {{x: Number, y: Number}} point Insert point coordinates
              * @param {Blob|*} data Data to import
              * @param {String} [mimetype] Mimetype of the data, needed if data is not a Blob
              */
-            importContent(point, data, mimetype) {
+            import_(data, mimetype) {
                 if (this.editor) {
-                    this.editor.importContent(point, data, mimetype);
+                    this.editor.import_(data, mimetype);
                 }
             }
 

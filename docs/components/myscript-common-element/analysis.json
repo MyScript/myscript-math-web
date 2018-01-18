@@ -1026,26 +1026,21 @@
           "params": []
         },
         {
-          "name": "importContent",
+          "name": "import_",
           "description": "Import content",
-          "privacy": "public",
+          "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 958,
+              "line": 957,
               "column": 12
             },
             "end": {
-              "line": 962,
+              "line": 961,
               "column": 13
             }
           },
           "metadata": {},
           "params": [
-            {
-              "name": "point",
-              "type": "{x: Number, y: Number}",
-              "description": "Insert point coordinates"
-            },
             {
               "name": "data",
               "type": "(Blob|*)",
@@ -1062,11 +1057,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 988,
+              "line": 987,
               "column": 12
             },
             "end": {
-              "line": 992,
+              "line": 991,
               "column": 13
             }
           },
@@ -1085,11 +1080,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 997,
+              "line": 996,
               "column": 12
             },
             "end": {
-              "line": 1001,
+              "line": 1000,
               "column": 13
             }
           },
@@ -1102,11 +1097,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 1007,
+              "line": 1006,
               "column": 12
             },
             "end": {
-              "line": 1011,
+              "line": 1010,
               "column": 13
             }
           },
@@ -1119,11 +1114,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 1013,
+              "line": 1012,
               "column": 12
             },
             "end": {
-              "line": 1018,
+              "line": 1017,
               "column": 13
             }
           },
@@ -1149,11 +1144,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 1020,
+              "line": 1019,
               "column": 12
             },
             "end": {
-              "line": 1025,
+              "line": 1024,
               "column": 13
             }
           },
@@ -1179,11 +1174,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 1027,
+              "line": 1026,
               "column": 12
             },
             "end": {
-              "line": 1032,
+              "line": 1031,
               "column": 13
             }
           },
@@ -1203,11 +1198,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 1034,
+              "line": 1033,
               "column": 12
             },
             "end": {
-              "line": 1038,
+              "line": 1037,
               "column": 13
             }
           },
@@ -1224,11 +1219,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 1040,
+              "line": 1039,
               "column": 12
             },
             "end": {
-              "line": 1061,
+              "line": 1060,
               "column": 13
             }
           },
@@ -1278,7 +1273,7 @@
           "column": 8
         },
         "end": {
-          "line": 1062,
+          "line": 1061,
           "column": 9
         }
       },

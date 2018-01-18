@@ -343,10 +343,8 @@ Custom property | Description | Default
       this.bindValue = value;
       this.$.mirror.innerHTML = this._valueForMirror();
 
-      // This code is from early 1.0, when this element was a type extension.
-      // It's unclear if it's still needed, but leaving in in case it is.
-      // manually notify because we don't want to notify until after setting value.
-      // this.fire('bind-value-changed', {value: this.bindValue});
+      // Manually notify because we don't want to notify until after setting value.
+      this.fire('bind-value-changed', {value: this.bindValue});
     },
 
     _onInput: function(event) {
