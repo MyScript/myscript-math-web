@@ -11397,9 +11397,9 @@
           "params": []
         },
         {
-          "name": "exportContent",
+          "name": "export_",
           "description": "Launch export",
-          "privacy": "public",
+          "privacy": "private",
           "sourceRange": {
             "start": {
               "line": 729,

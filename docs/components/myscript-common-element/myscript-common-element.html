@@ -633,9 +633,11 @@ CSS variable | Default
             _changedListener(event) {
                 if (event.detail) {
                     this.initialized = event.detail.initialized;
-                    console.log(event.detail.isEmpty);
-                    this.canclear = event.detail.isEmpty ? !event.detail.isEmpty : event.detail.canClear;
-                    console.log(this.canclear);
+                    if (event.detail.isEmpty !== undefined) {
+                        this.canclear = !event.detail.isEmpty;
+                    } else {
+                        this.canclear = event.detail.canClear;
+                    }
                     this.canundo = event.detail.canUndo;
                     this.canredo = event.detail.canRedo;
                     this.canexport = event.detail.canExport;
@@ -651,8 +653,6 @@ CSS variable | Default
 
             _exportedListener(event) {
                 this.exports = event.detail ? event.detail.exports : {};
-                if (this.apiversion === 'V4')
-                    this.canclear = this.exports[Object.keys(this.exports)[0]] !== '';
             }
 
             _errorListener(event) {
@@ -949,9 +949,9 @@ CSS variable | Default
             /**
              * Trigger export
              */
-            exportContent() {
+            export_() {
                 if (this.editor) {
-                    this.editor.exportContent();
+                    this.editor.export_();
                 }
             }
 

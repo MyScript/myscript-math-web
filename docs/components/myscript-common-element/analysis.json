@@ -801,7 +801,7 @@
               "column": 12
             },
             "end": {
-              "line": 643,
+              "line": 645,
               "column": 13
             }
           },
@@ -818,11 +818,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 645,
+              "line": 647,
               "column": 12
             },
             "end": {
-              "line": 649,
+              "line": 651,
               "column": 13
             }
           },
@@ -839,7 +839,7 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 651,
+              "line": 653,
               "column": 12
             },
             "end": {
@@ -1009,9 +1009,9 @@
           "params": []
         },
         {
-          "name": "exportContent",
+          "name": "export_",
           "description": "Trigger export",
-          "privacy": "public",
+          "privacy": "private",
           "sourceRange": {
             "start": {
               "line": 951,
