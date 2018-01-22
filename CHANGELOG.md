@@ -1,4 +1,16 @@
-# [v4.0.2](https://github.com/MyScript/myscript-math-web/tree/v4.0.2)
+# v4.1.0
+
+## Features
+- Custom resources / grammar support, upload your custom grammar to modify the recognition behaviour (see the [example](./examples/v4/custom_resources.html)).
+- New `penStyleClasses` property. Used to change the theme using classes passed using the `theme` property (see the [example](./examples/non-version-specific/customize_style.html)).
+- No more css background if api is set to `V4`.
+- No more STIX font import needed as the font is now rendered by the server.
+- New `usepointerlisteners` property used to force the pointer events use.
+
+## Breaking changes
+In order to be consistent with the native API :
+- `importContent()` and `exportContent()` respectively renamed to `import_()` and `export_()`.
+- `importInk(strokes)` changed to `pointerEvents(events)`.
 
 ## Bug fixed
 
