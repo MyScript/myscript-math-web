@@ -19,8 +19,7 @@ addons:
       - google-chrome-stable
   sauce_connect: true
 script:
-  - xvfb-run polymer test -l chrome
-  - xvfb-run polymer test -l firefox
+  - polymer test -l chrome -l firefox
   - >-
     if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test -s 'default';
     fi

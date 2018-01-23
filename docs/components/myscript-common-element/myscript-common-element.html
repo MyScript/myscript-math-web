@@ -417,6 +417,20 @@ CSS variable | Default
                         notify: true
                     },
                     /**
+                     * Number of operations that it is currently possible to undo.
+                     */
+                    possibleUndoCount: {
+                        type: Number,
+                        value: 0,
+                    },
+                    /**
+                     * The position of the cursor identifying the current state in the internal iink undo/redo stack.
+                     */
+                    undoStackIndex: {
+                        type: Number,
+                        value: 0,
+                    },
+                    /**
                      * If set to true, disable the autoReconnect.
                      */
                     disableautoreconnect: {
@@ -642,6 +656,8 @@ CSS variable | Default
                     this.canredo = event.detail.canRedo;
                     this.canexport = event.detail.canExport;
                     this.canconvert = event.detail.canConvert;
+                    this.possibleUndoCount = event.detail.possibleUndoCount;
+                    this.undoStackIndex = event.detail.undoStackIndex;
                 }
             }
 
@@ -664,6 +680,7 @@ CSS variable | Default
             }
 
             _attachGrabber(element, editor) {
+                let firstPointerDown = true;
                 let mMaxDiffX = 0;
                 let smartGuidePointerDown = false;
                 let downSmartGuidePoint = null;
@@ -705,7 +722,15 @@ CSS variable | Default
                     return false;
                 };
 
+                const downText = () => {
+                    this.logger.debug('down on prompter text');
+                };
+
                 const pointerDownHandler = (evt) => { // Trigger a pointerDown
+                    if (firstPointerDown) {
+                        Polymer.Gestures.addListener(editor.smartGuide.elements.textContainer, 'down', downText);
+                    }
+                    firstPointerDown = false;
                     patchPointerEvent(evt);
                     const pointerDownOnEditor = evt.target.id === editor.domElement.id || evt.target.classList.contains('ms-canvas');
                     if (this.activePointerId) {

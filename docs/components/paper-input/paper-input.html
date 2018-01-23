@@ -161,7 +161,7 @@ Custom property | Description | Default
 
       <slot name="prefix" slot="prefix"></slot>
 
-      <label hidden$="[[!label]]" aria-hidden="true" for="input" slot="label">[[label]]</label>
+      <label hidden$="[[!label]]" aria-hidden="true" for$="[[_inputId]]" slot="label">[[label]]</label>
 
       <span id="template-placeholder"></span>
 
@@ -183,7 +183,9 @@ Custom property | Description | Default
     Expect some conditional code (especially in the tests).
    -->
   <template id="v0">
-    <input is="iron-input" id="input" slot="input"
+    <input is="iron-input" slot="input"
+        class="input-element"
+        id$="[[_inputId]]"
         aria-labelledby$="[[_ariaLabelledBy]]"
         aria-describedby$="[[_ariaDescribedBy]]"
         disabled$="[[disabled]]"
@@ -221,12 +223,14 @@ Custom property | Description | Default
 
   <template id="v1">
     <!-- Need to bind maxlength so that the paper-input-char-counter works correctly -->
-    <iron-input bind-value="{{value}}" id="input" slot="input"
+    <iron-input bind-value="{{value}}" slot="input"
+        class="input-element"
+        id$="[[_inputId]]"
         maxlength$="[[maxlength]]"
         allowed-pattern="[[allowedPattern]]"
         invalid="{{invalid}}"
         validator="[[validator]]">
-      <input id="nativeInput"
+      <input
         aria-labelledby$="[[_ariaLabelledBy]]"
         aria-describedby$="[[_ariaDescribedBy]]"
         disabled$="[[disabled]]"
@@ -302,6 +306,11 @@ Custom property | Description | Default
     },
 
     _onIronInputReady: function() {
+      // Even though this is only used in the next line, save this for
+      // backwards compatibility, since the native input had this ID until 2.0.5.
+      if (!this.$.nativeInput) {
+        this.$.nativeInput = this.$$('input');
+      }
       if (this.inputElement &&
           this._typesThatHaveText.indexOf(this.$.nativeInput.type) !== -1) {
         this.alwaysFloatLabel = true;
