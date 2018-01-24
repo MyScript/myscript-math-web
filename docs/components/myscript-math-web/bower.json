@@ -34,7 +34,7 @@
   ],
   "dependencies": {
     "polymer": "^2.0.1",
-    "myscript-common-element": "master",
+    "myscript-common-element": "4.1.x",
     "KaTeX": "katex#^0.8.3"
   },
   "devDependencies": {

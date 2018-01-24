@@ -31,7 +31,7 @@
     "!examples/**/*"
   ],
   "dependencies": {
-    "myscript": "master",
+    "myscript": "4.1.x",
     "polymer": "^2.0.1",
     "iron-resizable-behavior": "^2.0.1",
     "paper-fab": "^2.0.0",
@@ -47,13 +47,14 @@
     "paper-toggle-button": "^2.0.0",
     "paper-slider": "^2.0.2"
   },
-  "_release": "01c28b0058",
+  "version": "4.1.0",
+  "_release": "4.1.0",
   "_resolution": {
-    "type": "branch",
-    "branch": "master",
-    "commit": "01c28b0058388bc78368cdfd67cdeb9e066cfff4"
+    "type": "version",
+    "tag": "v4.1.0",
+    "commit": "7fad0bb56bd2664b68df80f499ea518bd03f86eb"
   },
   "_source": "https://github.com/MyScript/myscript-common-element.git",
-  "_target": "master",
+  "_target": "4.1.x",
   "_originalSource": "myscript-common-element"
 }
