@@ -12375,16 +12375,16 @@
           "description": "Customize style [V4]"
         },
         {
+          "url": "examples/v4/custom_resources.html",
+          "description": "Use a custom grammar [V4]"
+        },
+        {
           "url": "examples/non-version-specific/custom_controls.html",
           "description": "Redefining the controls [V4]"
         },
         {
           "url": "examples/non-version-specific/interact_with_your_app.html",
           "description": "Answering a math question [V4]"
-        },
-        {
-          "url": "examples/v4/import_content.html",
-          "description": "Import content [V4]"
         },
         {
           "url": "examples/v4/solver_tuned.html",
