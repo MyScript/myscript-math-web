@@ -1,4 +1,9 @@
-# v4.1.0
+# v4.1.1
+
+## Bugs fixed
+- Documentation and paper buttons colors were not taken into account in Edge.
+
+# [v4.1.0](https://github.com/MyScript/myscript-math-web/tree/v4.1.0)
 
 ## Features
 - Custom resources / grammar support, upload your custom grammar to modify the recognition behaviour (see the [example](./examples/v4/custom_resources.html)).

@@ -109,10 +109,18 @@ CSS variable | Default
                 width: 100%;
             }
 
-            .ms-editor canvas.ms-rendering-canvas,
+            .ms-editor canvas.ms-rendering-canvas {
+                z-index: 10;
+                pointer-events: none;
+            }
+
             .ms-editor svg {
                 z-index: 10;
                 pointer-events: none;
+            }
+
+            .ms-editor svg[data-layer="BACKGROUND"] {
+                z-index: 9;
             }
 
             .error-msg {

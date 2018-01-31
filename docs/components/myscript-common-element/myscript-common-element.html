@@ -51,6 +51,11 @@ CSS variable | Default
                 --myscript-common-element-loader: var(--myscript-editor-loader);
                 --myscript-common-element-error: var(--myscript-editor-error);
 
+                --paper-fab-background: #1A9FFF;
+                --paper-fab-keyboard-focus-background: #1A9FFF;
+                --paper-fab-disabled-background: #F5F6F7;
+                --paper-fab-disabled-text: #dcdee0;
+
                 --paper-fab: {
                     margin: 6px;
                     box-sizing: border-box;
@@ -741,6 +746,7 @@ CSS variable | Default
                         if (!hideMenu(evt) && !hideCandidates(evt)) {
                             this.activePointerId = evt.pointerId;
                             unFocus();
+                            evt.preventDefault();
                             evt.stopPropagation();
                             editor.pointerDown(MyScriptCommonElement._extractPoint(evt, element, editor.configuration), evt.pointerType, evt.pointerId);
                         }
@@ -772,13 +778,14 @@ CSS variable | Default
                             // Hack for iOS 9 Safari : pointerId has to be int so -1 if > max value
                             const pointerId = evt.pointerId > 2147483647 ? -1 : evt.pointerId;
                             unFocus();
+                            evt.preventDefault();
                             editor.pointerDown(downSmartGuidePoint, evt.pointerType, pointerId);
                         }
                     }
                 };
 
                 const polymerPointerMoveHandler = (evt) => { // Trigger a pointerMove
-
+                    console.log(evt);
                     const checkHover = (evt) => {
                         const smartGuideIds = ['smartguide', 'prompter-text-container', 'prompter-text', 'tag-icon', 'ellipsis'];
                         const scrollbarClasses = ['ps__rail-x', 'ps__thumb-x'];
