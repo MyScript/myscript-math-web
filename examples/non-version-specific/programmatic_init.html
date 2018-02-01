@@ -39,10 +39,18 @@
                 // Testing if options are taken into account
                 mathElement.configuration = {
                     recognitionParams: {
-                        timestampFloatPrecision: 2
+                        timestampFloatPrecision: 2,
+                        v4: {
+                            export: {
+                                jiix: {
+                                    'bounding-box': true,
+                                    'strokes': true
+                                }
+                            }
+                        }
                     }
                 };
-                mathElement.mimetypes = ['application/x-latex'];
+                mathElement.mimetypes = ['application/vnd.myscript.jiix'];
                 mathElement.unloaded = false;
             });
         </script>
