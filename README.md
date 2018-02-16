@@ -1,26 +1,56 @@
-:pencil: The easy way to integrate mathematical expressions handwriting recognition in your web app.
+# MyScript Math Web
+> The easy way to integrate mathematical expressions handwriting recognition in your web app.
 
 <p align="center">
   <img src="preview.gif">
 </p>
  
-<a style="text-align:center; font-size:150%;" href="https://myscript.github.io/myscript-math-web/components/myscript-math-web/examples/">Test it live</a>
+`myscript-math-web` is a Web component that can be used in every web application to bring mathematical handwriting recognition and conversion. 
 
-
-## What is it about?
-
-myscript-math-web is a web component that can be used in every web application to bring handwriting recognition and conversion. It integrates all you need:  
-* Signal capture,
+It integrates all you need:  
+* Signal capture for all devices,
 * Digital ink rendering,
+* Link to MyScript Cloud to bring handwriting recognition.
+
+## Table of contents
+
+* [Examples](https://github.com/MyScript/myscript-math-web#examples)
+* [Features](https://github.com/MyScript/myscript-math-web#features)
+* [Requirements](https://github.com/MyScript/myscript-math-web#requirements)
+* [Installation](https://github.com/MyScript/myscript-math-web#installation)
+* [Usage](https://github.com/MyScript/myscript-math-web#usage)
+* [Documentation](https://github.com/MyScript/myscript-math-web#documentation)
+* [Support](https://github.com/MyScript/myscript-math-web#support)
+* [Feedback](https://github.com/MyScript/myscript-math-web#sharing-your-feedback)
+* [Contributing](https://github.com/MyScript/myscript-math-web#contributing)
+
+
+## Examples
+
+If you're not familiar with MyScript and Interactive Ink, consider discovering its major features with our [math demo](http://webdemo.myscript.com/views/math.html).
+
+You can find on our examples page a [simple example](https://myscript.github.io/myscript-math-web/components/myscript-math-web/#/elements/myscript-math-web/demos/get-started-[v4]) of `myscript-math-web`. 
+
+We also provide several examples to show the features of `myscript-math-web`. Those examples can be found on our [examples page](https://myscript.github.io/myscript-math-web/components/myscript-math-web/#/elements/myscript-math-web/demos/other-examples) with the source codes in [this directory](https://github.com/MyScript/myscript-math-web/tree/master/examples).
+
+
+## Features
+
+* Easy to integrate,
+* Digital ink capture and rendering,
 * Rich editing gestures,
-* Conversion,
-* Exports (LaTex and MathML).
+* Content export,
+* Styling,
+* Typeset support,
+* More than 200 mathematical symbols supported.
 
-## Getting started
+You can discover all the math features on our [Developer website](https://developer.myscript.com/math).
 
-### Prerequisites
+
+## Requirements
 
 1. Have [bower](https://bower.io/#install-bower) installed.
+2. Have a MyScript developer account. You can create one [here](https://dev.myscript.com/).
 2. Get your keys and the free monthly quota to access MyScript Cloud at [developer.myscript.com](https://developer.myscript.com)
  
 ## Installation
@@ -29,46 +59,90 @@ myscript-math-web is a web component that can be used in every web application t
 ```shell
 bower install myscript-math-web
 ```
-2. Create and edit `index.html` file in the same directory. Add the following line in the head section to import the library.  
+
+## Usage
+
+1. Create an `index.html` file in the same directory. 
+
+2. Add the following lines in the `head` section to import the library and the webcomponents polyfill.
 ```html
-<!-- Load the webcomponent polyfill -->
-<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-<!-- Load myscript-math-web and the related librairies -->
 <link rel="import" href="bower_components/myscript-math-web/myscript-math-web.html">
+<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 ```  
-3. Use the component in the `body` section. Use the keys you received by mail.  
+
+3. Still in the `head` section, add the following style:
+```html
+<style>
+    myscript-math-web {
+        height: 100%;
+    }
+</style>
+```
+
+4. Use the component in the `body` section with the keys you received by mail.  
 ```html
 <myscript-math-web
-  applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
-  hmackey="YOUR MYSCRIPT CDK HMAC KEY">
+  applicationkey="YOUR MYSCRIPT DEVELOPER APPLICATION KEY"
+  hmackey="YOUR MYSCRIPT DEVELOPER HMAC KEY">
 </myscript-math-web>
 ```
-4. Launch a local web-server and use it!
 
+5. Your `index.html` file should look like this:
+```html
+<html>
+    <head>
+        <link rel="import" href="bower_components/myscript-math-web/myscript-math-web.html">
+        <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+        <style>
+            myscript-math-web {
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+      <myscript-math-web
+        applicationkey="YOUR MYSCRIPT DEVELOPER APPLICATION KEY"
+        hmackey="YOUR MYSCRIPT DEVELOPER HMAC KEY">
+      </myscript-math-web>
+    </body>
+</html>
+```
 
-## Examples
+6. Launch a local Web server like the one below and open the page in your browser (at [0.0.0.0:8000](http://0.0.0.0:8000) if you used the one below) to start using it!
+```
+python -m SimpleHTTPServer
+```
 
-Browse [the examples hosted on github.io](https://myscript.github.io/myscript-math-web/components/myscript-math-web/).
+You can find this guide and a more complete example on the [MyScript Developer website](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/math-element/get-started/).
 
-The [directory examples/](/examples) of this Git repository contains all the example source codes. 
 
 ## Documentation
 
-A complete guide is available on [MyScript Developer website](https://developer.myscript.com/docs/interactive-ink/1.0/web/web-components/math-element/).
+You can find a complete documentation with the following sections on our Developer website:
 
-The API Reference is available in the `docs` directory or on [myscript.github.io/myscript-math-web/ website](https://myscript.github.io/myscript-math-web/).
+* **Get Started**: [how to use myscript-math-web with a full example](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/math-element/get-started/),
+* **Editing**: [how to interact with content](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/math-element/editing/),
+* **Conversion**: [how to convert your handwritten content](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/math-element/conversion/),
+* **Export content**: [how to export your content](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/math-element/import-and-export/),
+* **Styling**: [how to style content](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/math-element/styling/).
 
-## Contribute
+We also provide a complete [API Reference](https://myscript.github.io/myscript-math-web/components/myscript-math-web/#/elements/myscript-math-web).
 
-We welcome your contributions:
-If you wish to contribute to myscript-math-web, feel free to fork it!
-Please sign our [Contributor License Agreement](CONTRIBUTING.md) before submitting your pull request.
+## Getting support
 
-## Share your feedback
+You can get support and ask your questions on the [dedicated section](https://developer-support.myscript.com/support/discussions/forums/16000096021) of MyScript Developer website.
 
-Made a cool app with myscript-math-web? We would love to hear about you!
+## Sharing your feedback
+
+Made a cool app with `myscript-math-web`? We would love to hear about you!
 We’re planning to showcase apps using it so let us know by sending a quick mail to [myapp@myscript.com](mailto://myapp@myscript.com)
+
+## Contributing
+
+We welcome your contributions: if you wish to contribute to `myscript-math-web`, feel free to fork it!
+
+Please take a look at our [contributing](CONTRIBUTING.md) guidelines before submitting your pull request.
 
 ## License
 
-[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+This library is licensed under the [Apache 2.0](http://opensource.org/licenses/Apache-2.0).
