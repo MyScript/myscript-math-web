@@ -746,12 +746,11 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 
             /**
              * Send multiple strokes at the same time also call batch mode.
-             * @param {{processGestures: Boolean, events: Array<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array<Floats>, y: Array<Floats>, t: Array<Floats>}>}} events to process (strokes)
+             * @param {{events: Array<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array<Floats>, y: Array<Floats>, t: Array<Floats>}>}} events to process (strokes)
              * Depending of of your users writes the strokes you may or may not activate the gestures. <code>t</code> attribute is optional in the set of strokes but it is highly recommended to pass it for better accuracy.
              *
              * Example of input :
              * ````{
-             *      "processGestures": true,
              *      "events": [{
              *      "pointerType": "PEN",
              *      "pointerId": 1,
