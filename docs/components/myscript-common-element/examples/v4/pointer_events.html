@@ -46,7 +46,7 @@
                          disableconvertcontrol
                          disableclearcontrol>
 </myscript-common-element>
-<textarea id="pointerEventsObject">{ "processGestures": true, "events": [{
+<textarea id="pointerEventsObject">{ "events": [{
     "pointerType": "PEN",
     "pointerId": 1,
     "x": [128, 125, 122, 119, 118, 117, 116, 117, 119, 123, 127, 135, 139, 141, 144, 144, 143, 142, 141, 142],
@@ -69,7 +69,7 @@
 
     document.getElementById('pointerEvents').addEventListener('click', function () {
         const pointerEventsObject = JSON.parse(pointerEventsObjectElement.value);
-        console.log('Pointer events beeing processed', pointerEventsObject);
+        console.log('Pointer events being processed', pointerEventsObject);
         component.pointerEvents(pointerEventsObject);
     });
 </script>

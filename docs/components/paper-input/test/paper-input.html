@@ -190,6 +190,63 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }, 1);
       });
 
+      test('setting the value to the empty string unfloats the label', function(done) {
+        var input = fixture('basic');
+
+        // Mutation observer is async, so wait one tick.
+        Polymer.Base.async(function() {
+          // Initially the value isn't floating.
+          assert.equal(getFloatingLabel(input), null);
+
+          // The label is floating if it has a value.
+          input.value = 'foobar';
+          assert.ok(getFloatingLabel(input));
+
+          // The label isn't floating if it gets reset.
+          input.value = '';
+          assert.equal(getFloatingLabel(input), null);
+          done();
+        }, 1);
+      });
+
+      test('setting the value to null unfloats the label', function(done) {
+        var input = fixture('basic');
+
+        // Mutation observer is async, so wait one tick.
+        Polymer.Base.async(function() {
+          // Initially the value isn't floating.
+          assert.equal(getFloatingLabel(input), null);
+
+          // The label is floating if it has a value.
+          input.value = 'foobar';
+          assert.ok(getFloatingLabel(input));
+
+          // The label isn't floating if it gets reset.
+          input.value = null;
+          assert.equal(getFloatingLabel(input), null);
+          done();
+        }, 1);
+      });
+
+      test('setting the value to undefined unfloats the label', function(done) {
+        var input = fixture('basic');
+
+        // Mutation observer is async, so wait one tick.
+        Polymer.Base.async(function() {
+          // Initially the value isn't floating.
+          assert.equal(getFloatingLabel(input), null);
+
+          // The label is floating if it has a value.
+          input.value = 'foobar';
+          assert.ok(getFloatingLabel(input));
+
+          // The label isn't floating if it gets reset.
+          input.value = undefined;
+          assert.equal(getFloatingLabel(input), null);
+          done();
+        }, 1);
+      });
+
       test('always-float-label attribute works without placeholder', function() {
         var input = fixture('always-float-label');
         var container = Polymer.dom(input.root).querySelector('paper-input-container');

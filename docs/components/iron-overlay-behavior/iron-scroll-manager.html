@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      */
     var lastRootTarget = null;
     /**
-     * @type {!Array<Node>}
+     * @type {!Array<!Node>}
      */
     var lastScrollableNodes = [];
     /**
@@ -49,13 +49,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * The IronScrollManager is intended to provide a central source
      * of authority and control over which elements in a document are currently
      * allowed to scroll.
+     *
+     * @namespace
+     * @memberof Polymer
      */
-
     Polymer.IronScrollManager = {
 
       /**
        * The current element that defines the DOM boundaries of the
        * scroll lock. This is always the most recently locking element.
+       *
+       * @return {!Node|undefined}
        */
       get currentLockingElement() {
         return this._lockingElements[this._lockingElements.length - 1];
@@ -65,7 +69,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * Returns true if the provided element is "scroll locked", which is to
        * say that it cannot be scrolled via pointer or keyboard interactions.
        *
-       * @param {HTMLElement} element An HTML element instance which may or may
+       * @memberof Polymer.IronScrollManager
+       * @param {!HTMLElement} element An HTML element instance which may or may
        * not be scroll locked.
        */
       elementIsScrollLocked: function(element) {
@@ -105,7 +110,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * Scroll locking is implemented as a stack so that cases such as
        * dropdowns within dropdowns are handled well.
        *
-       * @param {HTMLElement} element The element that should lock scroll.
+       * @memberof Polymer.IronScrollManager
+       * @param {!HTMLElement} element The element that should lock scroll.
        */
       pushScrollLock: function(element) {
         // Prevent pushing the same element twice
@@ -129,7 +135,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * the scroll lock constraints only change when the most recently pushed
        * element is removed.
        *
-       * @param {HTMLElement} element The element to remove from the scroll
+       * @memberof Polymer.IronScrollManager
+       * @param {!HTMLElement} element The element to remove from the scroll
        * lock stack.
        */
       removeScrollLock: function(element) {
@@ -272,8 +279,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /**
        * Returns an array of scrollable nodes up to the current locking element,
        * which is included too if scrollable.
-       * @param {!Array<Node>} nodes
-       * @return {Array<Node>} scrollables
+       * @param {!Array<!Node>} nodes
+       * @return {!Array<!Node>} scrollables
        * @private
        */
       _getScrollableNodes: function(nodes) {
@@ -301,10 +308,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /**
        * Returns the node that is scrolling. If there is no scrolling,
        * returns undefined.
-       * @param {!Array<Node>} nodes
+       * @param {!Array<!Node>} nodes
        * @param {number} deltaX Scroll delta on the x-axis
        * @param {number} deltaY Scroll delta on the y-axis
-       * @return {Node|undefined}
+       * @return {!Node|undefined}
        * @private
        */
       _getScrollingNode: function(nodes, deltaX, deltaY) {

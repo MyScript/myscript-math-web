@@ -1,6 +1,6 @@
 {
   "name": "paper-item",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A material-design styled list item",
   "authors": [
     "The Polymer Authors"
@@ -69,11 +69,11 @@
   "resolutions": {
     "webcomponentsjs": "^1.0.0"
   },
-  "_release": "2.0.0",
+  "_release": "2.1.0",
   "_resolution": {
     "type": "version",
-    "tag": "v2.0.0",
-    "commit": "07910f6f76e1042286e931da923bff8ceabc3dc6"
+    "tag": "v2.1.0",
+    "commit": "3738a8c2b6d526272a86e153fe8fd1fe8504886e"
   },
   "_source": "https://github.com/PolymerElements/paper-item.git",
   "_target": "1 - 2",

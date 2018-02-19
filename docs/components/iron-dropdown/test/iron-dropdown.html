@@ -20,6 +20,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../iron-test-helpers/mock-interactions.js"></script>
 
   <link rel="import" href="../iron-dropdown.html">
+  <link rel="import" href="../../neon-animation/web-animations.html">
+  <link rel="import" href="../../neon-animation/animations/fade-in-animation.html">
 
 </head>
 <style>
@@ -310,6 +312,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               open: dropdown.openAnimationConfig,
               close: dropdown.closeAnimationConfig
             }, 'animationConfig ok');
+          });
+
+          test('no pointer events during animation', function(done) {
+            dropdown.openAnimationConfig = [{
+              name: 'fade-in-animation',
+              timing: {
+                duration: 300
+              }
+            }];
+            dropdown.open();
+            setTimeout(function() {
+              assert.equal(getComputedStyle(content).pointerEvents, 'none', 'content is interactive');
+            }, 150);
+            dropdown.addEventListener('iron-overlay-opened', function() {
+              assert.notEqual(getComputedStyle(content).pointerEvents, 'none', 'content is not interactive');
+              done();
+            });
           });
         });
 

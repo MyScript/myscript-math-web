@@ -104,6 +104,7 @@ Custom property | Description | Default
 `--paper-input-container-input-invalid` | Mixin applied to the input when invalid | `{}`
 `--paper-input-container-input-webkit-spinner` | Mixin applied to the webkit spinner | `{}`
 `--paper-input-container-input-webkit-clear` | Mixin applied to the webkit clear button | `{}`
+`--paper-input-container-input-webkit-calendar-picker-indicator` | Mixin applied to the webkit calendar picker indicator | `{}`
 `--paper-input-container-ms-clear` | Mixin applied to the Internet Explorer clear button | `{}`
 `--paper-input-container-underline` | Mixin applied to the underline | `{}`
 `--paper-input-container-underline-focus` | Mixin applied to the underline when the input is focused | `{}`
@@ -501,6 +502,12 @@ This element is `display:block` by default, but you can set the `inline` attribu
     },
 
     ready: function() {
+      // Paper-input treats a value of undefined differently at startup than
+      // the rest of the time (specifically: it does not validate it at startup, but
+      // it does after that. We need to track whether the first time we encounter
+      // the value is basically this first time, so that we can validate it
+      // correctly the rest of the time. See https://github.com/PolymerElements/paper-input/issues/605
+      this.__isFirstValueUpdate = true;
       if (!this._addons) {
         this._addons = [];
       }
@@ -552,16 +559,15 @@ This element is `display:block` by default, but you can set the `inline` attribu
     _onValueChanged: function(event) {
       var input = event.target;
 
-      // Problem: if the input is required but has no text entered, we should
-      // only validate it on blur (so that an empty form doesn't come up red
-      // immediately; however, in this handler, we don't know whether this is
-      // the booting up value or a value in the future. I am assuming that the
-      // case  we care about manifests itself when the value is undefined.
-      // If this causes future problems, we need to do something like track whether
-      // the iron-input-ready event has fired, and this handler came before that.
-
-      if (input.value === undefined) {
-        return;
+      // Paper-input treats a value of undefined differently at startup than
+      // the rest of the time (specifically: it does not validate it at startup, but
+      // it does after that. If this is in fact the bootup case, ignore validation,
+      // just this once.
+      if (this.__isFirstValueUpdate) {
+        this.__isFirstValueUpdate = false;
+        if (input.value === undefined) {
+          return;
+        }
       }
 
       this._handleValueAndAutoValidate(event.target);

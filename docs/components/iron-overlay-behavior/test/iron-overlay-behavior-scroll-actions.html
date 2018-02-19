@@ -232,6 +232,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     suite('scroll actions in shadow root', function() {
 
+      suiteSetup(function() {
+        if (!Polymer.Settings.useShadow) {
+          this.skip();
+        }
+      });
+
       var scrollable, overlay;
       setup(function() {
         var f = fixture('scrollable');
@@ -278,7 +284,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           overlay.addEventListener('iron-overlay-canceled', function(event) {
             assert.equal(event.detail.type, 'scroll', 'detail contains original event');
             // In Polymer 1.x with dom=shadow, triggering a scroll event on a node inside a shadowRoot
-            // doesn't set the correct target, so we skip this check. 
+            // doesn't set the correct target, so we skip this check.
             if (Polymer.Element || !Polymer.Settings.useShadow) {
               assert.equal(event.detail.target, scrollable, 'original scroll event target ok');
             }
@@ -293,6 +299,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     suite('scroll actions in shadow root, overlay distributed', function() {
+
+      suiteSetup(function() {
+        if (!Polymer.Settings.useShadow) {
+          this.skip();
+        }
+      });
 
       var scrollable, overlay;
       setup(function() {
@@ -340,7 +352,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           overlay.addEventListener('iron-overlay-canceled', function(event) {
             assert.equal(event.detail.type, 'scroll', 'detail contains original event');
             // In Polymer 1.x with dom=shadow, triggering a scroll event on a node inside a shadowRoot
-            // doesn't set the correct target, so we skip this check. 
+            // doesn't set the correct target, so we skip this check.
             if (Polymer.Element || !Polymer.Settings.useShadow) {
               assert.equal(event.detail.target, scrollable, 'original scroll event target ok');
             }
@@ -351,7 +363,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           dispatchScroll(scrollable, 0, 10);
         });
       });
-
     });
   </script>
 

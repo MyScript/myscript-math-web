@@ -31,7 +31,7 @@
     "!examples/**/*"
   ],
   "dependencies": {
-    "myscript": "4.1.x",
+    "myscript": "^4.1.1",
     "polymer": "^2.0.1",
     "iron-resizable-behavior": "^2.0.1",
     "paper-fab": "^2.0.0",

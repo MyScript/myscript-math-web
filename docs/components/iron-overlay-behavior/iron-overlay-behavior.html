@@ -98,7 +98,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       /**
-       * Set to true to allow clicks to go through overlays. 
+       * Set to true to allow clicks to go through overlays.
        * When the user clicks outside this overlay, the click may
        * close the overlay below.
        */
@@ -127,7 +127,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /**
        * Shortcut to access to the overlay manager.
        * @private
-       * @type {Polymer.IronOverlayManagerClass}
+       * @type {!Polymer.IronOverlayManagerClass}
        */
       _manager: {
         type: Object,
@@ -154,7 +154,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     /**
      * The backdrop element.
-     * @type {Element}
+     * @return {!Element}
      */
     get backdropElement() {
       return this._manager.backdropElement;
@@ -162,7 +162,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     /**
      * Returns the node to give focus to.
-     * @type {Node}
+     * @return {!Node}
      */
     get _focusNode() {
       return this._focusedChild || Polymer.dom(this).querySelector('[autofocus]') || this;
@@ -175,13 +175,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      *
      * If you know what is your content (specifically the first and last focusable children),
      * you can override this method to return only `[firstFocusable, lastFocusable];`
-     * @type {Array<Node>}
+     * @return {!Array<!Node>}
      * @protected
      */
     get _focusableNodes() {
       return Polymer.IronFocusablesHelper.getTabbableNodes(this);
     },
 
+    /**
+     * @return {void}
+     */
     ready: function() {
       // Used to skip calls to notifyResize and refit while the overlay is animating.
       this.__isAnimating = false;
@@ -636,7 +639,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.__addScrollListeners();
       }
     },
-    
+
     /**
      * @private
      */
@@ -645,7 +648,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.__rootNodes = [];
         // Listen for scroll events in all shadowRoots hosting this overlay only
         // when in native ShadowDOM.
-        if ('attachShadow' in Element.prototype && 'getRootNode' in Element.prototype) {
+        if (Polymer.Settings.useShadow) {
           var node = this;
           while (node) {
             if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE && node.host) {
@@ -663,7 +666,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       }, this);
     },
-    
+
     /**
      * @private
      */

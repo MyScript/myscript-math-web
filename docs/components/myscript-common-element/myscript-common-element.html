@@ -709,9 +709,8 @@ CSS variable | Default
                 };
 
                 const hideMenu = (evt) => {
-                    const moreMenu = ['ellipsis', 'more-menu'];
                     const moreMenuInDocument = this.shadowRoot.querySelector('#more-menu');
-                    if (!moreMenu.includes(evt.target.id) && !evt.target.classList.contains('options-label-button') && moreMenuInDocument && moreMenuInDocument.style.display !== 'none') {
+                    if (!evt.target.classList.contains('ellipsis') && !evt.target.classList.contains('more-menu') && !evt.target.classList.contains('options-label-button') && moreMenuInDocument && moreMenuInDocument.style.display !== 'none') {
                         moreMenuInDocument.style.display = 'none';
                         return true;
                     }
@@ -750,7 +749,7 @@ CSS variable | Default
                             evt.stopPropagation();
                             editor.pointerDown(MyScriptCommonElement._extractPoint(evt, element, editor.configuration), evt.pointerType, evt.pointerId);
                         }
-                    }  else if (evt.target.id === 'ellipsis' || evt.target.id === 'tag-icon') {
+                    } else if (evt.target.classList.contains('ellipsis') || evt.target.classList.contains('tag-icon')) {
                         hideMenu(evt);
                         hideCandidates(evt);
                     } else { // FIXME add more complete verification to pointer down on smart guide
@@ -785,14 +784,12 @@ CSS variable | Default
                 };
 
                 const polymerPointerMoveHandler = (evt) => { // Trigger a pointerMove
-                    console.log(evt);
                     const checkHover = (evt) => {
                         const smartGuideIds = ['smartguide', 'prompter-text-container', 'prompter-text', 'tag-icon', 'ellipsis'];
                         const scrollbarClasses = ['ps__rail-x', 'ps__thumb-x'];
                         if (evt.detail.hover()) {
-                            const evtId = evt.detail.hover().id;
                             // Check if pointer entered into any smart guide elements or scrollbar
-                            const pointerEnteredSmartGuide = smartGuideIds.includes(evtId) || scrollbarClasses.some((v) => evt.detail.hover().className.indexOf(v) >= 0);
+                            const pointerEnteredSmartGuide = smartGuideIds.some((v) => evt.detail.hover().className.indexOf(v) >= 0) || scrollbarClasses.some((v) => evt.detail.hover().className.indexOf(v) >= 0);
                             // Check if pointer moved between words in smart guide
                             const pointerMovedWords = evt.detail.hover().tagName === 'SPAN' || evt.detail.hover().tagName === 'SPAN';
                             return evt.detail.hover().id === 'editorDomElement'
@@ -837,9 +834,9 @@ CSS variable | Default
                     const smartGuideIds = ['smartguide', 'prompter-text-container', 'prompter-text', 'tag-icon', 'ellipsis'];
                     const scrollbarClasses = ['ps__rail-x', 'ps__thumb-x'];
                     // Check if pointer entered into any smartguide elements or scrollbar
-                    const pointerEnteredSmartGuide = evt.relatedTarget && (smartGuideIds.includes(evt.relatedTarget.id) || scrollbarClasses.includes(evt.relatedTarget.className));
+                    const pointerEnteredSmartGuide = evt.relatedTarget && (smartGuideIds.includes(evt.relatedTarget.className) || scrollbarClasses.includes(evt.relatedTarget.className));
                     // Check if pointer didn't stay in the smartguide and pointer exited the smartguide or scrollbar
-                    const pointerExitedSmartGuide = evt.relatedTarget && evt.target && (smartGuideIds.includes(evt.target.id) || scrollbarClasses.includes(evt.target.className));
+                    const pointerExitedSmartGuide = evt.relatedTarget && evt.target && (smartGuideIds.includes(evt.target.className) || scrollbarClasses.includes(evt.target.className));
                     // Check if pointer moved between words in smartguide
                     const pointerMovedWords = evt.relatedTarget && evt.target && (evt.target.tagName === 'SPAN' || evt.relatedTarget.tagName === 'SPAN');
                     if (pointerEnteredSmartGuide || pointerExitedSmartGuide || pointerMovedWords) {
@@ -1000,12 +997,11 @@ CSS variable | Default
 
             /**
              * Send multiple strokes at the same time also call batch mode.
-             * @param {{processGestures: Boolean, events: Array<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array<Floats>, y: Array<Floats>, t: Array<Floats>}>}} events to process (strokes)
+             * @param {{ events: Array<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array<Floats>, y: Array<Floats>, t: Array<Floats>}>}} events to process (strokes)
              * Depending of of your users writes the strokes you may or may not activate the gestures. <code>t</code> attribute is optional in the set of strokes but it is highly recommended to pass it for better accuracy.
              *
              * Example of input :
              * ````{
-             *      "processGestures": true,
              *      "events": [{
              *      "pointerType": "PEN",
              *      "pointerId": 1,

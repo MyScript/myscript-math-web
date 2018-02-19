@@ -31,29 +31,29 @@ interface IronOverlayBackdropElement extends Polymer.Element {
    * Returns true if the backdrop is opened.
    */
   opened: boolean|null|undefined;
-  created(): any;
-  attached(): any;
+  created(): void;
+  attached(): void;
 
   /**
    * Appends the backdrop to document body if needed.
    */
-  prepare(): any;
+  prepare(): void;
 
   /**
    * Shows the backdrop.
    */
-  open(): any;
+  open(): void;
 
   /**
    * Hides the backdrop.
    */
-  close(): any;
+  close(): void;
 
   /**
    * Removes the backdrop from document body if needed.
    */
-  complete(): any;
-  _onTransitionend(event: any): any;
+  complete(): void;
+  _onTransitionend(event: any): void;
 }
 
 interface HTMLElementTagNameMap {

@@ -1,4 +1,4 @@
-# v4.1.1
+# [v4.1.1](https://github.com/MyScript/myscript-math-web/tree/v4.1.1)
 
 ## Bugs fixed
 - Documentation and paper buttons colors were not taken into account in Edge.

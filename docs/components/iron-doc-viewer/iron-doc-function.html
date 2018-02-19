@@ -48,6 +48,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .privacy {
         color: #666;
       }
+
+      .import-path {
+        padding-left: 25px;
+      }
     </style>
 
     <code id="signature">
@@ -74,6 +78,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <p hidden$="[[!descriptor.inheritedFrom]]" class="inheritedFrom">
       Inherited from <code>[[descriptor.inheritedFrom]]</code>
     </p>
+
+    <div class="import-path" hidden$="[[!addImportPath]]">Requires import: <code>[[descriptor.sourceRange.file]]</code></div>
 
     <marked-element
         sanitize markdown="[[descriptor.description]]"
@@ -124,6 +130,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           _showParamList: {
             type: Boolean,
             computed: '_computeShowParamList(descriptor)'
+          },
+
+          addImportPath: {
+            type: Boolean,
+            value: false
           }
         },
 

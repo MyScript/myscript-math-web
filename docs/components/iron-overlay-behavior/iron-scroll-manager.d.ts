@@ -35,7 +35,7 @@ declare namespace Polymer {
      * Scroll locking is implemented as a stack so that cases such as
      * dropdowns within dropdowns are handled well.
      */
-    function pushScrollLock(element: HTMLElement): any;
+    function pushScrollLock(element: HTMLElement): void;
 
 
     /**
@@ -44,6 +44,6 @@ declare namespace Polymer {
      * the scroll lock constraints only change when the most recently pushed
      * element is removed.
      */
-    function removeScrollLock(element: HTMLElement): any;
+    function removeScrollLock(element: HTMLElement): void;
   }
 }

@@ -130,6 +130,7 @@ is separate from validation, and `allowed-pattern` does not affect how the input
          * `input is="iron-input"` value attribute).
          */
         value: {
+          type: String,
           computed: '_computeValue(bindValue)'
         },
 
@@ -198,7 +199,7 @@ is separate from validation, and `allowed-pattern` does not affect how the input
       },
 
       /**
-       * Returns the distributed <input> element.
+       * Returns the distributed input element.
        */
       get inputElement () {
         return this._inputElement;

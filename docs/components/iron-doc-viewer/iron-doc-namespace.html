@@ -111,6 +111,7 @@ JSON descriptor output by
       </h2>
       <template is="dom-repeat" items="[[descriptor.functions]]" sort="_compareDescriptors">
         <iron-doc-function
+            add-import-path
             anchor-id="[[fragmentPrefix]]function-[[item.name]]"
             descriptor="[[item]]">
         </iron-doc-function>

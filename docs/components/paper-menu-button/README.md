@@ -55,7 +55,4 @@ Defines these animations:
 ### Changes in 2.0
 - `neon-animation 2.0` doesn't import the Web Animations polyfill, so you'll have to import it ([see example](demo/index.html))
 
-
-
-
-
+- Distribution is now done with the `slot="dropdown-trigger"` and `slot="dropdown-content"` attributes (replacing the classes of the same names)

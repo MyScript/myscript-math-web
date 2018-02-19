@@ -25,7 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * It searches the tabbable nodes in the light and shadow dom of the chidren,
        * sorting the result by tabindex.
        * @param {!Node} node
-       * @return {Array<HTMLElement>}
+       * @return {!Array<!HTMLElement>}
        */
       getTabbableNodes: function(node) {
         var result = [];
@@ -97,7 +97,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * Returns if the `result` array needs to be sorted by tabindex.
        * @param {!Node} node The starting point for the search; added to `result`
        * if tabbable.
-       * @param {!Array<HTMLElement>} result
+       * @param {!Array<!HTMLElement>} result
        * @return {boolean}
        * @private
        */
@@ -106,7 +106,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (node.nodeType !== Node.ELEMENT_NODE || !this._isVisible(node)) {
           return false;
         }
-        var element = /** @type {HTMLElement} */ (node);
+        var element = /** @type {!HTMLElement} */ (node);
         var tabIndex = this._normalizedTabIndex(element);
         var needsSort = tabIndex > 0;
         if (tabIndex >= 0) {
@@ -159,8 +159,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       /**
        * Sorts an array of tabbable elements by tabindex. Returns a new array.
-       * @param {!Array<HTMLElement>} tabbables
-       * @return {Array<HTMLElement>}
+       * @param {!Array<!HTMLElement>} tabbables
+       * @return {!Array<!HTMLElement>}
        * @private
        */
       _sortByTabIndex: function(tabbables) {
@@ -178,9 +178,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       /**
        * Merge sort iterator, merges the two arrays into one, sorted by tab index.
-       * @param {!Array<HTMLElement>} left
-       * @param {!Array<HTMLElement>} right
-       * @return {Array<HTMLElement>}
+       * @param {!Array<!HTMLElement>} left
+       * @param {!Array<!HTMLElement>} right
+       * @return {!Array<!HTMLElement>}
        * @private
        */
       _mergeSortByTabIndex: function(left, right) {

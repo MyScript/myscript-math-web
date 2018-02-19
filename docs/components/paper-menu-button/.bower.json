@@ -1,6 +1,6 @@
 {
   "name": "paper-menu-button",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A material design element that composes a trigger and a dropdown menu",
   "authors": [
     "The Polymer Authors"
@@ -79,11 +79,11 @@
   "resolutions": {
     "webcomponentsjs": "^1.0.0"
   },
-  "_release": "2.0.0",
+  "_release": "2.1.0",
   "_resolution": {
     "type": "version",
-    "tag": "v2.0.0",
-    "commit": "d864f6d083dfeff29af4539b261c24ecf875c47d"
+    "tag": "v2.1.0",
+    "commit": "429a679fbad119b99239c5666cfe7d74939d502e"
   },
   "_source": "https://github.com/PolymerElements/paper-menu-button.git",
   "_target": "1 - 2",

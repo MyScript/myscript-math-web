@@ -19,6 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../iron-test-helpers/mock-interactions.js"></script>
   <script src="../../iron-test-helpers/test-helpers.js"></script>
 
+  <link rel="import" href="../../neon-animation/web-animations.html">
   <link rel="import" href="../paper-swatch-picker.html">
 </head>
 <body>
@@ -45,6 +46,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <test-fixture id="custom">
     <template>
       <paper-swatch-picker class="custom" column-count="5" color-list='["#ff0000", "#00ff00", "#0000ff", "#000", "#fff"]'></paper-swatch-picker>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="dynamic">
+    <template>
+      <paper-swatch-picker></paper-swatch-picker>
     </template>
   </test-fixture>
 
@@ -162,6 +169,87 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }, 1);
       });
     });
+
+    suite('dynamic', function () {
+      var picker, container;
+
+      setup(function () {
+        picker = fixture('dynamic');
+        container = picker.$.container;
+      });
+
+      test('changing the number of columns updates the layout', function (done) {
+        Polymer.dom.flush();
+
+        Polymer.Base.async(function () {
+          // There are 18 default columns, and each column is 20px wide.
+          assert.equal(container.style.width, 18 * 20 + 'px');
+          // There is 10 default rows, and each row is 20px wide.
+          assert.equal(container.style.height, 10 * 20 + 'px');
+
+          // Now change the number of columns from 18 to 9
+          picker.columnCount = 9;
+          assert.equal(picker.columnCount, 9);
+          // Now we have 9 columns, and each column is 20px wide.
+          assert.equal(container.style.width, 9 * 20 + 'px');
+          // Now we have 20 rows, and each column is 20px wide.
+          assert.equal(container.style.height, 20 * 20 + 'px');
+
+          done();
+        }, 1);
+      });
+
+      test('changing the colors updates the colors and the layout', function (done) {
+        Polymer.dom.flush();
+
+        // There are 18 default columns, and each column is 20px wide.
+        assert.equal(container.style.width, 18 * 20 + 'px');
+        // There is 10 default rows, and each row is 20px wide.
+        assert.equal(container.style.height, 10 * 20 + 'px');
+
+        MockInteractions.tap(picker.$.iconButton);
+        Polymer.Base.async(function() {
+          // Select the first color (#ffebee).
+          var box = container.querySelector('.color');
+          MockInteractions.tap(box);
+          Polymer.Base.async(function() {
+            // Now change the colors
+            picker.colorList = [
+              '#ffcdd2', '#f44336', '#b71c1c',
+              '#c5cae9', '#3f51b5', '#1a237e',
+              '#b2dfdb', '#009688', '#004d40',
+              '#fff9c4', '#ffeb3b', '#f57f17',
+              '#d7ccc8', '#795548', '#3e2723',
+              '#f5f5f5', '#9e9e9e', '#212121'
+            ];
+
+            flush(function() {
+              assert.equal(picker.colorList.length, 18);
+              // Now we have 1 row, and each column is 20px wide.
+              assert.equal(container.style.height, 20 + 'px');
+
+              // Since the old selected color is not in the new list,
+              // it has been adjusted to the fallback color (first color: #ffcdd2)
+              assert.equal('#ffcdd2', picker.color);
+              assert.equal('#ffcdd2', picker._rgbToHex(picker.$.iconButton.style.color));
+
+              MockInteractions.tap(picker.$.iconButton);
+
+              Polymer.Base.async(function() {
+                // The colors have been filled in correctly
+                var boxes = container.querySelectorAll('.color');
+                picker.colorList.forEach(function(color, index) {
+                  assert.equal(color, picker._rgbToHex(boxes[index].style.color))
+                });
+
+                done();
+              }, 1);
+            });
+          }, 1);
+        }, 1);
+      });
+    });
   </script>
 </body>
+
 </html>
