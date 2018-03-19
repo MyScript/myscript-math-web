@@ -86,7 +86,7 @@ Custom property | Description | Default
             }
 
             _getLatex(exports) {
-                return exports? exports['application/x-latex'] || exports.LATEX || '' : '';
+                return exports? exports['application/x-latex'] || exports.LATEX || exports.latex || '' : '';
             }
 
             _getLatexCleaned(exports) {
@@ -107,11 +107,11 @@ Custom property | Description | Default
             }
 
             _getMathml(exports) {
-                return exports? exports['application/mathml+xml'] || exports.MATHML || '' : '';
+                return exports? exports['application/mathml+xml'] || exports.MATHML || exports.mathml || '' : '';
             }
 
             _getOfficeopenxml(exports) {
-                return exports? exports['application/mathofficeXML'] || exports.OFFICEOPENXMLMATH || '' : '';
+                return exports? exports['application/mathofficeXML'] || exports.OFFICEOPENXMLMATH || exports.mathofficeXML || '' : '';
             }
 
             _getSymboltree(exports) {

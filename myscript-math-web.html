@@ -661,13 +661,15 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     conf.recognitionParams.v4.math.solver['angle-unit'] = solverangleunit;
                 }
                 if (customgrammar) {
-                    console.log(customgrammar);
                     conf.recognitionParams.v4.math.customGrammar = customgrammar;
                 }
                 return conf;
             }
 
             _buildConfiguration() {
+                if (this.apiversion === 'V3' || this.protocol === 'REST') {
+                    this.disableconvertcontrol = true;
+                }
                 return MyScriptMathWeb._generateMathConfiguration(
                     this.configuration,
                     this.mimetypes,
