@@ -482,6 +482,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     //                 End of recopy
                     // -----------------------------------------------------------------------------
                     /**
+                     * True if we want to use always connected mode, false otherwise
+                     */
+                    alwaysconnected: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
+                    /**
                      * Use a custom grammar
                      */
                     customgrammar: {
@@ -609,7 +617,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 return stylesheet;
             }
 
-            static _generateMathConfiguration(configuration, mimetypes, disablesolver, solverfractionalpartdigit, solverdecimalseparator, solverroundingmode, solverangleunit, resulttypes, columnaroperation, userresources, scratchoutdetectionsensitivity, customgrammar) {
+            static _generateMathConfiguration(configuration, mimetypes, disablesolver, solverfractionalpartdigit, solverdecimalseparator, solverroundingmode, solverangleunit, resulttypes, columnaroperation, userresources, scratchoutdetectionsensitivity, customgrammar, alwaysconnected) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
                 if (!conf.recognitionParams) {
@@ -663,6 +671,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                 if (customgrammar) {
                     conf.recognitionParams.v4.math.customGrammar = customgrammar;
                 }
+                if (alwaysconnected !== undefined) {
+                    conf.recognitionParams.v4.alwaysConnected = alwaysconnected;
+                }
                 return conf;
             }
 
@@ -682,7 +693,8 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                     this.columnaroperation,
                     this.userresources,
                     this.scratchoutdetectionsensitivity,
-                    this.customgrammar);
+                    this.customgrammar,
+                    this.alwaysconnected);
             }
 
             constructor() {

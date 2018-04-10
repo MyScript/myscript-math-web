@@ -86,13 +86,15 @@ Custom property | Description | Default
             }
 
             _getLatex(exports) {
-                return exports? exports['application/x-latex'] || exports.LATEX || '' : '';
+                return exports? exports['application/x-latex'] || exports.LATEX || exports.latex || '' : '';
             }
 
             _getLatexCleaned(exports) {
                 if (this._getLatex(exports).includes('\\\\')) {
                     const steps = '\\begin{align*}' + this._getLatex(exports) + '\\end{align*}';
                     return steps.replace("\\overrightarrow", "\\vec")
+                        .replace("\\begin{aligned}", "")
+                        .replace("\\end{aligned}", "")
                         .replace("\\llbracket", "\\lbracket")
                         .replace("\\rrbracket", "\\rbracket")
                         .replace("\\widehat", "\\hat")
@@ -107,11 +109,11 @@ Custom property | Description | Default
             }
 
             _getMathml(exports) {
-                return exports? exports['application/mathml+xml'] || exports.MATHML || '' : '';
+                return exports? exports['application/mathml+xml'] || exports.MATHML || exports.mathml || '' : '';
             }
 
             _getOfficeopenxml(exports) {
-                return exports? exports['application/mathofficeXML'] || exports.OFFICEOPENXMLMATH || '' : '';
+                return exports? exports['application/mathofficeXML'] || exports.OFFICEOPENXMLMATH || exports.mathofficeXML || '' : '';
             }
 
             _getSymboltree(exports) {
