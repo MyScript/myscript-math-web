@@ -80,17 +80,14 @@ of a listbox item will also focus it.
 
   <script>
     (function() {
-      Polymer({
-        is: 'paper-listbox',
+    Polymer({
+      is: 'paper-listbox',
 
-        behaviors: [
-          Polymer.IronMenuBehavior
-        ],
+      behaviors: [Polymer.IronMenuBehavior],
 
-        hostAttributes: {
-          role: 'listbox'
-        }
-      });
+      /** @private */
+      hostAttributes: {role: 'listbox'}
+    });
     })();
   </script>
 </dom-module>

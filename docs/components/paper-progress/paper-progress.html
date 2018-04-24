@@ -260,36 +260,24 @@ Custom property                                  | Description                  
   Polymer({
     is: 'paper-progress',
 
-    behaviors: [
-      Polymer.IronRangeBehavior
-    ],
+    behaviors: [Polymer.IronRangeBehavior],
 
     properties: {
       /**
        * The number that represents the current secondary progress.
        */
-      secondaryProgress: {
-        type: Number,
-        value: 0
-      },
+      secondaryProgress: {type: Number, value: 0},
 
       /**
        * The secondary ratio
        */
-      secondaryRatio: {
-        type: Number,
-        value: 0,
-        readOnly: true
-      },
+      secondaryRatio: {type: Number, value: 0, readOnly: true},
 
       /**
        * Use an indeterminate progress indicator.
        */
-      indeterminate: {
-        type: Boolean,
-        value: false,
-        observer: '_toggleIndeterminate'
-      },
+      indeterminate:
+          {type: Boolean, value: false, observer: '_toggleIndeterminate'},
 
       /**
        * True if the progress is disabled.
@@ -302,17 +290,15 @@ Custom property                                  | Description                  
       }
     },
 
-    observers: [
-      '_progressChanged(secondaryProgress, value, min, max, indeterminate)'
-    ],
+    observers:
+        ['_progressChanged(secondaryProgress, value, min, max, indeterminate)'],
 
-    hostAttributes: {
-      role: 'progressbar'
-    },
+    hostAttributes: {role: 'progressbar'},
 
     _toggleIndeterminate: function(indeterminate) {
-      // If we use attribute/class binding, the animation sometimes doesn't translate properly
-      // on Safari 7.1. So instead, we toggle the class here in the update method.
+      // If we use attribute/class binding, the animation sometimes doesn't
+      // translate properly on Safari 7.1. So instead, we toggle the class here in
+      // the update method.
       this.toggleClass('indeterminate', indeterminate, this.$.primaryProgress);
     },
 
@@ -325,7 +311,8 @@ Custom property                                  | Description                  
       this._transformProgress(this.$.primaryProgress, ratio);
     },
 
-    _progressChanged: function(secondaryProgress, value, min, max, indeterminate) {
+    _progressChanged: function(
+        secondaryProgress, value, min, max, indeterminate) {
       secondaryProgress = this._clampValue(secondaryProgress);
       value = this._clampValue(value);
 

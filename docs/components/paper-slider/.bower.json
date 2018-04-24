@@ -1,6 +1,5 @@
 {
   "name": "paper-slider",
-  "version": "2.0.4",
   "description": "A material design-style slider",
   "license": "http://polymer.github.io/LICENSE.txt",
   "authors": "The Polymer Authors",
@@ -65,11 +64,12 @@
     "webcomponentsjs": "^1.0.0"
   },
   "homepage": "https://github.com/PolymerElements/paper-slider",
-  "_release": "2.0.4",
+  "version": "2.0.6",
+  "_release": "2.0.6",
   "_resolution": {
     "type": "version",
-    "tag": "v2.0.4",
-    "commit": "9ed92733d20956d078f6f6592400c75335a9b1dc"
+    "tag": "v2.0.6",
+    "commit": "f091ca9d1dff205a236023613b0ef99fe9728c0e"
   },
   "_source": "https://github.com/PolymerElements/paper-slider.git",
   "_target": "^2.0.2",

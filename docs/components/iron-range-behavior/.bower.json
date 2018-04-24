@@ -1,6 +1,6 @@
 {
   "name": "iron-range-behavior",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "license": "http://polymer.github.io/LICENSE.txt",
   "description": "Provides a behavior for something with a minimum and maximum value",
   "authors": "The Polymer Authors",
@@ -43,11 +43,11 @@
     "webcomponentsjs": "^1.0.0"
   },
   "homepage": "https://github.com/PolymerElements/iron-range-behavior",
-  "_release": "2.1.0",
+  "_release": "2.1.1",
   "_resolution": {
     "type": "version",
-    "tag": "v2.1.0",
-    "commit": "acf7fa4137d1583b92fc7c3e8d70dc7dddd6cc1b"
+    "tag": "v2.1.1",
+    "commit": "dcc636b9fd86c8eeeb1cbd4cade2f6d34ebcb168"
   },
   "_source": "https://github.com/PolymerElements/iron-range-behavior.git",
   "_target": "1 - 2",

@@ -1,6 +1,6 @@
 {
   "name": "paper-swatch-picker",
-  "version": "2.0.2",
+  "version": "2.2.0",
   "description": "A color picker element using all the Material Design colours",
   "authors": [
     "The Polymer Authors"
@@ -31,7 +31,6 @@
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1 - 2",
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#1 - 2",
-    "iron-test-helpers": "PolymerElements/iron-test-helpers#1 - 2",
     "web-component-tester": "^6.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
     "web-animations-js": "web-animations/web-animations-js#^2.2"
@@ -50,7 +49,6 @@
       "devDependencies": {
         "iron-component-page": "PolymerElements/iron-component-page#^1.1.0",
         "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.1.0",
-        "iron-test-helpers": "PolymerElements/iron-test-helpers#^1.0.0",
         "test-fixture": "PolymerElements/test-fixture#^1.0.0",
         "web-component-tester": "^4.0.0",
         "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0",
@@ -64,11 +62,11 @@
   "resolutions": {
     "webcomponentsjs": "^1.0.0"
   },
-  "_release": "2.0.2",
+  "_release": "2.2.0",
   "_resolution": {
     "type": "version",
-    "tag": "v2.0.2",
-    "commit": "ffee16d5ee9b44b38965ec615722d9e825943a2b"
+    "tag": "v2.2.0",
+    "commit": "412e648cd69935799b2cd9b3197f6a6652d0ac36"
   },
   "_source": "https://github.com/PolymerElements/paper-swatch-picker.git",
   "_target": "^2.0.1",

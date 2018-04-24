@@ -116,30 +116,36 @@ This element is `display:block` by default, but you can set the `inline` attribu
 `display:inline-block`.
 -->
 
+<custom-style>
+  <style is="custom-style">
+    html {
+      --paper-input-container-shared-input-style: {
+        position: relative; /* to make a stacking context */
+        outline: none;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        background: transparent;
+        border: none;
+        color: var(--paper-input-container-input-color, var(--primary-text-color));
+        -webkit-appearance: none;
+        text-align: inherit;
+        vertical-align: bottom;
+
+        @apply --paper-font-subhead;
+      };
+    }
+  </style>
+</custom-style>
+
 <dom-module id="paper-input-container">
   <template>
     <style>
       :host {
         display: block;
         padding: 8px 0;
-
-        --paper-input-container-shared-input-style: {
-          position: relative; /* to make a stacking context */
-          outline: none;
-          box-shadow: none;
-          padding: 0;
-          width: 100%;
-          max-width: 100%;
-          background: transparent;
-          border: none;
-          color: var(--paper-input-container-input-color, var(--primary-text-color));
-          -webkit-appearance: none;
-          text-align: inherit;
-          vertical-align: bottom;
-
-          @apply --paper-font-subhead;
-        };
-
         @apply --paper-input-container;
       }
 
@@ -284,15 +290,15 @@ This element is `display:block` by default, but you can set the `inline` attribu
         visibility: hidden;
       }
 
-      .input-content ::slotted(iron-input) {
-        @apply --paper-input-container-shared-input-style;
-      }
-
       .input-content ::slotted(input),
+      .input-content ::slotted(iron-input),
       .input-content ::slotted(textarea),
       .input-content ::slotted(iron-autogrow-textarea),
       .input-content ::slotted(.paper-input-input) {
         @apply --paper-input-container-shared-input-style;
+        /* The apply shim doesn't apply the nested color custom property,
+          so we have to re-apply it here. */
+        color: var(--paper-input-container-input-color, var(--primary-text-color));
         @apply --paper-input-container-input;
       }
 
@@ -302,6 +308,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
 
       .input-content.focused ::slotted(input),
+      .input-content.focused ::slotted(iron-input),
       .input-content.focused ::slotted(textarea),
       .input-content.focused ::slotted(iron-autogrow-textarea),
       .input-content.focused ::slotted(.paper-input-input) {
@@ -309,6 +316,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
 
       .input-content.is-invalid ::slotted(input),
+      .input-content.is-invalid ::slotted(iron-input),
       .input-content.is-invalid ::slotted(textarea),
       .input-content.is-invalid ::slotted(iron-autogrow-textarea),
       .input-content.is-invalid ::slotted(.paper-input-input) {
@@ -530,6 +538,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
     },
 
+    /** @private */
     _onAddonAttached: function(event) {
       if (!this._addons) {
         this._addons = [];
@@ -543,19 +552,23 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
     },
 
+    /** @private */
     _onFocus: function() {
       this._setFocused(true);
     },
 
+    /** @private */
     _onBlur: function() {
       this._setFocused(false);
       this._handleValueAndAutoValidate(this._inputElement);
     },
 
+    /** @private */
     _onInput: function(event) {
       this._handleValueAndAutoValidate(event.target);
     },
 
+    /** @private */
     _onValueChanged: function(event) {
       var input = event.target;
 
@@ -573,6 +586,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       this._handleValueAndAutoValidate(event.target);
     },
 
+    /** @private */
     _handleValue: function(inputElement) {
       var value = this._inputElementValue;
 
@@ -590,6 +604,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       });
     },
 
+    /** @private */
     _handleValueAndAutoValidate: function(inputElement) {
       if (this.autoValidate && inputElement) {
         var valid;
@@ -606,10 +621,12 @@ This element is `display:block` by default, but you can set the `inline` attribu
       this._handleValue(inputElement);
     },
 
+    /** @private */
     _onIronInputValidate: function(event) {
       this.invalid = this._inputElement.invalid;
     },
 
+    /** @private */
     _invalidChanged: function() {
       if (this._addons) {
         this.updateAddons({invalid: this.invalid});
@@ -626,6 +643,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
     },
 
+    /** @private */
     _computeInputContentClass: function(noLabelFloat, alwaysFloatLabel, focused, invalid, _inputHasContent) {
       var cls = 'input-content';
       if (!noLabelFloat) {
@@ -665,6 +683,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       return cls;
     },
 
+    /** @private */
     _computeUnderlineClass: function(focused, invalid) {
       var cls = 'underline';
       if (invalid) {
@@ -675,6 +694,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       return cls;
     },
 
+    /** @private */
     _computeAddOnContentClass: function(focused, invalid) {
       var cls = 'add-on-content';
       if (invalid) {

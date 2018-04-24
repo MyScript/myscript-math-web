@@ -119,19 +119,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       });
 
-      test('The <paper-progress> only has a "aria-valuenow" attribute when ' +
-        '`indeterminate` is true.', function() {
-          progress.min = 0;
-          progress.max = 10;
-          progress.value = 5.1;
-          assert(progress.hasAttribute('aria-valuenow'));
+      test(
+          'The <paper-progress> only has a "aria-valuenow" attribute when ' +
+              '`indeterminate` is true.',
+          function() {
+            progress.min = 0;
+            progress.max = 10;
+            progress.value = 5.1;
+            assert(progress.hasAttribute('aria-valuenow'));
 
-          progress.indeterminate = true;
-          assert(!progress.hasAttribute('aria-valuenow'));
+            progress.indeterminate = true;
+            assert(!progress.hasAttribute('aria-valuenow'));
 
-          progress.indeterminate = false;
-          assert(progress.hasAttribute('aria-valuenow'));
-        });
+            progress.indeterminate = false;
+            assert(progress.hasAttribute('aria-valuenow'));
+          });
     });
 
     suite('transiting class', function() {
@@ -142,20 +144,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('progress bars', function() {
-        var stylesForPrimaryProgress = window.getComputedStyle(progress.$.primaryProgress);
-        var stylesForSecondaryProgress = window.getComputedStyle(progress.$.secondaryProgress);
+        var stylesForPrimaryProgress =
+            window.getComputedStyle(progress.$.primaryProgress);
+        var stylesForSecondaryProgress =
+            window.getComputedStyle(progress.$.secondaryProgress);
         var transitionProp = stylesForPrimaryProgress['transition-property'];
 
-        assert.isTrue(transitionProp === 'transform' || transitionProp === '-webkit-transform');
+        assert.isTrue(
+            transitionProp === 'transform' ||
+            transitionProp === '-webkit-transform');
         assert.equal(stylesForPrimaryProgress['transition-duration'], '0.08s');
 
         transitionProp = stylesForSecondaryProgress['transition-property'];
 
-        assert.isTrue(transitionProp === 'transform' || transitionProp === '-webkit-transform');
+        assert.isTrue(
+            transitionProp === 'transform' ||
+            transitionProp === '-webkit-transform');
         assert.equal(stylesForSecondaryProgress['transition-duration'], '0.08s');
       });
     });
-
   </script>
 
 </body>

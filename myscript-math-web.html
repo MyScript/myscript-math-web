@@ -98,6 +98,7 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
             protocol="[[ protocol ]]"
             apiversion="[[ apiversion ]]"
             host="[[ host ]]"
+            usewindowlocation="[[ usewindowlocation ]]"
             scheme="[[ scheme ]]"
             applicationkey="[[ applicationkey ]]"
             hmackey="[[ hmackey ]]"
@@ -221,6 +222,14 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
                         type: String,
                         reflectToAttribute: true,
                         value: 'cloud.myscript.com'
+                    },
+                    /**
+                     * Use if host and scheme should be set using window.location
+                     */
+                    usewindowlocation: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
                     },
                     /**
                      * Cloud API version to use.

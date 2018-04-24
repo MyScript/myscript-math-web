@@ -12,7 +12,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="iron-menu-behavior.html">
 
 <script>
-
   /**
    * `Polymer.IronMenubarBehavior` implements accessible menubar behavior.
    *
@@ -20,14 +19,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    */
   Polymer.IronMenubarBehaviorImpl = {
 
-    hostAttributes: {
-      'role': 'menubar'
-    },
+    hostAttributes: {'role': 'menubar'},
 
-    keyBindings: {
-      'left': '_onLeftKey',
-      'right': '_onRightKey'
-    },
+    /**
+     * @type {!Object}
+     */
+    keyBindings: {'left': '_onLeftKey', 'right': '_onRightKey'},
 
     _onUpKey: function(event) {
       this.focusedItem.click();
@@ -73,9 +70,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   };
 
   /** @polymerBehavior Polymer.IronMenubarBehavior */
-  Polymer.IronMenubarBehavior = [
-    Polymer.IronMenuBehavior,
-    Polymer.IronMenubarBehaviorImpl
-  ];
-
+  Polymer.IronMenubarBehavior =
+      [Polymer.IronMenuBehavior, Polymer.IronMenubarBehaviorImpl];
 </script>

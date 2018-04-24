@@ -74,7 +74,8 @@ var Constants = {
   },
   Error: {
     NOT_REACHABLE: 'MyScript recognition server is not reachable. Please reload once you are connected.',
-    WRONG_CREDENTIALS: 'Application credentials are invalid. Please check or regenerate your application key and hmackey.'
+    WRONG_CREDENTIALS: 'Application credentials are invalid. Please check or regenerate your application key and hmackey.',
+    TOO_OLD: 'Session is too old. Max Session Duration Reached.'
   },
   Exports: {
     JIIX: 'application/vnd.myscript.jiix'
@@ -655,6 +656,7 @@ var defaultConfiguration = {
       host: 'cloud.myscript.com',
       applicationKey: undefined,
       hmacKey: undefined,
+      useWindowLocation: false,
       websocket: {
         pingEnabled: true,
         pingDelay: 30000,
@@ -665,6 +667,7 @@ var defaultConfiguration = {
       }
     },
     v4: {
+      alwaysConnected: false,
       lang: 'en_US',
       export: {
         'image-resolution': 300,
@@ -817,7 +820,15 @@ var defaultConfiguration = {
  * @return {Configuration} Overridden configuration
  */
 function overrideDefaultConfiguration(configuration) {
-  var currentConfiguration = assignDeep({}, defaultConfiguration, configuration === undefined ? {} : configuration);
+  var confRef = configuration;
+  var currentConfiguration = void 0;
+  if (confRef && confRef.recognitionParams.server && confRef.recognitionParams.server.useWindowLocation) {
+    confRef.recognitionParams.server.scheme = window.location.protocol.slice(0, -1);
+    confRef.recognitionParams.server.host = window.location.host;
+    currentConfiguration = assignDeep({}, defaultConfiguration, confRef === undefined ? {} : confRef);
+  } else {
+    currentConfiguration = assignDeep({}, defaultConfiguration, configuration === undefined ? {} : configuration);
+  }
   editorLogger.debug('Override default configuration', currentConfiguration);
   return currentConfiguration;
 }
@@ -1027,7 +1038,7 @@ function attach(element, editor) {
   function pointerDownHandler(evt) {
     // Trigger a pointerDown
     var pointerDownOnEditor = evt.target.id === editor.domElement.id || evt.target.classList.contains('ms-canvas');
-    if (this.activePointerId) {
+    if (this.activePointerId !== undefined) {
       if (this.activePointerId === evt.pointerId) {
         grabberLogger.trace(evt.type + ' event with the same id without any pointer up', evt.pointerId);
       }
@@ -1056,7 +1067,7 @@ function attach(element, editor) {
   function pointerMoveHandler(evt) {
     // Trigger a pointerMove
     // Only considering the active pointer
-    if (this.activePointerId && this.activePointerId === evt.pointerId) {
+    if (this.activePointerId !== undefined && this.activePointerId === evt.pointerId) {
       unfocus();
       editor.pointerMove(extractPoint(evt, element, editor.configuration, offsetTop, offsetLeft));
     } else if (this.smartGuidePointerDown) {
@@ -1092,7 +1103,7 @@ function attach(element, editor) {
     var pointerMovedWords = evt.relatedTarget && evt.target && (evt.target.tagName === 'SPAN' || evt.relatedTarget.tagName === 'SPAN');
     if (pointerEnteredSmartGuide || pointerExitedSmartGuide || pointerMovedWords) {
       evt.stopPropagation();
-    } else if (this.activePointerId && this.activePointerId === evt.pointerId) {
+    } else if (this.activePointerId !== undefined && this.activePointerId === evt.pointerId) {
       // Only considering the active pointer
       this.activePointerId = undefined; // Managing the active pointer
       evt.stopPropagation();
@@ -6530,29 +6541,29 @@ function buildData(recognizerContext, model, conversionState) {
 function extractExports$4(configuration, mimeType, res) {
   var exports = {};
   if (mimeType === 'application/vnd.myscript.jiix') {
-    exports.jiix = res;
+    exports['application/vnd.myscript.jiix'] = res;
   }
   if (configuration.recognitionParams.type === 'TEXT' && mimeType === 'text/plain') {
-    exports.text = res;
+    exports['text/plain'] = res;
   } else if (configuration.recognitionParams.type === 'DIAGRAM') {
     if (mimeType === 'image/svg+xml') {
-      exports.svg = res;
+      exports['image/svg+xml'] = res;
     }
     if (mimeType === 'application/vnd.openxmlformats-officedocument.presentationml.presentation') {
-      exports.pptx = res;
+      exports['application/vnd.openxmlformats-officedocument.presentationml.presentation'] = res;
     }
     if (mimeType === 'application/vnd.microsoft.art-gvml-clipformat') {
-      exports.clipformat = res;
+      exports['application/vnd.microsoft.art-gvml-clipformat'] = res;
     }
   } else if (configuration.recognitionParams.type === 'MATH') {
     if (mimeType === 'application/x-latex') {
-      exports.latex = res;
+      exports['application/x-latex'] = res;
     }
     if (mimeType === 'application/mathml+xml') {
-      exports.mathml = res;
+      exports['application/mathml+xml'] = res;
     }
     if (mimeType === 'application/mathofficeXML') {
-      exports.mathofficeXML = res;
+      exports['application/mathofficeXML'] = res;
     }
   }
   return exports;
@@ -7679,7 +7690,7 @@ function buildWebSocketCallback$1(destructuredPromise, recognizerContext) {
         recognizerContextRef.canRedo = false;
         recognizerContextRef.canUndo = false;
         if (recognitionContext) {
-          recognitionContext.callback(undefined, message);
+          recognitionContext.callback(message);
         } else {
           destructuredPromise.reject(message);
         }
@@ -11477,13 +11488,16 @@ function recognizerCallback(editor, error, model) {
 
     if (err) {
       editorLogger.error('Error while firing the recognition', err.stack || err); // Handle any error from all above steps
-      if (err.message === 'Wrong application key' || err.message === 'Invalid HMAC' || err.error && err.error.result && err.error.result.error && (err.error.result.error === 'InvalidApplicationKeyException' || err.error.result.error === 'InvalidHMACSignatureException')) {
+      if (err.message === 'Invalid application key.' || err.message === 'Invalid HMAC' || err.error && err.error.result && err.error.result.error && (err.error.result.error === 'InvalidApplicationKeyException' || err.error.result.error === 'InvalidHMACSignatureException')) {
         editorRef.error.innerText = Constants.Error.WRONG_CREDENTIALS;
-      } else {
+      } else if (err.message === 'Session is too old. Max Session Duration Reached') {
+        editorRef.error.innerText = Constants.Error.TOO_OLD;
+      } else if (err.message && editorRef.error.style.display === 'none') {
         editorRef.error.innerText = Constants.Error.NOT_REACHABLE;
       }
-      if (err.message === 'Session is too old. Max Session Duration Reached' && canReconnect(editor.recognizerContext)) {
+      if ((editorRef.error.innerText === Constants.Error.TOO_OLD || err.code === 1006) && canReconnect(editor.recognizerContext)) {
         editorLogger.info('Reconnection is available', err.stack || err);
+        editorRef.error.style.display = 'none';
       } else {
         editorRef.error.style.display = 'initial';
         triggerCallbacks.apply(undefined, [editor, err, Constants.EventType.ERROR].concat(types));

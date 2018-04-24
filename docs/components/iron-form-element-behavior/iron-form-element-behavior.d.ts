@@ -30,7 +30,7 @@ declare namespace Polymer {
     /**
      * The value for this element.
      */
-    value: string|null|undefined;
+    value: string|number|null|undefined;
 
     /**
      * Set to true to mark the input as required. If used in a form, a
@@ -46,8 +46,8 @@ declare namespace Polymer {
      * The form that the element is registered to.
      */
     _parentForm: object|null|undefined;
-    attached: any;
-    detached: any;
+    attached(): void;
+    detached(): void;
   }
 
   const IronFormElementBehavior: object;

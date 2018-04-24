@@ -92,7 +92,7 @@ Custom property | Description | Default
         outline: none;
       }
 
-      /** 
+      /**
        * NOTE(keanulee): Though :host-context is not universally supported, some pages
        * still rely on paper-slider being flipped when dir="rtl" is set on body. For full
        * compatability, dir="rtl" must be explicitly set on paper-slider.
@@ -102,7 +102,7 @@ Custom property | Description | Default
         transform: scaleX(-1);
       }
 
-      /** 
+      /**
        * NOTE(keanulee): This is separate from the rule above because :host-context may
        * not be recognized.
        */
@@ -111,7 +111,7 @@ Custom property | Description | Default
         transform: scaleX(-1);
       }
 
-      /** 
+      /**
        * NOTE(keanulee): Needed to override the :host-context rule (where supported)
        * to support LTR sliders in RTL pages.
        */
@@ -346,7 +346,8 @@ Custom property | Description | Default
           secondary-progress="[[secondaryProgress]]"
           on-down="_bardown"
           on-up="_resetKnob"
-          on-track="_onTrack">
+          on-track="_bartrack"
+          on-tap="_barclick">
         </paper-progress>
       </div>
 
@@ -466,6 +467,15 @@ Custom property | Description | Default
         },
 
         /**
+         * If true, a touchmove on the slider bar doesn't drag the slider thunb.
+         * Tapping on the slider bar still updates the slider's position
+         */
+        ignoreBarTouch: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
          * True when the user is dragging the slider.
          */
         dragging: {
@@ -509,6 +519,12 @@ Custom property | Description | Default
         'up pageup end': '_incrementKey'
       },
 
+      ready: function() {
+        if(this.ignoreBarTouch) {
+          Polymer.Gestures.setTouchAction(this.$.sliderBar, 'auto');
+        }
+      },
+      
       /**
        * Increases value by `step` but not above `max`.
        * @method increment
@@ -641,7 +657,13 @@ Custom property | Description | Default
         this.focus();
       },
 
-      _bardown: function(event) {
+      _bartrack: function(event) {
+        if (this._allowBarEvent(event)) {
+          this._onTrack(event);
+        }
+      },
+
+      _barclick: function(event) {
         this._w = this.$.sliderBar.offsetWidth;
         var rect = this.$.sliderBar.getBoundingClientRect();
         var ratio = (event.detail.x - rect.left) / this._w * 100;
@@ -651,15 +673,11 @@ Custom property | Description | Default
         var prevRatio = this.ratio;
 
         this._setTransiting(true);
-
         this._positionKnob(ratio);
-
-        this.debounce('expandKnob', this._expandKnob, 60);
 
         // if the ratio doesn't change, sliderKnob's animation won't start
         // and `_knobTransitionEnd` won't be called
         // Therefore, we need to manually update the `transiting` state
-
         if (prevRatio === this.ratio) {
           this._setTransiting(false);
         }
@@ -673,6 +691,13 @@ Custom property | Description | Default
 
         // set the focus manually because we will called prevent default
         this.focus();
+      },
+
+      _bardown: function(event) {
+        if (this._allowBarEvent(event)) {
+          this.debounce('expandKnob', this._expandKnob, 60);
+          this._barclick(event);
+        }
       },
 
       _knobTransitionEnd: function(event) {
@@ -713,6 +738,10 @@ Custom property | Description | Default
           transiting: this.transiting,
           editable: this.editable
         });
+      },
+
+      _allowBarEvent: function(event) {
+        return (!this.ignoreBarTouch || (event.detail.sourceEvent instanceof MouseEvent))
       },
 
       get _isRTL() {

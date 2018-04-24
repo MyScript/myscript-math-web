@@ -36,7 +36,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </test-fixture>
 
     <script>
-
       suite('<paper-listbox>', function() {
         var listbox;
 
@@ -44,10 +43,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           listbox = fixture('basic');
 
           // Wait for the initial items update.
-          listbox.addEventListener('iron-items-changed', function onIronItemsChanged() {
-            listbox.removeEventListener('iron-items-changed', onIronItemsChanged);
-            done();
-          });
+          listbox.addEventListener(
+              'iron-items-changed', function onIronItemsChanged() {
+                listbox.removeEventListener('iron-items-changed', onIronItemsChanged);
+                done();
+              });
         });
 
         test('selected item has an appropriate className', function() {
@@ -60,7 +60,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         a11ySuite('basic');
       });
-
     </script>
 
   </body>

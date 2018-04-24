@@ -13,7 +13,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
 
 <script>
-
   /**
    * `Polymer.IronMenuBehavior` implements accessible menu behavior.
    *
@@ -28,21 +27,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * Returns the currently focused item.
        * @type {?Object}
        */
-      focusedItem: {
-        observer: '_focusedItemChanged',
-        readOnly: true,
-        type: Object
-      },
+      focusedItem:
+          {observer: '_focusedItemChanged', readOnly: true, type: Object},
 
       /**
-       * The attribute to use on menu items to look up the item title. Typing the first
-       * letter of an item when the menu is open focuses that item. If unset, `textContent`
-       * will be used.
+       * The attribute to use on menu items to look up the item title. Typing the
+       * first letter of an item when the menu is open focuses that item. If
+       * unset, `textContent` will be used.
        */
-      attrForItemTitle: {
-        type: String
-      },
+      attrForItemTitle: {type: String},
 
+      /**
+       * @type {boolean}
+       */
       disabled: {
         type: Boolean,
         value: false,
@@ -50,9 +47,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
     },
 
-    // The list of keys has been taken from
-    // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/getModifierState
-    _MODIFIER_KEYS : [
+    /**
+     * The list of keys has been taken from
+     * https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/getModifierState
+     * @private
+     */
+    _MODIFIER_KEYS: [
       'Alt',
       'AltGraph',
       'CapsLock',
@@ -70,17 +70,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'SymbolLock'
     ],
 
+    /** @private */
     _SEARCH_RESET_TIMEOUT_MS: 1000,
 
+    /** @private */
     _previousTabIndex: 0,
 
     hostAttributes: {
       'role': 'menu',
     },
 
-    observers: [
-      '_updateMultiselectable(multi)'
-    ],
+    observers: ['_updateMultiselectable(multi)'],
 
     listeners: {
       'focus': '_onFocus',
@@ -88,6 +88,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'iron-items-changed': '_onIronItemsChanged'
     },
 
+    /**
+     * @type {!Object}
+     */
     keyBindings: {
       'up': '_onUpKey',
       'down': '_onDownKey',
@@ -100,8 +103,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     /**
-     * Selects the given value. If the `multi` property is true, then the selected state of the
-     * `value` will be toggled; otherwise the `value` will be selected.
+     * Selects the given value. If the `multi` property is true, then the selected
+     * state of the `value` will be toggled; otherwise the `value` will be
+     * selected.
      *
      * @param {string|number} value the value to select.
      */
@@ -113,7 +117,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this._defaultFocusAsync = null;
       }
       var item = this._valueToItem(value);
-      if (item && item.hasAttribute('disabled')) return;
+      if (item && item.hasAttribute('disabled'))
+        return;
       this._setFocusedItem(item);
       Polymer.IronMultiSelectableBehaviorImpl.select.apply(this, arguments);
     },
@@ -125,7 +130,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * other items.
      */
     _resetTabindices: function() {
-      var selectedItem = this.multi ? (this.selectedItems && this.selectedItems[0]) : this.selectedItem;
+      var selectedItem = this.multi ?
+          (this.selectedItems && this.selectedItems[0]) :
+          this.selectedItem;
 
       this.items.forEach(function(item) {
         item.setAttribute('tabindex', item === selectedItem ? '0' : '-1');
@@ -162,7 +169,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.cancelDebouncer('_clearSearchText');
 
       var searchText = this._searchText || '';
-      var key = event.key && event.key.length == 1 ? event.key :
+      var key = event.key && event.key.length == 1 ?
+          event.key :
           String.fromCharCode(event.keyCode);
       searchText += key.toLocaleLowerCase();
 
@@ -187,8 +195,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       this._searchText = searchText;
-      this.debounce('_clearSearchText', this._clearSearchText,
-                    this._SEARCH_RESET_TIMEOUT_MS);
+      this.debounce(
+          '_clearSearchText',
+          this._clearSearchText,
+          this._SEARCH_RESET_TIMEOUT_MS);
     },
 
     _clearSearchText: function() {
@@ -270,7 +280,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      */
     _focusedItemChanged: function(focusedItem, old) {
       old && old.setAttribute('tabindex', '-1');
-      if (focusedItem && !focusedItem.hasAttribute('disabled') && !this.disabled) {
+      if (focusedItem && !focusedItem.hasAttribute('disabled') &&
+          !this.disabled) {
         focusedItem.setAttribute('tabindex', '0');
         focusedItem.focus();
       }
@@ -323,9 +334,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       // Do not focus the selected tab if the deepest target is part of the
       // menu element's local DOM and is focusable.
-      var rootTarget = /** @type {?HTMLElement} */(
-          Polymer.dom(event).rootTarget);
-      if (rootTarget !== this && typeof rootTarget.tabIndex !== "undefined" && !this.isLightDescendant(rootTarget)) {
+      var rootTarget =
+          /** @type {?HTMLElement} */ (Polymer.dom(event).rootTarget);
+      if (rootTarget !== this && typeof rootTarget.tabIndex !== 'undefined' &&
+          !this.isLightDescendant(rootTarget)) {
         return;
       }
 
@@ -333,7 +345,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this._defaultFocusAsync = this.async(function() {
         // focus the selected item when the menu receives focus, or the first item
         // if no item is selected
-        var selectedItem = this.multi ? (this.selectedItems && this.selectedItems[0]) : this.selectedItem;
+        var selectedItem = this.multi ?
+            (this.selectedItems && this.selectedItems[0]) :
+            this.selectedItem;
 
         this._setFocusedItem(null);
 
@@ -404,8 +418,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      */
     _disabledChanged: function(disabled) {
       if (disabled) {
-        this._previousTabIndex = this.hasAttribute('tabindex') ? this.tabIndex : 0;
-        this.removeAttribute('tabindex');  // No tabindex means not tab-able or select-able.
+        this._previousTabIndex =
+            this.hasAttribute('tabindex') ? this.tabIndex : 0;
+        this.removeAttribute(
+            'tabindex');  // No tabindex means not tab-able or select-able.
       } else if (!this.hasAttribute('tabindex')) {
         this.setAttribute('tabindex', this._previousTabIndex);
       }
@@ -420,5 +436,4 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer.IronA11yKeysBehavior,
     Polymer.IronMenuBehaviorImpl
   ];
-
 </script>

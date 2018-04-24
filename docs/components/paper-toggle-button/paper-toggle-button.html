@@ -205,32 +205,25 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
     Polymer({
       is: 'paper-toggle-button',
 
-      behaviors: [
-        Polymer.PaperCheckedElementBehavior
-      ],
+      behaviors: [Polymer.PaperCheckedElementBehavior],
 
-      hostAttributes: {
-        role: 'button',
-        'aria-pressed': 'false',
-        tabindex: 0
-      },
+      /** @private */
+      hostAttributes: {role: 'button', 'aria-pressed': 'false', tabindex: 0},
 
       properties: {
-        /**
-         * Fired when the checked state changes due to user interaction.
-         *
-         * @event change
-         */
-        /**
-         * Fired when the checked state changes.
-         *
-         * @event iron-change
-         */
+          /**
+           * Fired when the checked state changes due to user interaction.
+           *
+           * @event change
+           */
+          /**
+           * Fired when the checked state changes.
+           *
+           * @event iron-change
+           */
       },
 
-      listeners: {
-        track: '_ontrack'
-      },
+      listeners: {track: '_ontrack'},
 
       attached: function() {
         Polymer.RenderStatus.afterNextRender(this, function() {
@@ -261,8 +254,8 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
 
       _trackMove: function(track) {
         var dx = track.dx;
-        this._x = Math.min(this._width,
-            Math.max(0, this._trackChecked ? this._width + dx : dx));
+        this._x = Math.min(
+            this._width, Math.max(0, this._trackChecked ? this._width + dx : dx));
         this.translate3d(this._x + 'px', 0, 0, this.$.toggleButton);
         this._userActivate(this._x > (this._width / 2));
       },

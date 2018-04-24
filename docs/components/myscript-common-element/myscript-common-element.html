@@ -238,6 +238,14 @@ CSS variable | Default
                         value: 'cloud.myscript.com'
                     },
                     /**
+                     * Use if host and scheme should be set using window.location
+                     */
+                    usewindowlocation: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
+                    /**
                      * Cloud API version to use.
                      */
                     apiversion: {
@@ -551,7 +559,7 @@ CSS variable | Default
                 return inlinestyle;
             }
 
-            static _generateConfiguration(configuration, triggerdelay, processdelay, ondemand, type, protocol, apiversion, scheme, host, applicationkey, hmackey, disableautoreconnect) {
+            static _generateConfiguration(configuration, triggerdelay, processdelay, ondemand, type, protocol, apiversion, scheme, host, usewindowlocation, applicationkey, hmackey, disableautoreconnect) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
                 if (!conf.triggers) {
@@ -590,6 +598,10 @@ CSS variable | Default
                 }
                 if (host) {
                     conf.recognitionParams.server.host = host;
+                }
+                if (usewindowlocation) {
+                    conf.recognitionParams.server.scheme = window.location.protocol.slice(0, -1);
+                    conf.recognitionParams.server.host = window.location.host;
                 }
                 if (applicationkey) {
                     conf.recognitionParams.server.applicationKey = applicationkey;
@@ -637,6 +649,7 @@ CSS variable | Default
                     this.apiversion,
                     this.scheme,
                     this.host,
+                    this.usewindowlocation,
                     this.applicationkey,
                     this.hmackey,
                     this.disableautoreconnect);

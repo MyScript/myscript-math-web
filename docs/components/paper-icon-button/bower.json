@@ -1,7 +1,7 @@
 {
   "name": "paper-icon-button",
   "private": true,
-  "version": "2.1.0",
+  "version": "2.2.0",
   "license": "http://polymer.github.io/LICENSE.txt",
   "description": "A material design icon button",
   "main": [

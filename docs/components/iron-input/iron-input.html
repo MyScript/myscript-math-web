@@ -162,7 +162,7 @@ is separate from validation, and `allowed-pattern` does not affect how the input
           type: Boolean,
           value: false
         },
-          
+
        /**
         * The native input element.
         */
@@ -220,7 +220,7 @@ is separate from validation, and `allowed-pattern` does not affect how the input
         if (this.allowedPattern) {
           pattern = new RegExp(this.allowedPattern);
         } else {
-          switch (this.type) {
+          switch (this.inputElement.type) {
             case 'number':
               pattern = /[0-9.,e-]/;
               break;
@@ -300,7 +300,7 @@ is separate from validation, and `allowed-pattern` does not affect how the input
       },
 
       _onKeypress: function(event) {
-        if (!this.allowedPattern && this.type !== 'number') {
+        if (!this.allowedPattern && this.inputElement.type !== 'number') {
           return;
         }
         var regexp = this._patternRegExp;

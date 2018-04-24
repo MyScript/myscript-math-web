@@ -137,6 +137,9 @@ style this element.
       },
     },
 
+    /**
+     * @return {number}
+     */
     get selectionStart() {
       return this.$.input.textarea.selectionStart;
     },
@@ -144,6 +147,9 @@ style this element.
       this.$.input.textarea.selectionStart = start;
     },
 
+    /**
+     * @return {number}
+     */
     get selectionEnd() {
       return this.$.input.textarea.selectionEnd;
     },
