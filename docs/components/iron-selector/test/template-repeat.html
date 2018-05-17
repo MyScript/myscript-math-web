@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../web-component-tester/browser.js"></script>
   <link rel="import" href="../../iron-test-helpers/iron-test-helpers.html">
 
-  <link rel="import" href="../iron-selector.html">
+  <script type="module" src="../iron-selector.js"></script>
 
   <style>
     .iron-selected {
@@ -63,73 +63,74 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <script>
+  <script type="module">
+import '../iron-selector.js';
+import { Element } from '../../polymer/polymer-element.js';
 
-    suite('dom-repeat', function() {
+suite('dom-repeat', function() {
 
-      var scope;
-      var selector;
-      var domRepeat;
+  var scope;
+  var selector;
+  var domRepeat;
 
-      setup(function() {
-        if (Polymer.Element) {
-          scope = fixture('scope-polymer2');
-          selector = scope.querySelector('iron-selector');
-          domRepeat = scope.querySelector('dom-repeat');
-        } else {
-          scope = fixture('scope-polymer1');
-          selector = scope.querySelector('iron-selector');
-          domRepeat = scope.querySelector('template[is=dom-repeat]');
-        }
-        domRepeat.items = [{name:'item0'}, {name: 'item1'}, {name: 'item2'}, {name: 'item3'}];
-        domRepeat.render();
-        // See the note in `forceSynchronousItemUpdate`.
-        selector.forceSynchronousItemUpdate();
-      });
+  setup(function() {
+    if (Element) {
+      scope = fixture('scope-polymer2');
+      selector = scope.querySelector('iron-selector');
+      domRepeat = scope.querySelector('dom-repeat');
+    } else {
+      scope = fixture('scope-polymer1');
+      selector = scope.querySelector('iron-selector');
+      domRepeat = scope.querySelector('template[is=dom-repeat]');
+    }
+    domRepeat.items = [{name:'item0'}, {name: 'item1'}, {name: 'item2'}, {name: 'item3'}];
+    domRepeat.render();
+    // See the note in `forceSynchronousItemUpdate`.
+    selector.forceSynchronousItemUpdate();
+  });
 
-      test('supports repeated items', function() {
-        // check items
-        assert.equal(selector.items.length, 4);
-        // check selected
-        assert.equal(selector.selected, 1);
-        // check selected item
-        var item = selector.selectedItem;
-        assert.equal(selector.items[1], item);
-        // check selected class
-        assert.isTrue(item.classList.contains('iron-selected'));
-      });
+  test('supports repeated items', function() {
+    // check items
+    assert.equal(selector.items.length, 4);
+    // check selected
+    assert.equal(selector.selected, 1);
+    // check selected item
+    var item = selector.selectedItem;
+    assert.equal(selector.items[1], item);
+    // check selected class
+    assert.isTrue(item.classList.contains('iron-selected'));
+  });
 
-      test('update items', function() {
-        // check items
-        assert.equal(selector.items.length, 4);
-        // check selected
-        assert.equal(selector.selected, 1);
-        // update items
-        domRepeat.items = [{name:'foo'}, {name: 'bar'}];
-        domRepeat.render();
-        // See the note in `forceSynchronousItemUpdate`.
-        selector.forceSynchronousItemUpdate();
-        // check items
-        assert.equal(selector.items.length, 2);
-        // check selected (should still honor the selected)
-        assert.equal(selector.selected, 1);
-        // check selected class
-        assert.isTrue(selector.querySelector('#bar').classList.contains('iron-selected'));
-      });
+  test('update items', function() {
+    // check items
+    assert.equal(selector.items.length, 4);
+    // check selected
+    assert.equal(selector.selected, 1);
+    // update items
+    domRepeat.items = [{name:'foo'}, {name: 'bar'}];
+    domRepeat.render();
+    // See the note in `forceSynchronousItemUpdate`.
+    selector.forceSynchronousItemUpdate();
+    // check items
+    assert.equal(selector.items.length, 2);
+    // check selected (should still honor the selected)
+    assert.equal(selector.selected, 1);
+    // check selected class
+    assert.isTrue(selector.querySelector('#bar').classList.contains('iron-selected'));
+  });
 
-      test('set selected to something else', function() {
-        // set selected to something else
-        selector.selected = 3;
-        // check selected item
-        var item = selector.selectedItem;
-        assert.equal(selector.items[3], item);
-        // check selected class
-        assert.isTrue(item.classList.contains('iron-selected'));
-      });
+  test('set selected to something else', function() {
+    // set selected to something else
+    selector.selected = 3;
+    // check selected item
+    var item = selector.selectedItem;
+    assert.equal(selector.items[3], item);
+    // check selected class
+    assert.isTrue(item.classList.contains('iron-selected'));
+  });
 
-    });
-
-  </script>
+});
+</script>
 
 </body>
 </html>

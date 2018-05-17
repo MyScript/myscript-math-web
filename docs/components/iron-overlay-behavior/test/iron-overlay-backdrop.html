@@ -22,7 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script src="../../web-component-tester/browser.js"></script>
     <link rel="import" href="../../iron-test-helpers/iron-test-helpers.html">
-    <link rel="import" href="test-overlay.html">
+    <script type="module" src="./test-overlay.js"></script>
 
     <style>
         html,
@@ -52,32 +52,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
 </test-fixture>
 
-<script>
-    function runAfterOpen(overlay, callback) {
-        overlay.addEventListener('iron-overlay-opened', callback);
-        overlay.open();
-    }
+<script type="module">
+import './test-overlay.js';
+import { flush } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+function runAfterOpen(overlay, callback) {
+    overlay.addEventListener('iron-overlay-opened', callback);
+    overlay.open();
+}
 
-    suite('overlay with backdrop', function() {
-        var overlay;
+suite('overlay with backdrop', function() {
+    var overlay;
 
-        setup(function() {
-            overlay = fixture('backdrop');
-        });
-
-        test('backdrop size matches parent size', function(done) {
-            runAfterOpen(overlay, function() {
-                // Flush so we are sure backdrop is added in the DOM.
-                Polymer.dom.flush();
-                var backdrop = overlay.backdropElement;
-                var parent = backdrop.parentElement;
-                assert.strictEqual(backdrop.offsetWidth, parent.clientWidth, 'backdrop width matches parent width');
-                assert.strictEqual(backdrop.offsetHeight, parent.clientHeight, 'backdrop height matches parent height');
-                done();
-            });
-        });
-
+    setup(function() {
+        overlay = fixture('backdrop');
     });
+
+    test('backdrop size matches parent size', function(done) {
+        runAfterOpen(overlay, function() {
+            // Flush so we are sure backdrop is added in the DOM.
+            flush();
+            var backdrop = overlay.backdropElement;
+            var parent = backdrop.parentElement;
+            assert.strictEqual(backdrop.offsetWidth, parent.clientWidth, 'backdrop width matches parent width');
+            assert.strictEqual(backdrop.offsetHeight, parent.clientHeight, 'backdrop height matches parent height');
+            done();
+        });
+    });
+
+});
 </script>
 
 </body>

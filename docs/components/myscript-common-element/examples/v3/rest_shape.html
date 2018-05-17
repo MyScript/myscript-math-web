@@ -15,8 +15,8 @@
 
         <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
         <script src="../../../pepjs/dist/pep.min.js"></script>
-        <link rel="import" href="../../myscript-common-element.html">
-        <link rel="import" href="../../../paper-toast/paper-toast.html">
+        <script type="module" src="../../myscript-common-element.js"></script>
+        <script type="module" src="../../../paper-toast/paper-toast.js"></script>
     </head>
 
     <body>
@@ -31,13 +31,15 @@
                                  touch-action="none"
                                  disableconvertcontrol>
         </myscript-common-element>
-        <script>
-            const paperToast = document.querySelector('paper-toast');
-            document.querySelector('myscript-common-element').addEventListener('exported', (event) => {
-                paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
-                paperToast.fitIn = paperToast.show();
-            });
-        </script>
+        <script type="module">
+import '../../myscript-common-element.js';
+import '../../../paper-toast/paper-toast.js';
+const paperToast = document.querySelector('paper-toast');
+document.querySelector('myscript-common-element').addEventListener('exported', (event) => {
+    paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
+    paperToast.fitIn = paperToast.show();
+});
+</script>
     </body>
 
 </html>

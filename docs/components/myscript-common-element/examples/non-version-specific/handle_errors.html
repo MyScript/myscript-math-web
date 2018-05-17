@@ -14,8 +14,8 @@
         <link rel="stylesheet" href="../examples.css">
 
         <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-        <link rel="import" href="../../../paper-toast/paper-toast.html">
-        <link rel="import" href="../../myscript-common-element.html">
+        <script type="module" src="../../../paper-toast/paper-toast.js"></script>
+        <script type="module" src="../../myscript-common-element.js"></script>
     </head>
 
     <body>
@@ -23,13 +23,15 @@
         <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
         <myscript-common-element host="thisisnotanhost" applicationkey="WRONG">
         </myscript-common-element>
-        <script>
-            const paperToast = document.querySelector('paper-toast');
-            document.querySelector('myscript-common-element').addEventListener('error', (event) => {
-                paperToast.text = `Error : ${JSON.stringify(event.detail)}`;
-                paperToast.fitIn = paperToast.show();
-            });
-        </script>
+        <script type="module">
+import '../../../paper-toast/paper-toast.js';
+import '../../myscript-common-element.js';
+const paperToast = document.querySelector('paper-toast');
+document.querySelector('myscript-common-element').addEventListener('error', (event) => {
+    paperToast.text = `Error : ${JSON.stringify(event.detail)}`;
+    paperToast.fitIn = paperToast.show();
+});
+</script>
     </body>
 
 </html>

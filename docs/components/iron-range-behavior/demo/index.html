@@ -14,7 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../iron-range-behavior.html">
+    <script type="module" src="../iron-range-behavior.js"></script>
 
     <style>
 
@@ -57,19 +57,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="progress-value"><span>{{ratio}}</span>%</div>
         </div>
       </template>
-      <script>
-        window.addEventListener('WebComponentsReady', function() {
-          Polymer({
-            is: 'x-progressbar',
+      <script type="module">
+import { IronRangeBehavior } from '../iron-range-behavior.js';
+import { Polymer } from '../../polymer/lib/legacy/polymer-fn.js';
+Polymer({
+  is: 'x-progressbar',
 
-            behaviors: [Polymer.IronRangeBehavior],
+  behaviors: [IronRangeBehavior],
 
-            _computeStyle: function(ratio) {
-              return 'width: ' + ratio + '%;';
-            }
-          });
-        });
-      </script>
+  _computeStyle: function(ratio) {
+    return 'width: ' + ratio + '%;';
+  }
+});
+</script>
     </dom-module>
 
     <x-progressbar min="0" max="200" value="120"></x-progressbar>

@@ -32,7 +32,7 @@
     <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../../../pepjs/dist/pep.min.js"></script>
     <!-- myscript-common-element is import to be used later -->
-    <link rel="import" href="../../myscript-common-element.html">
+    <script type="module" src="../../myscript-common-element.js"></script>
 </head>
 
 <body>
@@ -63,15 +63,16 @@
   }]}</textarea>
 <button class="classic-btn" id="pointerEvents">Process</button>
 </div>
-<script>
-    const component = document.querySelector('myscript-common-element');
-    const pointerEventsObjectElement = document.getElementById('pointerEventsObject');
+<script type="module">
+import '../../myscript-common-element.js';
+const component = document.querySelector('myscript-common-element');
+const pointerEventsObjectElement = document.getElementById('pointerEventsObject');
 
-    document.getElementById('pointerEvents').addEventListener('click', function () {
-        const pointerEventsObject = JSON.parse(pointerEventsObjectElement.value);
-        console.log('Pointer events being processed', pointerEventsObject);
-        component.pointerEvents(pointerEventsObject);
-    });
+document.getElementById('pointerEvents').addEventListener('click', function () {
+    const pointerEventsObject = JSON.parse(pointerEventsObjectElement.value);
+    console.log('Pointer events being processed', pointerEventsObject);
+    component.pointerEvents(pointerEventsObject);
+});
 </script>
 </body>
 

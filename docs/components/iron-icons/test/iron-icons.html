@@ -19,22 +19,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
 
-  <link rel="import" href="../av-icons.html">
-  <link rel="import" href="../communication-icons.html">
-  <link rel="import" href="../device-icons.html">
-  <link rel="import" href="../editor-icons.html">
-  <link rel="import" href="../hardware-icons.html">
-  <link rel="import" href="../image-icons.html">
-  <link rel="import" href="../iron-icons.html">
-  <link rel="import" href="../maps-icons.html">
-  <link rel="import" href="../notification-icons.html">
-  <link rel="import" href="../places-icons.html">
-  <link rel="import" href="../social-icons.html">
+  <script type="module" src="../av-icons.js"></script>
+  <script type="module" src="../communication-icons.js"></script>
+  <script type="module" src="../device-icons.js"></script>
+  <script type="module" src="../editor-icons.js"></script>
+  <script type="module" src="../hardware-icons.js"></script>
+  <script type="module" src="../image-icons.js"></script>
+  <script type="module" src="../iron-icons.js"></script>
+  <script type="module" src="../maps-icons.js"></script>
+  <script type="module" src="../notification-icons.js"></script>
+  <script type="module" src="../places-icons.js"></script>
+  <script type="module" src="../social-icons.js"></script>
 
 </head>
 <body>
 
-  <script>
+  <script type="module">
+import '../av-icons.js';
+import '../communication-icons.js';
+import '../device-icons.js';
+import '../editor-icons.js';
+import '../hardware-icons.js';
+import '../image-icons.js';
+import '../iron-icons.js';
+import '../maps-icons.js';
+import '../notification-icons.js';
+import '../places-icons.js';
+import '../social-icons.js';
 
 suite('<iron-icons>', function() {
   suite('basic behavior', function() {
@@ -77,8 +88,7 @@ suite('<iron-icons>', function() {
     });
   });
 });
-
-  </script>
+</script>
 
 </body>
 </html>

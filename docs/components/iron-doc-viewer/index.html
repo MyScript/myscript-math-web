@@ -14,16 +14,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title></title>
 
-    <link rel="import" href="../polymer/polymer.html">
-    <link rel="import" href="../iron-ajax/iron-ajax.html">
-    <link rel="import" href="default-theme.html">
-    <link rel="import" href="iron-doc-viewer.html">
+    <script type="module" src="../polymer/polymer.js"></script>
+    <script type="module" src="../iron-ajax/iron-ajax.js"></script>
+    <script type="module" src="./default-theme.js"></script>
+    <script type="module" src="./iron-doc-viewer.js"></script>
 
-    <custom-style>
+    <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<custom-style>
       <style is="custom-style" include="iron-doc-default-theme"></style>
-    </custom-style>
+    </custom-style>`;
 
-    <style>
+document.body.appendChild($_documentContainer);
+</script>
+
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<style>
       body {
         margin: 16px;
       }
@@ -32,25 +49,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 0 auto;
         max-width: 48em;
       }
-    </style>
+    </style>`;
+
+document.body.appendChild($_documentContainer);
+</script>
   </head>
   <body>
-    <iron-ajax
-        id="ajax"
-        auto
-        url="/demo/analysis.json"
-        handle-as="json"></iron-ajax>
-    <iron-doc-viewer
-        id="doc-viewer"
-        root-namespace="Polymer">
-    </iron-doc-viewer>
-    <script>
-      const ajax = document.querySelector('#ajax');
-      const docViewer = document.querySelector('#doc-viewer');
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<iron-ajax id="ajax" auto="" url="/demo/analysis.json" handle-as="json"></iron-ajax>`;
+document.body.appendChild($_documentContainer);
+</script>
+    <script type="module">
+const $_documentContainer = document.createElement('div');
 
-      ajax.addEventListener('response', (e) => {
-        docViewer.descriptor = ajax.lastResponse;
-      });
-    </script>
+$_documentContainer.innerHTML = `<iron-doc-viewer id="doc-viewer" root-namespace="Polymer">
+    </iron-doc-viewer>`;
+
+document.body.appendChild($_documentContainer);
+</script>
+    <script type="module">
+import '../polymer/polymer.js';
+import '../iron-ajax/iron-ajax.js';
+import './default-theme.js';
+import './iron-doc-viewer.js';
+const ajax = document.querySelector('#ajax');
+const docViewer = document.querySelector('#doc-viewer');
+
+ajax.addEventListener('response', (e) => {
+  docViewer.descriptor = ajax.lastResponse;
+});
+</script>
   </body>
 </html>

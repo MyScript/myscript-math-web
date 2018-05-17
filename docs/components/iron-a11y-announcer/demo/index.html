@@ -21,26 +21,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-  <link rel="import" href="../../paper-button/paper-button.html">
-  <link rel="import" href="x-announces.html">
-  <link rel="import" href="../iron-a11y-announcer.html">
-  <custom-style>
+  <script type="module" src="../../paper-button/paper-button.js"></script>
+  <script type="module" src="./x-announces.js"></script>
+  <script type="module" src="../iron-a11y-announcer.js"></script>
+  <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
       input {
         margin-right: 20px;
       }
     </style>
-  </custom-style>
+  </custom-style>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 </head>
 <body>
-  <div class="vertical-section-container centered">
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
     <p><b>Note</b>: in order to hear the announcements, be sure to turn on your favorite screen reader!</p>
 
     <h4>Announcer used directly on the main document</h4>
     <demo-snippet>
       <template>
         <input id="input" value="Pizza is delicious">
-        <paper-button raised onclick="_announce()">Announce</paper-button>
+        <paper-button raised="" onclick="_announce()">Announce</paper-button>
 
         <script>
           window.addEventListener('WebComponentsReady', function() {
@@ -58,7 +75,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               bubbles: true
             });
           }
-        </script>
+        &lt;/script>
       </template>
     </demo-snippet>
 
@@ -70,6 +87,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <x-announces message="Are you paying attention?"></x-announces>
       </template>
     </demo-snippet>
-  </div>
-</body>
-</html>
+  </div>`;
+
+document.body.appendChild($_documentContainer);
+</script>

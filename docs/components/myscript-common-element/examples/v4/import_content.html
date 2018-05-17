@@ -26,7 +26,7 @@
     <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../../../pepjs/dist/pep.min.js"></script>
     <!-- myscript-common-element is import to be used later -->
-    <link rel="import" href="../../myscript-common-element.html">
+    <script type="module" src="../../myscript-common-element.js"></script>
 </head>
 
 <body>
@@ -44,13 +44,14 @@
                          disableconvertcontrol
                          disableclearcontrol>
 </myscript-common-element>
-<script>
-    const component = document.querySelector('myscript-common-element');
-    const importContent = document.getElementById('importContentField');
+<script type="module">
+import '../../myscript-common-element.js';
+const component = document.querySelector('myscript-common-element');
+const importContent = document.getElementById('importContentField');
 
-    document.getElementById('importContent').addEventListener('click', function () {
-        component.import_(importContent.value, importContent.dataset.type);
-    });
+document.getElementById('importContent').addEventListener('click', function () {
+    component.import_(importContent.value, importContent.dataset.type);
+});
 </script>
 </body>
 

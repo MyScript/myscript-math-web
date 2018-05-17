@@ -12,17 +12,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <head>
   <title>iron-icon demo</title>
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../iron-icon.html">
+  <script type="module" src="../iron-icon.js"></script>
   <link rel="import" href="../../iron-iconset/iron-iconset.html">
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
 </head>
 <body unresolved>
-  <custom-style>
-    <style is="custom-style" include="demo-pages-shared-styles"></style>
-  </custom-style>
+  <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
 
-  <div class="vertical-section-container centered">
+$_documentContainer.innerHTML = `<custom-style>
+    <style is="custom-style" include="demo-pages-shared-styles"></style>
+  </custom-style>`;
+
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
     <h3>
       This demo is for a single &lt;iron-icon&gt;. If you're looking for the
       whole set of available icons, check out the
@@ -45,6 +62,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-icon src="location.png"></iron-icon>
       </template>
     </demo-snippet>
-  </div>
+  </div>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 </body>
 </html>

@@ -23,12 +23,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../test-fixture/test-fixture-mocha.js"></script>
 
   <link rel="import" href="../../test-fixture/test-fixture.html">
-  <link rel="import" href="../web-animations.html">
-  <link rel="import" href="../neon-animated-pages.html">
-  <link rel="import" href="../neon-animatable.html">
-  <link rel="import" href="../animations/slide-from-left-animation.html">
-  <link rel="import" href="../animations/slide-right-animation.html">
-  <link rel="import" href="test-resizable-pages.html">
+  <script type="module" src="../web-animations.js"></script>
+  <script type="module" src="../neon-animated-pages.js"></script>
+  <script type="module" src="../neon-animatable.js"></script>
+  <script type="module" src="../animations/slide-from-left-animation.js"></script>
+  <script type="module" src="../animations/slide-right-animation.js"></script>
+  <script type="module" src="./test-resizable-pages.js"></script>
 
 </head>
 <body>
@@ -59,45 +59,52 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <script>
-    suite('basic', function() {
-    });
-    suite('notify-resize', function() {
-      test('only a destination page recieves a resize event', function(done) {
-        var animatedPages = fixture('notify-resize');
-        var resizables = Polymer.dom(animatedPages).children;
-        var recieves = {};
-        for (var i = 0; i < resizables.length; i++) {
-          var page = resizables[i];
-          page.addEventListener('iron-resize', function(event) {
-            var pageName = event.currentTarget.tagName;
-            recieves[pageName] = pageName in recieves ? recieves[pageName] + 1 : 1;
-          });
-        }
-        animatedPages.selected = 2;
-        setTimeout(function() {
-          assert.deepEqual(recieves, {
-            'C-RESIZABLE-PAGE': 1
-          });
-          done();
-        }, 50);
+  <script type="module">
+import '../web-animations.js';
+import '../neon-animated-pages.js';
+import '../neon-animatable.js';
+import '../animations/slide-from-left-animation.js';
+import '../animations/slide-right-animation.js';
+import './test-resizable-pages.js';
+import { dom } from '../../polymer/lib/legacy/polymer.dom.js';
+suite('basic', function() {
+});
+suite('notify-resize', function() {
+  test('only a destination page recieves a resize event', function(done) {
+    var animatedPages = fixture('notify-resize');
+    var resizables = dom(animatedPages).children;
+    var recieves = {};
+    for (var i = 0; i < resizables.length; i++) {
+      var page = resizables[i];
+      page.addEventListener('iron-resize', function(event) {
+        var pageName = event.currentTarget.tagName;
+        recieves[pageName] = pageName in recieves ? recieves[pageName] + 1 : 1;
       });
-    });
-    suite('animate-initial-selection', function() {
-      test('\'neon-animation-finish\' event fired after animating initial selection', function(done) {
-        var animatedPages = fixture('animate-initial-selection');
-        assert.isUndefined(animatedPages.selected);
-        var pages = Polymer.dom(animatedPages).children;
-        animatedPages.addEventListener('neon-animation-finish', function(event) {
-          assert.strictEqual(animatedPages.selected, 0);
-          assert.isFalse(event.detail.fromPage);
-          assert.deepEqual(event.detail.toPage, pages[0]);
-          done();
-        });
-        animatedPages.selected = 0;
+    }
+    animatedPages.selected = 2;
+    setTimeout(function() {
+      assert.deepEqual(recieves, {
+        'C-RESIZABLE-PAGE': 1
       });
+      done();
+    }, 50);
+  });
+});
+suite('animate-initial-selection', function() {
+  test('\'neon-animation-finish\' event fired after animating initial selection', function(done) {
+    var animatedPages = fixture('animate-initial-selection');
+    assert.isUndefined(animatedPages.selected);
+    var pages = dom(animatedPages).children;
+    animatedPages.addEventListener('neon-animation-finish', function(event) {
+      assert.strictEqual(animatedPages.selected, 0);
+      assert.isFalse(event.detail.fromPage);
+      assert.deepEqual(event.detail.toPage, pages[0]);
+      done();
     });
-  </script>
+    animatedPages.selected = 0;
+  });
+});
+</script>
 
 </body>
 </html>

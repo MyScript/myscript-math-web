@@ -23,10 +23,10 @@
             }
         </style>
 
-        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-        <script src="../../../pepjs/dist/pep.min.js"></script>
-        <link rel="import" href="../../../paper-toast/paper-toast.html">
-        <link rel="import" href="../../myscript-math-web.html">
+        <script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+        <script src="pepjs/dist/pep.min.js"></script>
+        <script type="module" src="@polymer/paper-toast/paper-toast.js"></script>
+        <script type="module" src="../../myscript-math-web.js"></script>
     </head>
 
     <body>
@@ -47,14 +47,16 @@
                            disablecontrols
                            touch-action="none">
         </myscript-math-web>
-        <script>
-            const myscriptMathWeb = document.querySelector('myscript-math-web');
-            const paperToast = document.querySelector('paper-toast');
-            myscriptMathWeb.addEventListener('exported', (event) => {
-                paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
-                paperToast.fitIn = paperToast.show();
-            });
-        </script>
+        <script type="module">
+import '@polymer/paper-toast/paper-toast.js';
+import '../../myscript-math-web.js';
+const myscriptMathWeb = document.querySelector('myscript-math-web');
+const paperToast = document.querySelector('paper-toast');
+myscriptMathWeb.addEventListener('exported', (event) => {
+    paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
+    paperToast.fitIn = paperToast.show();
+});
+</script>
     </body>
 
 </html>

@@ -14,8 +14,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <title>iron-query-params</title>
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../iron-query-params.html">
-  <link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+  <script type="module" src="../iron-query-params.js"></script>
+  <script type="module" src="../../iron-flex-layout/iron-flex-layout-classes.js"></script>
 </head>
 <body>
 
@@ -53,72 +53,73 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </div>
     </template>
-    <script>
-      window.addEventListener('WebComponentsReady', function() {
-        Polymer({
-          is: 'iron-query-params-demo',
-          properties: {
-            params: {
-              observer: 'paramsChanged'
-            },
+    <script type="module">
+import '../iron-query-params.js';
+import '../../iron-flex-layout/iron-flex-layout-classes.js';
+import { Polymer } from '../../polymer/lib/legacy/polymer-fn.js';
+Polymer({
+  is: 'iron-query-params-demo',
+  properties: {
+    params: {
+      observer: 'paramsChanged'
+    },
 
-            paramsInvalid: {
-              value: false,
-            },
+    paramsInvalid: {
+      value: false,
+    },
 
-            paramString: {
-              type: String,
-              observer: 'paramStringChanged'
-            },
+    paramString: {
+      type: String,
+      observer: 'paramStringChanged'
+    },
 
-            stringifiedParams: {
-              type: String,
-              observer: 'stringifedParamsChanged'
-            }
-          },
+    stringifiedParams: {
+      type: String,
+      observer: 'stringifedParamsChanged'
+    }
+  },
 
-          paramStringChanged: function() {
-            if (this.ignore) { return; }
+  paramStringChanged: function() {
+    if (this.ignore) { return; }
 
-            this.ignore = true;
+    this.ignore = true;
 
-            try {
-              this.paramsInvalid = false;
-            } catch(_) {
-              this.paramsInvalid = true;
-            }
+    try {
+      this.paramsInvalid = false;
+    } catch(_) {
+      this.paramsInvalid = true;
+    }
 
-            this.ignore = false;
-          },
+    this.ignore = false;
+  },
 
-          stringifedParamsChanged: function() {
-            if (this.ignore) { return; }
+  stringifedParamsChanged: function() {
+    if (this.ignore) { return; }
 
-            this.ignore = true;
+    this.ignore = true;
 
-            try {
-              var newParamsObject = JSON.parse(this.stringifiedParams);
-              this.$.queryParams.paramsObject = newParamsObject;
-              this.paramsInvalid = false;
+    try {
+      var newParamsObject = JSON.parse(this.stringifiedParams);
+      this.$.queryParams.paramsObject = newParamsObject;
+      this.paramsInvalid = false;
 
-            } catch (e) {
-              this.paramsInvalid = true;
-            }
+    } catch (e) {
+      this.paramsInvalid = true;
+    }
 
-            this.ignore = false;
-          },
+    this.ignore = false;
+  },
 
-          paramsChanged: function() {
-            if (this.ignore) { return; }
+  paramsChanged: function() {
+    if (this.ignore) { return; }
 
-            this.ignore = true;
-            this.stringifiedParams = JSON.stringify(this.params);
-            this.paramsInvalid = false;
-            this.ignore = false;
-          }
-        });
-      });
-    </script>
+    this.ignore = true;
+    this.stringifiedParams = JSON.stringify(this.params);
+    this.paramsInvalid = false;
+    this.ignore = false;
+  }
+});
+</script>
   </dom-module>
 
   <iron-query-params-demo></iron-query-params-demo>

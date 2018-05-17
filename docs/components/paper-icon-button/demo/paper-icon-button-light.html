@@ -14,19 +14,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../../iron-icon/iron-icon.html">
-    <link rel="import" href="../../iron-icons/iron-icons.html">
-    <link rel="import" href="../../paper-styles/color.html">
+    <script type="module" src="../../iron-icon/iron-icon.js"></script>
+    <script type="module" src="../../iron-icons/iron-icons.js"></script>
+    <script type="module" src="../../paper-styles/color.js"></script>
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../paper-icon-button-light.html">
+    <script type="module" src="../paper-icon-button-light.js"></script>
 
-    <custom-style>
+    <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<custom-style>
       <style is="custom-style" include="demo-pages-shared-styles"></style>
-    </custom-style>
+    </custom-style>`;
+
+document.body.appendChild($_documentContainer);
+</script>
   </head>
   <body unresolved>
-    <div class="vertical-section-container centered">
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
       <h3>paper-icon-button-light can contain iron-icons or external images and can be disabled</h3>
       <demo-snippet class="centered-demo">
         <template>
@@ -57,12 +74,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </paper-icon-button-light>
 
           <paper-icon-button-light>
-            <button title="reply" disabled>
+            <button title="reply" disabled="">
               <iron-icon icon="reply"></iron-icon>
             </button>
           </paper-icon-button-light>
         </template>
       </demo-snippet>
-    </div>
+    </div>`;
+
+document.body.appendChild($_documentContainer);
+</script>
   </body>
 </html>

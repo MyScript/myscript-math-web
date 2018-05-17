@@ -14,18 +14,19 @@
     <meta charset="UTF-8">
     <script src="../webcomponents-loader.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
-    <link rel="import" href="imports/a1-import.html">
+    <script type="module" src="./imports/a1-import.js"></script>
   </head>
   <body>
-    <script>
-      test('import upgrade', function() {
-        // import upgraded
-        assert.ok(a1);
-        assert.isTrue(isA1Upgraded);
-        // order expected
-        assert.deepEqual(a1DocsList, ['a1-instance.html', 'a1-reference.html']);
-        assert.isTrue(styleAppliedToDocument);
-      });
-    </script>
+    <script type="module">
+import './imports/a1-import.js';
+test('import upgrade', function() {
+  // import upgraded
+  assert.ok(a1);
+  assert.isTrue(isA1Upgraded);
+  // order expected
+  assert.deepEqual(a1DocsList, ['a1-instance.html', 'a1-reference.html']);
+  assert.isTrue(styleAppliedToDocument);
+});
+</script>
   </body>
 </html>

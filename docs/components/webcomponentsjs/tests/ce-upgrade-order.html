@@ -14,23 +14,24 @@
   <title>Custom Element Upgrade Order</title>
   <script src="../webcomponents-loader.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
-  <link rel="import" href="imports/import-upgrade-order.html">
+  <script type="module" src="./imports/import-upgrade-order.js"></script>
 </head>
 <body>
   <x-foo id="main"></x-foo>
-  <script>
-    suite('Custom Element upgrade', function() {
-      test('upgrade order', function() {
-        var order = [];
-        class XFoo extends HTMLElement {
-          connectedCallback() {
-            order.push(this.id);
-          }
-        }
-        window.customElements.define('x-foo', XFoo);
-        assert.deepEqual(order, ['import', 'main'], 'elements are upgraded in imports before main document');
-      });
-    });
-  </script>
+  <script type="module">
+import './imports/import-upgrade-order.js';
+suite('Custom Element upgrade', function() {
+  test('upgrade order', function() {
+    var order = [];
+    class XFoo extends HTMLElement {
+      connectedCallback() {
+        order.push(this.id);
+      }
+    }
+    window.customElements.define('x-foo', XFoo);
+    assert.deepEqual(order, ['import', 'main'], 'elements are upgraded in imports before main document');
+  });
+});
+</script>
 </body>
 </html>

@@ -19,8 +19,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
 
-  <link rel="import" href="x-resizable.html">
-  <link rel="import" href="x-resizer-parent.html">
+  <script type="module" src="./x-resizable.js"></script>
+  <script type="module" src="./x-resizer-parent.js"></script>
 
 </head>
 
@@ -29,16 +29,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <x-resizable></x-resizable>
   </x-resizer-parent>
 
-  <script>
-    suite('imports order', function() {
-      test('resizable children and parent updated', function() {
-        var parent = document.querySelector('x-resizer-parent');
-        var child = parent.firstElementChild;
-        assert.deepEqual(parent._interestedResizables, [child], 'resizable children ok');
-        assert.equal(child._parentResizable, parent, 'resizable parent ok');
-      });
-    });
-  </script>
+  <script type="module">
+import './x-resizable.js';
+import './x-resizer-parent.js';
+suite('imports order', function() {
+  test('resizable children and parent updated', function() {
+    var parent = document.querySelector('x-resizer-parent');
+    var child = parent.firstElementChild;
+    assert.deepEqual(parent._interestedResizables, [child], 'resizable children ok');
+    assert.equal(child._parentResizable, parent, 'resizable parent ok');
+  });
+});
+</script>
 </body>
 
 </html>

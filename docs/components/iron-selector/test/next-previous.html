@@ -21,7 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../test-fixture/test-fixture-mocha.js"></script>
 
   <link rel="import" href="../../test-fixture/test-fixture.html">
-  <link rel="import" href="../iron-selector.html">
+  <script type="module" src="../iron-selector.js"></script>
 
   <style>
     .iron-selected {
@@ -52,94 +52,94 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <script>
+  <script type="module">
+import '../iron-selector.js';
 
-    var s;
+var s;
 
-    function assertAndSelect(method, expectedIndex) {
-      assert.equal(s.selected, expectedIndex);
-      s[method]();
-    }
+function assertAndSelect(method, expectedIndex) {
+  assert.equal(s.selected, expectedIndex);
+  s[method]();
+}
 
-    suite('next/previous', function() {
+suite('next/previous', function() {
 
-      setup(function(done) {
-        s = fixture('test1');
+  setup(function(done) {
+    s = fixture('test1');
 
-        s.addEventListener('iron-items-changed', function onIronItemsChanged() {
-          s.removeEventListener('iron-items-changed', onIronItemsChanged);
-          done();
-        });
-      });
-
-      test('selectNext', function() {
-        assert.equal(s.selected, 0);
-        assertAndSelect('selectNext', 0);
-        assertAndSelect('selectNext', 1);
-        assertAndSelect('selectNext', 2);
-        assert.equal(s.selected, 0);
-      });
-
-      test('selectPrevious', function() {
-        assert.equal(s.selected, 0);
-        assertAndSelect('selectPrevious', 0);
-        assertAndSelect('selectPrevious', 2);
-        assertAndSelect('selectPrevious', 1);
-        assert.equal(s.selected, 0);
-      });
-
-      test('selectNext/Previous', function() {
-        assert.equal(s.selected, 0);
-        assertAndSelect('selectNext', 0);
-        assertAndSelect('selectNext', 1);
-        assertAndSelect('selectPrevious', 2);
-        assertAndSelect('selectNext', 1);
-        assertAndSelect('selectPrevious', 2);
-        assert.equal(s.selected, 1);
-      });
-
+    s.addEventListener('iron-items-changed', function onIronItemsChanged() {
+      s.removeEventListener('iron-items-changed', onIronItemsChanged);
+      done();
     });
+  });
 
-    suite('next/previous attrForSelected', function() {
+  test('selectNext', function() {
+    assert.equal(s.selected, 0);
+    assertAndSelect('selectNext', 0);
+    assertAndSelect('selectNext', 1);
+    assertAndSelect('selectNext', 2);
+    assert.equal(s.selected, 0);
+  });
 
-      setup(function(done) {
-        s = fixture('test2');
+  test('selectPrevious', function() {
+    assert.equal(s.selected, 0);
+    assertAndSelect('selectPrevious', 0);
+    assertAndSelect('selectPrevious', 2);
+    assertAndSelect('selectPrevious', 1);
+    assert.equal(s.selected, 0);
+  });
 
-        s.addEventListener('iron-items-changed', function onIronItemsChanged() {
-          s.removeEventListener('iron-items-changed', onIronItemsChanged);
-          done();
-        });
-      });
+  test('selectNext/Previous', function() {
+    assert.equal(s.selected, 0);
+    assertAndSelect('selectNext', 0);
+    assertAndSelect('selectNext', 1);
+    assertAndSelect('selectPrevious', 2);
+    assertAndSelect('selectNext', 1);
+    assertAndSelect('selectPrevious', 2);
+    assert.equal(s.selected, 1);
+  });
 
-      test('selectNext', function() {
-        assert.equal(s.selected, 'foo');
-        assertAndSelect('selectNext', 'foo');
-        assertAndSelect('selectNext', 'bar');
-        assertAndSelect('selectNext', 'zot');
-        assert.equal(s.selected, 'foo');
-      });
+});
 
-      test('selectPrevious', function() {
-        assert.equal(s.selected, 'foo');
-        assertAndSelect('selectPrevious', 'foo');
-        assertAndSelect('selectPrevious', 'zot');
-        assertAndSelect('selectPrevious', 'bar');
-        assert.equal(s.selected, 'foo');
-      });
+suite('next/previous attrForSelected', function() {
 
-      test('selectNext/Previous', function() {
-        assert.equal(s.selected, 'foo');
-        assertAndSelect('selectNext', 'foo');
-        assertAndSelect('selectNext', 'bar');
-        assertAndSelect('selectPrevious', 'zot');
-        assertAndSelect('selectNext', 'bar');
-        assertAndSelect('selectPrevious', 'zot');
-        assert.equal(s.selected, 'bar');
-      });
+  setup(function(done) {
+    s = fixture('test2');
 
+    s.addEventListener('iron-items-changed', function onIronItemsChanged() {
+      s.removeEventListener('iron-items-changed', onIronItemsChanged);
+      done();
     });
+  });
 
-  </script>
+  test('selectNext', function() {
+    assert.equal(s.selected, 'foo');
+    assertAndSelect('selectNext', 'foo');
+    assertAndSelect('selectNext', 'bar');
+    assertAndSelect('selectNext', 'zot');
+    assert.equal(s.selected, 'foo');
+  });
+
+  test('selectPrevious', function() {
+    assert.equal(s.selected, 'foo');
+    assertAndSelect('selectPrevious', 'foo');
+    assertAndSelect('selectPrevious', 'zot');
+    assertAndSelect('selectPrevious', 'bar');
+    assert.equal(s.selected, 'foo');
+  });
+
+  test('selectNext/Previous', function() {
+    assert.equal(s.selected, 'foo');
+    assertAndSelect('selectNext', 'foo');
+    assertAndSelect('selectNext', 'bar');
+    assertAndSelect('selectPrevious', 'zot');
+    assertAndSelect('selectNext', 'bar');
+    assertAndSelect('selectPrevious', 'zot');
+    assert.equal(s.selected, 'bar');
+  });
+
+});
+</script>
 
 </body>
 </html>

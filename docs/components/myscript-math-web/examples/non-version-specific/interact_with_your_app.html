@@ -41,7 +41,7 @@
 
     <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../../../pepjs/dist/pep.min.js"></script>
-    <link rel="import" href="../../myscript-math-web.html">
+    <script type="module" src="../../myscript-math-web.js"></script>
     <custom-style>
         <style>
             paper-fab {
@@ -69,29 +69,30 @@
                    touch-action="none">
 </myscript-math-web>
 <button class="check classic-btn">Check</button>
-<script>
-    window.addEventListener('load', () => {
-        const myscriptMathWebElement = document.querySelector('myscript-math-web');
-        const checkElement = document.querySelector('.check.classic-btn');
+<script type="module">
+import '../../myscript-math-web.js';
+window.addEventListener('load', () => {
+    const myscriptMathWebElement = document.querySelector('myscript-math-web');
+    const checkElement = document.querySelector('.check.classic-btn');
 
-        myscriptMathWebElement.addEventListener('exported', (evt) => {
-            if(evt.detail.exports) {
-                const latexExport = evt.detail.exports['application/x-latex'] || '';
-                console.log('We got: ', latexExport);
-                if ("E=mc^{2}" === latexExport) {
-                    myscriptMathWebElement.themecolor = '#008000';
-                } else {
-                    myscriptMathWebElement.themecolor = '#FF0000';
-                }
+    myscriptMathWebElement.addEventListener('exported', (evt) => {
+        if(evt.detail.exports) {
+            const latexExport = evt.detail.exports['application/x-latex'] || '';
+            console.log('We got: ', latexExport);
+            if ("E=mc^{2}" === latexExport) {
+                myscriptMathWebElement.themecolor = '#008000';
+            } else {
+                myscriptMathWebElement.themecolor = '#FF0000';
             }
-        });
-
-        checkElement.addEventListener('click', () => {
-            myscriptMathWebElement.convert();
-            const functionOutput = myscriptMathWebElement.export_();
-            console.log('Output :' + functionOutput);
-        });
+        }
     });
+
+    checkElement.addEventListener('click', () => {
+        myscriptMathWebElement.convert();
+        const functionOutput = myscriptMathWebElement.export_();
+        console.log('Output :' + functionOutput);
+    });
+});
 </script>
 </body>
 

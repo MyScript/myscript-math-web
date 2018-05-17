@@ -18,10 +18,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../../web-animations.html">
-    <link rel="import" href="../../neon-animated-pages.html">
-    <link rel="import" href="../../neon-animations.html">
-    <link rel="import" href="animated-dropdown.html">
+    <script type="module" src="../../web-animations.js"></script>
+    <script type="module" src="../../neon-animated-pages.js"></script>
+    <script type="module" src="../../neon-animations.js"></script>
+    <script type="module" src="./animated-dropdown.js"></script>
 
   </head>
   <body>
@@ -36,26 +36,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </dom-bind>
 
-    <script>
+    <script type="module">
+import '../../web-animations.js';
+import '../../neon-animated-pages.js';
+import '../../neon-animations.js';
+import './animated-dropdown.js';
 
-      var scope1 = document.querySelector('template[is="dom-bind"]');
-      var scope2 = document.querySelector('dom-bind');
+var scope1 = document.querySelector('template[is="dom-bind"]');
+var scope2 = document.querySelector('dom-bind');
 
-      scope1._onButtonClick = function(event) {
-        var dropdown = document.querySelector('#' + event.target.getAttribute('dropdown-id'));
-        if (dropdown) {
-          dropdown.show();
-        }
-      };
+scope1._onButtonClick = function(event) {
+  var dropdown = document.querySelector('#' + event.target.getAttribute('dropdown-id'));
+  if (dropdown) {
+    dropdown.show();
+  }
+};
 
-      scope1._onDropdownClick = function(event) {
-        event.target.hide();
-      };
+scope1._onDropdownClick = function(event) {
+  event.target.hide();
+};
 
-      scope2._onButtonClick = scope1._onButtonClick;
-      scope2._onDropdownClick = scope1._onDropdownClick;
-
-    </script>
+scope2._onButtonClick = scope1._onButtonClick;
+scope2._onDropdownClick = scope1._onDropdownClick;
+</script>
 
   </body>
 </html>

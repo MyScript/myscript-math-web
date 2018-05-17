@@ -14,9 +14,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <title>iron-location</title>
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../../polymer/polymer.html">
-  <link rel="import" href="../iron-location.html">
-  <link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
+  <script type="module" src="../../polymer/polymer.js"></script>
+  <script type="module" src="../iron-location.js"></script>
+  <script type="module" src="../../iron-flex-layout/iron-flex-layout.js"></script>
   <link rel="import" href="../../iron-demo-helpers/url-bar.html">
 </head>
 <body>
@@ -88,43 +88,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </div>
     </template>
-    <script>
-      window.addEventListener('WebComponentsReady', function() {
-        Polymer({
-          is: 'iron-location-demo',
-          properties: {
-            historyElementsAdded: {
-              type: Number
-            },
+    <script type="module">
+import '../../polymer/polymer.js';
+import '../iron-location.js';
+import '../../iron-flex-layout/iron-flex-layout.js';
+import { Polymer } from '../../polymer/lib/legacy/polymer-fn.js';
+Polymer({
+  is: 'iron-location-demo',
+  properties: {
+    historyElementsAdded: {
+      type: Number
+    },
 
-            dwellTime: {
-              type: Number,
-              value: 2000
-            }
-          },
-          observers: [
-            'checkHistorySize(path, hash, query, startingHistoryLength)'
-          ],
+    dwellTime: {
+      type: Number,
+      value: 2000
+    }
+  },
+  observers: [
+    'checkHistorySize(path, hash, query, startingHistoryLength)'
+  ],
 
-          ready: function() {
-            this.startingHistoryLength = window.history.length;
-          },
+  ready: function() {
+    this.startingHistoryLength = window.history.length;
+  },
 
-          checkHistorySize: function() {
-            this.historyElementsAdded =
-                window.history.length - this.startingHistoryLength;
-          },
+  checkHistorySize: function() {
+    this.historyElementsAdded =
+        window.history.length - this.startingHistoryLength;
+  },
 
-          inSeconds: function(dwellTime) {
-            if (dwellTime === -1 || dwellTime === undefined) {
-              return -1;
-            }
+  inSeconds: function(dwellTime) {
+    if (dwellTime === -1 || dwellTime === undefined) {
+      return -1;
+    }
 
-            return (Math.round(dwellTime / 100) / 10)
-          }
-        });
-      });
-    </script>
+    return (Math.round(dwellTime / 100) / 10)
+  }
+});
+</script>
   </dom-module>
 
   <iron-location-demo></iron-location-demo>

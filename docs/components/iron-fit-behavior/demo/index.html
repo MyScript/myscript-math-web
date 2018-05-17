@@ -19,11 +19,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="simple-fit.html">
+  <script type="module" src="./simple-fit.js"></script>
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
 
-  <custom-style><style is="custom-style" include="demo-pages-shared-styles">
+  <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<custom-style><style is="custom-style" include="demo-pages-shared-styles">
     .centered {
       min-width: 600px;
     }
@@ -32,16 +43,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-height: 250px;
       }
     }
-  </style></custom-style>
+  </style></custom-style>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 
 </head>
 
 <body unresolved class="centered">
-  <h3>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<h3>
     An element with <code>IronFitBehavior</code> can be centered in
     <code>fitInto</code> or positioned around a <code>positionTarget</code>
-  </h3>
-  <demo-snippet>
+  </h3>`;
+
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet>
     <template>
       <style>
         .target {
@@ -76,21 +99,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template is="dom-repeat" items="[[containers]]">
           <div class="target" on-tap="updatePositionTarget">Target</div>
         </template>
-        <simple-fit id="myFit" auto-fit-on-attach>
+        <simple-fit id="myFit" auto-fit-on-attach="">
           <h2>Align</h2>
           <p>
             <button on-tap="updateAlign" vertical-align="top">top</button>
             <button on-tap="updateAlign" vertical-align="middle">middle</button>
             <button on-tap="updateAlign" vertical-align="bottom">bottom</button>
             <button on-tap="updateAlign" vertical-align="auto">auto</button>
-            <button on-tap="updateAlign" vertical-align>null</button>
+            <button on-tap="updateAlign" vertical-align="">null</button>
           </p>
           <p>
             <button on-tap="updateAlign" horizontal-align="left">left</button>
             <button on-tap="updateAlign" horizontal-align="center">center</button>
             <button on-tap="updateAlign" horizontal-align="right">right</button>
             <button on-tap="updateAlign" horizontal-align="auto">auto</button>
-            <button on-tap="updateAlign" horizontal-align>null</button>
+            <button on-tap="updateAlign" horizontal-align="">null</button>
           </p>
           <button on-tap="toggleNoOverlap">no overlap</button>
           <button on-tap="toggleDynamicAlign">dynamic align</button>
@@ -165,11 +188,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           function toggleClass(element, cssClass, condition) {
             element.classList[condition ? 'add' : 'remove'](cssClass);
           }
-        </script>
+        &lt;/script>
       </template></dom-bind>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-</body>
-
-</html>
+document.body.appendChild($_documentContainer);
+</script>

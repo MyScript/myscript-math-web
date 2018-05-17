@@ -20,11 +20,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../../paper-styles/demo-pages.html">
-    <link rel="import" href="../paper-toggle-button.html">
+    <script type="module" src="../../paper-styles/demo-pages.js"></script>
+    <script type="module" src="../paper-toggle-button.js"></script>
   </head>
   <body unresolved>
-    <custom-style>
+    <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
         .vertical-section-container {
           max-width: 500px;
@@ -35,23 +46,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           margin-right: 10px;
         }
       </style>
-    </custom-style>
+    </custom-style>`;
 
-    <div class="vertical-section-container centered">
+document.body.appendChild($_documentContainer);
+</script>
+
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
       <h3>Toggle buttons can be checked and disabled</h3>
       <demo-snippet class="centered-demo">
         <template>
           <paper-toggle-button>Toggle</paper-toggle-button>
-          <paper-toggle-button checked>Toggle</paper-toggle-button>
-          <paper-toggle-button disabled>Disabled</paper-toggle-button>
-          <paper-toggle-button invalid>Invalid</paper-toggle-button>
+          <paper-toggle-button checked="">Toggle</paper-toggle-button>
+          <paper-toggle-button disabled="">Disabled</paper-toggle-button>
+          <paper-toggle-button invalid="">Invalid</paper-toggle-button>
         </template>
       </demo-snippet>
 
       <h3>Toggle buttons can hide the ripple effect using the <i>noink</i> attribute</h3>
       <demo-snippet class="centered-demo">
         <template>
-          <paper-toggle-button noink>Toggle</paper-toggle-button>
+          <paper-toggle-button noink="">Toggle</paper-toggle-button>
         </template>
       </demo-snippet>
 
@@ -80,9 +97,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </custom-style>
 
           <paper-toggle-button class="green">Toggle</paper-toggle-button>
-          <paper-toggle-button checked class="pink">Toggle</paper-toggle-button>
+          <paper-toggle-button checked="" class="pink">Toggle</paper-toggle-button>
         </template>
       </demo-snippet>
-    </div>
+    </div>`;
+
+document.body.appendChild($_documentContainer);
+</script>
   </body>
 </html>

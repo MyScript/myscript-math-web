@@ -19,31 +19,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
 
-  <link rel="import" href="../iron-meta.html">
+  <script type="module" src="../iron-meta.js"></script>
 
 </head>
 <body>
   <iron-meta key="info" value="foo/bar"></iron-meta>
 
-  <script>
-    suite('basic', function() {
-      test('byKey', function() {
-        var meta = new Polymer.IronMeta({key: 'info'});
+  <script type="module">
+import { IronMeta } from '../iron-meta.js';
+suite('basic', function() {
+  test('byKey', function() {
+    var meta = new IronMeta({key: 'info'});
 
-        expect(meta.value).to.be.eql('foo/bar');
-      });
+    expect(meta.value).to.be.eql('foo/bar');
+  });
 
-      test('list', function() {
-        assert.equal(document.querySelector('iron-meta').list.length, 1);
-      });
+  test('list', function() {
+    assert.equal(document.querySelector('iron-meta').list.length, 1);
+  });
 
-      test('constructor with no arguments', function() {
-        expect(function() {
-          new Polymer.IronMeta();
-        }).to.not.throw();
-      });
-    });
-  </script>
+  test('constructor with no arguments', function() {
+    expect(function() {
+      new IronMeta();
+    }).to.not.throw();
+  });
+});
+</script>
 
 </body>
 </html>

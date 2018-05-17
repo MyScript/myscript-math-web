@@ -21,7 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../test-fixture/test-fixture-mocha.js"></script>
 
   <link rel="import" href="../../test-fixture/test-fixture.html">
-  <link rel="import" href="content-element.html">
+  <script type="module" src="./content-element.js"></script>
 
   <style>
     .iron-selected {
@@ -78,146 +78,149 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <script>
+  <script type="module">
+import './content-element.js';
+import { dom } from '../../polymer/lib/legacy/polymer.dom.js';
+import { flush } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+import { Element } from '../../polymer/polymer-element.js';
 
-    suite('content', function() {
-      var s1;
+suite('content', function() {
+  var s1;
 
-      setup(function(done) {
-        s1 = fixture('selector1');
+  setup(function(done) {
+    s1 = fixture('selector1');
 
-        s1.selector.addEventListener('iron-items-changed', function onIronItemsChanged() {
-          s1.selector.removeEventListener('iron-items-changed', onIronItemsChanged);
-          done();
-        });
-      });
-
-      test('attribute selected', function() {
-        // check selected class
-        assert.isTrue(s1.querySelector('#item0').classList.contains('iron-selected'));
-      });
-
-      test('set selected', function() {
-        // set selected
-        s1.selected = 'item1';
-        // check selected class
-        assert.isTrue(s1.querySelector('#item1').classList.contains('iron-selected'));
-      });
-
-      test('get items', function() {
-        assert.equal(s1.selector.items.length, 4);
-      });
-
-      test('activate event', function() {
-        var item = s1.querySelector('#item2');
-        item.dispatchEvent(new CustomEvent('tap', {bubbles: true}));
-        // check selected class
-        assert.isTrue(item.classList.contains('iron-selected'));
-      });
-
-      test('add item dynamically', function() {
-        var item = document.createElement('div');
-        item.id = 'item4';
-        item.textContent = 'item4';
-        Polymer.dom(s1).appendChild(item);
-        Polymer.dom.flush();
-        // See the note in `forceSynchronousItemUpdate`.
-        s1.selector.forceSynchronousItemUpdate();
-        // set selected
-        s1.selected = 'item4';
-        // check items length
-        assert.equal(s1.selector.items.length, 5);
-        // check selected class
-        assert.isTrue(s1.querySelector('#item4').classList.contains('iron-selected'));
-      });
-
+    s1.selector.addEventListener('iron-items-changed', function onIronItemsChanged() {
+      s1.selector.removeEventListener('iron-items-changed', onIronItemsChanged);
+      done();
     });
+  });
 
-    suite('content with selectable', function() {
-      var s2;
+  test('attribute selected', function() {
+    // check selected class
+    assert.isTrue(s1.querySelector('#item0').classList.contains('iron-selected'));
+  });
 
-      setup(function(done) {
-        s2 = fixture('selector2');
+  test('set selected', function() {
+    // set selected
+    s1.selected = 'item1';
+    // check selected class
+    assert.isTrue(s1.querySelector('#item1').classList.contains('iron-selected'));
+  });
 
-        s2.selector.addEventListener('iron-items-changed', function onIronItemsChanged() {
-          s2.selector.removeEventListener('iron-items-changed', onIronItemsChanged);
-          done();
-        });
-      });
+  test('get items', function() {
+    assert.equal(s1.selector.items.length, 4);
+  });
 
-      test('attribute selected', function() {
-        // check selected class
-        assert.isTrue(s2.querySelector('#item0').classList.contains('iron-selected'));
-      });
+  test('activate event', function() {
+    var item = s1.querySelector('#item2');
+    item.dispatchEvent(new CustomEvent('tap', {bubbles: true}));
+    // check selected class
+    assert.isTrue(item.classList.contains('iron-selected'));
+  });
 
-      test('set selected', function() {
-        // set selected
-        s2.selected = 'item1';
-        // check selected class
-        assert.isTrue(s2.querySelector('#item1').classList.contains('iron-selected'));
-      });
+  test('add item dynamically', function() {
+    var item = document.createElement('div');
+    item.id = 'item4';
+    item.textContent = 'item4';
+    dom(s1).appendChild(item);
+    flush();
+    // See the note in `forceSynchronousItemUpdate`.
+    s1.selector.forceSynchronousItemUpdate();
+    // set selected
+    s1.selected = 'item4';
+    // check items length
+    assert.equal(s1.selector.items.length, 5);
+    // check selected class
+    assert.isTrue(s1.querySelector('#item4').classList.contains('iron-selected'));
+  });
 
-      test('get items', function() {
-        assert.equal(s2.selector.items.length, 4);
-      });
+});
 
-      test('activate event', function() {
-        var item = s2.querySelector('#item2');
-        item.dispatchEvent(new CustomEvent('tap', {bubbles: true}));
-        // check selected class
-        assert.isTrue(item.classList.contains('iron-selected'));
-      });
+suite('content with selectable', function() {
+  var s2;
 
-      test('add item dynamically', function() {
-        var item = document.createElement('item');
-        item.id = 'item4';
-        item.textContent = 'item4';
-        Polymer.dom(s2).appendChild(item);
-        Polymer.dom.flush();
-        // See the note in `forceSynchronousItemUpdate`.
-        s2.selector.forceSynchronousItemUpdate();
-        // set selected
-        s2.selected = 'item4';
-        // check items length
-        assert.equal(s2.selector.items.length, 5);
-        // check selected class
-        assert.isTrue(s2.querySelector('#item4').classList.contains('iron-selected'));
-      });
+  setup(function(done) {
+    s2 = fixture('selector2');
 
+    s2.selector.addEventListener('iron-items-changed', function onIronItemsChanged() {
+      s2.selector.removeEventListener('iron-items-changed', onIronItemsChanged);
+      done();
     });
+  });
 
-    suite('content with dom-repeat', function() {
-      var s3;
-      var domRepeat;
+  test('attribute selected', function() {
+    // check selected class
+    assert.isTrue(s2.querySelector('#item0').classList.contains('iron-selected'));
+  });
 
-      setup(function() {
-        if (Polymer.Element) {
-          s3 = fixture('selector3-polymer2');
-          domRepeat = s3.querySelector('dom-repeat');
-        } else {
-          s3 = fixture('selector3-polymer1');
-          domRepeat = s3.querySelector('template[is=dom-repeat]');
-        }
-      });
+  test('set selected', function() {
+    // set selected
+    s2.selected = 'item1';
+    // check selected class
+    assert.isTrue(s2.querySelector('#item1').classList.contains('iron-selected'));
+  });
 
-      test('supports repeated children', function() {
-        domRepeat.items = [{name:'item0'}, {name: 'item1'}, {name: 'item2'}, {name: 'item3'}];
-        domRepeat.render();
-        // See the note in `forceSynchronousItemUpdate`.
-        s3.selector.forceSynchronousItemUpdate();
-        // check selected
-        assert.equal(s3.selected, 'item0');
-        // check selected class
-        assert.isTrue(s3.querySelector('#item0').classList.contains('iron-selected'));
-        // set selected
-        s3.selected = 'item2';
-        // check selected class
-        assert.isTrue(s3.querySelector('#item2').classList.contains('iron-selected'));
-      });
+  test('get items', function() {
+    assert.equal(s2.selector.items.length, 4);
+  });
 
-    });
+  test('activate event', function() {
+    var item = s2.querySelector('#item2');
+    item.dispatchEvent(new CustomEvent('tap', {bubbles: true}));
+    // check selected class
+    assert.isTrue(item.classList.contains('iron-selected'));
+  });
 
-  </script>
+  test('add item dynamically', function() {
+    var item = document.createElement('item');
+    item.id = 'item4';
+    item.textContent = 'item4';
+    dom(s2).appendChild(item);
+    flush();
+    // See the note in `forceSynchronousItemUpdate`.
+    s2.selector.forceSynchronousItemUpdate();
+    // set selected
+    s2.selected = 'item4';
+    // check items length
+    assert.equal(s2.selector.items.length, 5);
+    // check selected class
+    assert.isTrue(s2.querySelector('#item4').classList.contains('iron-selected'));
+  });
+
+});
+
+suite('content with dom-repeat', function() {
+  var s3;
+  var domRepeat;
+
+  setup(function() {
+    if (Element) {
+      s3 = fixture('selector3-polymer2');
+      domRepeat = s3.querySelector('dom-repeat');
+    } else {
+      s3 = fixture('selector3-polymer1');
+      domRepeat = s3.querySelector('template[is=dom-repeat]');
+    }
+  });
+
+  test('supports repeated children', function() {
+    domRepeat.items = [{name:'item0'}, {name: 'item1'}, {name: 'item2'}, {name: 'item3'}];
+    domRepeat.render();
+    // See the note in `forceSynchronousItemUpdate`.
+    s3.selector.forceSynchronousItemUpdate();
+    // check selected
+    assert.equal(s3.selected, 'item0');
+    // check selected class
+    assert.isTrue(s3.querySelector('#item0').classList.contains('iron-selected'));
+    // set selected
+    s3.selected = 'item2';
+    // check selected class
+    assert.isTrue(s3.querySelector('#item2').classList.contains('iron-selected'));
+  });
+
+});
+</script>
 
 </body>
 </html>

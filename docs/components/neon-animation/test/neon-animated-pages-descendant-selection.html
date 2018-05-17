@@ -18,11 +18,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <script src="../../web-component-tester/browser.js"></script>
 <script src="../../test-fixture/test-fixture-mocha.js"></script>
 
-<link rel="import" href="../web-animations.html">
+<script type="module" src="../web-animations.js"></script>
 <link rel="import" href="../../test-fixture/test-fixture.html">
-<link rel="import" href="../neon-animated-pages.html">
-<link rel="import" href="../neon-animation-behavior.html">
-<link rel="import" href="../../iron-selector/iron-selector.html">
+<script type="module" src="../neon-animated-pages.js"></script>
+<script type="module" src="../neon-animation-behavior.js"></script>
+<script type="module" src="../../iron-selector/iron-selector.js"></script>
 
 </head>
 <body>
@@ -67,20 +67,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 </dom-module>
 
-<script>
-  window.addEventListener('WebComponentsReady', function() {
-    Polymer({ is: 'x-selecting-element' });
-    Polymer({ is: 'test-element' });
-    Polymer({
-      is: 'test-animation',
-      behaviors: [
-        Polymer.NeonAnimationBehavior
-      ],
-      configure: function(config) {
-        config.node.animated = true;
-      }
-    });
-  });
+<script type="module">
+import '../web-animations.js';
+import '../neon-animated-pages.js';
+import { NeonAnimationBehavior } from '../neon-animation-behavior.js';
+import '../../iron-selector/iron-selector.js';
+import { Polymer } from '../../polymer/lib/legacy/polymer-fn.js';
+Polymer({ is: 'x-selecting-element' });
+Polymer({ is: 'test-element' });
+Polymer({
+  is: 'test-animation',
+  behaviors: [
+    NeonAnimationBehavior
+  ],
+  configure: function(config) {
+    config.node.animated = true;
+  }
+});
 </script>
 
 <test-fixture id="distributed-children">
@@ -92,28 +95,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 </test-fixture>
 
-<script>
+<script type="module">
+import '../web-animations.js';
+import '../neon-animated-pages.js';
+import '../neon-animation-behavior.js';
+import '../../iron-selector/iron-selector.js';
+import { dom } from '../../polymer/lib/legacy/polymer.dom.js';
 suite('descendant selection', function() {
   test('descendents of other selectors are not animated', function() {
     var animatedPages = fixture('descendant-selection');
-    var selector = Polymer.dom(animatedPages).querySelector('#selector');
-    var target = Polymer.dom(animatedPages).querySelector('#target');
-    Polymer.dom(selector).setAttribute('selected', '1');
+    var selector = dom(animatedPages).querySelector('#selector');
+    var target = dom(animatedPages).querySelector('#target');
+    dom(selector).setAttribute('selected', '1');
     selector.forceSynchronousItemUpdate();
     assert(!target.animated);
   });
   test('elements distributed as children are animated', function() {
     var testElement = fixture('distributed-children');
-    var target = Polymer.dom(testElement).querySelector('#target');
-    var animatedPages = Polymer.dom(testElement.root).querySelector("neon-animated-pages");
-    Polymer.dom(animatedPages).setAttribute('selected', '1');
+    var target = dom(testElement).querySelector('#target');
+    var animatedPages = dom(testElement.root).querySelector("neon-animated-pages");
+    dom(animatedPages).setAttribute('selected', '1');
     animatedPages.forceSynchronousItemUpdate();
     assert(target.animated);
   });
   test('ignores selection from shadow descendants of its items', function() {
     var pages = fixture('selecting-item');
-    var target = Polymer.dom(pages).querySelector('#target');
-    var selecting = Polymer.dom(pages).querySelector('x-selecting-element');
+    var target = dom(pages).querySelector('#target');
+    var selecting = dom(pages).querySelector('x-selecting-element');
     selecting.$.selector.selected = 1;
     pages.forceSynchronousItemUpdate();
     assert(!target.animated);

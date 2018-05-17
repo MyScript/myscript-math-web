@@ -18,10 +18,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="../../web-component-tester/browser.js"></script>
     <script src="../../test-fixture/test-fixture-mocha.js"></script>
 
-    <link rel="import" href="../../polymer/polymer.html">
+    <script type="module" src="../../polymer/polymer.js"></script>
     <link rel="import" href="../../test-fixture/test-fixture.html">
 
-    <link rel="import" href="../iron-doc-api.html">
+    <script type="module" src="../iron-doc-api.js"></script>
   </head>
   <body>
 
@@ -31,32 +31,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </test-fixture>
 
-    <script>
-      describe('<iron-doc-api>', function() {
-        var api;
-        beforeEach(function() {
-          api = fixture('iron-doc-api-fixture');
-        });
+    <script type="module">
+import '../../polymer/polymer.js';
+import '../iron-doc-api.js';
+import { flush } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+import { dom } from '../../polymer/lib/legacy/polymer.dom.js';
+describe('<iron-doc-api>', function() {
+  var api;
+  beforeEach(function() {
+    api = fixture('iron-doc-api-fixture');
+  });
 
-        it('shows static methods even when no regular methods', function() {
-          api.descriptor = {
-            "staticMethods": [
-              {
-                "name": "foo"
-              },
-              {
-                "name": "bar"
-              }
-            ]
-          };
-          Polymer.dom.flush();
-          expect(api.$$('#methods').hidden).to.be.false;
-          var methods =
-              Polymer.dom(api.root).querySelectorAll('iron-doc-function');
-          expect(methods.length).equals(2);
-        });
-      });
-    </script>
+  it('shows static methods even when no regular methods', function() {
+    api.descriptor = {
+      "staticMethods": [
+        {
+          "name": "foo"
+        },
+        {
+          "name": "bar"
+        }
+      ]
+    };
+    flush();
+    expect(api.$$('#methods').hidden).to.be.false;
+    var methods =
+        dom(api.root).querySelectorAll('iron-doc-function');
+    expect(methods.length).equals(2);
+  });
+});
+</script>
 
   </body>
 </html>

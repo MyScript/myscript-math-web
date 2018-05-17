@@ -12,45 +12,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <head>
     <title></title>
     <meta charset="UTF-8">
-    <script>
-      WCT = {
-        waitFor: function(cb) {
-          cb();
-        }
-      }
-    </script>
+    <script type="module">
+import './imports/element-import-a.js';
+WCT = {
+  waitFor: function(cb) {
+    cb();
+  }
+}
+</script>
     <script src="../webcomponents-loader.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
-    <link rel="import" href="imports/element-import-a.html">
+    <script type="module" src="./imports/element-import-a.js"></script>
   </head>
   <body>
     <x-test></x-test>
 
-    <script>
-      var created = 0;
-      function register() {
-        class XTest extends HTMLElement {
-          connectedCallback() {
-            created++;
-          }
-        }
-        window.customElements.define('x-test', XTest);
-      }
+    <script type="module">
+import './imports/element-import-a.js';
+var created = 0;
+function register() {
+  class XTest extends HTMLElement {
+    connectedCallback() {
+      created++;
+    }
+  }
+  window.customElements.define('x-test', XTest);
+}
 
-      test('upgraded document tree', function(done) {
-        if (CustomElements.useNative || !window.HTMLImports) {
-          return done();
-        } else {
-          window.addEventListener('WebComponentsReady', function() {
-            CustomElements.ready = false;
-            register();
-            assert.equal(created, 0, 'no elements created when ready explicitly set to false');
-            CustomElements.upgradeDocumentTree(document);
-            assert.equal(created, 3, 'elements in document tree upgraded via CustomElements.upgradeDocumentTree');
-            done();
-          });
-        }
-      });
-    </script>
+test('upgraded document tree', function(done) {
+  if (CustomElements.useNative || !window.HTMLImports) {
+    return done();
+  } else {
+    window.addEventListener('WebComponentsReady', function() {
+      CustomElements.ready = false;
+      register();
+      assert.equal(created, 0, 'no elements created when ready explicitly set to false');
+      CustomElements.upgradeDocumentTree(document);
+      assert.equal(created, 3, 'elements in document tree upgraded via CustomElements.upgradeDocumentTree');
+      done();
+    });
+  }
+});
+</script>
   </body>
 </html>

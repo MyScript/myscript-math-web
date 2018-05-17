@@ -20,18 +20,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-  <link rel="import" href="../../iron-icon/iron-icon.html">
-  <link rel="import" href="../../iron-icons/iron-icons.html">
-  <link rel="import" href="../../iron-input/iron-input.html">
-  <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
-  <link rel="import" href="../../paper-styles/color.html">
-  <link rel="import" href="../paper-input-container.html">
-  <link rel="import" href="../paper-input-error.html">
-  <link rel="import" href="../paper-input.html">
-  <link rel="import" href="../paper-textarea.html">
-  <link rel="import" href="ssn-input.html">
+  <script type="module" src="../../iron-icon/iron-icon.js"></script>
+  <script type="module" src="../../iron-icons/iron-icons.js"></script>
+  <script type="module" src="../../iron-input/iron-input.js"></script>
+  <script type="module" src="../../paper-icon-button/paper-icon-button.js"></script>
+  <script type="module" src="../../paper-styles/color.js"></script>
+  <script type="module" src="../paper-input-container.js"></script>
+  <script type="module" src="../paper-input-error.js"></script>
+  <script type="module" src="../paper-input.js"></script>
+  <script type="module" src="../paper-textarea.js"></script>
+  <script type="module" src="./ssn-input.js"></script>
 
-  <custom-style>
+  <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
       paper-input {
         display: block;
@@ -69,10 +80,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: inline-block;
       }
     </style>
-  </custom-style>
+  </custom-style>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 </head>
 <body unresolved>
-  <div class="vertical-section-container centered">
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
     <h3>Inputs can have different types, and be disabled</h3>
     <demo-snippet>
       <template>
@@ -80,15 +97,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-input label="text input" value="pre-filled"></paper-input>
         <paper-textarea label="autoresizing textarea input"></paper-textarea>
         <paper-input label="password input" type="password"></paper-input>
-        <paper-input label="disabled input" disabled value="batman"></paper-input>
+        <paper-input label="disabled input" disabled="" value="batman"></paper-input>
       </template>
     </demo-snippet>
 
     <h3>Inputs can have character counters</h3>
     <demo-snippet>
       <template>
-        <paper-input label="simple character counter" char-counter></paper-input>
-        <paper-input label="input with at most 10 characters" char-counter maxlength="10"></paper-input>
+        <paper-input label="simple character counter" char-counter=""></paper-input>
+        <paper-input label="input with at most 10 characters" char-counter="" maxlength="10"></paper-input>
       </template>
     </demo-snippet>
 
@@ -96,20 +113,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <demo-snippet>
       <template>
         <paper-input label="this label floats after typing"></paper-input>
-        <paper-input label="this label is always floating" always-float-label></paper-input>
-        <paper-input label="this label never floats" no-label-float></paper-input>
-        <paper-input label="this label is always floating" always-float-label placeholder="placeholder text"></paper-input>
+        <paper-input label="this label is always floating" always-float-label=""></paper-input>
+        <paper-input label="this label never floats" no-label-float=""></paper-input>
+        <paper-input label="this label is always floating" always-float-label="" placeholder="placeholder text"></paper-input>
       </template>
     </demo-snippet>
 
     <h3>Inputs can validate automatically or on demand, and can have custom error messages</h3>
     <demo-snippet>
       <template>
-        <paper-input label="this input requires some text" required auto-validate error-message="needs some text!"></paper-input>
-        <paper-input label="this input requires letters only" auto-validate pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
-        <paper-input label="this input requires letters only" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="pre-filled 123"></paper-input>
-        <paper-input label="this input will only let you type letters" auto-validate allowed-pattern="[a-zA-Z]"></paper-input>
-        <paper-input id="inputForValidation" required label="this input is manually validated" pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
+        <paper-input label="this input requires some text" required="" auto-validate="" error-message="needs some text!"></paper-input>
+        <paper-input label="this input requires letters only" auto-validate="" pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
+        <paper-input label="this input requires letters only" auto-validate="" pattern="[a-zA-Z]*" error-message="letters only!" value="pre-filled 123"></paper-input>
+        <paper-input label="this input will only let you type letters" auto-validate="" allowed-pattern="[a-zA-Z]"></paper-input>
+        <paper-input id="inputForValidation" required="" label="this input is manually validated" pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
 
         <button onclick="validate()">Validate!</button>
       </template>
@@ -119,14 +136,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <demo-snippet class="horizontal">
       <template>
         <paper-input label="total" type="number">
-          <div slot="prefix">$</div>
+          <div slot="prefix">\$</div>
         </paper-input>
 
         <paper-input label="username" id="inputWithButton">
           <iron-icon icon="mail" slot="prefix"></iron-icon>
           <div slot="suffix">@email.com</div>
-          <paper-icon-button slot="suffix" onclick="clearInput()"
-              icon="clear" alt="clear" title="clear">
+          <paper-icon-button slot="suffix" onclick="clearInput()" icon="clear" alt="clear" title="clear">
           </paper-icon-button>
         </paper-input>
       </template>
@@ -135,7 +151,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <h3>Inputs can have custom logic</h3>
     <demo-snippet>
       <template>
-        <paper-input-container always-float-label auto-validate attr-for-value="value">
+        <paper-input-container always-float-label="" auto-validate="" attr-for-value="value">
           <label slot="label">Social Security Number</label>
           <ssn-input class="paper-input-input" slot="input"></ssn-input>
           <paper-input-error slot="add-on">SSN invalid!</paper-input-error>
@@ -214,24 +230,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </style>
         </custom-style>
         <div class="custom-parent">
-          <paper-input class="custom" label="Name" value="Batman" always-float-label>
+          <paper-input class="custom" label="Name" value="Batman" always-float-label="">
           </paper-input>
-          <paper-input class="custom" label="Address (letters only, will autovalidate)"
-              always-float-label auto-validate pattern="[a-zA-Z]*">
+          <paper-input class="custom" label="Address (letters only, will autovalidate)" always-float-label="" auto-validate="" pattern="[a-zA-Z]*">
           </paper-input>
         </div>
       </template>
     </demo-snippet>
-  </div>
+  </div>`;
 
-  <script>
-    function validate() {
-      document.getElementById('inputForValidation').validate();
-    }
+document.body.appendChild($_documentContainer);
+</script>
 
-    function clearInput() {
-      document.getElementById('inputWithButton').value = '';
-    }
-  </script>
+  <script type="module">
+import '../../iron-icon/iron-icon.js';
+import '../../iron-icons/iron-icons.js';
+import '../../iron-input/iron-input.js';
+import '../../paper-icon-button/paper-icon-button.js';
+import '../../paper-styles/color.js';
+import '../paper-input-container.js';
+import '../paper-input-error.js';
+import '../paper-input.js';
+import '../paper-textarea.js';
+import './ssn-input.js';
+function validate() {
+  document.getElementById('inputForValidation').validate();
+}
+
+function clearInput() {
+  document.getElementById('inputWithButton').value = '';
+}
+</script>
 </body>
 </html>

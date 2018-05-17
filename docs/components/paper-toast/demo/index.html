@@ -19,26 +19,55 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-  <link rel="import" href="../paper-toast.html">
-  <link rel="import" href="../../paper-button/paper-button.html">
+  <script type="module" src="../paper-toast.js"></script>
+  <script type="module" src="../../paper-button/paper-button.js"></script>
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
 
-  <custom-style><style is="custom-style" include="demo-pages-shared-styles"></style></custom-style>
+  <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<custom-style><style is="custom-style" include="demo-pages-shared-styles"></style></custom-style>`;
+document.body.appendChild($_documentContainer);
+</script>
 
 </head>
 
 <body unresolved class="centered">
-  <h3>Toast auto-closes after 3 seconds. Only one toast per time will be visible</h3>
-  <demo-snippet class="centered-demo">
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<h3>Toast auto-closes after 3 seconds. Only one toast per time will be visible</h3>`;
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
-      <paper-button raised onclick="toast0.open()">Default toast</paper-button>
+      <paper-button raised="" onclick="toast0.open()">Default toast</paper-button>
       <paper-toast id="toast0" text="This toast auto-closes after 3 seconds"></paper-toast>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <h3>Toast does not auto-close when <code>duration</code> is negative, <code>0</code>, or <code>Infinity</code></h3>
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<h3>Toast does not auto-close when <code>duration</code> is negative, <code>0</code>, or <code>Infinity</code></h3>`;
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <style>
         .yellow-button {
@@ -47,16 +76,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       </style>
 
-      <paper-button raised onclick="toast1.open()">Persistent toast</paper-button>
+      <paper-button raised="" onclick="toast1.open()">Persistent toast</paper-button>
 
       <paper-toast id="toast1" duration="0" text="This toast will stay opened until you close it, or open another toast.">
         <paper-button onclick="toast1.toggle()" class="yellow-button">Close now!</paper-button>
       </paper-toast>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <h3>Toast can be styled</h3>
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<h3>Toast can be styled</h3>`;
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <custom-style><style is="custom-style">
         #toast2 {
@@ -65,14 +104,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       </style></custom-style>
 
-      <paper-button raised onclick="toast2.open()">Styled toast</paper-button>
+      <paper-button raised="" onclick="toast2.open()">Styled toast</paper-button>
 
       <paper-toast id="toast2" class="fit-bottom" text="This toast is red and fits bottom!"></paper-toast>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <h3>Toast can fit into any element</h3>
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<h3>Toast can fit into any element</h3>`;
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <style>
         #container {
@@ -81,13 +130,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       </style>
       <div id="container">
-        <paper-button raised onclick="toast3.open()">Open toast</paper-button>
+        <paper-button raised="" onclick="toast3.open()">Open toast</paper-button>
       </div>
       <paper-toast id="toast3" class="fit-bottom" text="This toast fits into the container."></paper-toast>
 
       <script>
         toast3.fitInto = container;
-      </script>
+      &lt;/script>
+
+    </template>
+  </demo-snippet>`;
+
+document.body.appendChild($_documentContainer);
+</script>
+toast3.fitInto = container;
+</script>
 
     </template>
   </demo-snippet>

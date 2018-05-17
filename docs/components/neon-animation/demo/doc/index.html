@@ -18,9 +18,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
     
-    <link rel="import" href="../../web-animations.html">
-    <link rel="import" href="my-animatable.html">
-    <link rel="import" href="my-dialog.html">
+    <script type="module" src="../../web-animations.js"></script>
+    <script type="module" src="./my-animatable.js"></script>
+    <script type="module" src="./my-dialog.js"></script>
 
   </head>
   <style>
@@ -44,33 +44,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </dom-bind>
 
-    <script>
+    <script type="module">
+import '../../web-animations.js';
+import './my-animatable.js';
+import './my-dialog.js';
 
-      var scope1 = document.querySelector('template[is="dom-bind"]');
-      var scope2 = document.querySelector('dom-bind');
+var scope1 = document.querySelector('template[is="dom-bind"]');
+var scope2 = document.querySelector('dom-bind');
 
-      scope1._onCircleButtonClick = function(event) {
-        var node = document.querySelector('my-animatable');
-        if (node) {
-          node.animate();
-        }
-      };
+scope1._onCircleButtonClick = function(event) {
+  var node = document.querySelector('my-animatable');
+  if (node) {
+    node.animate();
+  }
+};
 
-      scope1._onDialogButtonClick = function(event) {
-        var node = document.querySelector('my-dialog');
-        if (node) {
-          if (node.opened) {
-            node.hide();
-          } else {
-            node.show();
-          }
-        }
-      };
+scope1._onDialogButtonClick = function(event) {
+  var node = document.querySelector('my-dialog');
+  if (node) {
+    if (node.opened) {
+      node.hide();
+    } else {
+      node.show();
+    }
+  }
+};
 
-     scope2._onCircleButtonClick = scope1._onCircleButtonClick;
-     scope2._onDialogButtonClick = scope1._onDialogButtonClick;
-
-    </script>
+scope2._onCircleButtonClick = scope1._onCircleButtonClick;
+scope2._onDialogButtonClick = scope1._onDialogButtonClick;
+</script>
 
   </body>
 </html>

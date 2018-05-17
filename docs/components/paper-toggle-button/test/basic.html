@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="../../iron-test-helpers/mock-interactions.js"></script>
 
     <link rel="import" href="../../test-fixture/test-fixture.html">
-    <link rel="import" href="../paper-toggle-button.html">
+    <script type="module" src="../paper-toggle-button.js"></script>
 
   </head>
   <body>
@@ -31,67 +31,69 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </test-fixture>
 
-    <script>
-      suite('defaults', function() {
-        var b1;
+    <script type="module">
+import '../paper-toggle-button.js';
+import { afterNextRender } from '../../polymer/lib/utils/render-status.js';
+suite('defaults', function() {
+  var b1;
 
-        setup(function() {
-          b1 = fixture('Basic');
-        });
+  setup(function() {
+    b1 = fixture('Basic');
+  });
 
-        test('set scroll direction', function(done) {
-          Polymer.RenderStatus.afterNextRender(b1, function() {
-            assert.equal(b1.__polymerGesturesTouchAction, 'pan-y');
-            done();
-          });
-        });
+  test('set scroll direction', function(done) {
+    afterNextRender(b1, function() {
+      assert.equal(b1.__polymerGesturesTouchAction, 'pan-y');
+      done();
+    });
+  });
 
-        test('check button via click', function(done) {
-          b1.addEventListener('click', function() {
-            assert.isTrue(b1.getAttribute('aria-pressed') == 'true');
-            assert.isTrue(b1.checked);
-            done();
-          });
-          MockInteractions.tap(b1);
-        });
+  test('check button via click', function(done) {
+    b1.addEventListener('click', function() {
+      assert.isTrue(b1.getAttribute('aria-pressed') == 'true');
+      assert.isTrue(b1.checked);
+      done();
+    });
+    MockInteractions.tap(b1);
+  });
 
-        test('toggle button via click', function(done) {
-          b1.checked = true;
-          b1.addEventListener('click', function() {
-            assert.isFalse(b1.getAttribute('aria-pressed') == 'true');
-            assert.isFalse(b1.checked);
-            done();
-          });
-          MockInteractions.tap(b1);
-        });
+  test('toggle button via click', function(done) {
+    b1.checked = true;
+    b1.addEventListener('click', function() {
+      assert.isFalse(b1.getAttribute('aria-pressed') == 'true');
+      assert.isFalse(b1.checked);
+      done();
+    });
+    MockInteractions.tap(b1);
+  });
 
-        test('disabled button cannot be clicked', function(done) {
-          b1.disabled = true;
-          b1.checked = true;
-          MockInteractions.tap(b1);
+  test('disabled button cannot be clicked', function(done) {
+    b1.disabled = true;
+    b1.checked = true;
+    MockInteractions.tap(b1);
 
-          setTimeout(function() {
-            assert.isTrue(b1.getAttribute('aria-pressed') == 'true');
-            assert.isTrue(b1.checked);
-            done();
-          }, 1);
-        });
-      });
+    setTimeout(function() {
+      assert.isTrue(b1.getAttribute('aria-pressed') == 'true');
+      assert.isTrue(b1.checked);
+      done();
+    }, 1);
+  });
+});
 
-      suite('a11y', function() {
-        var b1;
+suite('a11y', function() {
+  var b1;
 
-        setup(function() {
-          b1 = fixture('Basic');
-        });
+  setup(function() {
+    b1 = fixture('Basic');
+  });
 
-        test('has aria role "button"', function() {
-          console.log(b1.getAttribute('role'));
-          assert.isTrue(b1.getAttribute('role') == 'button');
-        });
+  test('has aria role "button"', function() {
+    console.log(b1.getAttribute('role'));
+    assert.isTrue(b1.getAttribute('role') == 'button');
+  });
 
-        a11ySuite('Basic');
-      });
-    </script>
+  a11ySuite('Basic');
+});
+</script>
   </body>
 </html>

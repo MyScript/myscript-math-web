@@ -18,13 +18,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../../web-animations.html">
-    <link rel="import" href="../../../iron-flex-layout/iron-flex-layout.html">
-    <link rel="import" href="../../neon-animated-pages.html">
-    <link rel="import" href="../../neon-animations.html">
-    <link rel="import" href="../../../paper-styles/typography.html">
-    <link rel="import" href="x-card.html">
-    <link rel="import" href="x-cards-list.html">
+    <script type="module" src="../../web-animations.js"></script>
+    <script type="module" src="../../../iron-flex-layout/iron-flex-layout.js"></script>
+    <script type="module" src="../../neon-animated-pages.js"></script>
+    <script type="module" src="../../neon-animations.js"></script>
+    <script type="module" src="../../../paper-styles/typography.js"></script>
+    <script type="module" src="./x-card.js"></script>
+    <script type="module" src="./x-cards-list.js"></script>
 
     <custom-style>
       <style is="custom-style">
@@ -140,35 +140,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </dom-bind>
 
-    <script>
-      var polymer2DomBind = document.querySelector('dom-bind');
-      var polymer1DomBindScope = document.querySelector('template[is="dom-bind"]');
+    <script type="module">
+import '../../web-animations.js';
+import '../../../iron-flex-layout/iron-flex-layout.js';
+import '../../neon-animated-pages.js';
+import '../../neon-animations.js';
+import '../../../paper-styles/typography.js';
+import './x-card.js';
+import './x-cards-list.js';
+var polymer2DomBind = document.querySelector('dom-bind');
+var polymer1DomBindScope = document.querySelector('template[is="dom-bind"]');
 
-      polymer2DomBind._onPolymerClick = function(event) {
-        this.$.list.sharedElements = {
-          'ripple': event.target,
-          'reverse-ripple': event.target
-        };
-        this.$.pages.selected = 1;
-      };
+polymer2DomBind._onPolymerClick = function(event) {
+  this.$.list.sharedElements = {
+    'ripple': event.target,
+    'reverse-ripple': event.target
+  };
+  this.$.pages.selected = 1;
+};
 
-      polymer2DomBind._onAngularClick = function(event) {
-        this.$.list.sharedElements = {
-          'ripple': event.target,
-          'reverse-ripple': event.target
-        };
-        this.$.pages.selected = 2;
-      };
+polymer2DomBind._onAngularClick = function(event) {
+  this.$.list.sharedElements = {
+    'ripple': event.target,
+    'reverse-ripple': event.target
+  };
+  this.$.pages.selected = 2;
+};
 
-      polymer2DomBind._onBackClick = function(event) {
-        this.$.pages.selected = 0;
-      };
+polymer2DomBind._onBackClick = function(event) {
+  this.$.pages.selected = 0;
+};
 
-      polymer1DomBindScope._onPolymerClick = polymer2DomBind._onPolymerClick;
-      polymer1DomBindScope._onAngularClick = polymer2DomBind._onAngularClick;
-      polymer1DomBindScope._onBackClick = polymer2DomBind._onBackClick;
-
-    </script>
+polymer1DomBindScope._onPolymerClick = polymer2DomBind._onPolymerClick;
+polymer1DomBindScope._onAngularClick = polymer2DomBind._onAngularClick;
+polymer1DomBindScope._onBackClick = polymer2DomBind._onBackClick;
+</script>
 
   </body>
 </html>

@@ -21,21 +21,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-  <link rel="import" href="../../iron-icons/iron-icons.html">
-  <link rel="import" href="../../iron-icon/iron-icon.html">
+  <script type="module" src="../../iron-icons/iron-icons.js"></script>
+  <script type="module" src="../../iron-icon/iron-icon.js"></script>
   <link rel="import" href="../../iron-image/iron-image.html">
-  <link rel="import" href="../../paper-listbox/paper-listbox.html">
-  <link rel="import" href="../../paper-item/paper-item.html">
-  <link rel="import" href="../../paper-button/paper-button.html">
-  <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+  <script type="module" src="../../paper-listbox/paper-listbox.js"></script>
+  <script type="module" src="../../paper-item/paper-item.js"></script>
+  <script type="module" src="../../paper-button/paper-button.js"></script>
+  <script type="module" src="../../paper-icon-button/paper-icon-button.js"></script>
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
 
   <!-- Ensure Web Animations polyfill is loaded since neon-animation 2.0 doesn't import it -->
-  <link rel="import" href="../../neon-animation/web-animations.html">
-  <link rel="import" href="../paper-menu-button.html">
+  <script type="module" src="../../neon-animation/web-animations.js"></script>
+  <script type="module" src="../paper-menu-button.js"></script>
 
-  <custom-style>
+  <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
       demo-snippet {
         --demo-snippet-code: {
@@ -69,13 +80,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-align: center;
       }
     </style>
-  </custom-style>
+  </custom-style>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 
 </head>
 
 <body unresolved class="centered">
-  <h4>Paper Icon Button + Paper Menu</h4>
-  <demo-snippet class="centered-demo">
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<h4>Paper Icon Button + Paper Menu</h4>`;
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <paper-menu-button>
         <paper-icon-button icon="menu" slot="dropdown-trigger" alt="menu"></paper-icon-button>
@@ -88,14 +109,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-listbox>
       </paper-menu-button>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <h4>Paper Menu with multi selection</h4>
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<h4>Paper Menu with multi selection</h4>`;
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
-      <paper-menu-button ignore-select>
+      <paper-menu-button ignore-select="">
         <paper-icon-button icon="menu" slot="dropdown-trigger" alt="multi menu"></paper-icon-button>
-        <paper-listbox slot="dropdown-content" multi>
+        <paper-listbox slot="dropdown-content" multi="">
           <paper-item>alpha</paper-item>
           <paper-item>beta</paper-item>
           <paper-item>gamma</paper-item>
@@ -104,12 +135,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-listbox>
       </paper-menu-button>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <h4>Disabled</h4>
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<h4>Disabled</h4>`;
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
-      <paper-menu-button disabled>
+      <paper-menu-button disabled="">
         <paper-icon-button icon="menu" slot="dropdown-trigger" alt="menu"></paper-icon-button>
         <paper-listbox slot="dropdown-content">
           <paper-item>alpha</paper-item>
@@ -120,10 +161,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-listbox>
       </paper-menu-button>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <h4>Alternate Alignment</h4>
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<h4>Alternate Alignment</h4>`;
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <paper-menu-button vertical-align="bottom" horizontal-align="right">
         <paper-icon-button icon="menu" slot="dropdown-trigger" alt="bottom align"></paper-icon-button>
@@ -136,13 +187,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-listbox>
       </paper-menu-button>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <h4>Alternate Button</h4>
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<h4>Alternate Button</h4>`;
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <paper-menu-button>
-        <paper-button slot="dropdown-trigger" raised>
+        <paper-button slot="dropdown-trigger" raised="">
           <iron-icon icon="check"></iron-icon>
           <span>Dinosaurs</span>
         </paper-button>
@@ -186,19 +247,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         ];
         // Support hybrid mode.
         dinosaurs.firstElementChild.items = dinosaurs.items;
-      </script>
+      &lt;/script>
+    </template>
+  </demo-snippet>`;
+
+document.body.appendChild($_documentContainer);
+</script>/ Support hybrid mode.
+dinosaurs.firstElementChild.items = dinosaurs.items;
+</script>
     </template>
   </demo-snippet>
 
-  <h4>Alternate Content</h4>
-  <demo-snippet class="centered-demo">
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<h4>Alternate Content</h4>`;
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <paper-menu-button vertical-align="bottom">
         <paper-icon-button slot="dropdown-trigger" icon="polymer" alt="polymer"></paper-icon-button>
         <iron-image slot="dropdown-content" src="../../iron-image/demo/polymer.svg"></iron-image>
       </paper-menu-button>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 
 </body>
 

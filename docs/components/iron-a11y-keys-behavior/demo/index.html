@@ -14,19 +14,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <title>Iron A11y Keys Behavior demo</title>
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-  <link rel="import" href="x-key-aware.html">
+  <script type="module" src="./x-key-aware.js"></script>
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
 
-  <custom-style><style is="custom-style" include="demo-pages-shared-styles"></style></custom-style>
+  <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<custom-style><style is="custom-style" include="demo-pages-shared-styles"></style></custom-style>`;
+document.body.appendChild($_documentContainer);
+</script>
 </head>
 
 <body unresolved class="centered">
 
-  <demo-snippet>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet>
     <template>
       <x-key-aware></x-key-aware>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 </body>
 </html>

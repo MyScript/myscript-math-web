@@ -18,9 +18,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../test-fixture/test-fixture-mocha.js"></script>
   <script src="../../iron-test-helpers/mock-interactions.js"></script>
 
-  <link rel="import" href="../../polymer/polymer.html">
+  <script type="module" src="../../polymer/polymer.js"></script>
   <link rel="import" href="../../test-fixture/test-fixture.html">
-  <link rel="import" href="test-radio-button.html">
+  <script type="module" src="./test-radio-button.js"></script>
 </head>
 <body>
 
@@ -30,29 +30,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <script>
-    suite('basic', function() {
-      var button;
+  <script type="module">
+import '../../polymer/polymer.js';
+import './test-radio-button.js';
+suite('basic', function() {
+  var button;
 
-      setup(function() {
-        button = fixture('basic');
-        MockInteractions.blur(button);
-      });
+  setup(function() {
+    button = fixture('basic');
+    MockInteractions.blur(button);
+  });
 
-      test('normal (no states)', function() {
-        assert.isFalse(button.focused);
-        assert.isFalse(button.hasRipple());
-      });
+  test('normal (no states)', function() {
+    assert.isFalse(button.focused);
+    assert.isFalse(button.hasRipple());
+  });
 
-      test('receives focus', function() {
-        MockInteractions.focus(button);
+  test('receives focus', function() {
+    MockInteractions.focus(button);
 
-        assert.isTrue(button.focused);
-        assert.isTrue(button.hasRipple());
-      });
+    assert.isTrue(button.focused);
+    assert.isTrue(button.hasRipple());
+  });
 
-    });
-  </script>
+});
+</script>
 
 </body>
 </html>

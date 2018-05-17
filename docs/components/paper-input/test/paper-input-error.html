@@ -20,9 +20,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
 
-  <link rel="import" href="../../iron-input/iron-input.html">
-  <link rel="import" href="../paper-input-container.html">
-  <link rel="import" href="../paper-input-error.html">
+  <script type="module" src="../../iron-input/iron-input.js"></script>
+  <script type="module" src="../paper-input-container.js"></script>
+  <script type="module" src="../paper-input-error.js"></script>
 
 </head>
 <body>
@@ -54,34 +54,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <script>
+  <script type="module">
+import '../../iron-input/iron-input.js';
+import '../paper-input-container.js';
+import '../paper-input-error.js';
+import { Element } from '../../polymer/polymer-element.js';
+import { dom } from '../../polymer/lib/legacy/polymer.dom.js';
+import { Base } from '../../polymer/polymer.js';
 
-    suite('basic', function() {
+suite('basic', function() {
 
-      test('error message only appears when input is invalid', function(done) {
-        var container = Polymer.Element ?
-            fixture('auto-validate-numbers-2') :
-            fixture('auto-validate-numbers-1');
-        var input = Polymer.dom(container).querySelector('#i');
-        var error = Polymer.dom(container).querySelector('#e');
+  test('error message only appears when input is invalid', function(done) {
+    var container = Element ?
+        fixture('auto-validate-numbers-2') :
+        fixture('auto-validate-numbers-1');
+    var input = dom(container).querySelector('#i');
+    var error = dom(container).querySelector('#e');
 
-        // Need to wait a tick to stamp the error message.
-        Polymer.Base.async(function() {
-          assert.equal(getComputedStyle(error).visibility, 'hidden', 'error is visibility:hidden');
-          input.bindValue = 'foobar';
-          assert.equal(getComputedStyle(error).visibility, 'visible', 'error is visibility:visible');
-          done();
-        }, 1);
-      });
+    // Need to wait a tick to stamp the error message.
+    Base.async(function() {
+      assert.equal(getComputedStyle(error).visibility, 'hidden', 'error is visibility:hidden');
+      input.bindValue = 'foobar';
+      assert.equal(getComputedStyle(error).visibility, 'visible', 'error is visibility:visible');
+      done();
+    }, 1);
+  });
 
-      test('error message add on is registered', function() {
-        var container = document.getElementById('container');
-        assert.isTrue(container._addons && container._addons.length === 1, 'add on is registered');
-      });
+  test('error message add on is registered', function() {
+    var container = document.getElementById('container');
+    assert.isTrue(container._addons && container._addons.length === 1, 'add on is registered');
+  });
 
-    });
-
-  </script>
+});
+</script>
 
 </body>
 </html>

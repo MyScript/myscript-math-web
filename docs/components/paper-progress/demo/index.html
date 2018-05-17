@@ -17,13 +17,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="apple-mobile-web-app-capable" content="yes">
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../../paper-styles/color.html">
+  <script type="module" src="../../paper-styles/color.js"></script>
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-  <link rel="import" href="../paper-progress.html">
-  <link rel="import" href="../../paper-button/paper-button.html">
+  <script type="module" src="../paper-progress.js"></script>
+  <script type="module" src="../../paper-button/paper-button.js"></script>
 
-  <custom-style>
+  <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
       paper-progress {
         display: block;
@@ -35,17 +46,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 5px;
       }
     </style>
-  </custom-style>
+  </custom-style>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 
 </head>
 <body unresolved>
-  <div class="vertical-section-container centered">
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
     <h3>paper-progress can be imperatively controlled</h3>
     <demo-snippet class="centered-demo">
       <template>
         <p>Once started, loops 5 times before stopping.
           <!-- View the source code to see the contents of startProgress() -->
-          <paper-button raised onclick="startProgress();" id="start">Start</paper-button>
+          <paper-button raised="" onclick="startProgress();" id="start">Start</paper-button>
         </p>
         <paper-progress id="progress"></paper-progress>
       </template>
@@ -61,8 +78,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
           </style>
         </custom-style>
-        <paper-progress indeterminate></paper-progress>
-        <paper-progress indeterminate class="slow"></paper-progress>
+        <paper-progress indeterminate=""></paper-progress>
+        <paper-progress indeterminate="" class="slow"></paper-progress>
       </template>
     </demo-snippet>
 
@@ -92,41 +109,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-progress value="40" secondary-progress="80" class="blue"></paper-progress>
       </template>
     </demo-snippet>
-  </div>
+  </div>`;
 
-  <script>
-    var progress, button;
-    var repeat, maxRepeat = 5, animating = false;
+document.body.appendChild($_documentContainer);
+</script>
 
-    function nextProgress() {
-      animating = true;
-      if (progress.value < progress.max) {
-        progress.value += (progress.step || 1);
-      } else {
-        if (++repeat >= maxRepeat) {
-          animating = false;
-          button.disabled = false;
-          return;
-        }
-        progress.value = progress.min;
-      }
-      requestAnimationFrame(nextProgress);
+  <script type="module">
+import '../../paper-styles/color.js';
+import '../paper-progress.js';
+import '../../paper-button/paper-button.js';
+var progress, button;
+var repeat, maxRepeat = 5, animating = false;
+
+function nextProgress() {
+  animating = true;
+  if (progress.value < progress.max) {
+    progress.value += (progress.step || 1);
+  } else {
+    if (++repeat >= maxRepeat) {
+      animating = false;
+      button.disabled = false;
+      return;
     }
+    progress.value = progress.min;
+  }
+  requestAnimationFrame(nextProgress);
+}
 
-    function startProgress() {
-      repeat = 0;
-      progress.value = progress.min;
-      button.disabled = true;
-      if (!animating) {
-        nextProgress();
-      }
-    }
+function startProgress() {
+  repeat = 0;
+  progress.value = progress.min;
+  button.disabled = true;
+  if (!animating) {
+    nextProgress();
+  }
+}
 
-    window.addEventListener('WebComponentsReady', function() {
-      progress = document.querySelector('paper-progress');
-      button = document.querySelector('paper-button');
-    });
-  </script>
+progress = document.querySelector('paper-progress');
+button = document.querySelector('paper-button');
+</script>
 
 </body>
 </html>

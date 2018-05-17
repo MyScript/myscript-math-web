@@ -21,9 +21,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../iron-autogrow-textarea.html">
+    <script type="module" src="../iron-autogrow-textarea.js"></script>
 
-    <custom-style>
+    <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
         iron-autogrow-textarea {
           display: block;
@@ -42,10 +53,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         }
       </style>
-    </custom-style>
+    </custom-style>`;
+
+document.body.appendChild($_documentContainer);
+</script>
   </head>
   <body unresolved>
-    <div class="vertical-section-container centered">
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
       <h3>An iron-autogrow-textarea grows automatically as more text is entered</h3>
       <demo-snippet>
         <template>
@@ -94,6 +111,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </dom-bind>
         </template>
       </demo-snippet>
-    </div>
+    </div>`;
+
+document.body.appendChild($_documentContainer);
+</script>
   </body>
 </html>

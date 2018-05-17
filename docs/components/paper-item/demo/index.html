@@ -19,18 +19,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-  <link rel="import" href="../../iron-icon/iron-icon.html">
-  <link rel="import" href="../../iron-icons/iron-icons.html">
-  <link rel="import" href="../../iron-icons/communication-icons.html">
+  <script type="module" src="../../iron-icon/iron-icon.js"></script>
+  <script type="module" src="../../iron-icons/iron-icons.js"></script>
+  <script type="module" src="../../iron-icons/communication-icons.js"></script>
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-  <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
-  <link rel="import" href="../paper-icon-item.html">
-  <link rel="import" href="../paper-item.html">
-  <link rel="import" href="../paper-item-body.html">
-  <link rel="import" href="../../paper-styles/color.html">
+  <script type="module" src="../../paper-icon-button/paper-icon-button.js"></script>
+  <script type="module" src="../paper-icon-item.js"></script>
+  <script type="module" src="../paper-item.js"></script>
+  <script type="module" src="../paper-item-body.js"></script>
+  <script type="module" src="../../paper-styles/color.js"></script>
 
-  <custom-style>
+  <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
       div[role="listbox"] {
         border: 1px solid #e5e5e5;
@@ -48,10 +59,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: var(--paper-light-blue-300);
       }
     </style>
-  </custom-style>
+  </custom-style>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 </head>
 <body unresolved>
-  <div class="vertical-section-container centered">
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
     <h3>Paper-items are simple list elements, ideally used in a paper-listbox or
     an element with <i>role="listbox"</i></h3>
     <demo-snippet>
@@ -118,24 +135,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template>
         <div role="listbox">
           <paper-item>
-            <paper-item-body two-line>
+            <paper-item-body two-line="">
               <div>Profile Photo</div>
-              <div secondary>Change your Google+ profile photo</div>
+              <div secondary="">Change your Google+ profile photo</div>
             </paper-item-body>
           </paper-item>
           <paper-icon-item>
             <iron-icon icon="communication:phone" slot="item-icon">
             </iron-icon>
-            <paper-item-body two-line>
+            <paper-item-body two-line="">
               <div>(650) 555-1234</div>
-              <div secondary>Mobile</div>
+              <div secondary="">Mobile</div>
             </paper-item-body>
           </paper-icon-item>
           <paper-icon-item>
             <div class="avatar blue" slot="item-icon"></div>
-            <paper-item-body two-line>
+            <paper-item-body two-line="">
               <div>Alphonso Engelking</div>
-              <div secondary>Change photo</div>
+              <div secondary="">Change photo</div>
             </paper-item-body>
           </paper-icon-item>
         </div>
@@ -148,18 +165,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div role="listbox">
           <paper-icon-item>
             <div class="avatar blue" slot="item-icon"></div>
-            <paper-item-body two-line>
+            <paper-item-body two-line="">
               <div>Photos</div>
-              <div secondary>Jan 9, 2014</div>
+              <div secondary="">Jan 9, 2014</div>
             </paper-item-body>
             <paper-icon-button icon="star" alt="favourite this!">
             </paper-icon-button>
           </paper-icon-item>
           <paper-icon-item>
             <div class="avatar" slot="item-icon"></div>
-            <paper-item-body two-line>
+            <paper-item-body two-line="">
               <div>Recipes</div>
-              <div secondary>Jan 17, 2014</div>
+              <div secondary="">Jan 17, 2014</div>
             </paper-item-body>
             <paper-icon-button icon="star" alt="favourite this!">
             </paper-icon-button>
@@ -192,6 +209,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </template>
     </demo-snippet>
-  </div>
+  </div>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 </body>
 </html>

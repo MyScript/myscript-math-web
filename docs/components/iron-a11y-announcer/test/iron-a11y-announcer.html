@@ -16,8 +16,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
 
-  <link rel="import" href="../../polymer/polymer.html">
-  <link rel="import" href="../iron-a11y-announcer.html">
+  <script type="module" src="../../polymer/polymer.js"></script>
+  <script type="module" src="../iron-a11y-announcer.js"></script>
 </head>
 <body>
 
@@ -27,30 +27,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <script>
-    suite('<iron-a11y-announcer>', function() {
-      var announcer;
+  <script type="module">
+import '../../polymer/polymer.js';
+import '../iron-a11y-announcer.js';
+suite('<iron-a11y-announcer>', function() {
+  var announcer;
 
-      setup(function() {
-        announcer = fixture('Announcer');
-      });
+  setup(function() {
+    announcer = fixture('Announcer');
+  });
 
-      test('announces when there is an iron-announce event', function() {
-        var event = new CustomEvent('iron-announce', {
-          bubbles: true,
-          detail: {
-            text: 'foo'
-          }
-        });
-
-        sinon.spy(announcer, 'announce');
-
-        document.body.dispatchEvent(event);
-
-        expect(announcer.announce.callCount).to.be.equal(1);
-      });
+  test('announces when there is an iron-announce event', function() {
+    var event = new CustomEvent('iron-announce', {
+      bubbles: true,
+      detail: {
+        text: 'foo'
+      }
     });
-  </script>
+
+    sinon.spy(announcer, 'announce');
+
+    document.body.dispatchEvent(event);
+
+    expect(announcer.announce.callCount).to.be.equal(1);
+  });
+});
+</script>
 
 </body>
 </html>

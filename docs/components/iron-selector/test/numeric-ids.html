@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../web-component-tester/browser.js"></script>
   <link rel="import" href="../../iron-test-helpers/iron-test-helpers.html">
 
-  <link rel="import" href="../iron-selector.html">
+  <script type="module" src="../iron-selector.js"></script>
 
   <style>
     .iron-selected {
@@ -63,49 +63,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <script>
+  <script type="module">
+import '../iron-selector.js';
+import { Element } from '../../polymer/polymer-element.js';
 
-    suite('select by a numeric property', function() {
+suite('select by a numeric property', function() {
 
-      var scope;
-      var selector;
-      var domRepeat;
+  var scope;
+  var selector;
+  var domRepeat;
 
-      setup(function(done) {
-        if (Polymer.Element) {
-          scope = fixture('scope-polymer2');
-          selector = scope.querySelector('iron-selector');
-          domRepeat = scope.querySelector('dom-repeat');
-        } else {
-          scope = fixture('scope-polymer1');
-          selector = scope.querySelector('iron-selector');
-          domRepeat = scope.querySelector('template[is=dom-repeat]');
-        }
+  setup(function(done) {
+    if (Element) {
+      scope = fixture('scope-polymer2');
+      selector = scope.querySelector('iron-selector');
+      domRepeat = scope.querySelector('dom-repeat');
+    } else {
+      scope = fixture('scope-polymer1');
+      selector = scope.querySelector('iron-selector');
+      domRepeat = scope.querySelector('template[is=dom-repeat]');
+    }
 
-        // Wait for the initial iron-items-changed.
-        selector.addEventListener('iron-items-changed', function onIronItemsChanged() {
-          selector.removeEventListener('iron-items-changed', onIronItemsChanged);
+    // Wait for the initial iron-items-changed.
+    selector.addEventListener('iron-items-changed', function onIronItemsChanged() {
+      selector.removeEventListener('iron-items-changed', onIronItemsChanged);
 
-          domRepeat.items = [{ id: 0, name:'item0'}, {id: 1, name: 'item1'}, {id: 2, name: 'item2'}];
-          domRepeat.render();
-          selector.forceSynchronousItemUpdate();
+      domRepeat.items = [{ id: 0, name:'item0'}, {id: 1, name: 'item1'}, {id: 2, name: 'item2'}];
+      domRepeat.render();
+      selector.forceSynchronousItemUpdate();
 
-          done();
-        });
-      });
-
-      test('select a value of zero', function() {
-        selector.selected = 1;
-        assert.equal(selector.selected, '1');
-
-        // select item with a name value of 0
-        MockInteractions.tap(selector.items[0]);
-        assert.equal(selector.selected, 0);
-      });
-
+      done();
     });
+  });
 
-  </script>
+  test('select a value of zero', function() {
+    selector.selected = 1;
+    assert.equal(selector.selected, '1');
+
+    // select item with a name value of 0
+    MockInteractions.tap(selector.items[0]);
+    assert.equal(selector.selected, 0);
+  });
+
+});
+</script>
 
 </body>
 </html>

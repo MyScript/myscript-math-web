@@ -17,8 +17,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <title>iron-meta</title>
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../../paper-styles/demo-pages.html">
-  <link rel="import" href="../iron-meta.html">
+  <script type="module" src="../../paper-styles/demo-pages.js"></script>
+  <script type="module" src="../iron-meta.js"></script>
 </head>
 <body>
 
@@ -42,34 +42,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     The <code>value(s)</code> stored at <code>type="type1"</code> are:<br><code><type-one></type-one></code>.<br><br>The <code>value(s)</code> stored at <code>type="type2"</code> are:<br><code><type-two></type-two></code>.
   </div>
 
-  <script>
-    window.addEventListener('WebComponentsReady', function() {
-      Polymer({
-        is: 'meta-test',
-        ready: function() {
-          this.textContent = new Polymer.IronMeta({key: 'info'}).value;
-        }
-      });
-    });
+  <script type="module">
+import '../../paper-styles/demo-pages.js';
+import { IronMeta } from '../iron-meta.js';
+import { Polymer } from '../../polymer/lib/legacy/polymer-fn.js';
+Polymer({
+  is: 'meta-test',
+  ready: function() {
+    this.textContent = new IronMeta({key: 'info'}).value;
+  }
+});
 
-    Polymer({
-      is: 'type-one',
+Polymer({
+  is: 'type-one',
 
-      ready: function() {
-        var resultList = new Polymer.IronMeta({type: 'type1'}).list;
-        this.textContent = JSON.stringify(resultList);
-      }
-    });
+  ready: function() {
+    var resultList = new IronMeta({type: 'type1'}).list;
+    this.textContent = JSON.stringify(resultList);
+  }
+});
 
-    Polymer({
-      is: 'type-two',
+Polymer({
+  is: 'type-two',
 
-      ready: function() {
-        var resultList = new Polymer.IronMeta({type: 'type2'}).list;
-        this.textContent = JSON.stringify(resultList);
-      }
-    });
-  </script>
+  ready: function() {
+    var resultList = new IronMeta({type: 'type2'}).list;
+    this.textContent = JSON.stringify(resultList);
+  }
+});
+</script>
 
 </body>
 </html>

@@ -16,10 +16,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
 
-  <link rel="import" href="../../polymer/polymer.html">
-  <link rel="import" href="../iron-form-element-behavior.html">
-  <link rel="import" href="simple-element.html">
-  <link rel="import" href="simple-form.html">
+  <script type="module" src="../../polymer/polymer.js"></script>
+  <script type="module" src="../iron-form-element-behavior.js"></script>
+  <script type="module" src="./simple-element.js"></script>
+  <script type="module" src="./simple-form.js"></script>
 </head>
 
 <body>
@@ -30,44 +30,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <script>
-    suite('basic', function() {
-      var form;
+  <script type="module">
+import { Base } from '../../polymer/polymer.js';
+import '../iron-form-element-behavior.js';
+import './simple-element.js';
+import './simple-form.js';
+import { Element } from '../../polymer/polymer-element.js';
+suite('basic', function() {
+  var form;
 
-      setup(function() {
-        if (Polymer.Element) this.skip();
-        form = fixture('basic');
-      });
+  setup(function() {
+    if (Element) this.skip();
+    form = fixture('basic');
+  });
 
-      test('elements fire an event when attached', function(done) {
-        var element = document.createElement('input', 'simple-element');
+  test('elements fire an event when attached', function(done) {
+    var element = document.createElement('input', 'simple-element');
 
-        var handler = sinon.spy();
-        form.addEventListener('iron-form-element-register', handler);
+    var handler = sinon.spy();
+    form.addEventListener('iron-form-element-register', handler);
 
-        form.appendChild(element);
-        Polymer.Base.async(function() {
-          expect(handler.callCount).to.be.equal(1);
-          done();
-        }, 1);
-      });
+    form.appendChild(element);
+    Base.async(function() {
+      expect(handler.callCount).to.be.equal(1);
+      done();
+    }, 1);
+  });
 
-      test('elements fire an event when detached', function(done) {
-        var element = document.createElement('input', 'simple-element');
-        form.appendChild(element);
-        element._parentForm = form;
+  test('elements fire an event when detached', function(done) {
+    var element = document.createElement('input', 'simple-element');
+    form.appendChild(element);
+    element._parentForm = form;
 
-        var handler = sinon.spy();
-        form.addEventListener('iron-form-element-unregister', handler);
+    var handler = sinon.spy();
+    form.addEventListener('iron-form-element-unregister', handler);
 
-        form.removeChild(element);
-        Polymer.Base.async(function() {
-          expect(handler.callCount).to.be.equal(1);
-          done();
-        }, 1);
-      });
-    });
-  </script>
+    form.removeChild(element);
+    Base.async(function() {
+      expect(handler.callCount).to.be.equal(1);
+      done();
+    }, 1);
+  });
+});
+</script>
 
 </body>
 

@@ -13,10 +13,10 @@
 
         <link rel="stylesheet" href="../examples.css">
 
-        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-        <script src="../../../pepjs/dist/pep.min.js"></script>
-        <link rel="import" href="../../../paper-toast/paper-toast.html">
-        <link rel="import" href="../../myscript-math-web.html">
+        <script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+        <script src="pepjs/dist/pep.min.js"></script>
+        <script type="module" src="@polymer/paper-toast/paper-toast.js"></script>
+        <script type="module" src="../../myscript-math-web.js"></script>
     </head>
 
     <body>
@@ -28,13 +28,15 @@
                            hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
                            touch-action="none">
         </myscript-math-web>
-        <script>
-            const paperToast = document.querySelector('paper-toast');
-            document.querySelector('myscript-math-web').addEventListener('changed', (event) => {
-                paperToast.text = `Stats for this input are : ${JSON.stringify(event.target.getStats())}`;
-                paperToast.fitIn = paperToast.show();
-            });
-        </script>
+        <script type="module">
+import '@polymer/paper-toast/paper-toast.js';
+import '../../myscript-math-web.js';
+const paperToast = document.querySelector('paper-toast');
+document.querySelector('myscript-math-web').addEventListener('changed', (event) => {
+    paperToast.text = `Stats for this input are : ${JSON.stringify(event.target.getStats())}`;
+    paperToast.fitIn = paperToast.show();
+});
+</script>
     </body>
 
 </html>

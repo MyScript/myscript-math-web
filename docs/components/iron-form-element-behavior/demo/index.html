@@ -19,9 +19,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../../paper-styles/demo-pages.html">
-    <link rel="import" href="simple-form.html">
-    <link rel="import" href="simple-element.html">
+    <script type="module" src="../../paper-styles/demo-pages.js"></script>
+    <script type="module" src="./simple-form.js"></script>
+    <script type="module" src="./simple-element.js"></script>
   </head>
   <style>
     input {
@@ -48,23 +48,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </div>
 
-    <script>
-      function update() {
-        if (Polymer.Element) {
-          console.warn('IronFormElementBehavior is deprecated in Polymer 2.0');
-          return;
-        }
-        var output = document.getElementById('output');
-        var elements = document.getElementById('form').formElements;
-        document.getElementById('output').innerHTML = '';
-        for (var i = 0; i < elements.length; i++) {
-          var li = document.createElement('li');
-          var text = document.createTextNode(elements[i].value);
-          li.appendChild(text);
-          output.appendChild(li);
-        }
-      }
-    </script>
+    <script type="module">
+import '../../paper-styles/demo-pages.js';
+import './simple-form.js';
+import './simple-element.js';
+import { Element } from '../../polymer/polymer-element.js';
+function update() {
+  if (Element) {
+    console.warn('IronFormElementBehavior is deprecated in Polymer 2.0');
+    return;
+  }
+  var output = document.getElementById('output');
+  var elements = document.getElementById('form').formElements;
+  document.getElementById('output').innerHTML = '';
+  for (var i = 0; i < elements.length; i++) {
+    var li = document.createElement('li');
+    var text = document.createTextNode(elements[i].value);
+    li.appendChild(text);
+    output.appendChild(li);
+  }
+}
+</script>
   </body>
 
 

@@ -23,21 +23,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- Order of imports matters. The validator needs to be imported before the
     iron-input needs it. -->
-  <link rel="import" href="cats-only.html">
-  <link rel="import" href="../iron-input.html">
+  <script type="module" src="./cats-only.js"></script>
+  <script type="module" src="../iron-input.js"></script>
 
-  <custom-style>
+  <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<custom-style>
     <style is="custom-style" include="demo-pages-shared-styles"></style>
-  </custom-style>
+  </custom-style>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 </head>
 <body>
-  <div class="vertical-section-container centered">
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
     <h4>Basic inputs</h4>
     <demo-snippet class="centered-demo">
       <template>
         <iron-input><input placeholder="type=date" type="date"></iron-input>
         <iron-input><input placeholder="type=number" type="number"></iron-input>
-        <iron-input><input placeholder="disabled" disabled></iron-input>
+        <iron-input><input placeholder="disabled" disabled=""></iron-input>
       </template>
     </demo-snippet>
 
@@ -73,8 +90,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             background-color: #FFCDD2;
           }
         </style>
-        <iron-input allowed-pattern="[0-9]" auto-validate>
-          <input pattern="\d{3}" placeholder="exactly 3 digits are valid">
+        <iron-input allowed-pattern="[0-9]" auto-validate="">
+          <input pattern="\\d{3}" placeholder="exactly 3 digits are valid">
         </iron-input>
       </template>
     </demo-snippet>
@@ -89,11 +106,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         </style>
         <cats-only></cats-only>
-        <iron-input auto-validate validator="cats-only">
+        <iron-input auto-validate="" validator="cats-only">
           <input placeholder="only 'cat' is valid">
         </iron-input>
       </template>
     </demo-snippet>
-  </div>
+  </div>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 </body>
 </html>

@@ -19,11 +19,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="../../iron-image/iron-image.html">
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-  <link rel="import" href="../../neon-animation/web-animations.html">
+  <script type="module" src="../../neon-animation/web-animations.js"></script>
 
-  <link rel="import" href="x-select.html">
+  <script type="module" src="./x-select.js"></script>
 
-  <custom-style><style is="custom-style" include="demo-pages-shared-styles">
+  <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<custom-style><style is="custom-style" include="demo-pages-shared-styles">
     demo-snippet {
       --demo-snippet-code: {
         max-height: 250px;
@@ -83,12 +94,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       box-shadow: 0px 2px 6px #ccc;
       border-radius: 3px;
     }
-  </style></custom-style>
+  </style></custom-style>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 </head>
 
 <body unresolved class="centered">
-  <h3>Basic</h3>
-  <demo-snippet class="centered-demo">
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<h3>Basic</h3>`;
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <x-select>
         <button slot="dropdown-trigger">Basic</button>
@@ -109,10 +130,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </x-select>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <h3>Alignment</h3>
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<h3>Alignment</h3>`;
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <x-select vertical-align="bottom">
         <button slot="dropdown-trigger">Bottom-left Aligned</button>
@@ -129,10 +160,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </x-select>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <h3>Scroll actions</h3>
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<h3>Scroll actions</h3>`;
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <x-select scroll-action="refit">
         <button slot="dropdown-trigger">Refit on scroll</button>
@@ -149,10 +190,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </x-select>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <h3>Content</h3>
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+$_documentContainer.innerHTML = `<h3>Content</h3>`;
+document.body.appendChild($_documentContainer);
+</script>
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <x-select horizontal-align="left" vertical-align="top">
         <button slot="dropdown-trigger">Content</button>
@@ -200,12 +251,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         ];
         // Support hybrid mode.
         Demo.firstElementChild.items = Demo.items;
-      </script>
+      &lt;/script>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-
-
-</body>
-
-</html>
+document.body.appendChild($_documentContainer);
+</script>

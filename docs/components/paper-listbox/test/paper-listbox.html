@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
 
-    <link rel="import" href="../paper-listbox.html">
+    <script type="module" src="../paper-listbox.js"></script>
 
   </head>
   <body>
@@ -35,32 +35,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </test-fixture>
 
-    <script>
-      suite('<paper-listbox>', function() {
-        var listbox;
+    <script type="module">
+import '../paper-listbox.js';
+suite('<paper-listbox>', function() {
+  var listbox;
 
-        setup(function(done) {
-          listbox = fixture('basic');
+  setup(function(done) {
+    listbox = fixture('basic');
 
-          // Wait for the initial items update.
-          listbox.addEventListener(
-              'iron-items-changed', function onIronItemsChanged() {
-                listbox.removeEventListener('iron-items-changed', onIronItemsChanged);
-                done();
-              });
+    // Wait for the initial items update.
+    listbox.addEventListener(
+        'iron-items-changed', function onIronItemsChanged() {
+          listbox.removeEventListener('iron-items-changed', onIronItemsChanged);
+          done();
         });
+  });
 
-        test('selected item has an appropriate className', function() {
-          assert(listbox.selectedItem.classList.contains('iron-selected'));
-        });
+  test('selected item has an appropriate className', function() {
+    assert(listbox.selectedItem.classList.contains('iron-selected'));
+  });
 
-        test('has listbox aria role', function() {
-          assert(listbox.getAttribute('role') === 'listbox');
-        });
+  test('has listbox aria role', function() {
+    assert(listbox.getAttribute('role') === 'listbox');
+  });
 
-        a11ySuite('basic');
-      });
-    </script>
+  a11ySuite('basic');
+});
+</script>
 
   </body>
 </html>

@@ -17,11 +17,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
 
     <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../../web-animations.html">
-    <link rel="import" href="../../../iron-flex-layout/iron-flex-layout.html">
-    <link rel="import" href="../../neon-animated-pages.html">
-    <link rel="import" href="../../neon-animations.html">
-    <link rel="import" href="full-page.html">
+    <script type="module" src="../../web-animations.js"></script>
+    <script type="module" src="../../../iron-flex-layout/iron-flex-layout.js"></script>
+    <script type="module" src="../../neon-animated-pages.js"></script>
+    <script type="module" src="../../neon-animations.js"></script>
+    <script type="module" src="./full-page.js"></script>
 
     <custom-style>
       <style is="custom-style">
@@ -39,13 +39,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <full-page></full-page>
 
-    <script>
-
-      window.addEventListener('WebComponentsReady', function() {
-        document.querySelector('full-page').show();
-      });
-
-    </script>
+    <script type="module">
+import '../../web-animations.js';
+import '../../../iron-flex-layout/iron-flex-layout.js';
+import '../../neon-animated-pages.js';
+import '../../neon-animations.js';
+import './full-page.js';
+document.querySelector('full-page').show();
+</script>
 
   </body>
 </html>

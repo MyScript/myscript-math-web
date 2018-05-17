@@ -18,8 +18,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../web-component-tester/browser.js"></script>
   <script src="../../iron-test-helpers/mock-interactions.js"></script>
 
-  <link rel="import" href="../../polymer/polymer.html">
-  <link rel="import" href="../iron-a11y-keys-behavior.html">
+  <script type="module" src="../../polymer/polymer.js"></script>
+  <script type="module" src="../iron-a11y-keys-behavior.js"></script>
 </head>
 <body>
   <test-fixture id="BasicKeys">
@@ -58,13 +58,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <script>
+  <script type="module">
+import '../../polymer/polymer.js';
+import { IronA11yKeysBehavior } from '../iron-a11y-keys-behavior.js';
+import { Polymer } from '../../polymer/lib/legacy/polymer-fn.js';
 suite('Polymer.IronA11yKeysBehavior', function() {
   var keys;
 
   suiteSetup(function() {
     /** @polymerBehavior */
-    var KeysTestBehavior = [Polymer.IronA11yKeysBehavior, {
+    var KeysTestBehavior = [IronA11yKeysBehavior, {
       properties: {
         keyCount: {
           type: Number,
@@ -450,6 +453,6 @@ suite('Polymer.IronA11yKeysBehavior', function() {
   });
 
 });
-  </script>
+</script>
 </body>
 </html>

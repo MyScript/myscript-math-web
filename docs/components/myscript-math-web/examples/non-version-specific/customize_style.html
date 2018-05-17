@@ -65,11 +65,11 @@
 
         <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
         <script src="../../../pepjs/dist/pep.min.js"></script>
-        <link rel="import" href="../../../paper-toggle-button/paper-toggle-button.html">
-        <link rel="import" href="../../../paper-swatch-picker/paper-swatch-picker.html">
-        <link rel="import" href="../../../paper-slider/paper-slider.html">
-        <link rel="import" href="../../../neon-animation/web-animations.html">
-        <link rel="import" href="../../myscript-math-web.html">
+        <script type="module" src="../../../paper-toggle-button/paper-toggle-button.js"></script>
+        <script type="module" src="../../../paper-swatch-picker/paper-swatch-picker.js"></script>
+        <script type="module" src="../../../paper-slider/paper-slider.js"></script>
+        <script type="module" src="../../../neon-animation/web-animations.js"></script>
+        <script type="module" src="../../myscript-math-web.js"></script>
         <custom-style>
             <style>
                 myscript-math-web {
@@ -131,82 +131,87 @@
                 Theme or pen style applied will be written here (where component is myscript-math-web).
             </div>
         </div>
-        <script>
-            const themes = [{
-                name: 'normal-white',
-                color: '#FFFFFF',
-                resultColor: '#A8A8A8',
-                width: 2
-            }, {
-                name: 'thin-green',
-                color: '#00FF00',
-                resultColor: '#2E7D32',
-                width: 1
-            }, {
-                name: 'bold-red',
-                color: '#FF0000',
-                resultColor: '#B71C1C',
-                width: 3
-            }];
+        <script type="module">
+import '../../../paper-toggle-button/paper-toggle-button.js';
+import '../../../paper-swatch-picker/paper-swatch-picker.js';
+import '../../../paper-slider/paper-slider.js';
+import '../../../neon-animation/web-animations.js';
+import '../../myscript-math-web.js';
+const themes = [{
+    name: 'normal-white',
+    color: '#FFFFFF',
+    resultColor: '#A8A8A8',
+    width: 2
+}, {
+    name: 'thin-green',
+    color: '#00FF00',
+    resultColor: '#2E7D32',
+    width: 1
+}, {
+    name: 'bold-red',
+    color: '#FF0000',
+    resultColor: '#B71C1C',
+    width: 3
+}];
 
-            const component = document.querySelector('myscript-math-web');
-            const penSettings = document.querySelector('#pensettings');
-            const penColor = document.querySelector('#pencolor');
-            const penWidth = document.querySelector('#penwidth');
-            const penStyleClasses = document.querySelector('#penstyleclasses');
-            const prompterText = document.getElementById('prompter-css-text');
+const component = document.querySelector('myscript-math-web');
+const penSettings = document.querySelector('#pensettings');
+const penColor = document.querySelector('#pencolor');
+const penWidth = document.querySelector('#penwidth');
+const penStyleClasses = document.querySelector('#penstyleclasses');
+const prompterText = document.getElementById('prompter-css-text');
 
-            function updatePrompter(values) {
-                prompterText.innerText = '';
-                values.forEach(function(value) {
-                    prompterText.innerText += `${value[0]} = ${JSON.stringify(value[1])} \n`;
-                });
-            }
+function updatePrompter(values) {
+    prompterText.innerText = '';
+    values.forEach(function(value) {
+        prompterText.innerText += `${value[0]} = ${JSON.stringify(value[1])} \n`;
+    });
+}
 
-            document.querySelector('#theme').addEventListener('change', (event) => {
-                const selectedTheme = themes.find(theme => theme.name === event.target.value);
-                if (selectedTheme) {
-                    component.themecolor = selectedTheme.color;
-                    component.themewidth = selectedTheme.width;
-                    component.solvercolor = selectedTheme.resultColor;
-                    updatePrompter([['component.themecolor', selectedTheme.color], ['component.themewidth', selectedTheme.width], ['component.solvercolor', selectedTheme.resultColor]]);
-                }
-            });
+document.querySelector('#theme').addEventListener('change', (event) => {
+    const selectedTheme = themes.find(theme => theme.name === event.target.value);
+    if (selectedTheme) {
+        component.themecolor = selectedTheme.color;
+        component.themewidth = selectedTheme.width;
+        component.solvercolor = selectedTheme.resultColor;
+        updatePrompter([['component.themecolor', selectedTheme.color], ['component.themewidth', selectedTheme.width], ['component.solvercolor', selectedTheme.resultColor]]);
+    }
+});
 
-            document.querySelector('#penenabled').addEventListener('change', (event) => {
-                if (event.target.checked) {
-                    penSettings.classList.remove('hidden');
-                    component.pencolor = penColor.color;
-                    component.penwidth = penWidth.value;
-                    updatePrompter([['component.pencolor', penColor.color], ['component.penwidth', penWidth.value]]);
-                } else {
-                    penSettings.classList.add('hidden');
-                    component.pencolor = undefined;
-                    component.penwidth = undefined;
-                    updatePrompter([['component.pencolor', undefined], ['component.penwidth', undefined]]);
-                }
-            });
+document.querySelector('#penenabled').addEventListener('change', (event) => {
+    if (event.target.checked) {
+        penSettings.classList.remove('hidden');
+        component.pencolor = penColor.color;
+        component.penwidth = penWidth.value;
+        updatePrompter([['component.pencolor', penColor.color], ['component.penwidth', penWidth.value]]);
+    } else {
+        penSettings.classList.add('hidden');
+        component.pencolor = undefined;
+        component.penwidth = undefined;
+        updatePrompter([['component.pencolor', undefined], ['component.penwidth', undefined]]);
+    }
+});
 
-            penColor.addEventListener('color-changed', (event) => {
-                component.pencolor = event.target.color;
-                updatePrompter([['component.pencolor', event.target.color]])
-            });
+penColor.addEventListener('color-changed', (event) => {
+    component.pencolor = event.target.color;
+    updatePrompter([['component.pencolor', event.target.color]])
+});
 
-            penWidth.addEventListener('change', (event) => {
-                component.penwidth = event.target.value;
-                updatePrompter([['component.pencolor', event.target.value]])
-            });
+penWidth.addEventListener('change', (event) => {
+    component.penwidth = event.target.value;
+    updatePrompter([['component.pencolor', event.target.value]])
+});
 
-            penStyleClasses.addEventListener('change', (event) => {
-                if (event.target.checked) {
-                    component.penstyleclasses = 'green';
-                    updatePrompter([['component.penstyleclasses ', 'green']]);
-                } else {
-                    component.penstyleclasses = '';
-                    updatePrompter([['component.penstyleclasses', '']]);
-                }
-            });
-        </script>
+penStyleClasses.addEventListener('change', (event) => {
+    if (event.target.checked) {
+        component.penstyleclasses = 'green';
+        updatePrompter([['component.penstyleclasses ', 'green']]);
+    } else {
+        component.penstyleclasses = '';
+        updatePrompter([['component.penstyleclasses', '']]);
+    }
+});
+</script>
     </body>
 
 </html>

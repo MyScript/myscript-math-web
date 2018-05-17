@@ -19,13 +19,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-  <link rel="import" href="../../iron-icons/iron-icons.html">
-  <link rel="import" href="../../iron-icon/iron-icon.html">
+  <script type="module" src="../../iron-icons/iron-icons.js"></script>
+  <script type="module" src="../../iron-icon/iron-icon.js"></script>
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-  <link rel="import" href="../paper-ripple.html">
+  <script type="module" src="../paper-ripple.js"></script>
 
-  <custom-style><style is="custom-style" include="demo-pages-shared-styles">
+  <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<custom-style><style is="custom-style" include="demo-pages-shared-styles">
 
     demo-snippet {
       --demo-snippet-code: {
@@ -233,12 +244,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     .label-red {
       color: #d23f31;
     }
-  </style></custom-style>
+  </style></custom-style>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 </head>
 
 <body unresolved class="centered">
 
-  <demo-snippet class="centered-demo">
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <div class="button raised">
         <div class="center" tabindex="1">SUBMIT</div>
@@ -247,7 +264,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <div class="button raised">
         <div class="center" tabindex="1">NO INK</div>
-        <paper-ripple noink></paper-ripple>
+        <paper-ripple noink=""></paper-ripple>
       </div>
 
       <div class="button raised grey">
@@ -265,9 +282,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-ripple></paper-ripple>
       </div>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <div class="button raised grey narrow">
         <div class="center" tabindex="1">+1</div>
@@ -284,52 +307,70 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-ripple></paper-ripple>
       </div>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <div class="icon-button">
         <iron-icon icon="menu" tabindex="1"></iron-icon>
-        <paper-ripple class="circle" recenters></paper-ripple>
+        <paper-ripple class="circle" recenters=""></paper-ripple>
       </div>
 
       <div class="icon-button">
         <iron-icon icon="more-vert" tabindex="1"></iron-icon>
-        <paper-ripple class="circle" recenters></paper-ripple>
+        <paper-ripple class="circle" recenters=""></paper-ripple>
       </div>
 
       <div class="icon-button red">
         <iron-icon icon="delete" tabindex="1"></iron-icon>
-        <paper-ripple class="circle" recenters></paper-ripple>
+        <paper-ripple class="circle" recenters=""></paper-ripple>
       </div>
 
       <div class="icon-button blue">
         <iron-icon icon="account-box" tabindex="1"></iron-icon>
-        <paper-ripple class="circle" recenters></paper-ripple>
+        <paper-ripple class="circle" recenters=""></paper-ripple>
       </div>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <div class="fab red">
         <iron-icon icon="add" tabindex="1"></iron-icon>
-        <paper-ripple class="circle" recenters></paper-ripple>
+        <paper-ripple class="circle" recenters=""></paper-ripple>
       </div>
 
       <div class="fab blue">
         <iron-icon icon="mail" tabindex="1"></iron-icon>
-        <paper-ripple class="circle" recenters></paper-ripple>
+        <paper-ripple class="circle" recenters=""></paper-ripple>
       </div>
 
       <div class="fab green">
         <iron-icon icon="create" tabindex="1"></iron-icon>
-        <paper-ripple class="circle" recenters></paper-ripple>
+        <paper-ripple class="circle" recenters=""></paper-ripple>
       </div>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <div class="menu">
         <div class="item">
@@ -369,9 +410,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </div>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
 
-  <demo-snippet class="centered-demo">
+document.body.appendChild($_documentContainer);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('div');
+
+$_documentContainer.innerHTML = `<demo-snippet class="centered-demo">
     <template>
       <div class="dialog">
         <div class="content">
@@ -392,14 +439,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
 
       <div class="card" tabindex="1">
-        <paper-ripple recenters></paper-ripple>
+        <paper-ripple recenters=""></paper-ripple>
       </div>
 
       <div class="card image" tabindex="1">
-        <paper-ripple recenters></paper-ripple>
+        <paper-ripple recenters=""></paper-ripple>
       </div>
     </template>
-  </demo-snippet>
+  </demo-snippet>`;
+
+document.body.appendChild($_documentContainer);
+</script>
 </body>
 
 </html>
