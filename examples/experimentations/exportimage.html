@@ -58,8 +58,7 @@
 
         </style>
 
-        <script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-        <script src="pepjs/dist/pep.min.js"></script>
+        <script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
         <script type="module" src="../../myscript-math-web.js"></script>
         <script src="./rasterizeHTML.allinone.js"></script>
     </head>
@@ -82,8 +81,7 @@
             </div>
             <img id="displayInk" class="displayAsImage"/>
         </div>
-        <script type="module">
-import '../../myscript-math-web.js';
+        <script>
 // Button behaviour to display strokes in a specified canvas zone
 function displayCanvasAsImage(e) {
     var inkPaperPointer = document.getElementById('myscriptMathWebElement')._myscriptCommonElement._inkPaper;

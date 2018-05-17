@@ -23,9 +23,8 @@
             }
         </style>
 
-        <script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-        <script src="pepjs/dist/pep.min.js"></script>
-        <script type="module" src="@polymer/paper-toast/paper-toast.js"></script>
+        <script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+        <script type="module" src="../../node_modules/@polymer/paper-toast/paper-toast.js"></script>
         <script type="module" src="../../myscript-math-web.js"></script>
     </head>
 
@@ -47,9 +46,7 @@
                            disablecontrols
                            touch-action="none">
         </myscript-math-web>
-        <script type="module">
-import '@polymer/paper-toast/paper-toast.js';
-import '../../myscript-math-web.js';
+        <script>
 const myscriptMathWeb = document.querySelector('myscript-math-web');
 const paperToast = document.querySelector('paper-toast');
 myscriptMathWeb.addEventListener('exported', (event) => {
