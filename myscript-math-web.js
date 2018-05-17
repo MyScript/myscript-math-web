@@ -35,7 +35,9 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 @demo examples/v3/websocket_math.html Configure component with legacy api [V3]
 @demo examples/index.html Other examples
 */
+
 class MyScriptMathWeb extends PolymerElement {
+
   static get template() {
     return html`
         <style include="myscript-stylesheet">
@@ -94,11 +96,11 @@ class MyScriptMathWeb extends PolymerElement {
                 height: 100%;
             }
         </style>
+        
         <myscript-math-exports hidden="[[ !_displayExports(hideexportzone, unloaded) ]]" exports="[[ exports ]]" debug="[[ debug ]]">
         </myscript-math-exports>
-        <myscript-common-element type="MATH" protocol="[[ protocol ]]" apiversion="[[ apiversion ]]" host="[[ host ]]" usewindowlocation="[[ usewindowlocation ]]" scheme="[[ scheme ]]" applicationkey="[[ applicationkey ]]" hmackey="[[ hmackey ]]" triggerdelay="[[ triggerdelay ]]" processdelay="[[ processdelay ]]" ondemand="[[ ondemand ]]" debug="[[ debug ]]" configuration="{{ configuration }}" editor="{{ editor }}" exports="{{ exports }}" initialized="{{ initialized }}" unloaded="{{ commonunloaded }}" pencolor="[[ pencolor ]]" penwidth="[[ penwidth ]]" penstyle="[[ penstyle ]]" penstyleclasses="[[ penstyleclasses ]]" themecolor="[[ themecolor ]]" themewidth="[[ themewidth ]]" theme="[[ commontheme ]]" canclear="[[ canclear ]]" canredo="[[ canredo ]]" canundo="[[ canundo ]]" idle="[[ idle ]]" disableautoreconnect="[[ disableautoreconnect ]]" disablecontrols="[[ disablecontrols ]]" disableclearcontrol="[[ disableclearcontrol ]]" disableundoredocontrol="[[ disableundoredocontrol ]]" disableconvertcontrol="[[ disableconvertcontrol ]]" usepointerlisteners="[[ usepointerlisteners ]]" touch-action="[[&nbsp;touch-action ]]">
-        </myscript-common-element>
-`;
+        <myscript-common-element type="MATH" protocol="[[ protocol ]]" apiversion="[[ apiversion ]]" host="[[ host ]]" usewindowlocation="[[ usewindowlocation ]]" scheme="[[ scheme ]]" applicationkey="[[ applicationkey ]]" hmackey="[[ hmackey ]]" triggerdelay="[[ triggerdelay ]]" processdelay="[[ processdelay ]]" ondemand="[[ ondemand ]]" debug="[[ debug ]]" configuration="{{ configuration }}" editor="{{ editor }}" exports="{{ exports }}" initialized="{{ initialized }}" unloaded="{{ commonunloaded }}" pencolor="[[ pencolor ]]" penwidth="[[ penwidth ]]" penstyle="[[ penstyle ]]" penstyleclasses="[[ penstyleclasses ]]" themecolor="[[ themecolor ]]" themewidth="[[ themewidth ]]" theme="[[ commontheme ]]" canclear="[[ canclear ]]" canredo="[[ canredo ]]" canundo="[[ canundo ]]" idle="[[ idle ]]" disableautoreconnect="[[ disableautoreconnect ]]" disablecontrols="[[ disablecontrols ]]" disableclearcontrol="[[ disableclearcontrol ]]" disableundoredocontrol="[[ disableundoredocontrol ]]" disableconvertcontrol="[[ disableconvertcontrol ]]" usepointerlisteners="[[ usepointerlisteners ]]" touch-action="[[ touch-action ]]">
+        </myscript-common-element>`;
   }
 
   static get is() {

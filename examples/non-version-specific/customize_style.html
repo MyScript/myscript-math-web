@@ -64,11 +64,12 @@
     </style>
 
     <script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../../node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
     <script type="module" src="../../node_modules/@polymer/paper-toggle-button/paper-toggle-button.js"></script>
     <script type="module" src="../../node_modules/@polymer/paper-swatch-picker/paper-swatch-picker.js"></script>
     <script type="module" src="../../node_modules/@polymer/paper-slider/paper-slider.js"></script>
-    <script src="../../node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
     <script type="module" src="../../myscript-math-web.js"></script>
+
     <custom-style>
         <style>
             myscript-math-web {
@@ -97,20 +98,20 @@
     <paper-toggle-button class="flex-item" id="penstyleclasses" checked>Apply pen style classes (greenThickPen)
     </paper-toggle-button>
     <span class="flex-item">
-                <paper-toggle-button id="penenabled">Enable pen color/width</paper-toggle-button>
-                <span id="pensettings" class="hidden">
-                    <paper-swatch-picker id="pencolor"></paper-swatch-picker>
-                    <paper-slider id="penwidth" snaps min="1" max="5" value="2"></paper-slider>
-                </span>
-            </span>
+        <paper-toggle-button id="penenabled">Enable pen color/width</paper-toggle-button>
+        <span id="pensettings" class="hidden">
+            <paper-swatch-picker id="pencolor"></paper-swatch-picker>
+            <paper-slider id="penwidth" snaps min="1" max="5" value="2"></paper-slider>
+        </span>
+    </span>
     <span>
-                <label for="theme" class="flex-item">Theme:</label>
-                <select id="theme" class="flex-item">
-                    <option value="normal-white">Normal white theme</option>
-                    <option value="thin-green">Thin green theme</option>
-                    <option value="bold-red">Bold red theme</option>
-                </select>
-            </span>
+        <label for="theme" class="flex-item">Theme:</label>
+        <select id="theme" class="flex-item">
+            <option value="normal-white">Normal white theme</option>
+            <option value="thin-green">Thin green theme</option>
+            <option value="bold-red">Bold red theme</option>
+        </select>
+    </span>
 </nav>
 <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
 <myscript-math-web scheme="https"
