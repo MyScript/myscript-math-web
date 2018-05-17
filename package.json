@@ -37,5 +37,10 @@
     "@polymer/paper-toggle-button": "^3.0.0-pre.19",
     "@polymer/paper-slider": "^3.0.0-pre.19",
     "web-animations-js": "^2.3.1"
-  }
+  },
+  "scripts": {
+  "cache-clean": "npm cache clean",
+  "analyze": "polymer analyze myscript-common-element.html myscript-languages-element.html myscript-stylesheet.html > analysis.json",
+  "start": "polymer serve"
+}
 }
