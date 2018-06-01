@@ -1,7 +1,7 @@
 {
   "name": "myscript-math-web",
   "flat": true,
-  "version": "4.2.0",
+  "version": "5.0.0",
   "description": "The easy way to integrate mathematical expressions handwriting recognition in your web app.",
   "keywords": [
     "web-component",
@@ -38,8 +38,8 @@
     "web-animations-js": "^2.3.1"
   },
   "scripts": {
-  "cache-clean": "npm cache clean",
-  "analyze": "polymer analyze myscript-common-element.html myscript-languages-element.html myscript-stylesheet.html > analysis.json",
-  "start": "polymer serve"
-}
+    "analyze": "polymer analyze myscript-math-web.js myscript-math-exports.js katex-component.js > analysis.json",
+    "start": "polymer serve",
+    "build": "polymer build"
+  }
 }
