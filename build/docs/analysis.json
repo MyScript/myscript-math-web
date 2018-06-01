@@ -7902,7 +7902,7 @@
       "tagname": "myscript-math-exports"
     },
     {
-      "description": "The `myscript-math-web` is a turnkey solution for those who need to quickly implement MyScript Math recognition.\n\n    <myscript-math-web\n        applicationkey=\"YOUR MYSCRIPT CDK APPLICATION KEY\"\n        hmackey=\"YOUR MYSCRIPT CDK HMAC KEY\">\n    </myscript-math-web>\n\n| CSS variable | Default|\n|----------------|----------|\n|`--myscript-math-web-background`  | none|\n|`--myscript-math-web-color` | #FFFFFF|\n|`--myscript-math-web-line-pattern` | _Classic notebook pattern_|\n|`--myscript-math-web-loader-background`  | #1A9FFF|\n|`--myscript-math-web-loader-color`  | #F5F6F7|\n|`--myscript-math-web-button-background`  | #1A9FFF|\n|`--myscript-math-web-button-focus-background`  | #1A9FFF|\n|`--myscript-math-web-button-disabled-background`  | #F5F6F7|\n|`--myscript-math-web-exports-color` | #1580CD|",
+      "description": "The `myscript-math-web` is a turnkey solution for those who need to quickly implement MyScript Math recognition.\n\n    <myscript-math-web\n        applicationkey=\"YOUR MYSCRIPT DEVELOPER APPLICATION KEY\"\n        hmackey=\"YOUR MYSCRIPT DEVELOPER HMAC KEY\">\n    </myscript-math-web>\n\n| CSS variable | Default|\n|----------------|----------|\n|`--myscript-math-web-background`  | none|\n|`--myscript-math-web-color` | #FFFFFF|\n|`--myscript-math-web-line-pattern` | _Classic notebook pattern_|\n|`--myscript-math-web-loader-background`  | #1A9FFF|\n|`--myscript-math-web-loader-color`  | #F5F6F7|\n|`--myscript-math-web-button-background`  | #1A9FFF|\n|`--myscript-math-web-button-focus-background`  | #1A9FFF|\n|`--myscript-math-web-button-disabled-background`  | #F5F6F7|\n|`--myscript-math-web-exports-color` | #1580CD|",
       "summary": "",
       "path": "myscript-math-web.js",
       "properties": [
@@ -8705,7 +8705,7 @@
         {
           "name": "applicationkey",
           "type": "string | null | undefined",
-          "description": "Application key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />\n<b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.",
+          "description": "Application key to use for recognition on MyScript handwriting recognition server.\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.\nWarning: This parameter is mandatory and its value should be a string.",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -8726,7 +8726,7 @@
         {
           "name": "hmackey",
           "type": "string | null | undefined",
-          "description": "HMAC key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />\n<b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.",
+          "description": "HMAC key to use for recognition on MyScript handwriting recognition server.\nYou have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.\nWarning: This parameter may be mandatory if HMAC signature security is enabled for your application. The value should be a string.",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -9347,7 +9347,7 @@
         {
           "name": "resulttypes",
           "type": "Array | null | undefined",
-          "description": "Math export types (LATEX, MATHML or SYMBOLTREE).\n<b>Warning</b>: v3 only, for v4, use mimetypes instead",
+          "description": "Math export types (LATEX, MATHML or SYMBOLTREE).\nWarning: v3 only, for v4, use mimetypes instead",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -13303,7 +13303,7 @@
         },
         {
           "name": "applicationkey",
-          "description": "Application key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />\n<b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.",
+          "description": "Application key to use for recognition on MyScript handwriting recognition server.\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.\nWarning: This parameter is mandatory and its value should be a string.",
           "sourceRange": {
             "start": {
               "line": 245,
@@ -13319,7 +13319,7 @@
         },
         {
           "name": "hmackey",
-          "description": "HMAC key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />\n<b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.",
+          "description": "HMAC key to use for recognition on MyScript handwriting recognition server.\nYou have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.\nWarning: This parameter may be mandatory if HMAC signature security is enabled for your application. The value should be a string.",
           "sourceRange": {
             "start": {
               "line": 254,
@@ -13687,7 +13687,7 @@
         },
         {
           "name": "resulttypes",
-          "description": "Math export types (LATEX, MATHML or SYMBOLTREE).\n<b>Warning</b>: v3 only, for v4, use mimetypes instead",
+          "description": "Math export types (LATEX, MATHML or SYMBOLTREE).\nWarning: v3 only, for v4, use mimetypes instead",
           "sourceRange": {
             "start": {
               "line": 487,

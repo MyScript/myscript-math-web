@@ -7,8 +7,8 @@ import "./myscript-math-exports.js";
 The `myscript-math-web` is a turnkey solution for those who need to quickly implement MyScript Math recognition.
 
     <myscript-math-web
-        applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
-        hmackey="YOUR MYSCRIPT CDK HMAC KEY">
+        applicationkey="YOUR MYSCRIPT DEVELOPER APPLICATION KEY"
+        hmackey="YOUR MYSCRIPT DEVELOPER HMAC KEY">
     </myscript-math-web>
 
 | CSS variable | Default|
@@ -247,9 +247,9 @@ class MyScriptMathWeb extends PolymerElement {
       },
 
       /**
-           * Application key to use for recognition on MyScript handwriting recognition server.<br />
-           * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
-           * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
+           * Application key to use for recognition on MyScript handwriting recognition server.
+           * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.
+           * Warning: This parameter is mandatory and its value should be a string.
            */
       applicationkey: {
         type: String,
@@ -257,9 +257,9 @@ class MyScriptMathWeb extends PolymerElement {
       },
 
       /**
-           * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
-           * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
-           * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
+           * HMAC key to use for recognition on MyScript handwriting recognition server.
+           * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.
+           * Warning: This parameter may be mandatory if HMAC signature security is enabled for your application. The value should be a string.
            */
       hmackey: {
         type: String,
@@ -519,7 +519,7 @@ class MyScriptMathWeb extends PolymerElement {
 
       /**
            * Math export types (LATEX, MATHML or SYMBOLTREE).
-           * <b>Warning</b>: v3 only, for v4, use mimetypes instead
+           * Warning: v3 only, for v4, use mimetypes instead
            */
       resulttypes: {
         type: Array,
