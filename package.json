@@ -32,6 +32,7 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.8.2",
+    "@polymer/iron-component-page": "^3.0.0-pre.19",
     "@polymer/paper-swatch-picker": "^3.0.0-pre.19",
     "@polymer/paper-toggle-button": "^3.0.0-pre.19",
     "@polymer/paper-slider": "^3.0.0-pre.19",
