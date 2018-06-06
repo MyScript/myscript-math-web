@@ -43,6 +43,6 @@
     "analyze": "polymer analyze myscript-math-web.js myscript-math-exports.js katex-component.js > analysis.json",
     "start": "polymer serve",
     "build": "polymer build",
-    "docs": "npm run analyze & npm run build"
+    "docs": "npm run analyze && npm run build"
   }
 }
