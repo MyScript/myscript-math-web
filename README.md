@@ -49,37 +49,48 @@ You can discover all the math features on our [Developer website](https://develo
 
 ## Requirements
 
-1. Have [bower](https://bower.io/#install-bower) installed.
+1. Have [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/en/docs/install) installed.
 2. Have a MyScript developer account. You can create one [here](https://dev.myscript.com/).
 2. Get your keys and the free monthly quota to access MyScript Cloud at [developer.myscript.com](https://developer.myscript.com)
  
 ## Installation
 
-1. Download myscript-math-web.  
+Use an existing project or start a fresh one.
+
 ```shell
-bower install myscript-math-web
+npm init
 ```
+
+Install `myscript-math-web` and use it as showed in the [Usage]() section.
+
+```shell
+npm install myscript-math-web
+```
+
 
 ## Usage
 
 1. Create an `index.html` file in the same directory. 
 
 2. Add the following lines in the `head` section to import the library and the webcomponents polyfill.
+
 ```html
-<link rel="import" href="bower_components/myscript-math-web/myscript-math-web.html">
-<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" href="node_modules/myscript-math-web/myscript-math-web.js"></script>
+<script src="node_modules/webcomponentsjs/webcomponents-loader.js"></script>
 ```  
 
 3. Still in the `head` section, add the following style:
+
 ```html
 <style>
     myscript-math-web {
-        height: 100%;
+        height: 100vw;
     }
 </style>
 ```
 
-4. Use the component in the `body` section with the keys you received by mail.  
+4. Use the component in the `body` section with the keys you received by mail.
+
 ```html
 <myscript-math-web
   applicationkey="YOUR MYSCRIPT DEVELOPER APPLICATION KEY"
@@ -88,14 +99,15 @@ bower install myscript-math-web
 ```
 
 5. Your `index.html` file should look like this:
+
 ```html
 <html>
     <head>
-        <link rel="import" href="bower_components/myscript-math-web/myscript-math-web.html">
-        <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+        <script type="module" href="node_modules/myscript-math-web/myscript-math-web.js"></script>
+        <script src="node_modules/webcomponentsjs/webcomponents-loader.js"></script>
         <style>
             myscript-math-web {
-                height: 100%;
+                height: 100vw;
             }
         </style>
     </head>
@@ -108,9 +120,10 @@ bower install myscript-math-web
 </html>
 ```
 
-6. Launch a local Web server like the one below and open the page in your browser (at [0.0.0.0:8000](http://0.0.0.0:8000) if you used the one below) to start using it!
+6. Launch a local Web server to start using it! We recommend to use the polymer one, you can find more information on the [Polymer website](https://www.polymer-project.org/3.0/start/install-3-0).
+
 ```
-python -m SimpleHTTPServer
+polymer serve
 ```
 
 You can find this guide and a more complete example on the [MyScript Developer website](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/math-element/get-started/).
