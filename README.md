@@ -76,7 +76,7 @@ npm install myscript-math-web
 
 ```html
 <script type="module" href="node_modules/myscript-math-web/myscript-math-web.js"></script>
-<script src="node_modules/webcomponentsjs/webcomponents-loader.js"></script>
+<script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 ```  
 
 3. Still in the `head` section, add the following style:
@@ -104,7 +104,7 @@ npm install myscript-math-web
 <html>
     <head>
         <script type="module" href="node_modules/myscript-math-web/myscript-math-web.js"></script>
-        <script src="node_modules/webcomponentsjs/webcomponents-loader.js"></script>
+        <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
         <style>
             myscript-math-web {
                 height: 100vw;
