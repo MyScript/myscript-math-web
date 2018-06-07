@@ -75,7 +75,7 @@ npm install myscript-math-web
 2. Add the following lines in the `head` section to import the library and the webcomponents polyfill.
 
 ```html
-<script type="module" href="node_modules/myscript-math-web/myscript-math-web.js"></script>
+<script type="module" src="node_modules/myscript-math-web/myscript-math-web.js"></script>
 <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 ```  
 
@@ -103,7 +103,7 @@ npm install myscript-math-web
 ```html
 <html>
     <head>
-        <script type="module" href="node_modules/myscript-math-web/myscript-math-web.js"></script>
+        <script type="module" src="node_modules/myscript-math-web/myscript-math-web.js"></script>
         <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
         <style>
             myscript-math-web {
