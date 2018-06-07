@@ -29,9 +29,9 @@ It integrates all you need:
 
 If you're not familiar with MyScript and Interactive Ink, consider discovering its major features with our [math demo](http://webdemo.myscript.com/views/math.html).
 
-You can find on our examples page a [simple example](https://myscript.github.io/myscript-math-web/components/myscript-math-web/#/elements/myscript-math-web/demos/get-started-[v4]) of `myscript-math-web`. 
+[Simple example](https://myscript.github.io/myscript-math-web/components/myscript-math-web/#/elements/myscript-math-web/demos/get-started-[v4]) of `myscript-math-web`. 
 
-We also provide several examples to show the features of `myscript-math-web`. Those examples can be found on our [examples page](https://myscript.github.io/myscript-math-web/components/myscript-math-web/#/elements/myscript-math-web/demos/other-examples) with the source codes in [this directory](https://github.com/MyScript/myscript-math-web/tree/master/examples).
+[All our examples](https://myscript.github.io/myscript-math-web/components/myscript-math-web/#/elements/myscript-math-web/demos/other-examples) with the [source codes](https://github.com/MyScript/myscript-math-web/tree/master/examples).
 
 
 ## Features
