@@ -8837,7 +8837,7 @@
         {
           "name": "configuration",
           "type": "Object | null | undefined",
-          "description": "Set the additional configuration used to feed MyScript Editor (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)\nConfiguration values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.\nConfiguration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).",
+          "description": "Set the additional configuration used to feed MyScript Editor (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)\nConfiguration values are taken into account when myscript-common-element is attached to the dom and when detached is set to false.\nConfiguration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -13383,7 +13383,7 @@
         },
         {
           "name": "configuration",
-          "description": "Set the additional configuration used to feed MyScript Editor (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)\nConfiguration values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.\nConfiguration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).",
+          "description": "Set the additional configuration used to feed MyScript Editor (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)\nConfiguration values are taken into account when myscript-common-element is attached to the dom and when detached is set to false.\nConfiguration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).",
           "sourceRange": {
             "start": {
               "line": 296,

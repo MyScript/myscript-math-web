@@ -305,7 +305,7 @@ class MyScriptMathWeb extends PolymerElement {
 
       /**
            * Set the additional configuration used to feed MyScript Editor (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)
-           * Configuration values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.
+           * Configuration values are taken into account when myscript-common-element is attached to the dom and when detached is set to false.
            * Configuration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).
            */
       configuration: {

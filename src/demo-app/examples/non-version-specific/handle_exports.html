@@ -14,12 +14,10 @@
     <link rel="stylesheet" href="../examples.css">
 
     <script src="../../../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script type="module" src="../../../../node_modules/@polymer/paper-toast/paper-toast.js"></script>
     <script type="module" src="../../../../myscript-math-web.js"></script>
 </head>
 
 <body>
-<paper-toast class="fit-top"></paper-toast>
 <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
 <myscript-math-web scheme="https"
                    host="webdemoapi.myscript.com"
@@ -28,11 +26,11 @@
                    mimetypes='["application/x-latex"]'
                    touch-action="none">
 </myscript-math-web>
+<div class="toast"></div>
 <script>
-    const paperToast = document.querySelector('paper-toast');
+    const toast = document.querySelector('.toast');
     document.querySelector('myscript-math-web').addEventListener('exported', function (event) {
-        paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
-        paperToast.fitIn = paperToast.show();
+        toast.textContent = `Recognition object contains : ${JSON.stringify(event.detail)}`;
     });
 </script>
 </body>
