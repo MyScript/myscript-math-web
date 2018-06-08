@@ -1,9 +1,0 @@
-{
-  "removeReferences": [
-    "../prism/prism.d.ts",
-    "../prism/themes/prism.d.ts"
-  ],
-  "renameTypes": {
-    "Prism.Lang": "{}"
-  }
-}

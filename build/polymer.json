@@ -1,0 +1,34 @@
+{
+  "entrypoint": "index.html",
+  "fragments": [],
+  "sources": [
+    "src/**/*",
+    "analysis.json",
+    "myscript-math-web.js",
+    "myscript-math-exports.js",
+    "katex-component.js",
+    "index.html"
+  ],
+  "extraDependencies": [
+    "bower_components/webcomponentsjs/*.js",
+    "node_modules/@webcomponents/webcomponentsjs/**",
+    "node_modules/web-animations-js/**",
+    "node_modules/@polymer/**",
+    "node_modules/myscript-common-element/**",
+    "node_modules/myscript/**",
+    "node_modules/katex/**"
+  ],
+  "builds": [
+    {
+      "name": "docs"
+    }
+  ],
+  "lint": {
+    "rules": [
+      "polymer-3"
+    ]
+  },
+  "npm": true,
+  "componentDir": "node_modules/",
+  "moduleResolution": "node"
+}

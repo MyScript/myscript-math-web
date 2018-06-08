@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="true"/>
+
+    <title>Handle exports</title>
+
+    <link rel="stylesheet" href="../examples.css">
+
+    <script src="../../../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script type="module" src="../../../../myscript-math-web.js"></script>
+</head>
+
+<body>
+<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+<myscript-math-web scheme="https"
+                   host="webdemoapi.myscript.com"
+                   applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+                   hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+                   mimetypes='["application/x-latex"]'
+                   touch-action="none">
+</myscript-math-web>
+<div class="toast"></div>
+<script>
+    const toast = document.querySelector('.toast');
+    document.querySelector('myscript-math-web').addEventListener('exported', function (event) {
+        toast.textContent = `Recognition object contains : ${JSON.stringify(event.detail)}`;
+    });
+</script>
+</body>
+
+</html>

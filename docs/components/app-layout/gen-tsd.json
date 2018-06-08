@@ -1,8 +1,0 @@
-{
-  "excludeFiles": [
-    "index.html",
-    "**/test/**",
-    "**/demo/**",
-    "templates/**"
-  ]
-}
