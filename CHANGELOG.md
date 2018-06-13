@@ -1,3 +1,13 @@
+# [v5.0.0](https://github.com/MyScript/myscript-math-web/tree/v5.0.0)
+
+## Features
+
+`myscript-math-web` now supports all the features introduced by the version [4.2.0 of MyScriptJS](https://github.com/MyScript/myscript-js/tree/v4.2.0).
+
+## Breaking changes
+
+- We are now using Polymer 3. For more details, please refer to the [Polymer documentation](https://www.polymer-project.org/3.0/docs/about_30).
+
 # [v4.1.1](https://github.com/MyScript/myscript-math-web/tree/v4.1.1)
 
 ## Bugs fixed
