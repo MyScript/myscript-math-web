@@ -1,0 +1,30 @@
+{
+  "files": {
+    "paper-menu-button.html": {
+      "convertedUrl": "paper-menu-button.js",
+      "exports": {
+        "Polymer.PaperMenuButton": "PaperMenuButton"
+      }
+    },
+    "paper-menu-button-animations.html": {
+      "convertedUrl": "paper-menu-button-animations.js",
+      "exports": {}
+    },
+    "index.html": {
+      "convertedUrl": "index.html",
+      "exports": {}
+    },
+    "demo/index.html": {
+      "convertedUrl": "demo/index.html",
+      "exports": {}
+    },
+    "test/index.html": {
+      "convertedUrl": "test/index.html",
+      "exports": {}
+    },
+    "test/paper-menu-button.html": {
+      "convertedUrl": "test/paper-menu-button.html",
+      "exports": {}
+    }
+  }
+}

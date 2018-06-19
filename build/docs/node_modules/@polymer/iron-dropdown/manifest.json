@@ -1,0 +1,42 @@
+{
+  "files": {
+    "iron-dropdown.html": {
+      "convertedUrl": "iron-dropdown.js",
+      "exports": {}
+    },
+    "iron-dropdown-scroll-manager.html": {
+      "convertedUrl": "iron-dropdown-scroll-manager.js",
+      "exports": {
+        "Polymer.IronDropdownScrollManager": "IronDropdownScrollManager"
+      }
+    },
+    "index.html": {
+      "convertedUrl": "index.html",
+      "exports": {}
+    },
+    "demo/index.html": {
+      "convertedUrl": "demo/index.html",
+      "exports": {}
+    },
+    "demo/x-select.html": {
+      "convertedUrl": "demo/x-select.js",
+      "exports": {}
+    },
+    "demo/grow-height-animation.html": {
+      "convertedUrl": "demo/grow-height-animation.js",
+      "exports": {}
+    },
+    "test/index.html": {
+      "convertedUrl": "test/index.html",
+      "exports": {}
+    },
+    "test/iron-dropdown.html": {
+      "convertedUrl": "test/iron-dropdown.html",
+      "exports": {}
+    },
+    "test/x-scrollable-element.html": {
+      "convertedUrl": "test/x-scrollable-element.html",
+      "exports": {}
+    }
+  }
+}

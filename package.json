@@ -23,7 +23,7 @@
   "homepage": "https://myscript.github.io/myscript-math-web/components/myscript-math-web/",
   "dependencies": {
     "@polymer/polymer": "^3.0.0-pre.13",
-    "myscript-common-element": "github:myscript/myscript-common-element#wip-polymer-3",
+    "myscript-common-element": "^5.0.0",
     "katex": "0.8.3",
     "@webcomponents/webcomponentsjs": "^2.0.0"
   },
