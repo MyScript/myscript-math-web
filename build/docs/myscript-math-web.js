@@ -29,7 +29,6 @@ The `myscript-math-web` is a turnkey solution for those who need to quickly impl
 @demo src/demo-app/examples/non-version-specific/custom_controls.html Redefining the controls [V4]
 @demo src/demo-app/examples/non-version-specific/interact_with_your_app.html Answering a math question [V4]
 @demo src/demo-app/examples/v4/solver_tuned.html Tuning the solver [V4]
-@demo src/demo-app/examples/v3/websocket_math.html Configure component with legacy api [V3]
 @demo src/demo-app/examples/index.html Other examples
 */
 
