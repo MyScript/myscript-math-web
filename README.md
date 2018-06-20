@@ -1,4 +1,12 @@
 # MyScript Math Web
+
+[![npm version](https://badge.fury.io/js/myscript-math-web.svg)](https://badge.fury.io/js/myscript-math-web)
+[![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/MyScriptmyscript-math-web)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/MyScriptmyscript-math-web.svg)](https://vaadin.com/directory/component/MyScriptmyscript-math-web)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/MyScript/myscript-math-web)
+[![Examples](https://img.shields.io/badge/Link%20to-examples-blue.svg)](https://myscript.github.io/myscript-common-element/#/elements/myscript-math-web/demos/other-demonstrations)
+[![Documentation](https://img.shields.io/badge/Link%20to-documentation-green.svg)](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/math-web/)
+
 > The easy way to integrate mathematical expressions handwriting recognition in your web app.
 
 <p align="center">
