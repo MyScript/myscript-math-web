@@ -92,7 +92,7 @@ npm install myscript-math-web
 ```html
 <style>
     myscript-math-web {
-        height: 100vw;
+        height: 100vh;
     }
 </style>
 ```
@@ -115,7 +115,7 @@ npm install myscript-math-web
         <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
         <style>
             myscript-math-web {
-                height: 100vw;
+                height: 100vh;
             }
         </style>
     </head>
