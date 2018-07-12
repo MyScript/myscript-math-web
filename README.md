@@ -147,7 +147,7 @@ You can find a complete documentation with the following sections on our Develop
 * **Export content**: [how to export your content](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/math-element/import-and-export/),
 * **Styling**: [how to style content](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/math-element/styling/).
 
-We also provide a complete [API Reference](https://myscript.github.io/myscript-math-web/components/myscript-math-web/#/elements/myscript-math-web).
+We also provide a complete [API Reference](https://myscript.github.io/myscript-math-web/#/elements/myscript-math-web).
 
 ## Getting support
 
