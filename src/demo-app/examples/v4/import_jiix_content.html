@@ -18,7 +18,15 @@
             }
 
             myscript-math-web {
-                height: calc(100% - 60px);
+                border: 1px solid #D7DDE3;
+                height: calc(40% - 60px);
+                margin: 20px 0;
+            }
+            #editor2 {
+                background-color: rgba(215,221,227,.3);
+            }
+            .btn-container {
+                text-align: center;
             }
         </style>
 
@@ -29,15 +37,19 @@
     </head>
 
     <body>
-        <nav>
-            <span>
-                <input type="text" class="input-field" id="importContentField" data-type="application/vnd.myscript.jiix"
-                       placeholder="e.g. \sqrt {\dfrac {2} {3}}"/>
-                <button class="classic-btn" id="importContent">Import</button>
-            </span>
-        </nav>
         <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-        <myscript-math-web scheme="https"
+        <myscript-math-web id="editor1" scheme="https"
+                           host="webdemoapi.myscript.com"
+                           applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+                           hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+                           mimetypes='["application/x-latex", "application/vnd.myscript.jiix"]'
+                           configuration='{ "recognitionParams" : { "v4": { "export": { "jiix" : { "strokes": "true"}}}}}'
+                           touch-action="none">
+        </myscript-math-web>
+        <div class="btn-container">
+            <button class="classic-btn" id="importContent">Import</button>
+        </div>
+        <myscript-math-web id="editor2" scheme="https"
                            host="webdemoapi.myscript.com"
                            applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
                            hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
@@ -45,13 +57,35 @@
                            touch-action="none">
         </myscript-math-web>
         <script>
-const component = document.querySelector('myscript-math-web');
-const importContent = document.getElementById('importContentField');
+            const component1 = document.querySelector('#editor1');
+            const component2 = document.querySelector('#editor2');
 
-document.getElementById('importContent').addEventListener('click', function () {
-    component.import_(importContent.value, importContent.dataset.type);
-});
-</script>
+            let toImport = null;
+
+            component1.addEventListener('exported', (event) => {
+                const exports = event.detail.exports;
+                if(exports && exports['application/vnd.myscript.jiix']) {
+                    toImport = exports['application/vnd.myscript.jiix'];
+                }
+            });
+
+            component2.addEventListener('exported', () => {
+                if (toImport === null) {
+                    component2.clear();
+                }
+            });
+
+            document.getElementById('importContent').addEventListener('click', () => {
+                if(toImport !== null) {
+                    component2.clear();
+                    if(component1.editor.isEmpty) {
+                        toImport = null;
+                    } else {
+                        component2.import_(toImport, 'application/vnd.myscript.jiix');
+                    }
+                }
+            });
+        </script>
     </body>
 
 </html>
