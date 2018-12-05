@@ -1,7 +1,7 @@
 {
   "name": "myscript-math-web",
   "flat": true,
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "The easy way to integrate mathematical expressions handwriting recognition in your web app.",
   "keywords": [
     "web-component",
@@ -23,7 +23,7 @@
   "homepage": "https://myscript.github.io/myscript-math-web/components/myscript-math-web/",
   "dependencies": {
     "@polymer/polymer": "^3.0.0-pre.13",
-    "myscript-common-element": "^5.0.0",
+    "myscript-common-element": "^5.1.0",
     "katex": "0.8.3",
     "@webcomponents/webcomponentsjs": "^2.0.0"
   },

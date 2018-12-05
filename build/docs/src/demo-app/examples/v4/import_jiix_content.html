@@ -1,0 +1,74 @@
+<!DOCTYPE html><html><head>
+        <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="true">
+
+        <title>Import Jiix content</title>
+
+        <link rel="stylesheet" href="../examples.css">
+        <style>
+            input {
+                margin: 6px;
+            }
+
+            myscript-math-web {
+                border: 1px solid #D7DDE3;
+                height: calc(40% - 60px);
+                margin: 20px 0;
+            }
+            #editor2 {
+                background-color: rgba(215,221,227,.3);
+            }
+            .btn-container {
+                text-align: center;
+            }
+        </style>
+
+        <!-- As web components are not fully support -->
+        <script src="../../../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+        <!-- myscript-common-element is import to be used later -->
+        <script type="module" src="../../../../myscript-math-web.js"></script>
+    </head>
+
+    <body>
+        <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+        <myscript-math-web id="editor1" scheme="https" host="webdemoapi.myscript.com" applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60" hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad" mimetypes="[&quot;application/x-latex&quot;, &quot;application/vnd.myscript.jiix&quot;]" configuration="{ &quot;recognitionParams&quot; : { &quot;v4&quot;: { &quot;export&quot;: { &quot;jiix&quot; : { &quot;strokes&quot;: &quot;true&quot;}}}}}" touch-action="none">
+        </myscript-math-web>
+        <div class="btn-container">
+            <button class="classic-btn" id="importContent">Import</button>
+        </div>
+        <myscript-math-web id="editor2" scheme="https" host="webdemoapi.myscript.com" applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60" hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad" mimetypes="[&quot;application/x-latex&quot;, &quot;application/vnd.myscript.jiix&quot;]" touch-action="none">
+        </myscript-math-web>
+        <script>const component1 = document.querySelector('#editor1');
+const component2 = document.querySelector('#editor2');
+let toImport = null;
+component1.addEventListener('exported', event => {
+  const exports = event.detail.exports;
+
+  if (exports && exports['application/vnd.myscript.jiix']) {
+    toImport = exports['application/vnd.myscript.jiix'];
+  }
+});
+component2.addEventListener('exported', () => {
+  if (toImport === null) {
+    component2.clear();
+  }
+});
+document.getElementById('importContent').addEventListener('click', () => {
+  if (toImport !== null) {
+    component2.clear();
+
+    if (component1.editor.isEmpty) {
+      toImport = null;
+    } else {
+      component2.import_(toImport, 'application/vnd.myscript.jiix');
+    }
+  }
+});</script>
+    
+
+
+</body></html>
