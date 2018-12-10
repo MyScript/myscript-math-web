@@ -90,7 +90,13 @@ class MyScriptMathExports extends PolymerElement {
   }
 
   _getLatex(exports) {
-    return exports ? exports['application/x-latex'] || exports.LATEX || exports.latex || '' : '';
+    let exp = exports ? exports['application/x-latex'] || exports.LATEX || exports.latex || '' : ''; // In case we have only one number being recognize like 1
+
+    if (typeof exp === 'number') {
+      exp = exp.toString();
+    }
+
+    return exp;
   }
 
   _getLatexCleaned(exports) {
