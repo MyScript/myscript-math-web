@@ -1,7 +1,0 @@
-{
-  "addReferences": {
-    "iron-dropdown-scroll-manager.d.ts": [
-      "iron-dropdown-scroll-manager-extra.d.ts"
-    ]
-  }
-}

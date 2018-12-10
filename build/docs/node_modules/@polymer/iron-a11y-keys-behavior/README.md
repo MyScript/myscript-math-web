@@ -1,45 +1,77 @@
-
+[![Published on NPM](https://img.shields.io/npm/v/@polymer/iron-a11y-keys-behavior.svg)](https://www.npmjs.com/package/@polymer/iron-a11y-keys-behavior)
 [![Build status](https://travis-ci.org/PolymerElements/iron-a11y-keys-behavior.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-a11y-keys-behavior)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://webcomponents.org/element/@polymer/iron-a11y-keys-behavior)
 
-_[Demo and API docs](https://elements.polymer-project.org/elements/iron-a11y-keys-behavior)_
-
-
-## Polymer.IronA11yKeysBehavior
-
+## &lt;iron-a11y-keys-behavior&gt;
 `Polymer.IronA11yKeysBehavior` provides a normalized interface for processing
 keyboard commands that pertain to [WAI-ARIA best practices](http://www.w3.org/TR/wai-aria-practices/#kbd_general_binding).
 The element takes care of browser differences with respect to Keyboard events
 and uses an expressive syntax to filter key presses.
 
-Use the `keyBindings` prototype property to express what combination of keys
-will trigger the callback. A key binding has the format
-`"KEY+MODIFIER:EVENT": "callback"` (`"KEY": "callback"` or
-`"KEY:EVENT": "callback"` are valid as well). Some examples:
+See: [Documentation](https://www.webcomponents.org/element/@polymer/iron-a11y-keys-behavior),
+  [Demo](https://www.webcomponents.org/element/@polymer/iron-a11y-keys-behavior/demo/demo/index.html).
 
-```javascript
- keyBindings: {
-   'space': '_onKeydown', // same as 'space:keydown'
-   'shift+tab': '_onKeydown',
-   'enter:keypress': '_onKeypress',
-   'esc:keyup': '_onKeyup'
- }
+## Usage
+
+### Installation
+```
+npm install --save @polymer/iron-a11y-keys-behavior
 ```
 
-The callback will receive with an event containing the following information in `event.detail`:
+### In a Polymer 3 element
+```js
+import {PolymerElement, html} from '@polymer/polymer';
+import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+import {IronA11yKeysBehavior} from '@polymer/iron-a11y-keys-behavior/iron-a11y-keys-behavior.js';
 
-```javascript
- _onKeydown: function(event) {
-   console.log(event.detail.combo); // KEY+MODIFIER, e.g. "shift+tab"
-   console.log(event.detail.key); // KEY only, e.g. "tab"
-   console.log(event.detail.event); // EVENT, e.g. "keydown"
-   console.log(event.detail.keyboardEvent); // the original KeyboardEvent
- }
+class SampleElement extends  extends mixinBehaviors([IronA11yKeysBehavior], PolymerElement) {
+  static get template() {
+    return html`
+      <pre>[[pressed]]</pre>
+    `;
+  }
+
+  static get properties() {
+    return {
+      pressed: {type: String, readOnly: true, value: ''},
+      keyBindings: {
+        'space': '_onKeydown', // same as 'space:keydown'
+        'shift+tab': '_onKeydown',
+        'enter:keypress': '_onKeypress',
+        'esc:keyup': '_onKeyup'
+      }
+    }
+  }
+
+  function _onKeydown: function(event) {
+    console.log(event.detail.combo); // KEY+MODIFIER, e.g. "shift+tab"
+    console.log(event.detail.key); // KEY only, e.g. "tab"
+    console.log(event.detail.event); // EVENT, e.g. "keydown"
+    console.log(event.detail.keyboardEvent); // the original KeyboardEvent
+  }
+}
+customElements.define('sample-element', SampleElement);
 ```
 
-Use the `keyEventTarget` attribute to set up event handlers on a specific
-node.
+## Contributing
+If you want to send a PR to this element, here are
+the instructions for running the tests and demo locally:
 
-See the [demo source code](https://github.com/PolymerElements/iron-a11y-keys-behavior/blob/master/demo/x-key-aware.html)
-for an example.
+### Installation
+```sh
+git clone https://github.com/PolymerElements/iron-a11y-keys-behavior
+cd iron-a11y-keys-behavior
+npm install
+npm install -g polymer-cli
+```
 
+### Running the demo locally
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
+```
 
+### Running the tests
+```sh
+polymer test --npm
+```

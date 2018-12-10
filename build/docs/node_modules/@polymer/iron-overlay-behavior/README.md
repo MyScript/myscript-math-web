@@ -1,21 +1,15 @@
+[![Published on NPM](https://img.shields.io/npm/v/@polymer/iron-overlay-behavior.svg)](https://www.npmjs.com/package/@polymer/iron-overlay-behavior)
 [![Build status](https://travis-ci.org/PolymerElements/iron-overlay-behavior.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-overlay-behavior)
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/PolymerElements/iron-overlay-behavior)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://webcomponents.org/element/@polymer/iron-overlay-behavior)
 
-_[Demo and API docs](https://elements.polymer-project.org/elements/iron-overlay-behavior)_
+## IronOverlayBehavior
 
-
-## Polymer.IronOverlayBehavior
-
-Use `Polymer.IronOverlayBehavior` to implement an element that can be hidden or shown, and displays
+Use `IronOverlayBehavior` to implement an element that can be hidden or shown, and displays
 on top of other content. It includes an optional backdrop, and can be used to implement a variety
 of UI controls including dialogs and drop downs. Multiple overlays may be displayed at once.
 
-See the [demo source code](https://github.com/PolymerElements/iron-overlay-behavior/blob/master/demo/simple-overlay.html)
+See the [demo source code](https://github.com/PolymerElements/iron-overlay-behavior/blob/master/demo/simple-overlay.js)
 for an example.
-
-### Changes in 2.0
-- Focus wrapping is not guaranteed to work for elements with `tabindex > 0`, see more details [here](https://github.com/PolymerElements/iron-overlay-behavior/pull/241).
-Consider overriding [`_focusableNodes`](http://jsbin.com/siwutox/1/edit) or using the [Blocking Elements polyfill](https://github.com/PolymerLabs/blockingElements).
 
 ### Closing and canceling
 
@@ -64,4 +58,56 @@ The following custom properties and mixins are available for styling.
 | `--iron-overlay-backdrop` | Mixin applied to `iron-overlay-backdrop`. | {} |
 | `--iron-overlay-backdrop-opened` | Mixin applied to `iron-overlay-backdrop` when it is displayed | {} |
 
+See: [Documentation](https://www.webcomponents.org/element/@polymer/iron-overlay-behavior),
+  [Demo](https://www.webcomponents.org/element/@polymer/iron-overlay-behavior/demo/demo/index.html).
 
+## Usage
+
+### Installation
+```
+npm install --save @polymer/iron-overlay-behavior
+```
+
+### In a Polymer 3 element
+```js
+import {PolymerElement, html} from '@polymer/polymer';
+import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+import {IronOverlayBehavior} from '@polymer/iron-overlay-behavior/iron-overlay-behavior.js';
+
+class SampleElement extends mixinBehaviors(IronOverlayBehavior, PolymerElement) {
+  static get template() {
+    return html`
+      <style>
+        :host {
+          background: white;
+        }
+      </style>
+      <p>Overlay Content</p>
+    `;
+  }
+}
+customElements.define('sample-element', SampleElement);
+```
+
+## Contributing
+If you want to send a PR to this element, here are
+the instructions for running the tests and demo locally:
+
+### Installation
+```sh
+git clone https://github.com/PolymerElements/iron-overlay-behavior
+cd iron-overlay-behavior
+npm install
+npm install -g polymer-cli
+```
+
+### Running the demo locally
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
+```
+
+### Running the tests
+```sh
+polymer test --npm
+```

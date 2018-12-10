@@ -1,43 +1,95 @@
+[![Published on NPM](https://img.shields.io/npm/v/@polymer/iron-fit-behavior.svg)](https://www.npmjs.com/package/@polymer/iron-fit-behavior)
 [![Build status](https://travis-ci.org/PolymerElements/iron-fit-behavior.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-fit-behavior)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://webcomponents.org/element/@polymer/iron-fit-behavior)
 
-_[Demo and API docs](https://elements.polymer-project.org/elements/iron-fit-behavior)_
+## IronFitBehavior
 
+`IronFitBehavior` positions and fits an element in the bounds of another
+element and optionally centers it in the window or the other element.
 
-## Polymer.IronFitBehavior
+See: [Documentation](https://www.webcomponents.org/element/@polymer/iron-fit-behavior),
+ [Demo](https://www.webcomponents.org/element/@polymer/iron-fit-behavior/demo/demo/index.html).
 
-`Polymer.IronFitBehavior` fits an element in another element using `max-height` and `max-width`, and
-optionally centers it in the window or another element.
+## Usage
 
-The element will only be sized and/or positioned if it has not already been sized and/or positioned
-by CSS.
+### Installation
 
-| CSS properties | Action |
-| --- | --- |
-| `position` set | Element is not centered horizontally or vertically |
-| `top` or `bottom` set | Element is not vertically centered |
-| `left` or `right` set | Element is not horizontally centered |
-| `max-height` set | Element respects `max-height` |
-| `max-width` set | Element respects `max-width` |
-
-`Polymer.IronFitBehavior` can position an element into another element using
-`verticalAlign` and `horizontalAlign`. This will override the element's css position.
-
-```html
-  <div class="container">
-    <iron-fit-impl vertical-align="top" horizontal-align="auto">
-      Positioned into the container
-    </iron-fit-impl>
-  </div>
+```
+npm install --save @polymer/iron-fit-behavior
 ```
 
-Use `noOverlap` to position the element around another element without overlapping it.
+### In a Polymer 3 element
 
-```html
-  <div class="container">
-    <iron-fit-impl no-overlap vertical-align="auto" horizontal-align="auto">
-      Positioned around the container
-    </iron-fit-impl>
-  </div>
+```js
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+import {html} from '@polymer/polymer/lib/utils/html-tag.js';
+
+import {IronFitBehavior} from '@polymer/iron-fit-behavior/iron-fit-behavior.js';
+
+class SimpleFit extends mixinBehaviors(IronFitBehavior, PolymerElement) {
+  static get template() {
+    return html`
+      <style>
+        :host {
+          background: lightblue;
+          padding: 2px;
+        }
+      </style>
+      verticalAlign: [[verticalAlign]], horizontalAlign: [[horizontalAlign]]
+    `;
+  }
+}
+
+customElements.define('simple-fit', SimpleFit);
 ```
 
+Then, in your HTML:
 
+```html
+<script type="module" src="./simple-fit.js"></script>
+
+<style>
+#container {
+  margin: 3em;
+  border: 2px dashed gray;
+  padding: 3em;
+}
+</style>
+
+<div id="container">
+  The <code>&lt;simple-fit&gt;</code> below will be positioned within this div.
+  <simple-fit id="simpleFitElement"
+    vertical-align="bottom"
+    horizontal-align="left"
+    auto-fit-on-attach
+  ></simple-fit>
+</div>
+```
+
+## Contributing
+
+If you want to send a PR to this element, here are the instructions for running
+the tests and demo locally:
+
+### Installation
+
+```sh
+git clone https://github.com/PolymerElements/iron-fit-behavior
+cd iron-fit-behavior
+npm install
+npm install -g polymer-cli
+```
+
+### Running the demo locally
+
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
+```
+
+### Running the tests
+
+```sh
+polymer test --npm
+```

@@ -1,10 +1,8 @@
+[![Published on NPM](https://img.shields.io/npm/v/@polymer/paper-toast.svg)](https://www.npmjs.com/package/@polymer/paper-toast)
 [![Build status](https://travis-ci.org/PolymerElements/paper-toast.svg?branch=master)](https://travis-ci.org/PolymerElements/paper-toast)
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/PolymerElements/paper-toast)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://webcomponents.org/element/@polymer/paper-toast)
 
 ## &lt;paper-toast&gt;
-
-Material design: [Snackbars & toasts](https://www.google.com/design/spec/components/snackbars-toasts.html)
-
 `paper-toast` provides a subtle notification toast. Only one `paper-toast` will
 be visible on screen.
 
@@ -64,4 +62,63 @@ The following custom properties and mixins are available for styling:
 This element applies the mixin `--paper-font-common-base` but does not import `paper-styles/typography.html`.
 In order to apply the `Roboto` font to this element, make sure you've imported `paper-styles/typography.html`.
 
+See: [Documentation](https://www.webcomponents.org/element/@polymer/paper-toast),
+  [Demo](https://www.webcomponents.org/element/@polymer/paper-toast/demo/demo/index.html).
 
+## Usage
+
+### Installation
+```
+npm install --save @polymer/paper-toast
+```
+
+### In an html file
+```html
+<html>
+  <head>
+    <script type="module">
+      import '@polymer/paper-toast/paper-toast.js';
+    </script>
+  </head>
+  <body>
+    <paper-toast text="Hello world!" opened></paper-toast>
+  </body>
+</html>
+```
+### In a Polymer 3 element
+```js
+import {PolymerElement, html} from '@polymer/polymer';
+import '@polymer/paper-toast/paper-toast.js';
+
+class SampleElement extends PolymerElement {
+  static get template() {
+    return html`
+      <paper-toast text="Hello world!" opened></paper-toast>
+    `;
+  }
+}
+customElements.define('sample-element', SampleElement);
+```
+
+## Contributing
+If you want to send a PR to this element, here are
+the instructions for running the tests and demo locally:
+
+### Installation
+```sh
+git clone https://github.com/PolymerElements/paper-toast
+cd paper-toast
+npm install
+npm install -g polymer-cli
+```
+
+### Running the demo locally
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
+```
+
+### Running the tests
+```sh
+polymer test --npm
+```

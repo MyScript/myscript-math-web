@@ -1,102 +1,116 @@
+[![Published on NPM](https://img.shields.io/npm/v/@polymer/iron-selector.svg)](https://www.npmjs.com/package/@polymer/iron-selector)
 [![Build status](https://travis-ci.org/PolymerElements/iron-selector.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-selector)
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/PolymerElements/iron-selector)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://webcomponents.org/element/@polymer/iron-selector)
 
-_[Demo and API docs](https://elements.polymer-project.org/elements/iron-selector)_
+## &lt;iron-selector&gt;, `IronSelectableBehavior`, `IronMultiSelectableBehavior`
 
+`iron-selector` is an element which can be used to manage a list of elements
+that can be selected. Tapping on the item will make the item selected. The
+`selected` indicates which item is being selected. The default is to use the
+index of the item. `iron-selector`'s functionality is entirely defined by
+`IronMultiSelectableBehavior`.
 
-## &lt;iron-selector&gt;
+`IronSelectableBehavior` gives an element the concept of a selected child
+element. By default, the element will select one of its selectable children
+when a ['tap'
+event](https://www.polymer-project.org/3.0/docs/devguide/gesture-events#gesture-event-types)
+(synthesized by Polymer, roughly 'click') is dispatched to it.
 
-  `iron-selector` is an element which can be used to manage a list of elements
-  that can be selected.  Tapping on the item will make the item selected.  The `selected` indicates
-  which item is being selected.  The default is to use the index of the item.
+`IronSelectableBehavior` lets you ...
 
-  Example:
+  - decide which children should be considered selectable (`selectable`),
+  - retrieve the currently selected element (`selectedItem`) and all elements
+    in the selectable set (`items`),
+  - change the selection (`select`, `selectNext`, etc.),
+  - decide how selected elements are modified to indicate their selected state
+    (`selectedClass`, `selectedAttribute`),
 
-```html
-  <iron-selector selected="0">
-    <div>Item 1</div>
-    <div>Item 2</div>
-    <div>Item 3</div>
-  </iron-selector>
+... among other things.
+
+`IronMultiSelectableBehavior` includes all the features of
+`IronSelectableBehavior` as well as a `multi` property, which can be set to
+`true` to indicate that the element can have multiple selected child elements.
+It also includes the `selectedItems` and `selectedValues` properties for
+working with arrays of selectable elements and their corresponding values
+(`multi` is `true`) - similar to the single-item versions provided by
+`IronSelectableBehavior`: `selectedItem` and `selected`.
+
+See: [Documentation](https://www.webcomponents.org/element/@polymer/iron-selector),
+  [Demo](https://www.webcomponents.org/element/@polymer/iron-selector/demo/demo/index.html).
+
+## Usage
+
+### Installation
+
+```
+npm install --save @polymer/iron-selector
 ```
 
-  If you want to use the attribute value of an element for `selected` instead of the index,
-  set `attrForSelected` to the name of the attribute.  For example, if you want to select item by
-  `name`, set `attrForSelected` to `name`.
-
-  Example:
+### In an HTML file
 
 ```html
-  <iron-selector attr-for-selected="name" selected="foo">
-    <div name="foo">Foo</div>
-    <div name="bar">Bar</div>
-    <div name="zot">Zot</div>
-  </iron-selector>
-```
-
-  You can specify a default fallback with `fallbackSelection` in case the `selected` attribute does
-  not match the `attrForSelected` attribute of any elements.
-
-  Example:
-
-```html
-    <iron-selector attr-for-selected="name" selected="non-existing"
-                   fallback-selection="default">
-      <div name="foo">Foo</div>
-      <div name="bar">Bar</div>
-      <div name="default">Default</div>
+<html>
+  <head>
+    <script type="module">
+      import '@polymer/iron-selector/iron-selector.js';
+    </script>
+  </head>
+  <body>
+    <iron-selector selected="0">
+      <div>Item 1</div>
+      <div>Item 2</div>
+      <div>Item 3</div>
     </iron-selector>
+  </body>
+</html>
 ```
 
-  Note: When the selector is multi, the selection will set to `fallbackSelection` iff
-  the number of matching elements is zero.
+### In a Polymer 3 element
 
-  `iron-selector` is not styled. Use the `iron-selected` CSS class to style the selected element.
+```js
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {html} from '@polymer/polymer/lib/utils/html-tag.js';
 
-  Example:
+import '@polymer/iron-selector/iron-selector.js';
 
-```html
-  <style>
-    .iron-selected {
-      background: #eee;
-    }
-  </style>
+class ExampleElement extends PolymerElement {
+  static get template() {
+    return html`
+      <iron-selector selected="0">
+        <div>Item 1</div>
+        <div>Item 2</div>
+        <div>Item 3</div>
+      </iron-selector>
+    `;
+  }
+}
 
-  ...
-
-  <iron-selector selected="0">
-    <div>Item 1</div>
-    <div>Item 2</div>
-    <div>Item 3</div>
-  </iron-selector>
+customElements.define('example-element', ExampleElement);
 ```
 
-### Notable breaking changes between 1.x and 2.x (hybrid):
+## Contributing
 
-#### IronSelectableBehavior
+If you want to send a PR to this element, here are the instructions for running
+the tests and demo locally:
 
-- IronSelectableBehavior no longer updates its list of items synchronously
-  when it is connected to avoid triggering a situation introduced in the
-  Custom Elements v1 spec that might cause custom element reactions to be
-  called later than expected.
+### Installation
 
-  If you are using an element with IronSelectableBehavior and ...
-  1. are reading or writing properties of the element that depend on its
-     items (`items`, `selectedItems`, etc.)
-  1. are performing these accesses after the element is created or connected
-    (attached) either **synchronously** or **after a timeout**
+```sh
+git clone https://github.com/PolymerElements/iron-selector
+cd iron-selector
+npm install
+npm install -g polymer-cli
+```
 
-  ... you should wait for the element to dispatch an `iron-items-changed`
-  event instead.
-- `Polymer.dom.flush()` no longer triggers the observer used by
-  IronSelectableBehavior to watch for changes to its items. You can call
-  `forceSynchronousItemUpdate` instead or, preferably, listen for the
-  `iron-items-changed` event.
+### Running the demo locally
 
-#### IronMultiSelectableBehavior
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
+```
 
-- All breaking changes to IronSelectableBehavior listed above apply to
-  IronMultiSelectableBehavior.
-- `selectedValues` and `selectedItems` now have empty arrays as default
-  values. This may cause bindings or observers of these properties to
-  trigger at start up when they previously had not.
+### Running the tests
+
+```sh
+polymer test --npm
+```

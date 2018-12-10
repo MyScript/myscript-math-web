@@ -1,35 +1,115 @@
+[![Published on NPM](https://img.shields.io/npm/v/@polymer/iron-dropdown.svg)](https://www.npmjs.com/package/@polymer/iron-dropdown)
 [![Build status](https://travis-ci.org/PolymerElements/iron-dropdown.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-dropdown)
-
-_[Demo and API docs](https://elements.polymer-project.org/elements/iron-dropdown)_
-
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://webcomponents.org/element/@polymer/iron-dropdown)
 
 ## &lt;iron-dropdown&gt;
 
-`<iron-dropdown>` is a generalized element that is useful when you have
-hidden content (`dropdown-content`) that is revealed due to some change in
-state that should cause it to do so.
+`<iron-dropdown>` displays content inside a fixed-position container,
+positioned relative to another element.
 
-Note that this is a low-level element intended to be used as part of other
-composite elements that cause dropdowns to be revealed.
+See: [Documentation](https://www.webcomponents.org/element/@polymer/iron-dropdown),
+ [Demo](https://www.webcomponents.org/element/@polymer/iron-dropdown/demo/demo/index.html).
 
-Examples of elements that might be implemented using an `iron-dropdown`
-include comboboxes, menubuttons, selects. The list goes on.
+## Usage
 
-The `<iron-dropdown>` element exposes attributes that allow the position
-of the `dropdown-content` relative to the `dropdown-trigger` to be
-configured.
+### Installation
 
-```html
-<iron-dropdown horizontal-align="right" vertical-align="top">
-  <div slot="dropdown-content">Hello!</div>
-</iron-dropdown>
+```
+npm install --save @polymer/iron-dropdown
 ```
 
-In the above example, the `<div>` assigned to the `dropdown-content` slot will be
-hidden until the dropdown element has `opened` set to true, or when the `open`
-method is called on the element.
+### In an HTML file
 
-### Changes in 2.0
-- Removed the private property `_focusTarget` which was deprecated.
-- `neon-animation 2.0` doesn't import the Web Animations polyfill, so you'll have to import it ([see example](demo/index.html))
-- Distribution moved from the `class="dropdown-content"` to `slot="dropdown-content"`
+```html
+<html>
+  <head>
+    <script type="module">
+      import '@polymer/iron-dropdown/iron-dropdown.js';
+    </script>
+    <style>
+      #container {
+        display: inline-block;
+      }
+
+      iron-dropdown {
+        border: 1px solid gray;
+        background: white;
+        font-size: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <button onclick="dropdown.open();">open the iron-dropdown</button>
+      <iron-dropdown id="dropdown" no-overlap>
+        <div slot="dropdown-content">Hello!</div>
+      </iron-dropdown>
+    </div>
+  </body>
+</html>
+```
+
+### In a Polymer 3 element
+
+```js
+import {PolymerElement, html} from '@polymer/polymer';
+import '@polymer/iron-dropdown/iron-dropdown.js';
+
+class SampleElement extends PolymerElement {
+  static get template() {
+    return html`
+      <style>
+        :host {
+          display: inline-block;
+        }
+
+        iron-dropdown {
+          border: 1px solid gray;
+          background: white;
+          font-size: 2em;
+        }
+      </style>
+      <button on-click="_openDropdown">open the dropdown</button>
+      <iron-dropdown id="dropdown" horizontal-align="right" vertical-align="top">
+        <div slot="dropdown-content">Hello!</div>
+      </iron-dropdown>
+    `;
+  }
+
+  _openDropdown() {
+    this.$.dropdown.open();
+  }
+}
+customElements.define('sample-element', SampleElement);
+```
+
+In the above example, the `<div>` assigned to the `dropdown-content` slot will
+be hidden until the dropdown element has `opened` set to true, or when the
+`open` method is called on the element.
+
+## Contributing
+
+If you want to send a PR to this element, here are the instructions for running
+the tests and demo locally:
+
+### Installation
+
+```sh
+git clone https://github.com/PolymerElements/iron-dropdown
+cd iron-dropdown
+npm install
+npm install -g polymer-cli
+```
+
+### Running the demo locally
+
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
+```
+
+### Running the tests
+
+```sh
+polymer test --npm
+```

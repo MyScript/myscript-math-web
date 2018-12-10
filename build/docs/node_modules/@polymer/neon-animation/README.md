@@ -1,299 +1,294 @@
-## Changes in 2.0
-* ⚠️ This Element is now deprecated ⚠️
-  * Please use the web animations api or CSS animations
-* Web animations polyfill is now a dev dependency
+[![Published on NPM](https://img.shields.io/npm/v/@polymer/neon-animation.svg)](https://www.npmjs.com/package/@polymer/neon-animation)
+[![Build status](https://travis-ci.org/PolymerElements/neon-animation.svg?branch=master)](https://travis-ci.org/PolymerElements/neon-animation)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://webcomponents.org/element/@polymer/neon-animation)
 
-# neon-animation
+## neon-animation
 
-`neon-animation` is a suite of elements and behaviors to implement pluggable animated transitions for Polymer Elements using [Web Animations](https://w3c.github.io/web-animations/).
+`neon-animation` is a suite of elements and behaviors to implement pluggable animated transitions for Polymer Elements using [Web Animations](https://w3c.github.io/web-animations/). Please note that these elements do not include the web-animations polyfill.
 
-*Warning: The API may change.*
+See: [Documentation](https://www.webcomponents.org/element/@polymer/neon-animation),
+  [Demo](https://www.webcomponents.org/element/@polymer/neon-animation/demo/demo/index.html).
 
-* [A basic animatable element](#basic)
-* [Animation configuration](#configuration)
-  * [Animation types](#configuration-types)
-  * [Configuration properties](#configuration-properties)
-  * [Using multiple animations](#configuration-multiple)
-  * [Running animations encapsulated in children nodes](#configuration-encapsulation)
-* [Page transitions](#page-transitions)
-  * [Shared element animations](#shared-element)
-  * [Declarative page transitions](#declarative-page)
-* [Included animations](#animations)
+_See [the guide](./guide.md) for detailed usage._
 
-<a name="basic"></a>
-## A basic animatable element
+## Usage
 
-Elements that can be animated should implement the `Polymer.NeonAnimatableBehavior` behavior, or `Polymer.NeonAnimationRunnerBehavior` if they're also responsible for running an animation.
+### Installation
 
-```js
-Polymer({
-  is: 'my-animatable',
-  behaviors: [
-    Polymer.NeonAnimationRunnerBehavior
-  ],
-  properties: {
-    animationConfig: {
-      value: function() {
-        return {
-          // provided by neon-animation/animations/scale-down-animation.html
-          name: 'scale-down-animation',
-          node: this
-        }
-      }
-    }
-  },
-  listeners: {
-    // this event is fired when the animation finishes
-    'neon-animation-finish': '_onNeonAnimationFinish'
-  },
-  animate: function() {
-    // run scale-down-animation
-    this.playAnimation();
-  },
-  _onNeonAnimationFinish: function() {
-    console.log('animation done!');
-  }
-});
+Element:
+```
+npm install --save @polymer/neon-animation
 ```
 
+Polyfill:
+```
+npm install --save web-animations-js
+```
 
-<a name="configuration"></a>
-## Animation configuration
+### In an HTML file
 
-<a name="configuration-types"></a>
-### Animation types
+### `NeonAnimatableBehavior`
+Elements that can be animated by `NeonAnimationRunnerBehavior` should implement the `NeonAnimatableBehavior` behavior, or `NeonAnimationRunnerBehavior` if they're also responsible for running an animation.
 
-An element might run different animations, for example it might do something different when it enters the view and when it exits from view. You can set the `animationConfig` property to a map from an animation type to configuration.
-
+#### In a Polymer 3 element
 ```js
-Polymer({
-  is: 'my-dialog',
-  behaviors: [
-    Polymer.NeonAnimationRunnerBehavior
-  ],
-  properties: {
-    opened: {
-      type: Boolean
-    },
-    animationConfig: {
-      value: function() {
-        return {
-          'entry': {
-            // provided by neon-animation/animations/scale-up-animation.html
-            name: 'scale-up-animation',
-            node: this
-          },
-          'exit': {
-            // provided by neon-animation/animations/fade-out-animation.html
-            name: 'fade-out-animation',
-            node: this
+import {PolymerElement, html} from '@polymer/polymer';
+import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+import {NeonAnimatableBehavior} from '@polymer/neon-animation/neon-animatable-behavior.js';
+
+class SampleElement extends mixinBehaviors([NeonAnimatableBehavior], PolymerElement) {
+  static get template() {
+    return html`
+      <style>
+        :host {
+          display: block;
+        }
+      </style>
+
+      <slot></slot>
+    `;
+  }
+}
+customElements.define('sample-element', SampleElement);
+```
+
+### `NeonAnimationRunnerBehavior`
+
+#### In a Polymer 3 element
+```js
+import {PolymerElement, html} from '@polymer/polymer';
+import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+import {NeonAnimationRunnerBehavior} from '@polymer/neon-animation/neon-animation-runner-behavior.js';
+import '@polymer/neon-animation/animations/scale-down-animation.js';
+
+class SampleElement extends mixinBehaviors([NeonAnimationRunnerBehavior], PolymerElement) {
+  static get template() {
+    return html`
+      <div>this entire element will be animated after one second</div>
+    `;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    // must be set here because properties is static and cannot reference "this"
+    this.animationConfig = {
+      // provided by neon-animation/animations/scale-down-animation.js
+      name: 'scale-down-animation',
+      node: this,
+    };
+
+    setTimeout(() => this.playAnimation(), 1000);
+  }
+}
+customElements.define('sample-element', SampleElement);
+```
+
+### `<neon-animatable>`
+A simple element that implements NeonAnimatableBehavior.
+
+#### In an html file
+```html
+<html>
+  <head>
+  </head>
+  <body>
+    <neon-animatable id="animatable">
+      <div>this entire element and its parent will be animated after one second</div>
+    </neon-animatable>
+    <runner-element></runner-element>
+    <script type="module">
+      import {PolymerElement} from '@polymer/polymer';
+      import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+      import {NeonAnimationRunnerBehavior} from '@polymer/neon-animation/neon-animation-runner-behavior.js';
+      import '@polymer/neon-animation/neon-animatable.js';
+      import '@polymer/neon-animation/animations/scale-down-animation.js';
+
+      const animatable = document.getElementById('animatable');
+
+      class SampleElement extends mixinBehaviors([NeonAnimationRunnerBehavior], PolymerElement) {
+        connectedCallback() {
+          super.connectedCallback();
+
+          this.animationConfig = {
+            // provided by neon-animation/animations/scale-down-animation.js
+            name: 'scale-down-animation',
+            // node is node to animate
+            node: animatable,
           }
+
+          setTimeout(() => this.playAnimation(), 1000);
         }
       }
-    }
-  },
-  listeners: {
-    'neon-animation-finish': '_onNeonAnimationFinish'
-  },
-  show: function() {
-    this.opened = true;
-    this.style.display = 'inline-block';
-    // run scale-up-animation
-    this.playAnimation('entry');
-  },
-  hide: function() {
-    this.opened = false;
-    // run fade-out-animation
-    this.playAnimation('exit');
-  },
-  _onNeonAnimationFinish: function() {
-    if (!this.opened) {
-      this.style.display = 'none';
-    }
-  }
-});
+      customElements.define('runner-element', SampleElement);
+    </script>
+  </body>
+</html>
 ```
 
-
-You can also use the convenience properties `entryAnimation` and `exitAnimation` to set `entry` and `exit` animations:
-
+#### In a Polymer 3 element
 ```js
-properties: {
-  entryAnimation: {
-    value: 'scale-up-animation'
-  },
-  exitAnimation: {
-    value: 'fade-out-animation'
+import {PolymerElement, html} from '@polymer/polymer';
+import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+import {NeonAnimationRunnerBehavior} from '@polymer/neon-animation/neon-animation-runner-behavior.js';
+import '@polymer/neon-animation/neon-animatable.js';
+import '@polymer/neon-animation/animations/scale-down-animation.js';
+
+class SampleElement extends mixinBehaviors([NeonAnimationRunnerBehavior], PolymerElement) {
+  static get template() {
+    return html`
+      <div>this div will not be animated</div>
+      <neon-animatable id="animatable">
+        <div>this div and its parent will be animated after one second</div>
+      </neon-animatable>
+    `;
   }
-}
-```
 
-<a name="configuration-properties"></a>
-### Configuration properties
+  connectedCallback() {
+    super.connectedCallback();
 
-You can pass additional parameters to configure an animation in the animation configuration object.
-All animations should accept the following properties:
+    // must be set here because properties is static and cannot reference "this"
+    this.animationConfig = {
+      // provided by neon-animation/animations/scale-down-animation.js
+      name: 'scale-down-animation',
+      node: this.$.animatable,
+    };
 
- * `name`: The name of an animation, ie. an element implementing `Polymer.NeonAnimationBehavior`.
- * `node`: The target node to apply the animation to. Defaults to `this`.
- * `timing`: Timing properties to use in this animation. They match the [Web Animations Animation Effect Timing interface](https://w3c.github.io/web-animations/#the-animationeffecttiming-interface). The
- properties include the following:
-     * `duration`: The duration of the animation in milliseconds.
-     * `delay`: The delay before the start of the animation in milliseconds.
-     * `easing`: A timing function for the animation. Matches the CSS timing function values.
-
-Animations may define additional configuration properties and they are listed in their documentation.
-
-<a name="configuration-multiple"></a>
-### Using multiple animations
-
-Set the animation configuration to an array to combine animations, like this:
-
-```js
-animationConfig: {
-  value: function() {
-    return {
-      // fade-in-animation is run with a 50ms delay from slide-down-animation
-      'entry': [{
-        name: 'slide-down-animation',
-        node: this
-      }, {
-        name: 'fade-in-animation',
-        node: this,
-        timing: {delay: 50}
-      }]
-    }
+    setTimeout(() => this.playAnimation(), 1000);
   }
 }
+customElements.define('sample-element', SampleElement);
 ```
 
-<a name="configuration-encapsulation"></a>
-### Running animations encapsulated in children nodes
+### `<neon-animated-pages>`
+`neon-animated-pages` manages a set of pages and runs an animation when
+switching between them.
 
-You can include animations in the configuration that are encapsulated in a child element that implement `Polymer.NeonAnimatableBehavior` with the `animatable` property.
+#### In an html file
+```html
+<html>
+  <head>
+    <script type="module">
+      import '@polymer/neon-animation/neon-animated-pages.js';
+      import '@polymer/neon-animation/neon-animatable.js';
+      import '@polymer/neon-animation/animations/slide-from-right-animation.js';
+      import '@polymer/neon-animation/animations/slide-left-animation.js';
+    </script>
+  </head>
+  <body>
+    <neon-animated-pages
+        id="pages"
+        selected="0"
+        entry-animation="slide-from-right-animation"
+        exit-animation="slide-left-animation">
+      <neon-animatable>1</neon-animatable>
+      <neon-animatable>2</neon-animatable>
+      <neon-animatable>3</neon-animatable>
+      <neon-animatable>4</neon-animatable>
+      <neon-animatable>5</neon-animatable>
+    </neon-animated-pages>
+    <button onclick="increase()">+</button>
+    <button onclick="decrease()">-</button>
+    <script>
+      const pages = document.getElementById('pages');
+      function increase() { pages.selected = pages.selected + 1 % 5; };
+      function decrease() { pages.selected = (pages.selected - 1 + 5) % 5; };
+    </script>
+  </body>
+</html>
+```
 
+#### In a Polymer 3 element
 ```js
-animationConfig: {
-  value: function() {
-    return {
-      // run fade-in-animation on this, and the entry animation on this.$.myAnimatable
-      'entry': [
-        {name: 'fade-in-animation', node: this},
-        {animatable: this.$.myAnimatable, type: 'entry'}
-      ]
-    }
+import {PolymerElement, html} from '@polymer/polymer';
+import '@polymer/neon-animation/neon-animated-pages.js';
+import '@polymer/neon-animation/neon-animatable.js';
+import '@polymer/neon-animation/animations/slide-from-right-animation.js';
+import '@polymer/neon-animation/animations/slide-left-animation.js';
+
+class SampleElement extends PolymerElement {
+  static get template() {
+    return html`
+      <neon-animated-pages
+          id="pages"
+          selected="0"
+          entry-animation="slide-from-right-animation"
+          exit-animation="slide-left-animation">
+        <neon-animatable>1</neon-animatable>
+        <neon-animatable>2</neon-animatable>
+        <neon-animatable>3</neon-animatable>
+        <neon-animatable>4</neon-animatable>
+        <neon-animatable>5</neon-animatable>
+      </neon-animated-pages>
+      <button on-click="increase">+</button>
+      <button on-click="decrease">-</button>
+    `;
+  }
+
+  increase() {
+    this.$.pages.selected = this.$.pages.selected + 1 % 5;
+  }
+
+  decrease() {
+    this.$.pages.selected = (this.$.pages.selected - 1 + 5) % 5;
   }
 }
+customElements.define('sample-element', SampleElement);
 ```
 
-<a name="page-transitions"></a>
-## Page transitions
-
-*The artist formerly known as `<core-animated-pages>`*
-
-The `neon-animated-pages` element manages a set of pages to switch between, and runs animations between the page transitions. It implements the `Polymer.IronSelectableBehavior` behavior. Each child node should implement `Polymer.NeonAnimatableBehavior` and define the `entry` and `exit` animations. During a page transition, the `entry` animation is run on the new page and the `exit` animation is run on the old page.
-
-<a name="shared-element"></a>
-### Shared element animations
-
-Shared element animations work on multiple nodes. For example, a "hero" animation is used during a page transition to make two elements from separate pages appear to animate as a single element. Shared element animation configurations have an `id` property that identify they belong in the same animation. Elements containing shared elements also have a `sharedElements` property defines a map from `id` to element, the element involved with the animation.
-
-In the incoming page:
-
+#### In a Polymer 3 element
 ```js
-properties: {
-  animationConfig: {
-    value: function() {
-      return {
-        // the incoming page defines the 'entry' animation
-        'entry': {
-          name: 'hero-animation',
-          id: 'hero',
-          toPage: this
-        }
-      }
-    }
-  },
-  sharedElements: {
-    value: function() {
-      return {
-        'hero': this.$.hero
-      }
-    }
+import {PolymerElement, html} from '@polymer/polymer';
+import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+import {NeonAnimationRunnerBehavior} from '@polymer/neon-animation/neon-animation-runner-behavior.js';
+import '@polymer/neon-animation/animations/neon-animatable.js';
+import '@polymer/neon-animation/animations/scale-down-animation.js';
+
+class SampleElement extends mixinBehaviors([NeonAnimationRunnerBehavior], PolymerElement) {
+  static get template() {
+    return html`
+      <div>this div will not be animated</div>
+      <neon-animatable id="animatable">
+        <div>this div and its parent will be animated after one second</div>
+      </neon-animatable>
+    `;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    // must be set here because properties is static and cannot reference "this"
+    this.animationConfig = {
+      // provided by neon-animation/animations/scale-down-animation.js
+      name: 'scale-down-animation',
+      node: this.$.animatable,
+    };
+
+    setTimeout(() => this.playAnimation(), 1000);
   }
 }
+customElements.define('sample-element', SampleElement);
 ```
 
-In the outgoing page:
+## Contributing
+If you want to send a PR to this element, here are
+the instructions for running the tests and demo locally:
 
-```js
-properties: {
-  animationConfig: {
-    value: function() {
-      return {
-        // the outgoing page defines the 'exit' animation
-        'exit': {
-          name: 'hero-animation',
-          id: 'hero',
-          fromPage: this
-        }
-      }
-    }
-  },
-  sharedElements: {
-    value: function() {
-      return {
-        'hero': this.$.otherHero
-      }
-    }
-  }
-}
+### Installation
+```sh
+git clone https://github.com/PolymerElements/neon-animation
+cd neon-animation
+npm install
+npm install -g polymer-cli
 ```
 
-<a name="declarative-page"></a>
-### Declarative page transitions
-
-For convenience, if you define the `entry-animation` and `exit-animation` attributes on `<neon-animated-pages>`, those animations will apply for all page transitions.
-
-For example:
-
-```js
-<neon-animated-pages id="pages" class="flex" selected="[[selected]]" entry-animation="slide-from-right-animation" exit-animation="slide-left-animation">
-  <neon-animatable>1</neon-animatable>
-  <neon-animatable>2</neon-animatable>
-  <neon-animatable>3</neon-animatable>
-  <neon-animatable>4</neon-animatable>
-  <neon-animatable>5</neon-animatable>
-</neon-animated-pages>
+### Running the demo locally
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
 ```
 
-The new page will slide in from the right, and the old page slide away to the left.
-
-<a name="animations"></a>
-## Included animations
-
-Single element animations:
-
- * `fade-in-animation` Animates opacity from `0` to `1`;
- * `fade-out-animation` Animates opacity from `1` to `0`;
- * `scale-down-animation` Animates transform from `scale(1)` to `scale(0)`;
- * `scale-up-animation` Animates transform from `scale(0)` to `scale(1)`;
- * `slide-down-animation` Animates transform from `none` to `translateY(100%)`;
- * `slide-up-animation` Animates transform from `none` to `translateY(-100%)`;
- * `slide-from-top-animation` Animates transform from `translateY(-100%)` to `none`;
- * `slide-from-bottom-animation` Animates transform from `translateY(100%)` to `none`;
- * `slide-left-animation` Animates transform from `none` to `translateX(-100%)`;
- * `slide-right-animation` Animates transform from `none` to `translateX(100%)`;
- * `slide-from-left-animation` Animates transform from `translateX(-100%)` to `none`;
- * `slide-from-right-animation` Animates transform from `translateX(100%)` to `none`;
- * `transform-animation` Animates a custom transform.
-
-Note that there is a restriction that only one transform animation can be applied on the same element at a time. Use the custom `transform-animation` to combine transform properties.
-
-Shared element animations
-
- * `hero-animation` Animates an element such that it looks like it scales and transforms from another element.
- * `ripple-animation` Animates an element to full screen such that it looks like it ripples from another element.
-
-Group animations
- * `cascaded-animation` Applys an animation to an array of elements with a delay between each.
+### Running the tests
+```sh
+polymer test --npm
+```

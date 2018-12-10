@@ -1,20 +1,6 @@
-
-<!---
-
-This README is automatically generated from the comments in these files:
-marked-element.html
-
-Edit those files, and our readme bot will duplicate them over here!
-Edit this file, and the bot will squash your changes :)
-
-The bot does some handling of markdown. Please file a bug if it does the wrong
-thing! https://github.com/PolymerLabs/tedium/issues
-
--->
-
+[![Published on NPM](https://img.shields.io/npm/v/@polymer/marked-element.svg)](https://www.npmjs.com/package/@polymer/marked-element)
 [![Build status](https://travis-ci.org/PolymerElements/marked-element.svg?branch=master)](https://travis-ci.org/PolymerElements/marked-element)
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/PolymerElements/marked-element)
-
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://webcomponents.org/element/@polymer/marked-element)
 
 ## &lt;marked-element&gt;
 
@@ -26,73 +12,101 @@ as you would a normal DOM element. If you do not provide a child element
 with the `markdown-html` slot, the Markdown source will still be rendered,
 but to a shadow DOM child that cannot be styled.
 
-The Markdown source can be specified several ways:
+See: [Documentation](https://www.webcomponents.org/element/@polymer/marked-element),
+  [Demo](https://www.webcomponents.org/element/@polymer/marked-element/demo/demo/index.html).
 
-### Use the `markdown` attribute to bind markdown
+## Usage
 
-```html
-<marked-element markdown="`Markdown` is _awesome_!">
-  <div slot="markdown-html"></div>
-</marked-element>
+### Installation
+```
+npm install --save @polymer/marked-element
 ```
 
-### Use `<script type="text/markdown">` element child to inline markdown
-
+### In an html file
 ```html
-<marked-element>
-  <div slot="markdown-html"></div>
-  <script type="text/markdown">
-    Check out my markdown!
+<html>
+  <head>
+    <script type="module">
+      import '@polymer/marked-element/marked-element.js';
+    </script>
+    <style>
+      [slot="markdown-html"] p {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <marked-element>
+      <div slot="markdown-html"></div>
+      <script type="text/markdown">
+        Check out my markdown!
 
-    We can even embed elements without fear of the HTML parser mucking up their
-    textual representation:
+        We can even embed elements without fear of the HTML parser mucking up their
+        textual representation:
 
-    ```html
-    <awesome-sauce>
-      <div>Oops, I'm about to forget to close this div.
-    </awesome-sauce>
-    ```
-  </script>
-</marked-element>
+        ```html
+        <awesome-sauce>
+          <div>Oops, I'm about to forget to close this div.
+        </awesome-sauce>
+        ```
+      </script>
+    </marked-element>
+  </body>
+</html>
 ```
+### In a Polymer 3 element
+```js
+import {PolymerElement, html} from '@polymer/polymer';
+import '@polymer/marked-element/marked-element.js';
 
-### Use `<script type="text/markdown" src="URL">` element child to specify remote markdown
+class SampleElement extends PolymerElement {
+  static get template() {
+    return html`
+      <style>
+        [slot="markdown-html"] p {
+          color: red;
+        }
+      </style>
+      <marked-element>
+        <div slot="markdown-html"></div>
+        <script type="text/markdown">
+          Check out my markdown!
 
-```html
-<marked-element>
-  <div slot="markdown-html"></div>
-  <script type="text/markdown" src="../guidelines.md"></script>
-</marked-element>
-```
+          We can even embed elements without fear of the HTML parser mucking up their
+          textual representation:
 
-Note that the `<script type="text/markdown">` approach is *static*. Changes to
-the script content will *not* update the rendered markdown!
-
-Though, you can data bind to the `src` attribute to change the markdown.
-
-```html
-<marked-element>
-  <div slot="markdown-html"></div>
-  <script type="text/markdown" src$="[[source]]"></script>
-</marked-element>
-...
-<script>
-  ...
-  this.source = '../guidelines.md';
-</script>
-```
-
-### Styling
-
-If you are using a child with the `markdown-html` slot, you can style it
-as you would a regular DOM element:
-
-```css
-[slot="markdown-html"] p {
-  color: red;
+          \`\`\`html
+          <awesome-sauce>
+            <div>Oops, I'm about to forget to close this div.
+          </awesome-sauce>
+          \`\`\`
+        </script>
+      </marked-element>
+    `;
+  }
 }
+customElements.define('sample-element', SampleElement);
+```
 
-[slot="markdown-html"] td:first-child {
-  padding-left: 24px;
-}
+## Contributing
+If you want to send a PR to this element, here are
+the instructions for running the tests and demo locally:
+
+### Installation
+```sh
+git clone https://github.com/PolymerElements/marked-element
+cd marked-element
+npm install
+npm install -g polymer-cli
+```
+
+### Running the demo locally
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
+```
+
+### Running the tests
+```sh
+polymer test --npm
 ```

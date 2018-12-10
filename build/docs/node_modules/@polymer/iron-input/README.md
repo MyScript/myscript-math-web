@@ -1,41 +1,52 @@
-
-<!---
-
-This README is automatically generated from the comments in these files:
-iron-input.html
-
-Edit those files, and our readme bot will duplicate them over here!
-Edit this file, and the bot will squash your changes :)
-
-The bot does some handling of markdown. Please file a bug if it does the wrong
-thing! https://github.com/PolymerLabs/tedium/issues
-
--->
-
+[![Published on NPM](https://img.shields.io/npm/v/@polymer/iron-input.svg)](https://www.npmjs.com/package/@polymer/iron-input)
 [![Build status](https://travis-ci.org/PolymerElements/iron-input.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-input)
-
-_[Demo and API docs](https://elements.polymer-project.org/elements/iron-input)_
-
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://webcomponents.org/element/@polymer/iron-input)
 
 ## &lt;iron-input&gt;
-
 `<iron-input>` adds two-way binding and custom validators using `Polymer.IronValidatorBehavior`
 to `<input>`.
 
-### Changes in 2.0
-Since type-extensions are not available in 2.0, `<iron-input` is a wrapper against a native `input`:
+See: [Documentation](https://www.webcomponents.org/element/@polymer/iron-input),
+  [Demo](https://www.webcomponents.org/element/@polymer/iron-input/demo/demo/index.html).
 
+## Usage
+
+### Installation
+```
+npm install --save @polymer/iron-input
+```
+
+### In an html file
 ```html
-<iron-input>
-  <input>
-</iron-input>
- ```
+<html>
+  <head>
+    <script type="module">
+      import '@polymer/iron-input/iron-input.js';
+    </script>
+  </head>
+  <body>
+    <iron-input>
+      <input>
+    </iron-input>
+  </body>
+</html>
+```
+### In a Polymer 3 element
+```js
+import {PolymerElement, html} from '@polymer/polymer';
+import '@polymer/iron-input/iron-input.js';
 
-Other changes:
-- `prevent-invalid-input` and `allowed-pattern` had to be always used together; deleted `prevent-invalid-input`, so that only 
-`allowed-pattern` is needed
-- added an `auto-validate` property
-- Note: imperatively setting the `value` attribute on the native `<input>` is not supported -- the native `input` does not fire an event in this case, so this update cannot be observed, and `bind-value` cannot be updated.
+class SampleElement extends PolymerElement {
+  static get template() {
+    return html`
+      <iron-input>
+        <input>
+      </iron-input>
+    `;
+  }
+}
+customElements.define('sample-element', SampleElement);
+```
 
 ### Two-way binding
 
@@ -78,3 +89,25 @@ is separate from validation, and `allowed-pattern` does not affect how the input
 ```
 
 
+## Contributing
+If you want to send a PR to this element, here are
+the instructions for running the tests and demo locally:
+
+### Installation
+```sh
+git clone https://github.com/PolymerElements/iron-input
+cd iron-input
+npm install
+npm install -g polymer-cli
+```
+
+### Running the demo locally
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
+```
+
+### Running the tests
+```sh
+polymer test --npm
+```

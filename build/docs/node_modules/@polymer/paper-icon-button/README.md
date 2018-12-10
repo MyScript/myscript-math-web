@@ -1,26 +1,8 @@
-
-<!---
-
-This README is automatically generated from the comments in these files:
-paper-icon-button-light.html  paper-icon-button.html
-
-Edit those files, and our readme bot will duplicate them over here!
-Edit this file, and the bot will squash your changes :)
-
-The bot does some handling of markdown. Please file a bug if it does the wrong
-thing! https://github.com/PolymerLabs/tedium/issues
-
--->
-
+[![Published on NPM](https://img.shields.io/npm/v/@polymer/paper-icon-button.svg)](https://www.npmjs.com/package/@polymer/paper-icon-button)
 [![Build status](https://travis-ci.org/PolymerElements/paper-icon-button.svg?branch=master)](https://travis-ci.org/PolymerElements/paper-icon-button)
-
-_[Demo and API docs](https://elements.polymer-project.org/elements/paper-icon-button)_
-
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://webcomponents.org/element/@polymer/paper-icon-button)
 
 ## &lt;paper-icon-button&gt;
-
-Material design: [Icon toggles](https://www.google.com/design/spec/components/buttons.html#buttons-toggle-buttons)
-
 `paper-icon-button` is a button with an image placed at the center. When the user touches
 the button, a ripple effect emanates from the center of the button.
 
@@ -28,65 +10,65 @@ the button, a ripple effect emanates from the center of the button.
 set, include `PolymerElements/iron-icons/iron-icons.html`, and use the `icon` attribute to specify which icon
 from the icon set to use.
 
-<!---
-```html
-<custom-element-demo>
-  <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="paper-icon-button.html">
-    <link rel="import" href="../iron-icons/iron-icons.html">
-    <next-code-block></next-code-block>
-  </template>
-</custom-element-demo>
+See: [Documentation](https://www.webcomponents.org/element/@polymer/paper-icon-button),
+  [Demo](https://www.webcomponents.org/element/@polymer/paper-icon-button/demo/demo/index.html).
+
+## Usage
+
+### Installation
 ```
--->
-```html
-<paper-icon-button icon="favorite"></paper-icon-button>
-<paper-icon-button icon="menu"></paper-icon-button>
-<paper-icon-button icon="star"></paper-icon-button>
+npm install --save @polymer/paper-icon-button
 ```
 
-See [`iron-iconset`](https://github.com/PolymerElements/iron-iconset) for more information about
-how to use a custom icon set.
-
-Example:
-
+### In an html file
 ```html
-<link href="path/to/iron-icons/iron-icons.html" rel="import">
+<html>
+  <head>
+    <script type="module">
+      import '@polymer/paper-icon-button/paper-icon-button.js';
+      import '@polymer/iron-icons/iron-icons.js';
+    </script>
+  </head>
+  <body>
+    <paper-icon-button icon="favorite"></paper-icon-button>
+  </body>
+</html>
+```
+### In a Polymer 3 element
+```js
+import {PolymerElement, html} from '@polymer/polymer';
+import '@polymer/paper-icon-button/paper-icon-button.js';
+import '@polymer/iron-icons/iron-icons.js';
 
-<paper-icon-button icon="favorite"></paper-icon-button>
-<paper-icon-button src="star.png"></paper-icon-button>
+class SampleElement extends PolymerElement {
+  static get template() {
+    return html`
+      <paper-icon-button icon="favorite"></paper-icon-button>
+    `;
+  }
+}
+customElements.define('sample-element', SampleElement);
 ```
 
-To use `paper-icon-button` as a link, wrap it in an anchor tag. Since `paper-icon-button`
-will already receive focus, you may want to prevent the anchor tag from receiving focus
-as well by setting its tabindex to -1.
+## Contributing
+If you want to send a PR to this element, here are
+the instructions for running the tests and demo locally:
 
-```html
-<a href="https://www.polymer-project.org" tabindex="-1">
-  <paper-icon-button icon="polymer"></paper-icon-button>
-</a>
+### Installation
+```sh
+git clone https://github.com/PolymerElements/paper-icon-button
+cd paper-icon-button
+npm install
+npm install -g polymer-cli
 ```
 
-### Styling
-
-Style the button with CSS as you would a normal DOM element. If you are using the icons
-provided by `iron-icons`, they will inherit the foreground color of the button.
-
-```html
-/* make a red "favorite" button */
-<paper-icon-button icon="favorite" style="color: red;"></paper-icon-button>
+### Running the demo locally
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
 ```
 
-By default, the ripple is the same color as the foreground at 25% opacity. You may
-customize the color using the `--paper-icon-button-ink-color` custom property.
-
-The following custom properties and mixins are available for styling:
-
-| Custom property | Description | Default |
-| --- | --- | --- |
-| `--paper-icon-button-disabled-text` | The color of the disabled button | `--disabled-text-color` |
-| `--paper-icon-button-ink-color` | Selected/focus ripple color | `--primary-text-color` |
-| `--paper-icon-button` | Mixin for a button | `{}` |
-| `--paper-icon-button-disabled` | Mixin for a disabled button | `{}` |
-| `--paper-icon-button-hover` | Mixin for button on hover | `{}` |
+### Running the tests
+```sh
+polymer test --npm
+```

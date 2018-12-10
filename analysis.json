@@ -14,11 +14,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1143,
+              "line": 1090,
               "column": 6
             },
             "end": {
-              "line": 1143,
+              "line": 1090,
               "column": 30
             }
           },
@@ -37,11 +37,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1145,
+              "line": 1092,
               "column": 6
             },
             "end": {
-              "line": 1145,
+              "line": 1092,
               "column": 32
             }
           },
@@ -60,11 +60,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1147,
+              "line": 1094,
               "column": 6
             },
             "end": {
-              "line": 1147,
+              "line": 1094,
               "column": 26
             }
           },
@@ -83,11 +83,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1149,
+              "line": 1096,
               "column": 6
             },
             "end": {
-              "line": 1149,
+              "line": 1096,
               "column": 29
             }
           },
@@ -106,11 +106,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1151,
+              "line": 1098,
               "column": 6
             },
             "end": {
-              "line": 1151,
+              "line": 1098,
               "column": 26
             }
           },
@@ -129,11 +129,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1153,
+              "line": 1100,
               "column": 6
             },
             "end": {
-              "line": 1153,
+              "line": 1100,
               "column": 33
             }
           },
@@ -152,11 +152,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1155,
+              "line": 1102,
               "column": 6
             },
             "end": {
-              "line": 1155,
+              "line": 1102,
               "column": 22
             }
           },
@@ -175,11 +175,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1157,
+              "line": 1104,
               "column": 6
             },
             "end": {
-              "line": 1157,
+              "line": 1104,
               "column": 22
             }
           },
@@ -198,11 +198,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1159,
+              "line": 1106,
               "column": 6
             },
             "end": {
-              "line": 1159,
+              "line": 1106,
               "column": 36
             }
           },
@@ -221,11 +221,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1161,
+              "line": 1108,
               "column": 6
             },
             "end": {
-              "line": 1161,
+              "line": 1108,
               "column": 18
             }
           },
@@ -244,11 +244,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1163,
+              "line": 1110,
               "column": 6
             },
             "end": {
-              "line": 1163,
+              "line": 1110,
               "column": 25
             }
           },
@@ -267,11 +267,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1165,
+              "line": 1112,
               "column": 6
             },
             "end": {
-              "line": 1165,
+              "line": 1112,
               "column": 21
             }
           },
@@ -290,11 +290,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1167,
+              "line": 1114,
               "column": 6
             },
             "end": {
-              "line": 1167,
+              "line": 1114,
               "column": 28
             }
           },
@@ -313,11 +313,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1169,
+              "line": 1116,
               "column": 6
             },
             "end": {
-              "line": 1169,
+              "line": 1116,
               "column": 28
             }
           },
@@ -336,11 +336,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1171,
+              "line": 1118,
               "column": 6
             },
             "end": {
-              "line": 1171,
+              "line": 1118,
               "column": 27
             }
           },
@@ -359,11 +359,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1173,
+              "line": 1120,
               "column": 6
             },
             "end": {
-              "line": 1173,
+              "line": 1120,
               "column": 30
             }
           },
@@ -382,11 +382,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1175,
+              "line": 1122,
               "column": 6
             },
             "end": {
-              "line": 1175,
+              "line": 1122,
               "column": 28
             }
           },
@@ -405,11 +405,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1177,
+              "line": 1124,
               "column": 6
             },
             "end": {
-              "line": 1177,
+              "line": 1124,
               "column": 22
             }
           },
@@ -428,11 +428,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1179,
+              "line": 1126,
               "column": 6
             },
             "end": {
-              "line": 1179,
+              "line": 1126,
               "column": 26
             }
           },
@@ -451,11 +451,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1182,
+              "line": 1129,
               "column": 4
             },
             "end": {
-              "line": 1184,
+              "line": 1131,
               "column": 5
             }
           },
@@ -474,11 +474,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 428,
+              "line": 490,
               "column": 6
             },
             "end": {
-              "line": 428,
+              "line": 490,
               "column": 21
             }
           },
@@ -497,11 +497,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 430,
+              "line": 492,
               "column": 6
             },
             "end": {
-              "line": 430,
+              "line": 492,
               "column": 23
             }
           },
@@ -520,11 +520,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 432,
+              "line": 494,
               "column": 6
             },
             "end": {
-              "line": 432,
+              "line": 494,
               "column": 20
             }
           },
@@ -543,11 +543,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 434,
+              "line": 496,
               "column": 6
             },
             "end": {
-              "line": 434,
+              "line": 496,
               "column": 22
             }
           },
@@ -566,11 +566,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 436,
+              "line": 498,
               "column": 6
             },
             "end": {
-              "line": 436,
+              "line": 498,
               "column": 16
             }
           },
@@ -589,11 +589,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 438,
+              "line": 500,
               "column": 6
             },
             "end": {
-              "line": 438,
+              "line": 500,
               "column": 13
             }
           },
@@ -636,11 +636,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2419,
+              "line": 2416,
               "column": 4
             },
             "end": {
-              "line": 2444,
+              "line": 2441,
               "column": 5
             }
           },
@@ -665,11 +665,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 446,
+              "line": 454,
               "column": 4
             },
             "end": {
-              "line": 451,
+              "line": 459,
               "column": 5
             }
           },
@@ -677,7 +677,7 @@
           "params": [
             {
               "name": "node",
-              "type": "!Node",
+              "type": "!EventTarget",
               "description": "Node to add listener on"
             },
             {
@@ -709,11 +709,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 461,
+              "line": 470,
               "column": 4
             },
             "end": {
-              "line": 463,
+              "line": 472,
               "column": 5
             }
           },
@@ -721,7 +721,7 @@
           "params": [
             {
               "name": "node",
-              "type": "!Node",
+              "type": "!EventTarget",
               "description": "Node to add event listener to"
             },
             {
@@ -747,11 +747,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 473,
+              "line": 483,
               "column": 4
             },
             "end": {
-              "line": 475,
+              "line": 485,
               "column": 5
             }
           },
@@ -759,7 +759,7 @@
           "params": [
             {
               "name": "node",
-              "type": "Node",
+              "type": "!EventTarget",
               "description": "Node to remove event listener from"
             },
             {
@@ -785,11 +785,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 100,
+              "line": 106,
               "column": 4
             },
             "end": {
-              "line": 109,
+              "line": 115,
               "column": 5
             }
           },
@@ -818,11 +818,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 118,
+              "line": 125,
               "column": 4
             },
             "end": {
-              "line": 126,
+              "line": 133,
               "column": 5
             }
           },
@@ -846,11 +846,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 134,
+              "line": 142,
               "column": 5
             },
             "end": {
-              "line": 147,
+              "line": 155,
               "column": 5
             }
           },
@@ -879,11 +879,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 546,
+              "line": 608,
               "column": 4
             },
             "end": {
-              "line": 552,
+              "line": 614,
               "column": 5
             }
           },
@@ -901,11 +901,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 453,
+              "line": 515,
               "column": 4
             },
             "end": {
-              "line": 486,
+              "line": 548,
               "column": 5
             }
           },
@@ -923,11 +923,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 216,
+              "line": 227,
               "column": 4
             },
             "end": {
-              "line": 218,
+              "line": 229,
               "column": 5
             }
           },
@@ -951,11 +951,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 229,
+              "line": 241,
               "column": 4
             },
             "end": {
-              "line": 233,
+              "line": 245,
               "column": 5
             }
           },
@@ -984,11 +984,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 241,
+              "line": 254,
               "column": 4
             },
             "end": {
-              "line": 243,
+              "line": 256,
               "column": 5
             }
           },
@@ -1013,11 +1013,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 258,
+              "line": 272,
               "column": 4
             },
             "end": {
-              "line": 274,
+              "line": 288,
               "column": 5
             }
           },
@@ -1052,11 +1052,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 284,
+              "line": 299,
               "column": 4
             },
             "end": {
-              "line": 294,
+              "line": 309,
               "column": 5
             }
           },
@@ -1074,11 +1074,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 307,
+              "line": 323,
               "column": 4
             },
             "end": {
-              "line": 316,
+              "line": 332,
               "column": 5
             }
           },
@@ -1096,11 +1096,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 327,
+              "line": 344,
               "column": 4
             },
             "end": {
-              "line": 336,
+              "line": 353,
               "column": 5
             }
           },
@@ -1118,11 +1118,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 350,
+              "line": 368,
               "column": 4
             },
             "end": {
-              "line": 352,
+              "line": 370,
               "column": 5
             }
           },
@@ -1135,12 +1135,12 @@
             },
             {
               "name": "changedProps",
-              "type": "!Object",
+              "type": "?Object",
               "description": "Bag of properties changed since the last\n  call to `_propertiesChanged`"
             },
             {
               "name": "oldProps",
-              "type": "!Object",
+              "type": "?Object",
               "description": "Bag of previous values for each property\n  in `changedProps`"
             }
           ],
@@ -1157,11 +1157,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 366,
+              "line": 385,
               "column": 4
             },
             "end": {
-              "line": 367,
+              "line": 386,
               "column": 5
             }
           },
@@ -1174,12 +1174,12 @@
             },
             {
               "name": "changedProps",
-              "type": "!Object",
+              "type": "?Object",
               "description": "Bag of properties changed since the last\n  call to `_propertiesChanged`"
             },
             {
               "name": "oldProps",
-              "type": "!Object",
+              "type": "?Object",
               "description": "Bag of previous values for each property\n  in `changedProps`"
             }
           ],
@@ -1195,11 +1195,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 387,
+              "line": 407,
               "column": 4
             },
             "end": {
-              "line": 394,
+              "line": 414,
               "column": 5
             }
           },
@@ -1234,11 +1234,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 407,
+              "line": 428,
               "column": 4
             },
             "end": {
-              "line": 414,
+              "line": 435,
               "column": 5
             }
           },
@@ -1277,11 +1277,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 428,
+              "line": 450,
               "column": 4
             },
             "end": {
-              "line": 435,
+              "line": 457,
               "column": 5
             }
           },
@@ -1315,11 +1315,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 447,
+              "line": 470,
               "column": 4
             },
             "end": {
-              "line": 453,
+              "line": 476,
               "column": 5
             }
           },
@@ -1353,11 +1353,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 468,
+              "line": 492,
               "column": 4
             },
             "end": {
-              "line": 475,
+              "line": 499,
               "column": 5
             }
           },
@@ -1391,11 +1391,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 488,
+              "line": 513,
               "column": 4
             },
             "end": {
-              "line": 495,
+              "line": 520,
               "column": 5
             }
           },
@@ -1420,11 +1420,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 509,
+              "line": 535,
               "column": 4
             },
             "end": {
-              "line": 518,
+              "line": 544,
               "column": 5
             }
           },
@@ -1454,11 +1454,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1213,
+              "line": 1160,
               "column": 4
             },
             "end": {
-              "line": 1217,
+              "line": 1164,
               "column": 5
             }
           },
@@ -1482,11 +1482,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-accessors.js",
             "start": {
-              "line": 186,
+              "line": 185,
               "column": 4
             },
             "end": {
-              "line": 191,
+              "line": 190,
               "column": 5
             }
           },
@@ -1515,11 +1515,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-accessors.js",
             "start": {
-              "line": 293,
+              "line": 292,
               "column": 4
             },
             "end": {
-              "line": 295,
+              "line": 294,
               "column": 5
             }
           },
@@ -1544,11 +1544,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-accessors.js",
             "start": {
-              "line": 304,
+              "line": 303,
               "column": 4
             },
             "end": {
-              "line": 306,
+              "line": 305,
               "column": 5
             }
           },
@@ -1573,11 +1573,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1251,
+              "line": 1198,
               "column": 4
             },
             "end": {
-              "line": 1259,
+              "line": 1206,
               "column": 5
             }
           },
@@ -1611,11 +1611,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1269,
+              "line": 1216,
               "column": 4
             },
             "end": {
-              "line": 1275,
+              "line": 1222,
               "column": 5
             }
           },
@@ -1649,11 +1649,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1286,
+              "line": 1233,
               "column": 4
             },
             "end": {
-              "line": 1289,
+              "line": 1236,
               "column": 5
             }
           },
@@ -1683,11 +1683,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1299,
+              "line": 1246,
               "column": 4
             },
             "end": {
-              "line": 1301,
+              "line": 1248,
               "column": 5
             }
           },
@@ -1712,11 +1712,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1311,
+              "line": 1258,
               "column": 4
             },
             "end": {
-              "line": 1313,
+              "line": 1260,
               "column": 5
             }
           },
@@ -1741,11 +1741,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1323,
+              "line": 1270,
               "column": 4
             },
             "end": {
-              "line": 1325,
+              "line": 1272,
               "column": 5
             }
           },
@@ -1770,11 +1770,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1335,
+              "line": 1282,
               "column": 4
             },
             "end": {
-              "line": 1337,
+              "line": 1284,
               "column": 5
             }
           },
@@ -1799,11 +1799,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1369,
+              "line": 1316,
               "column": 4
             },
             "end": {
-              "line": 1401,
+              "line": 1348,
               "column": 5
             }
           },
@@ -1843,11 +1843,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1424,
+              "line": 1371,
               "column": 4
             },
             "end": {
-              "line": 1432,
+              "line": 1379,
               "column": 5
             }
           },
@@ -1881,11 +1881,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1539,
+              "line": 1486,
               "column": 4
             },
             "end": {
-              "line": 1544,
+              "line": 1491,
               "column": 5
             }
           },
@@ -1909,11 +1909,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1565,
+              "line": 1512,
               "column": 4
             },
             "end": {
-              "line": 1576,
+              "line": 1523,
               "column": 5
             }
           },
@@ -1931,11 +1931,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1590,
+              "line": 1537,
               "column": 4
             },
             "end": {
-              "line": 1603,
+              "line": 1550,
               "column": 5
             }
           },
@@ -1953,11 +1953,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 564,
+              "line": 626,
               "column": 4
             },
             "end": {
-              "line": 573,
+              "line": 635,
               "column": 5
             }
           },
@@ -1975,11 +1975,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1632,
+              "line": 1579,
               "column": 4
             },
             "end": {
-              "line": 1643,
+              "line": 1590,
               "column": 5
             }
           },
@@ -2008,11 +2008,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1730,
+              "line": 1677,
               "column": 4
             },
             "end": {
-              "line": 1740,
+              "line": 1687,
               "column": 5
             }
           },
@@ -2046,11 +2046,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1751,
+              "line": 1698,
               "column": 4
             },
             "end": {
-              "line": 1756,
+              "line": 1703,
               "column": 5
             }
           },
@@ -2079,11 +2079,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1768,
+              "line": 1715,
               "column": 4
             },
             "end": {
-              "line": 1773,
+              "line": 1720,
               "column": 5
             }
           },
@@ -2107,11 +2107,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1805,
+              "line": 1752,
               "column": 4
             },
             "end": {
-              "line": 1809,
+              "line": 1756,
               "column": 5
             }
           },
@@ -2140,11 +2140,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1830,
+              "line": 1777,
               "column": 4
             },
             "end": {
-              "line": 1832,
+              "line": 1779,
               "column": 5
             }
           },
@@ -2174,11 +2174,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1855,
+              "line": 1802,
               "column": 4
             },
             "end": {
-              "line": 1865,
+              "line": 1812,
               "column": 5
             }
           },
@@ -2212,11 +2212,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1881,
+              "line": 1828,
               "column": 4
             },
             "end": {
-              "line": 1890,
+              "line": 1837,
               "column": 5
             }
           },
@@ -2247,11 +2247,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1905,
+              "line": 1852,
               "column": 4
             },
             "end": {
-              "line": 1914,
+              "line": 1861,
               "column": 5
             }
           },
@@ -2276,11 +2276,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1933,
+              "line": 1880,
               "column": 4
             },
             "end": {
-              "line": 1970,
+              "line": 1917,
               "column": 5
             }
           },
@@ -2298,7 +2298,7 @@
             },
             {
               "name": "deleteCount",
-              "type": "number",
+              "type": "number=",
               "description": "Number of items to remove."
             },
             {
@@ -2321,11 +2321,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1985,
+              "line": 1932,
               "column": 4
             },
             "end": {
-              "line": 1994,
+              "line": 1941,
               "column": 5
             }
           },
@@ -2350,11 +2350,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2010,
+              "line": 1957,
               "column": 4
             },
             "end": {
-              "line": 2018,
+              "line": 1965,
               "column": 5
             }
           },
@@ -2385,11 +2385,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2033,
+              "line": 1980,
               "column": 4
             },
             "end": {
-              "line": 2050,
+              "line": 1997,
               "column": 5
             }
           },
@@ -2418,11 +2418,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2063,
+              "line": 2010,
               "column": 4
             },
             "end": {
-              "line": 2070,
+              "line": 2017,
               "column": 5
             }
           },
@@ -2451,11 +2451,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2084,
+              "line": 2031,
               "column": 4
             },
             "end": {
-              "line": 2094,
+              "line": 2041,
               "column": 5
             }
           },
@@ -2489,11 +2489,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2107,
+              "line": 2054,
               "column": 4
             },
             "end": {
-              "line": 2113,
+              "line": 2060,
               "column": 5
             }
           },
@@ -2522,11 +2522,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2124,
+              "line": 2071,
               "column": 4
             },
             "end": {
-              "line": 2132,
+              "line": 2079,
               "column": 5
             }
           },
@@ -2550,11 +2550,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2143,
+              "line": 2090,
               "column": 4
             },
             "end": {
-              "line": 2156,
+              "line": 2103,
               "column": 5
             }
           },
@@ -2578,11 +2578,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2170,
+              "line": 2117,
               "column": 4
             },
             "end": {
-              "line": 2176,
+              "line": 2123,
               "column": 5
             }
           },
@@ -2610,17 +2610,56 @@
           "inheritedFrom": "PropertyEffects"
         },
         {
+          "name": "_marshalArgs",
+          "description": "Gather the argument values for a method specified in the provided array\nof argument metadata.\n\nThe `path` and `value` arguments are used to fill in wildcard descriptor\nwhen the method is being called as a result of a path notification.",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "../@polymer/polymer/lib/mixins/property-effects.js",
+            "start": {
+              "line": 2138,
+              "column": 4
+            },
+            "end": {
+              "line": 2173,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "args",
+              "type": "!Array.<!MethodArg>",
+              "description": "Array of argument metadata"
+            },
+            {
+              "name": "path",
+              "type": "string",
+              "description": "Property/path name that triggered the method effect"
+            },
+            {
+              "name": "props",
+              "type": "Object",
+              "description": "Bag of current property changes"
+            }
+          ],
+          "return": {
+            "type": "Array.<*>",
+            "desc": "Array of argument values"
+          },
+          "inheritedFrom": "PropertyEffects"
+        },
+        {
           "name": "_bindTemplate",
           "description": "Equivalent to static `bindTemplate` API but can be called on\nan instance to add effects at runtime.  See that method for\nfull API docs.\n\nThis method may be called on the prototype (for prototypical template\nbinding, to avoid creating accessors every instance) once per prototype,\nand will be called with `runtimeBinding: true` by `_stampTemplate` to\ncreate and link an instance of the template metadata associated with a\nparticular stamping.",
           "privacy": "protected",
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2353,
+              "line": 2350,
               "column": 4
             },
             "end": {
-              "line": 2376,
+              "line": 2373,
               "column": 5
             }
           },
@@ -2650,11 +2689,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2455,
+              "line": 2452,
               "column": 4
             },
             "end": {
-              "line": 2476,
+              "line": 2473,
               "column": 5
             }
           },
@@ -2698,11 +2737,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-mixin.js",
             "start": {
-              "line": 210,
+              "line": 216,
               "column": 3
             },
             "end": {
-              "line": 214,
+              "line": 220,
               "column": 4
             }
           },
@@ -2720,11 +2759,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 587,
+              "line": 649,
               "column": 4
             },
             "end": {
-              "line": 603,
+              "line": 665,
               "column": 5
             }
           },
@@ -2749,11 +2788,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 626,
+              "line": 688,
               "column": 4
             },
             "end": {
-              "line": 630,
+              "line": 692,
               "column": 5
             }
           },
@@ -2777,11 +2816,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 647,
+              "line": 709,
               "column": 4
             },
             "end": {
-              "line": 652,
+              "line": 714,
               "column": 5
             }
           },
@@ -2837,11 +2876,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 191,
+              "line": 197,
               "column": 4
             },
             "end": {
-              "line": 202,
+              "line": 208,
               "column": 5
             }
           },
@@ -2871,11 +2910,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 663,
+              "line": 725,
               "column": 4
             },
             "end": {
-              "line": 666,
+              "line": 728,
               "column": 5
             }
           },
@@ -2900,11 +2939,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2495,
+              "line": 2492,
               "column": 4
             },
             "end": {
-              "line": 2509,
+              "line": 2506,
               "column": 5
             }
           },
@@ -2939,11 +2978,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 252,
+              "line": 258,
               "column": 4
             },
             "end": {
-              "line": 289,
+              "line": 295,
               "column": 5
             }
           },
@@ -2977,11 +3016,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2587,
+              "line": 2584,
               "column": 4
             },
             "end": {
-              "line": 2597,
+              "line": 2594,
               "column": 5
             }
           },
@@ -3016,11 +3055,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 327,
+              "line": 333,
               "column": 4
             },
             "end": {
-              "line": 336,
+              "line": 342,
               "column": 5
             }
           },
@@ -3055,11 +3094,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2530,
+              "line": 2527,
               "column": 4
             },
             "end": {
-              "line": 2571,
+              "line": 2568,
               "column": 5
             }
           },
@@ -3104,11 +3143,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 382,
+              "line": 388,
               "column": 4
             },
             "end": {
-              "line": 385,
+              "line": 391,
               "column": 5
             }
           },
@@ -3133,11 +3172,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 319,
+              "line": 356,
               "column": 5
             },
             "end": {
-              "line": 323,
+              "line": 360,
               "column": 5
             }
           },
@@ -3159,11 +3198,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 71,
+              "line": 76,
               "column": 4
             },
             "end": {
-              "line": 73,
+              "line": 78,
               "column": 5
             }
           },
@@ -3188,11 +3227,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-mixin.js",
             "start": {
-              "line": 175,
+              "line": 179,
               "column": 3
             },
             "end": {
-              "line": 178,
+              "line": 182,
               "column": 4
             }
           },
@@ -3217,11 +3256,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-accessors.js",
             "start": {
-              "line": 122,
+              "line": 121,
               "column": 4
             },
             "end": {
-              "line": 127,
+              "line": 126,
               "column": 5
             }
           },
@@ -3239,11 +3278,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2216,
+              "line": 2213,
               "column": 4
             },
             "end": {
-              "line": 2218,
+              "line": 2215,
               "column": 5
             }
           },
@@ -3277,11 +3316,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2230,
+              "line": 2227,
               "column": 4
             },
             "end": {
-              "line": 2232,
+              "line": 2229,
               "column": 5
             }
           },
@@ -3315,11 +3354,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2247,
+              "line": 2244,
               "column": 4
             },
             "end": {
-              "line": 2249,
+              "line": 2246,
               "column": 5
             }
           },
@@ -3349,11 +3388,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2259,
+              "line": 2256,
               "column": 4
             },
             "end": {
-              "line": 2261,
+              "line": 2258,
               "column": 5
             }
           },
@@ -3377,11 +3416,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2279,
+              "line": 2276,
               "column": 4
             },
             "end": {
-              "line": 2281,
+              "line": 2278,
               "column": 5
             }
           },
@@ -3410,11 +3449,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2291,
+              "line": 2288,
               "column": 4
             },
             "end": {
-              "line": 2293,
+              "line": 2290,
               "column": 5
             }
           },
@@ -3438,11 +3477,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2309,
+              "line": 2306,
               "column": 4
             },
             "end": {
-              "line": 2311,
+              "line": 2308,
               "column": 5
             }
           },
@@ -3476,11 +3515,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2325,
+              "line": 2322,
               "column": 4
             },
             "end": {
-              "line": 2327,
+              "line": 2324,
               "column": 5
             }
           },
@@ -3505,11 +3544,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2391,
+              "line": 2388,
               "column": 4
             },
             "end": {
-              "line": 2397,
+              "line": 2394,
               "column": 5
             }
           },
@@ -3543,11 +3582,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2643,
+              "line": 2640,
               "column": 4
             },
             "end": {
-              "line": 2708,
+              "line": 2705,
               "column": 5
             }
           },
@@ -3577,11 +3616,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2724,
+              "line": 2721,
               "column": 4
             },
             "end": {
-              "line": 2741,
+              "line": 2738,
               "column": 5
             }
           },
@@ -3631,11 +3670,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-mixin.js",
             "start": {
-              "line": 123,
+              "line": 127,
               "column": 3
             },
             "end": {
-              "line": 132,
+              "line": 136,
               "column": 4
             }
           },
@@ -3653,11 +3692,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 288,
+              "line": 325,
               "column": 3
             },
             "end": {
-              "line": 310,
+              "line": 347,
               "column": 5
             }
           },
@@ -3675,11 +3714,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 336,
+              "line": 373,
               "column": 4
             },
             "end": {
-              "line": 341,
+              "line": 378,
               "column": 5
             }
           },
@@ -3708,11 +3747,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 496,
+              "line": 558,
               "column": 4
             },
             "end": {
-              "line": 498,
+              "line": 560,
               "column": 5
             }
           },
@@ -3742,11 +3781,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 509,
+              "line": 571,
               "column": 4
             },
             "end": {
-              "line": 520,
+              "line": 582,
               "column": 5
             }
           },
@@ -3825,11 +3864,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1143,
+              "line": 1090,
               "column": 6
             },
             "end": {
-              "line": 1143,
+              "line": 1090,
               "column": 30
             }
           },
@@ -3848,11 +3887,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1145,
+              "line": 1092,
               "column": 6
             },
             "end": {
-              "line": 1145,
+              "line": 1092,
               "column": 32
             }
           },
@@ -3871,11 +3910,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1147,
+              "line": 1094,
               "column": 6
             },
             "end": {
-              "line": 1147,
+              "line": 1094,
               "column": 26
             }
           },
@@ -3894,11 +3933,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1149,
+              "line": 1096,
               "column": 6
             },
             "end": {
-              "line": 1149,
+              "line": 1096,
               "column": 29
             }
           },
@@ -3917,11 +3956,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1151,
+              "line": 1098,
               "column": 6
             },
             "end": {
-              "line": 1151,
+              "line": 1098,
               "column": 26
             }
           },
@@ -3940,11 +3979,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1153,
+              "line": 1100,
               "column": 6
             },
             "end": {
-              "line": 1153,
+              "line": 1100,
               "column": 33
             }
           },
@@ -3963,11 +4002,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1155,
+              "line": 1102,
               "column": 6
             },
             "end": {
-              "line": 1155,
+              "line": 1102,
               "column": 22
             }
           },
@@ -3986,11 +4025,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1157,
+              "line": 1104,
               "column": 6
             },
             "end": {
-              "line": 1157,
+              "line": 1104,
               "column": 22
             }
           },
@@ -4009,11 +4048,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1159,
+              "line": 1106,
               "column": 6
             },
             "end": {
-              "line": 1159,
+              "line": 1106,
               "column": 36
             }
           },
@@ -4032,11 +4071,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1161,
+              "line": 1108,
               "column": 6
             },
             "end": {
-              "line": 1161,
+              "line": 1108,
               "column": 18
             }
           },
@@ -4055,11 +4094,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1163,
+              "line": 1110,
               "column": 6
             },
             "end": {
-              "line": 1163,
+              "line": 1110,
               "column": 25
             }
           },
@@ -4078,11 +4117,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1165,
+              "line": 1112,
               "column": 6
             },
             "end": {
-              "line": 1165,
+              "line": 1112,
               "column": 21
             }
           },
@@ -4101,11 +4140,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1167,
+              "line": 1114,
               "column": 6
             },
             "end": {
-              "line": 1167,
+              "line": 1114,
               "column": 28
             }
           },
@@ -4124,11 +4163,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1169,
+              "line": 1116,
               "column": 6
             },
             "end": {
-              "line": 1169,
+              "line": 1116,
               "column": 28
             }
           },
@@ -4147,11 +4186,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1171,
+              "line": 1118,
               "column": 6
             },
             "end": {
-              "line": 1171,
+              "line": 1118,
               "column": 27
             }
           },
@@ -4170,11 +4209,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1173,
+              "line": 1120,
               "column": 6
             },
             "end": {
-              "line": 1173,
+              "line": 1120,
               "column": 30
             }
           },
@@ -4193,11 +4232,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1175,
+              "line": 1122,
               "column": 6
             },
             "end": {
-              "line": 1175,
+              "line": 1122,
               "column": 28
             }
           },
@@ -4216,11 +4255,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1177,
+              "line": 1124,
               "column": 6
             },
             "end": {
-              "line": 1177,
+              "line": 1124,
               "column": 22
             }
           },
@@ -4239,11 +4278,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1179,
+              "line": 1126,
               "column": 6
             },
             "end": {
-              "line": 1179,
+              "line": 1126,
               "column": 26
             }
           },
@@ -4262,11 +4301,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1182,
+              "line": 1129,
               "column": 4
             },
             "end": {
-              "line": 1184,
+              "line": 1131,
               "column": 5
             }
           },
@@ -4285,11 +4324,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 428,
+              "line": 490,
               "column": 6
             },
             "end": {
-              "line": 428,
+              "line": 490,
               "column": 21
             }
           },
@@ -4308,11 +4347,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 430,
+              "line": 492,
               "column": 6
             },
             "end": {
-              "line": 430,
+              "line": 492,
               "column": 23
             }
           },
@@ -4331,11 +4370,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 432,
+              "line": 494,
               "column": 6
             },
             "end": {
-              "line": 432,
+              "line": 494,
               "column": 20
             }
           },
@@ -4354,11 +4393,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 434,
+              "line": 496,
               "column": 6
             },
             "end": {
-              "line": 434,
+              "line": 496,
               "column": 22
             }
           },
@@ -4377,11 +4416,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 436,
+              "line": 498,
               "column": 6
             },
             "end": {
-              "line": 436,
+              "line": 498,
               "column": 16
             }
           },
@@ -4400,11 +4439,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 438,
+              "line": 500,
               "column": 6
             },
             "end": {
-              "line": 438,
+              "line": 500,
               "column": 13
             }
           },
@@ -4490,11 +4529,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2419,
+              "line": 2416,
               "column": 4
             },
             "end": {
-              "line": 2444,
+              "line": 2441,
               "column": 5
             }
           },
@@ -4519,11 +4558,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 446,
+              "line": 454,
               "column": 4
             },
             "end": {
-              "line": 451,
+              "line": 459,
               "column": 5
             }
           },
@@ -4531,7 +4570,7 @@
           "params": [
             {
               "name": "node",
-              "type": "!Node",
+              "type": "!EventTarget",
               "description": "Node to add listener on"
             },
             {
@@ -4563,11 +4602,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 461,
+              "line": 470,
               "column": 4
             },
             "end": {
-              "line": 463,
+              "line": 472,
               "column": 5
             }
           },
@@ -4575,7 +4614,7 @@
           "params": [
             {
               "name": "node",
-              "type": "!Node",
+              "type": "!EventTarget",
               "description": "Node to add event listener to"
             },
             {
@@ -4601,11 +4640,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 473,
+              "line": 483,
               "column": 4
             },
             "end": {
-              "line": 475,
+              "line": 485,
               "column": 5
             }
           },
@@ -4613,7 +4652,7 @@
           "params": [
             {
               "name": "node",
-              "type": "Node",
+              "type": "!EventTarget",
               "description": "Node to remove event listener from"
             },
             {
@@ -4639,11 +4678,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 100,
+              "line": 106,
               "column": 4
             },
             "end": {
-              "line": 109,
+              "line": 115,
               "column": 5
             }
           },
@@ -4672,11 +4711,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 118,
+              "line": 125,
               "column": 4
             },
             "end": {
-              "line": 126,
+              "line": 133,
               "column": 5
             }
           },
@@ -4700,11 +4739,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 134,
+              "line": 142,
               "column": 5
             },
             "end": {
-              "line": 147,
+              "line": 155,
               "column": 5
             }
           },
@@ -4733,11 +4772,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 546,
+              "line": 608,
               "column": 4
             },
             "end": {
-              "line": 552,
+              "line": 614,
               "column": 5
             }
           },
@@ -4755,11 +4794,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 453,
+              "line": 515,
               "column": 4
             },
             "end": {
-              "line": 486,
+              "line": 548,
               "column": 5
             }
           },
@@ -4777,11 +4816,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 216,
+              "line": 227,
               "column": 4
             },
             "end": {
-              "line": 218,
+              "line": 229,
               "column": 5
             }
           },
@@ -4805,11 +4844,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 229,
+              "line": 241,
               "column": 4
             },
             "end": {
-              "line": 233,
+              "line": 245,
               "column": 5
             }
           },
@@ -4838,11 +4877,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 241,
+              "line": 254,
               "column": 4
             },
             "end": {
-              "line": 243,
+              "line": 256,
               "column": 5
             }
           },
@@ -4867,11 +4906,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 258,
+              "line": 272,
               "column": 4
             },
             "end": {
-              "line": 274,
+              "line": 288,
               "column": 5
             }
           },
@@ -4906,11 +4945,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 284,
+              "line": 299,
               "column": 4
             },
             "end": {
-              "line": 294,
+              "line": 309,
               "column": 5
             }
           },
@@ -4928,11 +4967,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 307,
+              "line": 323,
               "column": 4
             },
             "end": {
-              "line": 316,
+              "line": 332,
               "column": 5
             }
           },
@@ -4950,11 +4989,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 327,
+              "line": 344,
               "column": 4
             },
             "end": {
-              "line": 336,
+              "line": 353,
               "column": 5
             }
           },
@@ -4972,11 +5011,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 350,
+              "line": 368,
               "column": 4
             },
             "end": {
-              "line": 352,
+              "line": 370,
               "column": 5
             }
           },
@@ -4989,12 +5028,12 @@
             },
             {
               "name": "changedProps",
-              "type": "!Object",
+              "type": "?Object",
               "description": "Bag of properties changed since the last\n  call to `_propertiesChanged`"
             },
             {
               "name": "oldProps",
-              "type": "!Object",
+              "type": "?Object",
               "description": "Bag of previous values for each property\n  in `changedProps`"
             }
           ],
@@ -5011,11 +5050,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 366,
+              "line": 385,
               "column": 4
             },
             "end": {
-              "line": 367,
+              "line": 386,
               "column": 5
             }
           },
@@ -5028,12 +5067,12 @@
             },
             {
               "name": "changedProps",
-              "type": "!Object",
+              "type": "?Object",
               "description": "Bag of properties changed since the last\n  call to `_propertiesChanged`"
             },
             {
               "name": "oldProps",
-              "type": "!Object",
+              "type": "?Object",
               "description": "Bag of previous values for each property\n  in `changedProps`"
             }
           ],
@@ -5049,11 +5088,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 387,
+              "line": 407,
               "column": 4
             },
             "end": {
-              "line": 394,
+              "line": 414,
               "column": 5
             }
           },
@@ -5088,11 +5127,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 407,
+              "line": 428,
               "column": 4
             },
             "end": {
-              "line": 414,
+              "line": 435,
               "column": 5
             }
           },
@@ -5131,11 +5170,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 428,
+              "line": 450,
               "column": 4
             },
             "end": {
-              "line": 435,
+              "line": 457,
               "column": 5
             }
           },
@@ -5169,11 +5208,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 447,
+              "line": 470,
               "column": 4
             },
             "end": {
-              "line": 453,
+              "line": 476,
               "column": 5
             }
           },
@@ -5207,11 +5246,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 468,
+              "line": 492,
               "column": 4
             },
             "end": {
-              "line": 475,
+              "line": 499,
               "column": 5
             }
           },
@@ -5245,11 +5284,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 488,
+              "line": 513,
               "column": 4
             },
             "end": {
-              "line": 495,
+              "line": 520,
               "column": 5
             }
           },
@@ -5274,11 +5313,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 509,
+              "line": 535,
               "column": 4
             },
             "end": {
-              "line": 518,
+              "line": 544,
               "column": 5
             }
           },
@@ -5308,11 +5347,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1213,
+              "line": 1160,
               "column": 4
             },
             "end": {
-              "line": 1217,
+              "line": 1164,
               "column": 5
             }
           },
@@ -5336,11 +5375,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-accessors.js",
             "start": {
-              "line": 186,
+              "line": 185,
               "column": 4
             },
             "end": {
-              "line": 191,
+              "line": 190,
               "column": 5
             }
           },
@@ -5369,11 +5408,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-accessors.js",
             "start": {
-              "line": 293,
+              "line": 292,
               "column": 4
             },
             "end": {
-              "line": 295,
+              "line": 294,
               "column": 5
             }
           },
@@ -5398,11 +5437,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-accessors.js",
             "start": {
-              "line": 304,
+              "line": 303,
               "column": 4
             },
             "end": {
-              "line": 306,
+              "line": 305,
               "column": 5
             }
           },
@@ -5427,11 +5466,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1251,
+              "line": 1198,
               "column": 4
             },
             "end": {
-              "line": 1259,
+              "line": 1206,
               "column": 5
             }
           },
@@ -5465,11 +5504,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1269,
+              "line": 1216,
               "column": 4
             },
             "end": {
-              "line": 1275,
+              "line": 1222,
               "column": 5
             }
           },
@@ -5503,11 +5542,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1286,
+              "line": 1233,
               "column": 4
             },
             "end": {
-              "line": 1289,
+              "line": 1236,
               "column": 5
             }
           },
@@ -5537,11 +5576,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1299,
+              "line": 1246,
               "column": 4
             },
             "end": {
-              "line": 1301,
+              "line": 1248,
               "column": 5
             }
           },
@@ -5566,11 +5605,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1311,
+              "line": 1258,
               "column": 4
             },
             "end": {
-              "line": 1313,
+              "line": 1260,
               "column": 5
             }
           },
@@ -5595,11 +5634,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1323,
+              "line": 1270,
               "column": 4
             },
             "end": {
-              "line": 1325,
+              "line": 1272,
               "column": 5
             }
           },
@@ -5624,11 +5663,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1335,
+              "line": 1282,
               "column": 4
             },
             "end": {
-              "line": 1337,
+              "line": 1284,
               "column": 5
             }
           },
@@ -5653,11 +5692,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1369,
+              "line": 1316,
               "column": 4
             },
             "end": {
-              "line": 1401,
+              "line": 1348,
               "column": 5
             }
           },
@@ -5697,11 +5736,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1424,
+              "line": 1371,
               "column": 4
             },
             "end": {
-              "line": 1432,
+              "line": 1379,
               "column": 5
             }
           },
@@ -5735,11 +5774,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1539,
+              "line": 1486,
               "column": 4
             },
             "end": {
-              "line": 1544,
+              "line": 1491,
               "column": 5
             }
           },
@@ -5763,11 +5802,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1565,
+              "line": 1512,
               "column": 4
             },
             "end": {
-              "line": 1576,
+              "line": 1523,
               "column": 5
             }
           },
@@ -5785,11 +5824,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1590,
+              "line": 1537,
               "column": 4
             },
             "end": {
-              "line": 1603,
+              "line": 1550,
               "column": 5
             }
           },
@@ -5807,11 +5846,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 564,
+              "line": 626,
               "column": 4
             },
             "end": {
-              "line": 573,
+              "line": 635,
               "column": 5
             }
           },
@@ -5829,11 +5868,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1632,
+              "line": 1579,
               "column": 4
             },
             "end": {
-              "line": 1643,
+              "line": 1590,
               "column": 5
             }
           },
@@ -5862,11 +5901,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1730,
+              "line": 1677,
               "column": 4
             },
             "end": {
-              "line": 1740,
+              "line": 1687,
               "column": 5
             }
           },
@@ -5900,11 +5939,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1751,
+              "line": 1698,
               "column": 4
             },
             "end": {
-              "line": 1756,
+              "line": 1703,
               "column": 5
             }
           },
@@ -5933,11 +5972,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1768,
+              "line": 1715,
               "column": 4
             },
             "end": {
-              "line": 1773,
+              "line": 1720,
               "column": 5
             }
           },
@@ -5961,11 +6000,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1805,
+              "line": 1752,
               "column": 4
             },
             "end": {
-              "line": 1809,
+              "line": 1756,
               "column": 5
             }
           },
@@ -5994,11 +6033,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1830,
+              "line": 1777,
               "column": 4
             },
             "end": {
-              "line": 1832,
+              "line": 1779,
               "column": 5
             }
           },
@@ -6028,11 +6067,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1855,
+              "line": 1802,
               "column": 4
             },
             "end": {
-              "line": 1865,
+              "line": 1812,
               "column": 5
             }
           },
@@ -6066,11 +6105,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1881,
+              "line": 1828,
               "column": 4
             },
             "end": {
-              "line": 1890,
+              "line": 1837,
               "column": 5
             }
           },
@@ -6101,11 +6140,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1905,
+              "line": 1852,
               "column": 4
             },
             "end": {
-              "line": 1914,
+              "line": 1861,
               "column": 5
             }
           },
@@ -6130,11 +6169,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1933,
+              "line": 1880,
               "column": 4
             },
             "end": {
-              "line": 1970,
+              "line": 1917,
               "column": 5
             }
           },
@@ -6152,7 +6191,7 @@
             },
             {
               "name": "deleteCount",
-              "type": "number",
+              "type": "number=",
               "description": "Number of items to remove."
             },
             {
@@ -6175,11 +6214,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1985,
+              "line": 1932,
               "column": 4
             },
             "end": {
-              "line": 1994,
+              "line": 1941,
               "column": 5
             }
           },
@@ -6204,11 +6243,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2010,
+              "line": 1957,
               "column": 4
             },
             "end": {
-              "line": 2018,
+              "line": 1965,
               "column": 5
             }
           },
@@ -6239,11 +6278,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2033,
+              "line": 1980,
               "column": 4
             },
             "end": {
-              "line": 2050,
+              "line": 1997,
               "column": 5
             }
           },
@@ -6272,11 +6311,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2063,
+              "line": 2010,
               "column": 4
             },
             "end": {
-              "line": 2070,
+              "line": 2017,
               "column": 5
             }
           },
@@ -6305,11 +6344,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2084,
+              "line": 2031,
               "column": 4
             },
             "end": {
-              "line": 2094,
+              "line": 2041,
               "column": 5
             }
           },
@@ -6343,11 +6382,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2107,
+              "line": 2054,
               "column": 4
             },
             "end": {
-              "line": 2113,
+              "line": 2060,
               "column": 5
             }
           },
@@ -6376,11 +6415,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2124,
+              "line": 2071,
               "column": 4
             },
             "end": {
-              "line": 2132,
+              "line": 2079,
               "column": 5
             }
           },
@@ -6404,11 +6443,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2143,
+              "line": 2090,
               "column": 4
             },
             "end": {
-              "line": 2156,
+              "line": 2103,
               "column": 5
             }
           },
@@ -6432,11 +6471,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2170,
+              "line": 2117,
               "column": 4
             },
             "end": {
-              "line": 2176,
+              "line": 2123,
               "column": 5
             }
           },
@@ -6464,17 +6503,56 @@
           "inheritedFrom": "PropertyEffects"
         },
         {
+          "name": "_marshalArgs",
+          "description": "Gather the argument values for a method specified in the provided array\nof argument metadata.\n\nThe `path` and `value` arguments are used to fill in wildcard descriptor\nwhen the method is being called as a result of a path notification.",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "../@polymer/polymer/lib/mixins/property-effects.js",
+            "start": {
+              "line": 2138,
+              "column": 4
+            },
+            "end": {
+              "line": 2173,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "args",
+              "type": "!Array.<!MethodArg>",
+              "description": "Array of argument metadata"
+            },
+            {
+              "name": "path",
+              "type": "string",
+              "description": "Property/path name that triggered the method effect"
+            },
+            {
+              "name": "props",
+              "type": "Object",
+              "description": "Bag of current property changes"
+            }
+          ],
+          "return": {
+            "type": "Array.<*>",
+            "desc": "Array of argument values"
+          },
+          "inheritedFrom": "PropertyEffects"
+        },
+        {
           "name": "_bindTemplate",
           "description": "Equivalent to static `bindTemplate` API but can be called on\nan instance to add effects at runtime.  See that method for\nfull API docs.\n\nThis method may be called on the prototype (for prototypical template\nbinding, to avoid creating accessors every instance) once per prototype,\nand will be called with `runtimeBinding: true` by `_stampTemplate` to\ncreate and link an instance of the template metadata associated with a\nparticular stamping.",
           "privacy": "protected",
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2353,
+              "line": 2350,
               "column": 4
             },
             "end": {
-              "line": 2376,
+              "line": 2373,
               "column": 5
             }
           },
@@ -6504,11 +6582,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2455,
+              "line": 2452,
               "column": 4
             },
             "end": {
-              "line": 2476,
+              "line": 2473,
               "column": 5
             }
           },
@@ -6532,11 +6610,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 533,
+              "line": 595,
               "column": 4
             },
             "end": {
-              "line": 538,
+              "line": 600,
               "column": 5
             }
           },
@@ -6554,11 +6632,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-mixin.js",
             "start": {
-              "line": 210,
+              "line": 216,
               "column": 3
             },
             "end": {
-              "line": 214,
+              "line": 220,
               "column": 4
             }
           },
@@ -6576,11 +6654,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 587,
+              "line": 649,
               "column": 4
             },
             "end": {
-              "line": 603,
+              "line": 665,
               "column": 5
             }
           },
@@ -6605,11 +6683,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 626,
+              "line": 688,
               "column": 4
             },
             "end": {
-              "line": 630,
+              "line": 692,
               "column": 5
             }
           },
@@ -6633,11 +6711,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 647,
+              "line": 709,
               "column": 4
             },
             "end": {
-              "line": 652,
+              "line": 714,
               "column": 5
             }
           },
@@ -6894,11 +6972,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 191,
+              "line": 197,
               "column": 4
             },
             "end": {
-              "line": 202,
+              "line": 208,
               "column": 5
             }
           },
@@ -6928,11 +7006,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 663,
+              "line": 725,
               "column": 4
             },
             "end": {
-              "line": 666,
+              "line": 728,
               "column": 5
             }
           },
@@ -6957,11 +7035,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2495,
+              "line": 2492,
               "column": 4
             },
             "end": {
-              "line": 2509,
+              "line": 2506,
               "column": 5
             }
           },
@@ -6996,11 +7074,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 252,
+              "line": 258,
               "column": 4
             },
             "end": {
-              "line": 289,
+              "line": 295,
               "column": 5
             }
           },
@@ -7034,11 +7112,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2587,
+              "line": 2584,
               "column": 4
             },
             "end": {
-              "line": 2597,
+              "line": 2594,
               "column": 5
             }
           },
@@ -7073,11 +7151,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 327,
+              "line": 333,
               "column": 4
             },
             "end": {
-              "line": 336,
+              "line": 342,
               "column": 5
             }
           },
@@ -7112,11 +7190,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2530,
+              "line": 2527,
               "column": 4
             },
             "end": {
-              "line": 2571,
+              "line": 2568,
               "column": 5
             }
           },
@@ -7161,11 +7239,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 382,
+              "line": 388,
               "column": 4
             },
             "end": {
-              "line": 385,
+              "line": 391,
               "column": 5
             }
           },
@@ -7190,11 +7268,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 319,
+              "line": 356,
               "column": 5
             },
             "end": {
-              "line": 323,
+              "line": 360,
               "column": 5
             }
           },
@@ -7216,11 +7294,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 71,
+              "line": 76,
               "column": 4
             },
             "end": {
-              "line": 73,
+              "line": 78,
               "column": 5
             }
           },
@@ -7245,11 +7323,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-mixin.js",
             "start": {
-              "line": 175,
+              "line": 179,
               "column": 3
             },
             "end": {
-              "line": 178,
+              "line": 182,
               "column": 4
             }
           },
@@ -7274,11 +7352,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-accessors.js",
             "start": {
-              "line": 122,
+              "line": 121,
               "column": 4
             },
             "end": {
-              "line": 127,
+              "line": 126,
               "column": 5
             }
           },
@@ -7296,11 +7374,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2216,
+              "line": 2213,
               "column": 4
             },
             "end": {
-              "line": 2218,
+              "line": 2215,
               "column": 5
             }
           },
@@ -7334,11 +7412,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2230,
+              "line": 2227,
               "column": 4
             },
             "end": {
-              "line": 2232,
+              "line": 2229,
               "column": 5
             }
           },
@@ -7372,11 +7450,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2247,
+              "line": 2244,
               "column": 4
             },
             "end": {
-              "line": 2249,
+              "line": 2246,
               "column": 5
             }
           },
@@ -7406,11 +7484,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2259,
+              "line": 2256,
               "column": 4
             },
             "end": {
-              "line": 2261,
+              "line": 2258,
               "column": 5
             }
           },
@@ -7434,11 +7512,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2279,
+              "line": 2276,
               "column": 4
             },
             "end": {
-              "line": 2281,
+              "line": 2278,
               "column": 5
             }
           },
@@ -7467,11 +7545,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2291,
+              "line": 2288,
               "column": 4
             },
             "end": {
-              "line": 2293,
+              "line": 2290,
               "column": 5
             }
           },
@@ -7495,11 +7573,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2309,
+              "line": 2306,
               "column": 4
             },
             "end": {
-              "line": 2311,
+              "line": 2308,
               "column": 5
             }
           },
@@ -7533,11 +7611,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2325,
+              "line": 2322,
               "column": 4
             },
             "end": {
-              "line": 2327,
+              "line": 2324,
               "column": 5
             }
           },
@@ -7562,11 +7640,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2391,
+              "line": 2388,
               "column": 4
             },
             "end": {
-              "line": 2397,
+              "line": 2394,
               "column": 5
             }
           },
@@ -7600,11 +7678,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2643,
+              "line": 2640,
               "column": 4
             },
             "end": {
-              "line": 2708,
+              "line": 2705,
               "column": 5
             }
           },
@@ -7634,11 +7712,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2724,
+              "line": 2721,
               "column": 4
             },
             "end": {
-              "line": 2741,
+              "line": 2738,
               "column": 5
             }
           },
@@ -7688,11 +7766,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-mixin.js",
             "start": {
-              "line": 123,
+              "line": 127,
               "column": 3
             },
             "end": {
-              "line": 132,
+              "line": 136,
               "column": 4
             }
           },
@@ -7710,11 +7788,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 288,
+              "line": 325,
               "column": 3
             },
             "end": {
-              "line": 310,
+              "line": 347,
               "column": 5
             }
           },
@@ -7732,11 +7810,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 336,
+              "line": 373,
               "column": 4
             },
             "end": {
-              "line": 341,
+              "line": 378,
               "column": 5
             }
           },
@@ -7765,11 +7843,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 496,
+              "line": 558,
               "column": 4
             },
             "end": {
-              "line": 498,
+              "line": 560,
               "column": 5
             }
           },
@@ -7799,11 +7877,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 509,
+              "line": 571,
               "column": 4
             },
             "end": {
-              "line": 520,
+              "line": 582,
               "column": 5
             }
           },
@@ -7914,11 +7992,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1143,
+              "line": 1090,
               "column": 6
             },
             "end": {
-              "line": 1143,
+              "line": 1090,
               "column": 30
             }
           },
@@ -7937,11 +8015,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1145,
+              "line": 1092,
               "column": 6
             },
             "end": {
-              "line": 1145,
+              "line": 1092,
               "column": 32
             }
           },
@@ -7960,11 +8038,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1147,
+              "line": 1094,
               "column": 6
             },
             "end": {
-              "line": 1147,
+              "line": 1094,
               "column": 26
             }
           },
@@ -7983,11 +8061,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1149,
+              "line": 1096,
               "column": 6
             },
             "end": {
-              "line": 1149,
+              "line": 1096,
               "column": 29
             }
           },
@@ -8006,11 +8084,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1151,
+              "line": 1098,
               "column": 6
             },
             "end": {
-              "line": 1151,
+              "line": 1098,
               "column": 26
             }
           },
@@ -8029,11 +8107,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1153,
+              "line": 1100,
               "column": 6
             },
             "end": {
-              "line": 1153,
+              "line": 1100,
               "column": 33
             }
           },
@@ -8052,11 +8130,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1155,
+              "line": 1102,
               "column": 6
             },
             "end": {
-              "line": 1155,
+              "line": 1102,
               "column": 22
             }
           },
@@ -8075,11 +8153,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1157,
+              "line": 1104,
               "column": 6
             },
             "end": {
-              "line": 1157,
+              "line": 1104,
               "column": 22
             }
           },
@@ -8098,11 +8176,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1159,
+              "line": 1106,
               "column": 6
             },
             "end": {
-              "line": 1159,
+              "line": 1106,
               "column": 36
             }
           },
@@ -8121,11 +8199,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1161,
+              "line": 1108,
               "column": 6
             },
             "end": {
-              "line": 1161,
+              "line": 1108,
               "column": 18
             }
           },
@@ -8144,11 +8222,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1163,
+              "line": 1110,
               "column": 6
             },
             "end": {
-              "line": 1163,
+              "line": 1110,
               "column": 25
             }
           },
@@ -8167,11 +8245,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1165,
+              "line": 1112,
               "column": 6
             },
             "end": {
-              "line": 1165,
+              "line": 1112,
               "column": 21
             }
           },
@@ -8190,11 +8268,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1167,
+              "line": 1114,
               "column": 6
             },
             "end": {
-              "line": 1167,
+              "line": 1114,
               "column": 28
             }
           },
@@ -8213,11 +8291,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1169,
+              "line": 1116,
               "column": 6
             },
             "end": {
-              "line": 1169,
+              "line": 1116,
               "column": 28
             }
           },
@@ -8236,11 +8314,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1171,
+              "line": 1118,
               "column": 6
             },
             "end": {
-              "line": 1171,
+              "line": 1118,
               "column": 27
             }
           },
@@ -8259,11 +8337,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1173,
+              "line": 1120,
               "column": 6
             },
             "end": {
-              "line": 1173,
+              "line": 1120,
               "column": 30
             }
           },
@@ -8282,11 +8360,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1175,
+              "line": 1122,
               "column": 6
             },
             "end": {
-              "line": 1175,
+              "line": 1122,
               "column": 28
             }
           },
@@ -8305,11 +8383,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1177,
+              "line": 1124,
               "column": 6
             },
             "end": {
-              "line": 1177,
+              "line": 1124,
               "column": 22
             }
           },
@@ -8328,11 +8406,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1179,
+              "line": 1126,
               "column": 6
             },
             "end": {
-              "line": 1179,
+              "line": 1126,
               "column": 26
             }
           },
@@ -8351,11 +8429,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1182,
+              "line": 1129,
               "column": 4
             },
             "end": {
-              "line": 1184,
+              "line": 1131,
               "column": 5
             }
           },
@@ -8374,11 +8452,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 428,
+              "line": 490,
               "column": 6
             },
             "end": {
-              "line": 428,
+              "line": 490,
               "column": 21
             }
           },
@@ -8397,11 +8475,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 430,
+              "line": 492,
               "column": 6
             },
             "end": {
-              "line": 430,
+              "line": 492,
               "column": 23
             }
           },
@@ -8420,11 +8498,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 432,
+              "line": 494,
               "column": 6
             },
             "end": {
-              "line": 432,
+              "line": 494,
               "column": 20
             }
           },
@@ -8443,11 +8521,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 434,
+              "line": 496,
               "column": 6
             },
             "end": {
-              "line": 434,
+              "line": 496,
               "column": 22
             }
           },
@@ -8466,11 +8544,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 436,
+              "line": 498,
               "column": 6
             },
             "end": {
-              "line": 436,
+              "line": 498,
               "column": 16
             }
           },
@@ -8489,11 +8567,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 438,
+              "line": 500,
               "column": 6
             },
             "end": {
-              "line": 438,
+              "line": 500,
               "column": 13
             }
           },
@@ -9661,11 +9739,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2419,
+              "line": 2416,
               "column": 4
             },
             "end": {
-              "line": 2444,
+              "line": 2441,
               "column": 5
             }
           },
@@ -9690,11 +9768,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 446,
+              "line": 454,
               "column": 4
             },
             "end": {
-              "line": 451,
+              "line": 459,
               "column": 5
             }
           },
@@ -9702,7 +9780,7 @@
           "params": [
             {
               "name": "node",
-              "type": "!Node",
+              "type": "!EventTarget",
               "description": "Node to add listener on"
             },
             {
@@ -9734,11 +9812,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 461,
+              "line": 470,
               "column": 4
             },
             "end": {
-              "line": 463,
+              "line": 472,
               "column": 5
             }
           },
@@ -9746,7 +9824,7 @@
           "params": [
             {
               "name": "node",
-              "type": "!Node",
+              "type": "!EventTarget",
               "description": "Node to add event listener to"
             },
             {
@@ -9772,11 +9850,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 473,
+              "line": 483,
               "column": 4
             },
             "end": {
-              "line": 475,
+              "line": 485,
               "column": 5
             }
           },
@@ -9784,7 +9862,7 @@
           "params": [
             {
               "name": "node",
-              "type": "Node",
+              "type": "!EventTarget",
               "description": "Node to remove event listener from"
             },
             {
@@ -9810,11 +9888,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 100,
+              "line": 106,
               "column": 4
             },
             "end": {
-              "line": 109,
+              "line": 115,
               "column": 5
             }
           },
@@ -9843,11 +9921,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 118,
+              "line": 125,
               "column": 4
             },
             "end": {
-              "line": 126,
+              "line": 133,
               "column": 5
             }
           },
@@ -9871,11 +9949,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 134,
+              "line": 142,
               "column": 5
             },
             "end": {
-              "line": 147,
+              "line": 155,
               "column": 5
             }
           },
@@ -9904,11 +9982,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 546,
+              "line": 608,
               "column": 4
             },
             "end": {
-              "line": 552,
+              "line": 614,
               "column": 5
             }
           },
@@ -9926,11 +10004,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 453,
+              "line": 515,
               "column": 4
             },
             "end": {
-              "line": 486,
+              "line": 548,
               "column": 5
             }
           },
@@ -9948,11 +10026,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 216,
+              "line": 227,
               "column": 4
             },
             "end": {
-              "line": 218,
+              "line": 229,
               "column": 5
             }
           },
@@ -9976,11 +10054,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 229,
+              "line": 241,
               "column": 4
             },
             "end": {
-              "line": 233,
+              "line": 245,
               "column": 5
             }
           },
@@ -10009,11 +10087,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 241,
+              "line": 254,
               "column": 4
             },
             "end": {
-              "line": 243,
+              "line": 256,
               "column": 5
             }
           },
@@ -10038,11 +10116,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 258,
+              "line": 272,
               "column": 4
             },
             "end": {
-              "line": 274,
+              "line": 288,
               "column": 5
             }
           },
@@ -10077,11 +10155,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 284,
+              "line": 299,
               "column": 4
             },
             "end": {
-              "line": 294,
+              "line": 309,
               "column": 5
             }
           },
@@ -10099,11 +10177,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 307,
+              "line": 323,
               "column": 4
             },
             "end": {
-              "line": 316,
+              "line": 332,
               "column": 5
             }
           },
@@ -10121,11 +10199,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 327,
+              "line": 344,
               "column": 4
             },
             "end": {
-              "line": 336,
+              "line": 353,
               "column": 5
             }
           },
@@ -10143,11 +10221,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 350,
+              "line": 368,
               "column": 4
             },
             "end": {
-              "line": 352,
+              "line": 370,
               "column": 5
             }
           },
@@ -10160,12 +10238,12 @@
             },
             {
               "name": "changedProps",
-              "type": "!Object",
+              "type": "?Object",
               "description": "Bag of properties changed since the last\n  call to `_propertiesChanged`"
             },
             {
               "name": "oldProps",
-              "type": "!Object",
+              "type": "?Object",
               "description": "Bag of previous values for each property\n  in `changedProps`"
             }
           ],
@@ -10182,11 +10260,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 366,
+              "line": 385,
               "column": 4
             },
             "end": {
-              "line": 367,
+              "line": 386,
               "column": 5
             }
           },
@@ -10199,12 +10277,12 @@
             },
             {
               "name": "changedProps",
-              "type": "!Object",
+              "type": "?Object",
               "description": "Bag of properties changed since the last\n  call to `_propertiesChanged`"
             },
             {
               "name": "oldProps",
-              "type": "!Object",
+              "type": "?Object",
               "description": "Bag of previous values for each property\n  in `changedProps`"
             }
           ],
@@ -10220,11 +10298,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 387,
+              "line": 407,
               "column": 4
             },
             "end": {
-              "line": 394,
+              "line": 414,
               "column": 5
             }
           },
@@ -10259,11 +10337,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 407,
+              "line": 428,
               "column": 4
             },
             "end": {
-              "line": 414,
+              "line": 435,
               "column": 5
             }
           },
@@ -10302,11 +10380,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 428,
+              "line": 450,
               "column": 4
             },
             "end": {
-              "line": 435,
+              "line": 457,
               "column": 5
             }
           },
@@ -10340,11 +10418,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 447,
+              "line": 470,
               "column": 4
             },
             "end": {
-              "line": 453,
+              "line": 476,
               "column": 5
             }
           },
@@ -10378,11 +10456,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 468,
+              "line": 492,
               "column": 4
             },
             "end": {
-              "line": 475,
+              "line": 499,
               "column": 5
             }
           },
@@ -10416,11 +10494,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 488,
+              "line": 513,
               "column": 4
             },
             "end": {
-              "line": 495,
+              "line": 520,
               "column": 5
             }
           },
@@ -10445,11 +10523,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 509,
+              "line": 535,
               "column": 4
             },
             "end": {
-              "line": 518,
+              "line": 544,
               "column": 5
             }
           },
@@ -10479,11 +10557,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1213,
+              "line": 1160,
               "column": 4
             },
             "end": {
-              "line": 1217,
+              "line": 1164,
               "column": 5
             }
           },
@@ -10507,11 +10585,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-accessors.js",
             "start": {
-              "line": 186,
+              "line": 185,
               "column": 4
             },
             "end": {
-              "line": 191,
+              "line": 190,
               "column": 5
             }
           },
@@ -10540,11 +10618,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-accessors.js",
             "start": {
-              "line": 293,
+              "line": 292,
               "column": 4
             },
             "end": {
-              "line": 295,
+              "line": 294,
               "column": 5
             }
           },
@@ -10569,11 +10647,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-accessors.js",
             "start": {
-              "line": 304,
+              "line": 303,
               "column": 4
             },
             "end": {
-              "line": 306,
+              "line": 305,
               "column": 5
             }
           },
@@ -10598,11 +10676,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1251,
+              "line": 1198,
               "column": 4
             },
             "end": {
-              "line": 1259,
+              "line": 1206,
               "column": 5
             }
           },
@@ -10636,11 +10714,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1269,
+              "line": 1216,
               "column": 4
             },
             "end": {
-              "line": 1275,
+              "line": 1222,
               "column": 5
             }
           },
@@ -10674,11 +10752,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1286,
+              "line": 1233,
               "column": 4
             },
             "end": {
-              "line": 1289,
+              "line": 1236,
               "column": 5
             }
           },
@@ -10708,11 +10786,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1299,
+              "line": 1246,
               "column": 4
             },
             "end": {
-              "line": 1301,
+              "line": 1248,
               "column": 5
             }
           },
@@ -10737,11 +10815,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1311,
+              "line": 1258,
               "column": 4
             },
             "end": {
-              "line": 1313,
+              "line": 1260,
               "column": 5
             }
           },
@@ -10766,11 +10844,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1323,
+              "line": 1270,
               "column": 4
             },
             "end": {
-              "line": 1325,
+              "line": 1272,
               "column": 5
             }
           },
@@ -10795,11 +10873,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1335,
+              "line": 1282,
               "column": 4
             },
             "end": {
-              "line": 1337,
+              "line": 1284,
               "column": 5
             }
           },
@@ -10824,11 +10902,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1369,
+              "line": 1316,
               "column": 4
             },
             "end": {
-              "line": 1401,
+              "line": 1348,
               "column": 5
             }
           },
@@ -10868,11 +10946,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1424,
+              "line": 1371,
               "column": 4
             },
             "end": {
-              "line": 1432,
+              "line": 1379,
               "column": 5
             }
           },
@@ -10906,11 +10984,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1539,
+              "line": 1486,
               "column": 4
             },
             "end": {
-              "line": 1544,
+              "line": 1491,
               "column": 5
             }
           },
@@ -10934,11 +11012,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1565,
+              "line": 1512,
               "column": 4
             },
             "end": {
-              "line": 1576,
+              "line": 1523,
               "column": 5
             }
           },
@@ -10956,11 +11034,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1590,
+              "line": 1537,
               "column": 4
             },
             "end": {
-              "line": 1603,
+              "line": 1550,
               "column": 5
             }
           },
@@ -10978,11 +11056,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 564,
+              "line": 626,
               "column": 4
             },
             "end": {
-              "line": 573,
+              "line": 635,
               "column": 5
             }
           },
@@ -11000,11 +11078,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1632,
+              "line": 1579,
               "column": 4
             },
             "end": {
-              "line": 1643,
+              "line": 1590,
               "column": 5
             }
           },
@@ -11033,11 +11111,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1730,
+              "line": 1677,
               "column": 4
             },
             "end": {
-              "line": 1740,
+              "line": 1687,
               "column": 5
             }
           },
@@ -11071,11 +11149,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1751,
+              "line": 1698,
               "column": 4
             },
             "end": {
-              "line": 1756,
+              "line": 1703,
               "column": 5
             }
           },
@@ -11104,11 +11182,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1768,
+              "line": 1715,
               "column": 4
             },
             "end": {
-              "line": 1773,
+              "line": 1720,
               "column": 5
             }
           },
@@ -11132,11 +11210,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1805,
+              "line": 1752,
               "column": 4
             },
             "end": {
-              "line": 1809,
+              "line": 1756,
               "column": 5
             }
           },
@@ -11165,11 +11243,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1830,
+              "line": 1777,
               "column": 4
             },
             "end": {
-              "line": 1832,
+              "line": 1779,
               "column": 5
             }
           },
@@ -11199,11 +11277,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1855,
+              "line": 1802,
               "column": 4
             },
             "end": {
-              "line": 1865,
+              "line": 1812,
               "column": 5
             }
           },
@@ -11237,11 +11315,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1881,
+              "line": 1828,
               "column": 4
             },
             "end": {
-              "line": 1890,
+              "line": 1837,
               "column": 5
             }
           },
@@ -11272,11 +11350,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1905,
+              "line": 1852,
               "column": 4
             },
             "end": {
-              "line": 1914,
+              "line": 1861,
               "column": 5
             }
           },
@@ -11301,11 +11379,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1933,
+              "line": 1880,
               "column": 4
             },
             "end": {
-              "line": 1970,
+              "line": 1917,
               "column": 5
             }
           },
@@ -11323,7 +11401,7 @@
             },
             {
               "name": "deleteCount",
-              "type": "number",
+              "type": "number=",
               "description": "Number of items to remove."
             },
             {
@@ -11346,11 +11424,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 1985,
+              "line": 1932,
               "column": 4
             },
             "end": {
-              "line": 1994,
+              "line": 1941,
               "column": 5
             }
           },
@@ -11375,11 +11453,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2010,
+              "line": 1957,
               "column": 4
             },
             "end": {
-              "line": 2018,
+              "line": 1965,
               "column": 5
             }
           },
@@ -11410,11 +11488,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2033,
+              "line": 1980,
               "column": 4
             },
             "end": {
-              "line": 2050,
+              "line": 1997,
               "column": 5
             }
           },
@@ -11443,11 +11521,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2063,
+              "line": 2010,
               "column": 4
             },
             "end": {
-              "line": 2070,
+              "line": 2017,
               "column": 5
             }
           },
@@ -11476,11 +11554,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2084,
+              "line": 2031,
               "column": 4
             },
             "end": {
-              "line": 2094,
+              "line": 2041,
               "column": 5
             }
           },
@@ -11514,11 +11592,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2107,
+              "line": 2054,
               "column": 4
             },
             "end": {
-              "line": 2113,
+              "line": 2060,
               "column": 5
             }
           },
@@ -11547,11 +11625,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2124,
+              "line": 2071,
               "column": 4
             },
             "end": {
-              "line": 2132,
+              "line": 2079,
               "column": 5
             }
           },
@@ -11575,11 +11653,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2143,
+              "line": 2090,
               "column": 4
             },
             "end": {
-              "line": 2156,
+              "line": 2103,
               "column": 5
             }
           },
@@ -11603,11 +11681,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2170,
+              "line": 2117,
               "column": 4
             },
             "end": {
-              "line": 2176,
+              "line": 2123,
               "column": 5
             }
           },
@@ -11635,17 +11713,56 @@
           "inheritedFrom": "PropertyEffects"
         },
         {
+          "name": "_marshalArgs",
+          "description": "Gather the argument values for a method specified in the provided array\nof argument metadata.\n\nThe `path` and `value` arguments are used to fill in wildcard descriptor\nwhen the method is being called as a result of a path notification.",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "../@polymer/polymer/lib/mixins/property-effects.js",
+            "start": {
+              "line": 2138,
+              "column": 4
+            },
+            "end": {
+              "line": 2173,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "args",
+              "type": "!Array.<!MethodArg>",
+              "description": "Array of argument metadata"
+            },
+            {
+              "name": "path",
+              "type": "string",
+              "description": "Property/path name that triggered the method effect"
+            },
+            {
+              "name": "props",
+              "type": "Object",
+              "description": "Bag of current property changes"
+            }
+          ],
+          "return": {
+            "type": "Array.<*>",
+            "desc": "Array of argument values"
+          },
+          "inheritedFrom": "PropertyEffects"
+        },
+        {
           "name": "_bindTemplate",
           "description": "Equivalent to static `bindTemplate` API but can be called on\nan instance to add effects at runtime.  See that method for\nfull API docs.\n\nThis method may be called on the prototype (for prototypical template\nbinding, to avoid creating accessors every instance) once per prototype,\nand will be called with `runtimeBinding: true` by `_stampTemplate` to\ncreate and link an instance of the template metadata associated with a\nparticular stamping.",
           "privacy": "protected",
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2353,
+              "line": 2350,
               "column": 4
             },
             "end": {
-              "line": 2376,
+              "line": 2373,
               "column": 5
             }
           },
@@ -11675,11 +11792,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2455,
+              "line": 2452,
               "column": 4
             },
             "end": {
-              "line": 2476,
+              "line": 2473,
               "column": 5
             }
           },
@@ -11743,11 +11860,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 587,
+              "line": 649,
               "column": 4
             },
             "end": {
-              "line": 603,
+              "line": 665,
               "column": 5
             }
           },
@@ -11772,11 +11889,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 626,
+              "line": 688,
               "column": 4
             },
             "end": {
-              "line": 630,
+              "line": 692,
               "column": 5
             }
           },
@@ -11800,11 +11917,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 647,
+              "line": 709,
               "column": 4
             },
             "end": {
-              "line": 652,
+              "line": 714,
               "column": 5
             }
           },
@@ -12097,11 +12214,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 191,
+              "line": 197,
               "column": 4
             },
             "end": {
-              "line": 202,
+              "line": 208,
               "column": 5
             }
           },
@@ -12131,11 +12248,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 663,
+              "line": 725,
               "column": 4
             },
             "end": {
-              "line": 666,
+              "line": 728,
               "column": 5
             }
           },
@@ -12160,11 +12277,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2495,
+              "line": 2492,
               "column": 4
             },
             "end": {
-              "line": 2509,
+              "line": 2506,
               "column": 5
             }
           },
@@ -12199,11 +12316,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 252,
+              "line": 258,
               "column": 4
             },
             "end": {
-              "line": 289,
+              "line": 295,
               "column": 5
             }
           },
@@ -12237,11 +12354,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2587,
+              "line": 2584,
               "column": 4
             },
             "end": {
-              "line": 2597,
+              "line": 2594,
               "column": 5
             }
           },
@@ -12276,11 +12393,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 327,
+              "line": 333,
               "column": 4
             },
             "end": {
-              "line": 336,
+              "line": 342,
               "column": 5
             }
           },
@@ -12315,11 +12432,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2530,
+              "line": 2527,
               "column": 4
             },
             "end": {
-              "line": 2571,
+              "line": 2568,
               "column": 5
             }
           },
@@ -12364,11 +12481,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/template-stamp.js",
             "start": {
-              "line": 382,
+              "line": 388,
               "column": 4
             },
             "end": {
-              "line": 385,
+              "line": 391,
               "column": 5
             }
           },
@@ -12393,11 +12510,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 319,
+              "line": 356,
               "column": 5
             },
             "end": {
-              "line": 323,
+              "line": 360,
               "column": 5
             }
           },
@@ -12419,11 +12536,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-changed.js",
             "start": {
-              "line": 71,
+              "line": 76,
               "column": 4
             },
             "end": {
-              "line": 73,
+              "line": 78,
               "column": 5
             }
           },
@@ -12448,11 +12565,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-mixin.js",
             "start": {
-              "line": 175,
+              "line": 179,
               "column": 3
             },
             "end": {
-              "line": 178,
+              "line": 182,
               "column": 4
             }
           },
@@ -12477,11 +12594,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-accessors.js",
             "start": {
-              "line": 122,
+              "line": 121,
               "column": 4
             },
             "end": {
-              "line": 127,
+              "line": 126,
               "column": 5
             }
           },
@@ -12499,11 +12616,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2216,
+              "line": 2213,
               "column": 4
             },
             "end": {
-              "line": 2218,
+              "line": 2215,
               "column": 5
             }
           },
@@ -12537,11 +12654,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2230,
+              "line": 2227,
               "column": 4
             },
             "end": {
-              "line": 2232,
+              "line": 2229,
               "column": 5
             }
           },
@@ -12575,11 +12692,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2247,
+              "line": 2244,
               "column": 4
             },
             "end": {
-              "line": 2249,
+              "line": 2246,
               "column": 5
             }
           },
@@ -12609,11 +12726,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2259,
+              "line": 2256,
               "column": 4
             },
             "end": {
-              "line": 2261,
+              "line": 2258,
               "column": 5
             }
           },
@@ -12637,11 +12754,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2279,
+              "line": 2276,
               "column": 4
             },
             "end": {
-              "line": 2281,
+              "line": 2278,
               "column": 5
             }
           },
@@ -12670,11 +12787,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2291,
+              "line": 2288,
               "column": 4
             },
             "end": {
-              "line": 2293,
+              "line": 2290,
               "column": 5
             }
           },
@@ -12698,11 +12815,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2309,
+              "line": 2306,
               "column": 4
             },
             "end": {
-              "line": 2311,
+              "line": 2308,
               "column": 5
             }
           },
@@ -12736,11 +12853,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2325,
+              "line": 2322,
               "column": 4
             },
             "end": {
-              "line": 2327,
+              "line": 2324,
               "column": 5
             }
           },
@@ -12765,11 +12882,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2391,
+              "line": 2388,
               "column": 4
             },
             "end": {
-              "line": 2397,
+              "line": 2394,
               "column": 5
             }
           },
@@ -12803,11 +12920,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2643,
+              "line": 2640,
               "column": 4
             },
             "end": {
-              "line": 2708,
+              "line": 2705,
               "column": 5
             }
           },
@@ -12837,11 +12954,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/property-effects.js",
             "start": {
-              "line": 2724,
+              "line": 2721,
               "column": 4
             },
             "end": {
-              "line": 2741,
+              "line": 2738,
               "column": 5
             }
           },
@@ -12891,11 +13008,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/properties-mixin.js",
             "start": {
-              "line": 123,
+              "line": 127,
               "column": 3
             },
             "end": {
-              "line": 132,
+              "line": 136,
               "column": 4
             }
           },
@@ -12913,11 +13030,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 288,
+              "line": 325,
               "column": 3
             },
             "end": {
-              "line": 310,
+              "line": 347,
               "column": 5
             }
           },
@@ -12935,11 +13052,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 336,
+              "line": 373,
               "column": 4
             },
             "end": {
-              "line": 341,
+              "line": 378,
               "column": 5
             }
           },
@@ -12968,11 +13085,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 496,
+              "line": 558,
               "column": 4
             },
             "end": {
-              "line": 498,
+              "line": 560,
               "column": 5
             }
           },
@@ -13002,11 +13119,11 @@
           "sourceRange": {
             "file": "../@polymer/polymer/lib/mixins/element-mixin.js",
             "start": {
-              "line": 509,
+              "line": 571,
               "column": 4
             },
             "end": {
-              "line": 520,
+              "line": 582,
               "column": 5
             }
           },

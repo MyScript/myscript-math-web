@@ -1,28 +1,9 @@
-
-<!---
-
-This README is automatically generated from the comments in these files:
-paper-icon-item.html  paper-item-behavior.html  paper-item-body.html  paper-item.html
-
-Edit those files, and our readme bot will duplicate them over here!
-Edit this file, and the bot will squash your changes :)
-
-The bot does some handling of markdown. Please file a bug if it does the wrong
-thing! https://github.com/PolymerLabs/tedium/issues
-
--->
-
+[![Published on NPM](https://img.shields.io/npm/v/@polymer/paper-item.svg)](https://www.npmjs.com/package/@polymer/paper-item)
 [![Build status](https://travis-ci.org/PolymerElements/paper-item.svg?branch=master)](https://travis-ci.org/PolymerElements/paper-item)
-
-_[Demo and API docs](https://elements.polymer-project.org/elements/paper-item)_
-
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://webcomponents.org/element/@polymer/paper-item)
 
 ## &lt;paper-item&gt;
-
-Material design: [Lists](https://www.google.com/design/spec/components/lists.html)
-
 `<paper-item>` is an interactive list item. By default, it is a horizontal flexbox.
-
 ```html
 <paper-item>Item</paper-item>
 ```
@@ -166,5 +147,63 @@ The following custom properties and mixins are available for styling:
 | `--paper-item-body-secondary` | Mixin applied to the `secondary` area | `{}` |
 
 
+See: [Documentation](https://www.webcomponents.org/element/@polymer/paper-item),
+  [Demo](https://www.webcomponents.org/element/@polymer/paper-item/demo/demo/index.html).
 
-<!-- No docs for Polymer.PaperItemBehavior found. -->
+## Usage
+
+### Installation
+```
+npm install --save @polymer/paper-item
+```
+
+### In an html file
+```html
+<html>
+  <head>
+    <script type="module">
+      import '@polymer/paper-item/paper-item.js';
+    </script>
+  </head>
+  <body>
+    <paper-item>Item</paper-item>
+  </body>
+</html>
+```
+### In a Polymer 3 element
+```js
+import {PolymerElement, html} from '@polymer/polymer';
+import '@polymer/paper-item/paper-item.js';
+
+class SampleElement extends PolymerElement {
+  static get template() {
+    return html`
+      <paper-item>Item</paper-item>
+    `;
+  }
+}
+customElements.define('sample-element', SampleElement);
+```
+
+## Contributing
+If you want to send a PR to this element, here are
+the instructions for running the tests and demo locally:
+
+### Installation
+```sh
+git clone https://github.com/PolymerElements/paper-item
+cd paper-item
+npm install
+npm install -g polymer-cli
+```
+
+### Running the demo locally
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
+```
+
+### Running the tests
+```sh
+polymer test --npm
+```

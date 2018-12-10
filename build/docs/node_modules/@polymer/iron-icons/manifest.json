@@ -8,10 +8,7 @@
       "convertedUrl": "av-icons.js",
       "exports": {}
     },
-    "index.html": {
-      "convertedUrl": "index.html",
-      "exports": {}
-    },
+    "index.html": null,
     "demo/index.html": {
       "convertedUrl": "demo/index.html",
       "exports": {}

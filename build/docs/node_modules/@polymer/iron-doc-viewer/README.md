@@ -1,11 +1,16 @@
+[![Published on NPM](https://img.shields.io/npm/v/@polymer/iron-doc-viewer.svg)](https://www.npmjs.com/package/@polymer/iron-doc-viewer)
 [![Build status](https://travis-ci.org/PolymerElements/iron-doc-viewer.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-doc-viewer)
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://beta.webcomponents.org/element/PolymerElements/iron-doc-viewer)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://webcomponents.org/element/@polymer/iron-doc-viewer)
 
 ## &lt;iron-doc-viewer&gt;
 
 A collection of elements that display documentation about custom elements,
 mixins, classes, and more using the JSON descriptor format produced by [Polymer
 Analyzer](https://github.com/Polymer/polymer-analyzer).
+
+See:
+[Documentation](https://www.webcomponents.org/element/@polymer/iron-doc-viewer),
+[Demo](https://www.webcomponents.org/element/@polymer/iron-doc-viewer/demo/demo/index.html).
 
 You may also be interested in
 [`<iron-component-page>`](https://github.com/PolymerElements/iron-component-page),
@@ -21,6 +26,73 @@ browser.
 * `<iron-doc-namespace>` Show docs about a JavaScript namespace.
 * `<iron-doc-class>` Show docs about a JavaScript class.
 * `<iron-doc-mixin>` Show docs about a JavaScript mixin.
+
+## Usage
+
+### Installation
+```
+npm install --save @polymer/iron-doc-viewer
+```
+
+### In an html file
+```html
+<html>
+  <head>
+    <script type="module">
+      import '@polymer/polymer/lib/elements/dom-bind.js';
+      import '@polymer/iron-ajax/iron-ajax.js';
+      import '@polymer/iron-doc-viewer/iron-doc-viewer.js';
+    </script>
+  </head>
+
+  <body>
+    <dom-bind>
+      <template>
+        <iron-ajax
+          auto
+          url="./analysis.json"
+          last-response="{{descriptor}}">
+        </iron-ajax>
+
+        <iron-doc-viewer
+          descriptor="[[descriptor]]"
+          root-namespace="MyNamespace">
+        </iron-doc-viewer>
+      </template>
+    </dom-bind>
+  </body>
+</html>
+```
+
+### In a Polymer 3 element
+```js
+import {PolymerElement, html} from '@polymer/polymer';
+import '@polymer/iron-doc-viewer/iron-doc-viewer.js';
+
+class SampleElement extends PolymerElement {
+  static get template() {
+    return html`
+      <iron-doc-viewer
+        descriptor="[[descriptor]]"
+        root-namespace="MyNamespace">
+      </iron-doc-viewer>
+    `;
+  },
+
+  static get properties() {
+    return {
+      descriptor: {
+        type: Object,
+        value: {
+          // Analyzer descriptor goes here.
+        }
+      }
+    };
+  }
+}
+
+customElements.define('sample-element', SampleElement);
+```
 
 ### Routing
 
@@ -42,7 +114,9 @@ The iron-doc elements come with an optional material-design default theme that
 must be explicitly included as custom style:
 
 ```html
-<link rel="import" href="../iron-doc-viewer/default-theme.html">
+<script type="module">
+  import '@polymer/iron-doc-viewer/default-theme.js';
+</script>
 
 <custom-style>
   <style is="custom-style" include="iron-doc-default-theme"></style>
@@ -59,12 +133,25 @@ Custom property | Description | Default
 `--iron-doc-title` | Mixin applied to page titles. | `{}`
 `--iron-doc-heading` | Mixin applied to section headings. | `{}`
 
-### Previous versions
+## Contributing
+If you want to send a PR to this element, here are
+the instructions for running the tests and demo locally:
 
-The 3.x `iron-doc` elements described here have major breaking changes versus
-the 1.x and 2.x versions. Previous versions were based on *Hydrolysis*, the
-predecessor to Polymer Analyzer. Hydrolysis is no longer maintained and does
-not support analysis of Polymer 2 elements.
+### Installation
+```sh
+git clone https://github.com/PolymerElements/iron-doc-viewer
+cd iron-doc-viewer
+npm install
+npm install -g polymer-cli
+```
 
-If you still need the previous version, see the
-[2.x branch](https://github.com/PolymerElements/iron-doc-viewer/tree/2.x).
+### Running the demo locally
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
+```
+
+### Running the tests
+```sh
+polymer test --npm
+```

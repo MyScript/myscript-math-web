@@ -6,10 +6,7 @@
         "Polymer.IronFitBehavior": "IronFitBehavior"
       }
     },
-    "index.html": {
-      "convertedUrl": "index.html",
-      "exports": {}
-    },
+    "index.html": null,
     "demo/index.html": {
       "convertedUrl": "demo/index.html",
       "exports": {}

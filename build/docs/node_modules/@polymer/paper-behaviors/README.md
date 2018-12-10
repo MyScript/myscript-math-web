@@ -1,44 +1,77 @@
-
-<!---
-
-This README is automatically generated from the comments in these files:
-paper-button-behavior.html  paper-checked-element-behavior.html  paper-inky-focus-behavior.html  paper-ripple-behavior.html
-
-Edit those files, and our readme bot will duplicate them over here!
-Edit this file, and the bot will squash your changes :)
-
-The bot does some handling of markdown. Please file a bug if it does the wrong
-thing! https://github.com/PolymerLabs/tedium/issues
-
--->
-
+[![Published on NPM](https://img.shields.io/npm/v/@polymer/paper-behaviors.svg)](https://www.npmjs.com/package/@polymer/paper-behaviors)
 [![Build status](https://travis-ci.org/PolymerElements/paper-behaviors.svg?branch=master)](https://travis-ci.org/PolymerElements/paper-behaviors)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://webcomponents.org/element/@polymer/paper-behaviors)
 
-_[Demo and API docs](https://elements.polymer-project.org/elements/paper-behaviors)_
+## &lt;paper-behaviors&gt;
+`<paper-behaviors>` is a set of behaviours to help implement Material Design elements:
 
-
-<!-- No docs for Polymer.PaperButtonBehavior found. -->
-
-##Polymer.PaperCheckedElementBehavior
-
-Use `Polymer.PaperCheckedElementBehavior` to implement a custom element
-that has a `checked` property similar to `Polymer.IronCheckedElementBehavior`
+- `PaperCheckedElementBehavior` to implement a custom element
+that has a `checked` property similar to `IronCheckedElementBehavior`
 and is compatible with having a ripple effect.
+- `PaperInkyFocusBehavior` implements a ripple when the element has keyboard focus.
+- `PaperRippleBehavior` dynamically implements a ripple
+when the element has focus via pointer or keyboard. This behavior is intended to be used in conjunction with and after
+`IronButtonState` and `IronControlState`.
 
+See: [Documentation](https://www.webcomponents.org/element/@polymer/paper-behaviors),
+  [Demo](https://www.webcomponents.org/element/@polymer/paper-behaviors/demo/demo/index.html).
 
+## Usage
 
-##Polymer.PaperInkyFocusBehavior
+### Installation
+```
+npm install --save @polymer/paper-behaviors
+```
 
-`Polymer.PaperInkyFocusBehavior` implements a ripple when the element has keyboard focus.
+### Example of using one of the behaviours in a Polymer 3 element
+```js
+import {PolymerElement, html} from '@polymer/polymer';
+import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+import {PaperButtonBehavior} from '@polymer/paper-behaviors/paper-button-behavior.js';
 
+class SampleElement extends mixinBehaviors([PaperButtonBehavior], PolymerElement) {
+  static get template() {
+    return html`
+      <style>
+        :host {
+          display: block;
+        }
+        /* Some properties inherited from the behaviour */
+        :host([disabled]) {
+          background-color: grey;
+          pointer-events: none;
+        }
+        :host([active]),
+        :host([pressed]) {
+          background-color: blue;
+        }
+      </style>
+      <div>I am a ripple-y button</div>
+    `;
+  }
+}
+customElements.define('sample-element', SampleElement);
+```
 
+## Contributing
+If you want to send a PR to this element, here are
+the instructions for running the tests and demo locally:
 
-##Polymer.PaperRippleBehavior
+### Installation
+```sh
+git clone https://github.com/PolymerElements/paper-behaviors
+cd paper-behaviors
+npm install
+npm install -g polymer-cli
+```
 
-`Polymer.PaperRippleBehavior` dynamically implements a ripple
-when the element has focus via pointer or keyboard.
+### Running the demo locally
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
+```
 
-NOTE: This behavior is intended to be used in conjunction with and after
-`Polymer.IronButtonState` and `Polymer.IronControlState`.
-
-
+### Running the tests
+```sh
+polymer test --npm
+```
