@@ -22,6 +22,7 @@
   "license": "Apache-2.0",
   "homepage": "https://myscript.github.io/myscript-math-web/components/myscript-math-web/",
   "dependencies": {
+    "@polymer/iron-icons": "^3.0.1",
     "@polymer/polymer": "^3.1.0",
     "@webcomponents/webcomponentsjs": "^2.2.1",
     "katex": "^0.8.3",
