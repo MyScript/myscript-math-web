@@ -26,7 +26,7 @@
     "@polymer/polymer": "^3.1.0",
     "@webcomponents/webcomponentsjs": "^2.2.1",
     "katex": "^0.8.3",
-    "myscript-common-element": "MyScript/myscript-common-element#master"
+    "myscript-common-element": "github:MyScript/myscript-common-element#master"
   },
   "devDependencies": {
     "@polymer/iron-component-page": "^4.0.1",
