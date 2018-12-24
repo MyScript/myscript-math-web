@@ -272,3 +272,21 @@ select:focus {
     margin: 20px 0 20px;
     text-align: center;
 }
+
+/* fix for edge: custom style not applied
+    on dynamic added element*/
+@supports (-ms-ime-align: auto) {
+    .ms-editor svg {
+        z-index: 15;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+    }
+
+    .ms-editor svg {
+        z-index: 10;
+        pointer-events: none;
+    }
+}

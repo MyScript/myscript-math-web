@@ -355,7 +355,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
       processdelay: {
         type: Number,
         reflectToAttribute: true,
-        value: 1000
+        value: 0
       },
 
       /**
@@ -886,7 +886,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
       patchPointerEvent(evt);
       const pointerDownOnEditor = evt.target.id === editor.domElement.id || evt.target.classList.contains('ms-canvas');
 
-      if (this.activePointerId) {
+      if (this.activePointerId !== undefined) {
         if (this.activePointerId === evt.pointerId) {
           this.logger.warn(`${evt.type} event with the same id without any pointer up`, evt.pointerId);
         }
@@ -915,7 +915,8 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
       // Trigger a pointerMove
       patchPointerEvent(evt); // Only considering the active pointer
 
-      if (this.activePointerId && this.activePointerId === evt.pointerId) {
+      if (this.activePointerId !== undefined && this.activePointerId === evt.pointerId) {
+        unFocus();
         editor.pointerMove(MyScriptCommonElement._extractPoint(evt, element, editor.configuration));
       } else if (smartGuidePointerDown) {
         const point = MyScriptCommonElement._extractPoint(evt, element, editor.configuration);
@@ -945,10 +946,20 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
 
         if (evt.detail.hover()) {
           // Check if pointer entered into any smart guide elements or scrollbar
-          const pointerEnteredSmartGuide = smartGuideIds.some(v => evt.detail.hover().className.indexOf(v) >= 0) || scrollbarClasses.some(v => evt.detail.hover().className.indexOf(v) >= 0); // Check if pointer moved between words in smart guide
+          let pointerEnteredSmartGuide;
+          let canvas;
+
+          if (evt.detail.hover().classList.length) {
+            pointerEnteredSmartGuide = smartGuideIds.some(v => evt.detail.hover().className.indexOf(v) >= 0) || scrollbarClasses.some(v => evt.detail.hover().className.indexOf(v) >= 0);
+            canvas = evt.detail.hover().className.includes('ms-canvas');
+          } else {
+            pointerEnteredSmartGuide = false;
+            canvas = false;
+          } // Check if pointer moved between words in smart guide
+
 
           const pointerMovedWords = evt.detail.hover().tagName === 'SPAN' || evt.detail.hover().tagName === 'SPAN';
-          return evt.detail.hover().id === 'editorDomElement' || evt.detail.hover().className.includes('ms-canvas') || pointerEnteredSmartGuide || pointerMovedWords;
+          return evt.detail.hover().id === 'editorDomElement' || evt.detail.hover().tagName === 'SVG' || canvas || pointerEnteredSmartGuide || pointerMovedWords;
         }
 
         return false;
@@ -956,7 +967,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
 
       patchPointerEvent(evt); // Only considering the active pointer
 
-      if (checkHover(evt) && this.activePointerId && this.activePointerId === evt.pointerId) {
+      if (checkHover(evt) && this.activePointerId !== undefined && this.activePointerId === evt.pointerId) {
         evt.stopPropagation();
         editor.pointerMove(MyScriptCommonElement._extractPoint(evt, element, editor.configuration));
       } else if (smartGuidePointerDown) {
@@ -999,7 +1010,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
 
       if (pointerEnteredSmartGuide || pointerExitedSmartGuide || pointerMovedWords) {
         evt.stopPropagation();
-      } else if (this.activePointerId && this.activePointerId === evt.pointerId) {
+      } else if (this.activePointerId !== undefined && this.activePointerId === evt.pointerId) {
         // Only considering the active pointer
         this.activePointerId = undefined; // Managing the active pointer
 
@@ -1016,7 +1027,7 @@ class MyScriptCommonElement extends GestureEventListeners(mixinBehaviors([IronRe
       mMaxDiffX = 0;
       smartGuidePointerDown = false;
 
-      if (this.activePointerId && this.activePointerId === evt.pointerId) {
+      if (this.activePointerId !== undefined && this.activePointerId === evt.pointerId) {
         // Only considering the active pointer
         this.activePointerId = undefined; // Managing the active pointer
 
