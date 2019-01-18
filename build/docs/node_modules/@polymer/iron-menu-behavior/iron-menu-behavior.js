@@ -114,12 +114,14 @@ export const IronMenuBehaviorImpl = {
    * Resets all tabindex attributes to the appropriate value based on the
    * current selection state. The appropriate value is `0` (focusable) for
    * the default selected item, and `-1` (not keyboard focusable) for all
-   * other items.
+   * other items. Also sets the correct initial values for aria-selected
+   * attribute, true for default selected item and false for others.
    */
   _resetTabindices: function () {
-    var selectedItem = this.multi ? this.selectedItems && this.selectedItems[0] : this.selectedItem;
+    var firstSelectedItem = this.multi ? this.selectedItems && this.selectedItems[0] : this.selectedItem;
     this.items.forEach(function (item) {
-      item.setAttribute('tabindex', item === selectedItem ? '0' : '-1');
+      item.setAttribute('tabindex', item === firstSelectedItem ? '0' : '-1');
+      item.setAttribute('aria-selected', this._selection.isSelected(item));
     }, this);
   },
 
@@ -244,7 +246,7 @@ export const IronMenuBehaviorImpl = {
     if (isSelected) {
       item.setAttribute('aria-selected', 'true');
     } else {
-      item.removeAttribute('aria-selected');
+      item.setAttribute('aria-selected', 'false');
     }
 
     IronSelectableBehavior._applySelection.apply(this, arguments);
@@ -323,12 +325,12 @@ export const IronMenuBehaviorImpl = {
     this._defaultFocusAsync = this.async(function () {
       // focus the selected item when the menu receives focus, or the first item
       // if no item is selected
-      var selectedItem = this.multi ? this.selectedItems && this.selectedItems[0] : this.selectedItem;
+      var firstSelectedItem = this.multi ? this.selectedItems && this.selectedItems[0] : this.selectedItem;
 
       this._setFocusedItem(null);
 
-      if (selectedItem) {
-        this._setFocusedItem(selectedItem);
+      if (firstSelectedItem) {
+        this._setFocusedItem(firstSelectedItem);
       } else if (this.items[0]) {
         // We find the first none-disabled item (if one exists)
         this._focusNext();

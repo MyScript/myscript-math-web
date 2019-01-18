@@ -50,6 +50,7 @@ import {LegacyElementMixin} from '@polymer/polymer/lib/legacy/legacy-element-mix
  */
 interface PaperIconButtonLightElement extends PaperRippleBehavior, LegacyElementMixin, HTMLElement {
   ensureRipple(...var_args: any[]): void;
+  registered(): void;
   ready(): void;
   _rippleDown(): void;
   _rippleUp(): void;

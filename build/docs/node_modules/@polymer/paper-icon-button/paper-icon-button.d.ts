@@ -92,6 +92,7 @@ interface PaperIconButtonElement extends PaperInkyFocusBehavior, LegacyElementMi
    */
   alt: string|null|undefined;
   hostAttributes: object|null;
+  registered(): void;
   _altChanged(newValue: any, oldValue: any): void;
 }
 
