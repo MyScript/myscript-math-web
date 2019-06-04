@@ -69,7 +69,7 @@ Use an existing project or start a fresh one.
 npm init
 ```
 
-Install `myscript-math-web` and use it as showed in the [Usage]() section.
+Install `myscript-math-web` and use it as showed in the [Usage](https://github.com/MyScript/myscript-math-web#usage) section.
 
 ```shell
 npm install myscript-math-web
